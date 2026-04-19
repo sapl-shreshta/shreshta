@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Angles - Let's Learn! 📐✨</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+    color:var(--ink);
+    padding:20px;
+  }
+
+  .container{
+    max-width:1000px;
+    margin:0 auto;
+  }
+
+  /* Navigation buttons */
+  .nav-top{
+    position:fixed;top:20px;display:flex;gap:15px;z-index:101;
+  }
+  .nav-back{
+    left:20px;
+  }
+  .nav-home{
+    right:20px;
+  }
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{
+    text-align:center;
+    margin:60px 0 40px 0;
+  }
+
+  h1{
+    font-size:clamp(36px,6vw,56px);
+    color:var(--purple);
+    margin-bottom:10px;
+  }
+
+  .subtitle{
+    font-size:clamp(18px,2.5vw,24px);
+    color:var(--blue);
+    font-weight:bold;
+  }
+
+  .card{
+    background:var(--cream);
+    border-radius:20px;
+    padding:30px;
+    margin-bottom:25px;
+    border:4px solid var(--purple);
+    box-shadow:0 8px 0 rgba(0,0,0,.08);
+  }
+
+  h2{
+    font-size:clamp(24px,4vw,36px);
+    color:var(--pink);
+    margin-bottom:15px;
+  }
+
+  p{
+    font-size:clamp(16px,2vw,20px);
+    line-height:1.6;
+    margin-bottom:10px;
+  }
+
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    font-weight:bold;
+  }
+
+  ul{
+    margin-left:30px;
+    margin-bottom:15px;
+  }
+
+  li{
+    font-size:clamp(16px,2vw,20px);
+    margin-bottom:8px;
+    line-height:1.5;
+  }
+
+  .emoji-row{
+    font-size:clamp(40px,8vw,60px);
+    text-align:center;
+    margin:20px 0;
+    letter-spacing:10px;
+  }
+
+  .worksheet-section{
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    margin:30px 0;
+    border:4px solid var(--orange);
+    box-shadow:0 8px 0 rgba(0,0,0,.1);
+  }
+
+  .worksheet-btn{
+    background:var(--red);
+    color:white;
+    border:none;
+    border-radius:50px;
+    padding:15px 35px;
+    font-size:clamp(16px,2vw,22px);
+    cursor:pointer;
+    box-shadow:0 6px 0 #b43355;
+    transition:transform .15s;
+    font-weight:bold;
+    text-decoration:none;
+    display:inline-block;
+    margin-top:15px;
+  }
+
+  .worksheet-btn:hover{
+    transform:translateY(-2px);
+  }
+
+  .worksheet-btn:active{
+    transform:translateY(3px);
+    box-shadow:0 3px 0 #b43355;
+  }
+
+  .pop{
+    display:inline-block;
+    animation:pop 2s ease-in-out infinite;
+  }
+  @keyframes pop{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+  .badge{
+    display:inline-block;
+    background:var(--teal);
+    color:white;
+    padding:6px 14px;
+    border-radius:20px;
+    font-weight:bold;
+    margin:4px;
+    border:3px solid var(--teal);
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Geometry">⬅️</button>
+  </a>
+</div>
+
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📐 📏 ✨ 🎯</div>
+    <h1>Understanding <span class="highlight">Angles</span>!</h1>
+    <p class="subtitle">Master the amazing world of angles! 🌟</p>
+  </header>
+
+  <div class="card">
+    <h2>📐 What is an Angle?</h2>
+    <p>An <span class="highlight">angle</span> is formed when <b>two lines meet at a point</b>. That point is called the <span class="badge">vertex</span>.</p>
+    <p style="margin-top:15px;">Angles are everywhere around you:</p>
+    <ul>
+      <li>🏠 The corners of your room</li>
+      <li>📐 The corner of your notebook</li>
+      <li>⏰ The hands of a clock</li>
+      <li>🍕 A slice of pizza</li>
+      <li>✂️ Open scissors</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📏 Types of Angles</h2>
+    <p>Angles are measured in <span class="badge">degrees (°)</span>. Different angles have different names:</p>
+    <ul>
+      <li><b>Right Angle:</b> Exactly 90° (like a corner of a square) <span class="pop">⊞</span></li>
+      <li><b>Acute Angle:</b> Less than 90° (sharp and pointy)</li>
+      <li><b>Obtuse Angle:</b> Between 90° and 180° (wide and open)</li>
+      <li><b>Straight Angle:</b> Exactly 180° (forms a straight line)</li>
+      <li><b>Reflex Angle:</b> Between 180° and 360° (extra wide!)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🎯 How to Measure Angles?</h2>
+    <p>We use a tool called a <span class="badge">protractor</span> to measure angles!</p>
+    <p style="margin-top:15px;">Steps to measure an angle:</p>
+    <ul>
+      <li>Place the center of the protractor at the <b>vertex</b> (the point where lines meet)</li>
+      <li>Align one line of the angle with the <b>zero line</b> of the protractor</li>
+      <li>Read the number where the other line crosses the protractor</li>
+      <li>That's your angle in degrees! ✨</li>
+    </ul>
+  </div>
+
+  <div class="worksheet-section">
+    <h2 style="color:var(--ink);margin-bottom:10px;"><span class="pop">📝</span> Ready to Practice?</h2>
+    <p style="color:var(--ink);font-weight:bold;margin-bottom:15px;">Complete your angles worksheet right here on the site!</p>
+    <a href="worksheet.html" class="worksheet-btn">📝 Start Worksheet</a>
+  </div>
+
+  <div class="card">
+    <h2>💡 Fun Facts about Angles!</h2>
+    <ul>
+      <li>A full rotation around a point is <b>360 degrees</b>! 🔄</li>
+      <li>The angles in a triangle always add up to <b>180 degrees</b>! 📐</li>
+      <li>A circle has angles that go from <b>0° to 360°</b>! 🔵</li>
+      <li>Protractors have been used for hundreds of years to measure angles! 📜</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

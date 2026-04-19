@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Angles Worksheet - Practice Problems 📐</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+    color:var(--ink);
+    padding:20px;
+  }
+
+  .container{
+    max-width:900px;
+    margin:0 auto;
+  }
+
+  /* Navigation buttons */
+  .nav-top{
+    position:fixed;top:20px;display:flex;gap:15px;z-index:101;
+  }
+  .nav-back{
+    left:20px;
+  }
+  .nav-home{
+    right:20px;
+  }
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{
+    text-align:center;
+    margin:60px 0 30px 0;
+  }
+
+  h1{
+    font-size:clamp(32px,5vw,48px);
+    color:var(--purple);
+    margin-bottom:10px;
+  }
+
+  .subtitle{
+    font-size:clamp(16px,2vw,22px);
+    color:var(--blue);
+    font-weight:bold;
+  }
+
+  .emoji-row{
+    font-size:clamp(40px,8vw,60px);
+    text-align:center;
+    margin:15px 0;
+    letter-spacing:10px;
+  }
+
+  .instructions{
+    background:var(--yellow);
+    border:3px solid var(--orange);
+    border-radius:15px;
+    padding:20px;
+    margin:20px 0;
+    font-size:clamp(16px,2vw,18px);
+    line-height:1.6;
+  }
+
+  .note{
+    background:linear-gradient(135deg,#ffd6e7,#ffe6f0);
+    border-left:5px solid var(--pink);
+    padding:15px;
+    margin:20px 0;
+    border-radius:10px;
+    font-size:clamp(15px,2vw,17px);
+    font-weight:bold;
+  }
+
+  .questions-section{
+    background:var(--cream);
+    border-radius:20px;
+    padding:30px;
+    border:4px solid var(--purple);
+    box-shadow:0 8px 0 rgba(0,0,0,.08);
+    margin:30px 0;
+  }
+
+  .question{
+    margin:25px 0;
+    padding:20px;
+    background:white;
+    border-left:5px solid var(--blue);
+    border-radius:10px;
+  }
+
+  .question-num{
+    font-weight:bold;
+    color:var(--purple);
+    font-size:clamp(18px,2.2vw,24px);
+    margin-bottom:10px;
+  }
+
+  .question-text{
+    font-size:clamp(16px,2vw,20px);
+    margin-bottom:15px;
+    line-height:1.6;
+  }
+
+  .options{
+    margin-left:20px;
+  }
+
+  .option-wrapper{
+    font-size:clamp(15px,2vw,19px);
+    margin:12px 0;
+    padding:10px;
+    line-height:1.5;
+    background:#f9f9f9;
+    border-radius:5px;
+    cursor:pointer;
+  }
+
+  .option-wrapper input[type="radio"]{
+    margin-right:10px;
+    cursor:pointer;
+  }
+
+  .option-wrapper label{
+    cursor:pointer;
+  }
+
+  .answer-input{
+    font-size:clamp(15px,2vw,19px);
+    padding:10px;
+    border:2px solid var(--purple);
+    border-radius:5px;
+    width:200px;
+    margin:10px 0;
+    font-family:inherit;
+  }
+
+  .answer-input:focus{
+    outline:none;
+    border-color:var(--pink);
+    box-shadow:0 0 5px rgba(160, 108, 213, 0.3);
+  }
+
+  .hint{
+    background:#f0f9ff;
+    border-left:4px solid var(--teal);
+    padding:12px;
+    margin:15px 0;
+    font-size:clamp(15px,2vw,17px);
+    font-style:italic;
+    color:var(--ink);
+    border-radius:5px;
+  }
+
+  .determine-section{
+    background:#f5f5f5;
+    padding:15px;
+    border-radius:10px;
+    margin:10px 0;
+  }
+
+  .determine-item{
+    font-size:clamp(15px,2vw,19px);
+    margin:15px 0;
+    padding:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .determine-item input[type="radio"]{
+    margin:0 10px;
+    cursor:pointer;
+  }
+
+  .btn-group{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    margin:30px 0;
+    flex-wrap:wrap;
+  }
+
+  .btn{
+    border:none;
+    border-radius:50px;
+    padding:14px 32px;
+    font-size:clamp(16px,2vw,20px);
+    cursor:pointer;
+    box-shadow:0 6px 0;
+    transition:transform .15s;
+    font-weight:bold;
+    font-family:inherit;
+  }
+
+  .btn-submit{
+    background:var(--teal);
+    color:white;
+    box-shadow:0 6px 0 #047857;
+  }
+
+  .btn-download{
+    background:var(--blue);
+    color:white;
+    box-shadow:0 6px 0 #0077b6;
+  }
+
+  .btn-reset{
+    background:var(--orange);
+    color:white;
+    box-shadow:0 6px 0 #cc6600;
+  }
+
+  .btn:hover{
+    transform:translateY(-2px);
+  }
+
+  .btn:active{
+    transform:translateY(3px);
+    box-shadow:0 3px 0 currentColor;
+    filter:brightness(0.9);
+  }
+
+  .results-section{
+    display:none;
+    background:linear-gradient(135deg,#e8f5e9,#c8e6c9);
+    border:3px solid var(--teal);
+    border-radius:15px;
+    padding:25px;
+    margin:20px 0;
+  }
+
+  .results-section.show{
+    display:block;
+  }
+
+  .score{
+    font-size:clamp(24px,4vw,36px);
+    font-weight:bold;
+    color:var(--teal);
+    text-align:center;
+    margin-bottom:20px;
+  }
+
+  .result-item{
+    background:white;
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+    border-left:4px solid var(--blue);
+  }
+
+  .result-item.correct{
+    border-left-color:#4caf50;
+  }
+
+  .result-item.incorrect{
+    border-left-color:var(--red);
+  }
+
+  .correct-badge{
+    display:inline-block;
+    background:#4caf50;
+    color:white;
+    padding:4px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    margin:5px 0;
+  }
+
+  .incorrect-badge{
+    display:inline-block;
+    background:var(--red);
+    color:white;
+    padding:4px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    margin:5px 0;
+  }
+
+  @media print{
+    .nav-top, .btn-group, .results-section{
+      display:none;
+    }
+    body{
+      background:white;
+      padding:0;
+    }
+    .questions-section{
+      box-shadow:none;
+      border:1px solid #ccc;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<div class="nav-top nav-back">
+  <a href="index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Lesson">⬅️</button>
+  </a>
+</div>
+
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📐 ✏️ 🎯</div>
+    <h1>Angles Worksheet</h1>
+    <p class="subtitle">Test Your Understanding!</p>
+  </header>
+
+  <div class="instructions">
+    <strong>📋 Instructions:</strong> Answer all questions and click "Submit Answers" to see your score. You can also download a record of your answers.
+  </div>
+
+  <form id="worksheetForm">
+    <div class="questions-section">
+      <!-- Question 1 -->
+      <div class="question">
+        <div class="question-num">1. The vertex of an angle lies</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q1" id="q1a" value="a">
+            <label for="q1a">(a) in its interior</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q1" id="q1b" value="b">
+            <label for="q1b">(b) in its exterior</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q1" id="q1c" value="c">
+            <label for="q1c">(c) on the angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q1" id="q1d" value="d">
+            <label for="q1d">(d) inside the angle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question">
+        <div class="question-num">2. The figure formed by two rays with the same initial point is known as</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q2" id="q2a" value="a">
+            <label for="q2a">(a) a ray</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q2" id="q2b" value="b">
+            <label for="q2b">(b) a line</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q2" id="q2c" value="c">
+            <label for="q2c">(c) an angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q2" id="q2d" value="d">
+            <label for="q2d">(d) a line segment</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question">
+        <div class="question-num">3. An angle of measure 0° is called</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q3" id="q3a" value="a">
+            <label for="q3a">(a) a complete angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q3" id="q3b" value="b">
+            <label for="q3b">(b) a right angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q3" id="q3c" value="c">
+            <label for="q3c">(c) a straight angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q3" id="q3d" value="d">
+            <label for="q3d">(d) a zero angle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question">
+        <div class="question-num">4. An angle of measure 90° is called</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q4" id="q4a" value="a">
+            <label for="q4a">(a) a complete angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q4" id="q4b" value="b">
+            <label for="q4b">(b) a right angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q4" id="q4c" value="c">
+            <label for="q4c">(c) a straight angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q4" id="q4d" value="d">
+            <label for="q4d">(d) a reflex angle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question">
+        <div class="question-num">5. An angle of measure 180° is called</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q5" id="q5a" value="a">
+            <label for="q5a">(a) a zero angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q5" id="q5b" value="b">
+            <label for="q5b">(b) a right angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q5" id="q5c" value="c">
+            <label for="q5c">(c) a straight angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q5" id="q5d" value="d">
+            <label for="q5d">(d) a reflex angle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 6 -->
+      <div class="question">
+        <div class="question-num">6. An angle of measure 360° is called</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q6" id="q6a" value="a">
+            <label for="q6a">(a) a zero angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q6" id="q6b" value="b">
+            <label for="q6b">(b) a straight angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q6" id="q6c" value="c">
+            <label for="q6c">(c) a reflex angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q6" id="q6d" value="d">
+            <label for="q6d">(d) a complete angle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 7 -->
+      <div class="question">
+        <div class="question-num">7. An angle of measure 240° is</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q7" id="q7a" value="a">
+            <label for="q7a">(a) an acute angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q7" id="q7b" value="b">
+            <label for="q7b">(b) an obtuse angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q7" id="q7c" value="c">
+            <label for="q7c">(c) a reflex angle</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q7" id="q7d" value="d">
+            <label for="q7d">(d) a complete angle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 8 -->
+      <div class="question">
+        <div class="question-num">8. A reflex angle measures</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q8" id="q8a" value="a">
+            <label for="q8a">(a) more than 90° but less than 180°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q8" id="q8b" value="b">
+            <label for="q8b">(b) more than 180° but less than 270°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q8" id="q8c" value="c">
+            <label for="q8c">(c) more than 180° but less than 360°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q8" id="q8d" value="d">
+            <label for="q8d">(d) None of these</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 9 -->
+      <div class="question">
+        <div class="question-num">9. The number of degrees in 2 right angles is</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q9" id="q9a" value="a">
+            <label for="q9a">(a) 90°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q9" id="q9b" value="b">
+            <label for="q9b">(b) 180°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q9" id="q9c" value="c">
+            <label for="q9c">(c) 270°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q9" id="q9d" value="d">
+            <label for="q9d">(d) 360°</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 10 -->
+      <div class="question">
+        <div class="question-num">10. The number of degrees in 3/2 right angles is</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q10" id="q10a" value="a">
+            <label for="q10a">(a) 180°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q10" id="q10b" value="b">
+            <label for="q10b">(b) 360°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q10" id="q10c" value="c">
+            <label for="q10c">(c) 270°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q10" id="q10d" value="d">
+            <label for="q10d">(d) 90°</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 11 -->
+      <div class="question">
+        <div class="question-num">11. If a bicycle wheel has 36 spokes, then the angle between a pair of adjacent spokes is</div>
+        <div class="options">
+          <div class="option-wrapper">
+            <input type="radio" name="q11" id="q11a" value="a">
+            <label for="q11a">(a) 10°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q11" id="q11b" value="b">
+            <label for="q11b">(b) 15°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q11" id="q11c" value="c">
+            <label for="q11c">(c) 20°</label>
+          </div>
+          <div class="option-wrapper">
+            <input type="radio" name="q11" id="q11d" value="d">
+            <label for="q11d">(d) 12°</label>
+          </div>
+        </div>
+        <div class="hint">
+          <strong>💡 Hint:</strong> All the spokes meet at one point and the total angle around a point is <input type="text" class="answer-input" style="width:80px;" id="hint1" placeholder="360">. If that angle is divided by 36 spokes, then the angle between two spokes is <input type="text" class="answer-input" style="width:80px;" id="hint2" placeholder="10">.
+        </div>
+      </div>
+
+      <!-- Note about complementary and supplementary angles -->
+      <div class="note">
+        📌 <strong>IMPORTANT DEFINITIONS:</strong><br>
+        • Two angles are <strong>complementary</strong> if they add up to <strong>90 degrees</strong>.<br>
+        • Two angles are <strong>supplementary</strong> if they add up to <strong>180 degrees</strong>.
+      </div>
+
+      <!-- Question 12 -->
+      <div class="question">
+        <div class="question-num">12. The complement of 43° is __________.</div>
+        <input type="text" class="answer-input" id="q12" placeholder="Enter your answer">
+      </div>
+
+      <!-- Question 13 -->
+      <div class="question">
+        <div class="question-num">13. The supplement of 125° is __________.</div>
+        <input type="text" class="answer-input" id="q13" placeholder="Enter your answer">
+      </div>
+
+      <!-- Question 14 -->
+      <div class="question">
+        <div class="question-num">14. Determine whether the following angles are complementary.</div>
+        <div class="determine-section">
+          <div class="determine-item">
+            <label>a) 45° and 45°</label>
+            <div>
+              <input type="radio" name="q14a" id="q14a_yes" value="yes"> <label for="q14a_yes">Yes</label>
+              <input type="radio" name="q14a" id="q14a_no" value="no"> <label for="q14a_no">No</label>
+            </div>
+          </div>
+          <div class="determine-item">
+            <label>b) 37° and 63°</label>
+            <div>
+              <input type="radio" name="q14b" id="q14b_yes" value="yes"> <label for="q14b_yes">Yes</label>
+              <input type="radio" name="q14b" id="q14b_no" value="no"> <label for="q14b_no">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 15 -->
+      <div class="question">
+        <div class="question-num">15. Determine whether the following angles are supplementary.</div>
+        <div class="determine-section">
+          <div class="determine-item">
+            <label>a) 45° and 135°</label>
+            <div>
+              <input type="radio" name="q15a" id="q15a_yes" value="yes"> <label for="q15a_yes">Yes</label>
+              <input type="radio" name="q15a" id="q15a_no" value="no"> <label for="q15a_no">No</label>
+            </div>
+          </div>
+          <div class="determine-item">
+            <label>b) 127° and 83°</label>
+            <div>
+              <input type="radio" name="q15b" id="q15b_yes" value="yes"> <label for="q15b_yes">Yes</label>
+              <input type="radio" name="q15b" id="q15b_no" value="no"> <label for="q15b_no">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 16 -->
+      <div class="question">
+        <div class="question-num">16. Which of the angles A and B are complementary?</div>
+        <div style="margin-top:15px;text-align:center;">
+          <img src="diagram-q16.png" alt="Diagram showing angles A and B" style="max-width:100%;height:auto;border-radius:10px;margin:15px 0;">
+        </div>
+        <div style="margin-top:15px;">
+          <label for="q16">Enter your answer (A, B, or Both):</label>
+          <input type="text" class="answer-input" id="q16" placeholder="Enter your answer (e.g., A or B or Both)">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-submit" onclick="submitAnswers()">✅ Submit Answers</button>
+      <button type="button" class="btn btn-download" onclick="downloadAnswers()">📥 Download Answers</button>
+      <button type="button" class="btn btn-reset" onclick="resetForm()">🔄 Clear All</button>
+    </div>
+  </form>
+
+  <!-- Results Section -->
+  <div id="resultsSection" class="results-section">
+    <div class="score" id="scoreDisplay"></div>
+    <div id="resultsContent"></div>
+  </div>
+
+</div>
+
+<script>
+  // Correct answers
+  const correctAnswers = {
+    q1: 'c',
+    q2: 'c',
+    q3: 'd',
+    q4: 'b',
+    q5: 'c',
+    q6: 'd',
+    q7: 'c',
+    q8: 'c',
+    q9: 'b',
+    q10: 'c',
+    q11: 'd',
+    q12: '47',
+    q13: '55',
+    q14a: 'no',
+    q14b: 'yes',
+    q15a: 'yes',
+    q15b: 'yes',
+    q16: 'B' // Requires diagram
+  };
+
+  function submitAnswers(){
+    let score = 0;
+    let total = Object.keys(correctAnswers).length;
+    let resultsHTML = '<h2 style="color:var(--purple);margin-bottom:20px;">📊 Your Results</h2>';
+
+    // Check each answer
+    for(let key in correctAnswers){
+      let userAnswer = '';
+      if(key.startsWith('q14') || key.startsWith('q15')){
+        userAnswer = document.querySelector(`input[name="${key}"]:checked`)?.value || '';
+      } else if(key === 'q12' || key === 'q13' || key === 'q16'){
+        userAnswer = document.getElementById(key).value.trim().toLowerCase();
+      } else {
+        userAnswer = document.querySelector(`input[name="${key}"]:checked`)?.value || '';
+      }
+
+      const isCorrect = userAnswer.toLowerCase() === correctAnswers[key].toString().toLowerCase();
+      if(isCorrect) score++;
+
+      const resultClass = isCorrect ? 'correct' : 'incorrect';
+      const badge = isCorrect ? '<span class="correct-badge">✓ Correct</span>' : '<span class="incorrect-badge">✗ Incorrect</span>';
+
+      if(key === 'q12'){
+        resultsHTML += `<div class="result-item ${resultClass}"><strong>Q12:</strong> Complement of 43° | Your answer: <strong>${userAnswer || 'Not answered'}</strong> | Correct answer: <strong>47</strong> ${badge}</div>`;
+      } else if(key === 'q13'){
+        resultsHTML += `<div class="result-item ${resultClass}"><strong>Q13:</strong> Supplement of 125° | Your answer: <strong>${userAnswer || 'Not answered'}</strong> | Correct answer: <strong>55</strong> ${badge}</div>`;
+      } else if(key === 'q16'){
+        resultsHTML += `<div class="result-item ${resultClass}"><strong>Q16:</strong> Which angles complementary? | Your answer: <strong>${userAnswer || 'Not answered'}</strong> | (Requires diagram reference) ${badge}</div>`;
+      } else {
+        resultsHTML += `<div class="result-item ${resultClass}"><strong>${key.toUpperCase()}:</strong> Your answer: <strong>${userAnswer || 'Not answered'}</strong> | Correct answer: <strong>${correctAnswers[key]}</strong> ${badge}</div>`;
+      }
+    }
+
+    document.getElementById('scoreDisplay').innerHTML = `Score: ${score}/${total} (${Math.round(score/total*100)}%)`;
+    document.getElementById('resultsContent').innerHTML = resultsHTML;
+    document.getElementById('resultsSection').classList.add('show');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function downloadAnswers(){
+    let answersText = 'ANGLES WORKSHEET - STUDENT ANSWERS\n';
+    answersText += '====================================\n\n';
+    let timestamp = new Date().toLocaleString();
+    answersText += `Date: ${timestamp}\n\n`;
+
+    answersText += 'ANSWERS PROVIDED:\n';
+    answersText += '----------------\n';
+
+    for(let i = 1; i <= 11; i++){
+      let key = 'q' + i;
+      let answer = document.querySelector(`input[name="${key}"]:checked`)?.value || 'Not answered';
+      answersText += `Q${i}: ${answer}\n`;
+    }
+
+    answersText += `Q12: ${document.getElementById('q12').value || 'Not answered'}\n`;
+    answersText += `Q13: ${document.getElementById('q13').value || 'Not answered'}\n`;
+    answersText += `Q14a: ${document.querySelector('input[name="q14a"]:checked')?.value || 'Not answered'}\n`;
+    answersText += `Q14b: ${document.querySelector('input[name="q14b"]:checked')?.value || 'Not answered'}\n`;
+    answersText += `Q15a: ${document.querySelector('input[name="q15a"]:checked')?.value || 'Not answered'}\n`;
+    answersText += `Q15b: ${document.querySelector('input[name="q15b"]:checked')?.value || 'Not answered'}\n`;
+    answersText += `Q16: ${document.getElementById('q16').value || 'Not answered'}\n`;
+
+    const blob = new Blob([answersText], {type: 'text/plain'});
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Angles_Worksheet_${new Date().getTime()}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
+  function resetForm(){
+    document.getElementById('worksheetForm').reset();
+    document.getElementById('resultsSection').classList.remove('show');
+  }
+</script>
+
+</body>
+</html>

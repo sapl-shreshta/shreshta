@@ -5,38 +5,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Mathematics ➗</title>
 <style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
   body{
-    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
     background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
-    color:#1d2b53;padding:40px 20px;text-align:center;
+    color:var(--ink);
+    padding:20px;
+    min-height:100vh;
+  }
+  .container{
+    max-width:1200px;
+    margin:0 auto;
   }
   .back{
-    position:absolute;top:30px;left:30px;
-    background:#a06cd5;color:white;text-decoration:none;
-    padding:10px 20px;border-radius:50px;font-weight:bold;
+    position:fixed;top:30px;left:30px;
+    background:var(--purple);color:white;text-decoration:none;
+    padding:12px 24px;border-radius:50px;font-weight:bold;
     box-shadow:0 5px 0 #7b4aaf;
+    z-index:100;
   }
-  .big{font-size:clamp(80px,15vw,160px);animation:bounce 2s ease-in-out infinite;}
+  .back:hover{transform:translateY(-2px);}
+  header{
+    text-align:center;
+    margin:60px 0 40px 0;
+  }
+  .emoji{font-size:clamp(60px,12vw,120px);animation:bounce 2s ease-in-out infinite;}
   @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
   h1{
     font-size:clamp(40px,6vw,72px);margin:20px 0;
     background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  p{font-size:clamp(20px,2.6vw,28px);color:#a06cd5;max-width:600px;margin-top:10px;}
-  .badge{
-    display:inline-block;background:#ffd166;color:#1d2b53;
-    padding:10px 24px;border-radius:50px;font-weight:bold;margin-top:30px;
-    border:4px solid #ff9e45;font-size:22px;
+  .subtitle{
+    font-size:clamp(18px,2.5vw,24px);
+    color:var(--blue);
+    font-weight:bold;
+    margin-top:10px;
+  }
+  .lessons-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+    margin:40px 0;
+  }
+  .lesson-card{
+    background:var(--cream);
+    border-radius:20px;
+    padding:30px;
+    border:4px solid var(--teal);
+    box-shadow:0 8px 0 rgba(0,0,0,.08);
+    text-decoration:none;
+    color:inherit;
+    transition:transform .2s,box-shadow .2s;
+    cursor:pointer;
+  }
+  .lesson-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 20px rgba(0,0,0,.15);
+  }
+  .lesson-emoji{
+    font-size:60px;
+    margin-bottom:15px;
+  }
+  .lesson-card h2{
+    font-size:clamp(24px,4vw,32px);
+    color:var(--pink);
+    margin-bottom:10px;
+  }
+  .lesson-card p{
+    font-size:clamp(16px,2vw,18px);
+    color:var(--ink);
+    line-height:1.5;
   }
 </style>
 </head>
 <body>
   <a class="back" href="../index.html">⬅️ Home</a>
-  <div class="big">➗</div>
-  <h1>Mathematics</h1>
-  <p>Awesome lessons are coming soon! Check back for fun activities ✨</p>
-  <div class="badge">🚧 Coming Soon 🚧</div>
+  <div class="container">
+    <header>
+      <div class="emoji">➗</div>
+      <h1>Mathematics</h1>
+      <p class="subtitle">Explore numbers, shapes, and calculations! ✨</p>
+    </header>
+
+    <div class="lessons-grid">
+      <a href="geometry/index.html" class="lesson-card">
+        <div class="lesson-emoji">📐</div>
+        <h2>Geometry</h2>
+        <p>Learn about shapes, angles, and spatial relationships with fun interactive lessons!</p>
+      </a>
+    </div>
+  </div>
 </body>
 </html>
