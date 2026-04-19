@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Welcome Shreshta! 🌟</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{min-height:100%;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0 0%,#e0f7ff 50%,#fff5d6 100%);
+    color:#1d2b53;
+    padding:40px 20px;
+    overflow-x:hidden;
+  }
+  .hero{text-align:center;margin-bottom:50px;position:relative;}
+  .hero h1{
+    font-size:clamp(40px,7vw,84px);
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0,#a06cd5);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:wiggle 3s ease-in-out infinite;
+    line-height:1.1;
+  }
+  .hero p{font-size:clamp(20px,2.8vw,30px);color:#a06cd5;margin-top:14px;}
+  .emoji-row{font-size:clamp(40px,6vw,70px);letter-spacing:12px;margin:20px 0;}
+  @keyframes wiggle{0%,100%{transform:rotate(-1deg);}50%{transform:rotate(1deg);}}
+
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;max-width:1200px;margin:0 auto;
+  }
+  .subject{
+    background:#fff8f0;border-radius:24px;padding:28px 20px;
+    text-align:center;text-decoration:none;color:#1d2b53;
+    border:4px solid;
+    box-shadow:0 8px 0 rgba(0,0,0,.1), 0 16px 30px rgba(0,0,0,.08);
+    transition:transform .2s ease, box-shadow .2s ease;display:block;
+  }
+  .subject:hover{
+    transform:translateY(-6px) rotate(-1deg);
+    box-shadow:0 14px 0 rgba(0,0,0,.1), 0 22px 40px rgba(0,0,0,.15);
+  }
+  .subject:active{transform:translateY(2px);}
+  .icon{font-size:clamp(50px,7vw,80px);display:block;margin-bottom:10px;}
+  .name{font-size:clamp(22px,2.4vw,28px);font-weight:bold;}
+
+  .math     {border-color:#ef476f;}
+  .english  {border-color:#ff6ec7;}
+  .chem     {border-color:#06d6a0;}
+  .phy      {border-color:#4cc9f0;}
+  .bio      {border-color:#8bc34a;}
+  .hist     {border-color:#ff9e45;}
+  .civ      {border-color:#a06cd5;}
+  .geo      {border-color:#118ab2;}
+  .telugu   {border-color:#ffd166;}
+  .sanskrit {border-color:#c77dff;}
+  .music    {border-color:#ff8fa3;}
+
+  .float{position:fixed;font-size:42px;opacity:.5;animation:float 7s ease-in-out infinite;pointer-events:none;z-index:-1;}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-25px) rotate(15deg);}}
+
+  footer{text-align:center;margin-top:50px;font-size:18px;color:#a06cd5;}
+</style>
+</head>
+<body>
+
+  <div class="float" style="top:8%;left:4%;">📚</div>
+  <div class="float" style="top:15%;right:6%;animation-delay:1s;">✨</div>
+  <div class="float" style="bottom:20%;left:5%;animation-delay:2s;">🎨</div>
+  <div class="float" style="bottom:10%;right:4%;animation-delay:3s;">🌟</div>
+
+  <section class="hero">
+    <div class="emoji-row">🌈 📖 🎓 🚀 ⭐</div>
+    <h1>Welcome Shreshta!</h1>
+    <p>Pick a subject and let's learn something awesome today 💫</p>
+  </section>
+
+  <div class="grid">
+    <a class="subject math"     href="Maths/index.html">       <span class="icon">➗</span><span class="name">Maths</span></a>
+    <a class="subject english"  href="English/index.html">     <span class="icon">📖</span><span class="name">English</span></a>
+    <a class="subject telugu"   href="Telugu/index.html">      <span class="icon">🔤</span><span class="name">Telugu</span></a>
+    <a class="subject chem"     href="Chemistry/index.html">   <span class="icon">🧪</span><span class="name">Chemistry</span></a>
+    <a class="subject phy"      href="Physics/index.html">     <span class="icon">⚡</span><span class="name">Physics</span></a>
+    <a class="subject bio"      href="Biology/index.html">     <span class="icon">🌱</span><span class="name">Biology</span></a>
+    <a class="subject geo"      href="Geography/index.html">   <span class="icon">🌍</span><span class="name">Geography</span></a>
+    <a class="subject hist"     href="History/index.html">     <span class="icon">🏛️</span><span class="name">History</span></a>
+    <a class="subject civ"      href="Civics/index.html">      <span class="icon">⚖️</span><span class="name">Civics</span></a>
+    <a class="subject sanskrit" href="Sanskrit/index.html">    <span class="icon">🕉️</span><span class="name">Sanskrit</span></a>
+    <a class="subject music"    href="Music/index.html">       <span class="icon">🎵</span><span class="name">Music</span></a>
+  </div>
+
+  <footer>Made with 💖 for Shreshta's learning adventure</footer>
+
+</body>
+</html>

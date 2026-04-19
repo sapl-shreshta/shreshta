@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Magical World of Matter! 🧪✨</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:var(--ink);
+  }
+  .stage{
+    position:relative;
+    width:100vw;height:100vh;
+    overflow:hidden;
+  }
+  .slide{
+    position:absolute;inset:0;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:40px 60px;
+    text-align:center;
+    animation:fade .6s ease;
+  }
+  .slide.active{display:flex;}
+  @keyframes fade{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:scale(1);}}
+  h1{font-size:clamp(32px,5vw,64px);line-height:1.1;margin-bottom:20px;}
+  h2{font-size:clamp(28px,4vw,48px);margin-bottom:16px;}
+  p,li{font-size:clamp(18px,2.2vw,28px);line-height:1.5;}
+  .bubble{
+    background:var(--cream);
+    border-radius:30px;
+    padding:24px 34px;
+    box-shadow:0 10px 0 rgba(0,0,0,.08), 0 20px 40px rgba(0,0,0,.1);
+    border:4px dashed var(--purple);
+    max-width:1100px;
+  }
+  .rainbow{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0,#a06cd5);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-weight:bold;
+  }
+  .nav{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    display:flex;gap:14px;z-index:100;
+  }
+  .btn{
+    background:var(--pink);color:white;border:none;
+    border-radius:50px;padding:12px 22px;font-size:20px;cursor:pointer;
+    box-shadow:0 6px 0 #c14a9a;transition:transform .15s;
+    font-family:inherit;font-weight:bold;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn:active{transform:translateY(3px);box-shadow:0 3px 0 #c14a9a;}
+  .counter{
+    background:rgba(255,255,255,.7);border-radius:50px;padding:10px 20px;
+    font-weight:bold;color:var(--ink);
+  }
+ 
+  /* floating decorations */
+  .float{position:absolute;font-size:40px;opacity:.7;animation:float 6s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-20px) rotate(10deg);}}
+ 
+  /* Slide 1 — Title */
+  .title-card h1{font-size:clamp(48px,8vw,96px);}
+  .title-card .sub{font-size:clamp(22px,3vw,34px);margin-top:10px;color:var(--purple);}
+  .emoji-row{font-size:clamp(50px,8vw,90px);margin:20px 0;letter-spacing:10px;}
+ 
+  /* Tree / boxes */
+  .tree{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;}
+  .row{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;}
+  .card{
+    background:var(--cream);border-radius:24px;padding:20px 28px;
+    min-width:220px;border:4px solid;box-shadow:0 8px 0 rgba(0,0,0,.08);
+  }
+  .card.pure{border-color:var(--teal);}
+  .card.impure{border-color:var(--orange);}
+  .card.element{border-color:var(--blue);}
+  .card.compound{border-color:var(--pink);}
+  .card h3{font-size:clamp(22px,2.6vw,32px);margin-bottom:8px;}
+  .connector{width:4px;height:40px;background:var(--purple);border-radius:4px;}
+  .v-line{width:4px;height:30px;background:var(--purple);}
+  .h-line{height:4px;width:80%;max-width:500px;background:var(--purple);border-radius:4px;}
+ 
+  /* Water molecule */
+  .molecule{display:flex;align-items:center;justify-content:center;gap:14px;margin:20px 0;font-size:clamp(28px,4vw,44px);font-weight:bold;}
+  .atom{
+    width:clamp(70px,10vw,120px);height:clamp(70px,10vw,120px);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:white;font-size:clamp(26px,4vw,44px);font-weight:bold;
+    box-shadow:inset -10px -10px 20px rgba(0,0,0,.2), 0 8px 16px rgba(0,0,0,.2);
+  }
+  .atom.h{background:radial-gradient(circle at 30% 30%,#ffe57a,#ffb703);}
+  .atom.o{background:radial-gradient(circle at 30% 30%,#9be0ff,#0096c7);}
+  .arrow{font-size:clamp(30px,4vw,50px);color:var(--red);}
+ 
+  /* Symbol table */
+  table{
+    border-collapse:separate;border-spacing:8px;margin:10px auto;
+    font-size:clamp(18px,2.2vw,26px);
+  }
+  td,th{
+    background:var(--cream);border-radius:14px;padding:10px 18px;
+    border:3px solid var(--purple);
+  }
+  th{background:var(--yellow);}
+  td.sym{background:var(--blue);color:white;font-weight:bold;font-size:clamp(22px,2.6vw,30px);}
+  td.latin{background:#ffd6e7;font-style:italic;}
+ 
+  .badge{
+    display:inline-block;background:var(--yellow);color:var(--ink);
+    padding:6px 14px;border-radius:20px;font-weight:bold;margin:4px;
+    border:3px solid var(--orange);
+  }
+  ul.fun{list-style:none;text-align:left;max-width:900px;margin:10px auto;}
+  ul.fun li{margin:10px 0;padding-left:40px;position:relative;}
+  ul.fun li::before{content:"🌟";position:absolute;left:0;top:0;}
+ 
+  .pop{display:inline-block;animation:pop 2s ease-in-out infinite;}
+  @keyframes pop{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+ 
+  .big{font-size:clamp(30px,4vw,50px);}
+  .tag{background:var(--teal);color:white;padding:4px 12px;border-radius:12px;font-weight:bold;}
+
+  /* Navigation buttons */
+  .nav-top{
+    position:fixed;top:20px;display:flex;gap:15px;z-index:101;
+  }
+  .nav-back{
+    left:20px;
+  }
+  .nav-home{
+    right:20px;
+  }
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+</style>
+</head>
+<body>
+<!-- Top Navigation -->
+<div class="nav-top nav-back">
+  <a href="index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Chemistry">⬅️</button>
+  </a>
+</div>
+
+<div class="nav-top nav-home">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="stage">
+ 
+  <!-- decorations -->
+  <div class="float" style="top:5%;left:5%;">⚛️</div>
+  <div class="float" style="top:12%;right:8%;animation-delay:1s;">🧪</div>
+  <div class="float" style="bottom:15%;left:8%;animation-delay:2s;">💧</div>
+  <div class="float" style="bottom:10%;right:6%;animation-delay:3s;">✨</div>
+ 
+  <!-- Slide 1 -->
+  <section class="slide active title-card">
+    <div class="emoji-row">🧪⚛️💧🔬✨</div>
+    <h1 class="rainbow">The Magical World of Matter!</h1>
+    <p class="sub">A fun adventure into atoms, elements and compounds 🚀</p>
+  </section>
+ 
+  <!-- Slide 2 — What is Matter? -->
+  <section class="slide">
+    <h1>🌍 What is Matter?</h1>
+    <div class="bubble" style="margin-top:20px;">
+      <p>Everything around you — your toys, water, air, even YOU —
+      is made of <span class="rainbow">Matter</span>! 🤗</p>
+      <p style="margin-top:14px;">Scientists love to <b>group</b> things.
+      So they split matter into <span class="tag">2 BIG groups</span> 👇</p>
+    </div>
+    <div class="row" style="margin-top:30px;">
+      <div class="card pure"><h3>✅ Pure Substances</h3><p>Only one kind of particle</p></div>
+      <div class="card impure"><h3>🥣 Impure Substances</h3><p>Mix of different particles</p></div>
+    </div>
+  </section>
+ 
+  <!-- Slide 3 — Pure Substances -->
+  <section class="slide">
+    <h1>✨ Pure Substances ✨</h1>
+    <div class="bubble">
+      <p>Pure substances have <span class="rainbow">particles of only ONE kind</span> 🎯</p>
+    </div>
+    <div class="tree" style="margin-top:30px;">
+      <div class="card pure"><h3>Pure Substance</h3></div>
+      <div class="v-line"></div>
+      <div class="h-line"></div>
+      <div class="row">
+        <div class="card element"><h3>🔵 Elements</h3><p>Like Hydrogen &amp; Oxygen</p></div>
+        <div class="card compound"><h3>🩷 Compounds</h3><p>Like Water (H₂O)</p></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Slide 4 — Water Example -->
+  <section class="slide">
+    <h1>💧 Meet Water — H₂O!</h1>
+    <div class="molecule">
+      <div class="atom h">H</div>
+      <div class="atom h">H</div>
+      <span class="big">+</span>
+      <div class="atom o">O</div>
+      <span class="arrow">➡️</span>
+      <span class="big rainbow">H₂O</span>
+    </div>
+    <div class="bubble">
+      <p>Water is made of <b>Hydrogen</b> 💛 and <b>Oxygen</b> 💙.</p>
+      <p style="margin-top:10px;">We <span class="tag">CAN</span> break water into Hydrogen and Oxygen.</p>
+      <p style="margin-top:10px;">But Hydrogen and Oxygen <b>CANNOT</b> be broken down any further!</p>
+    </div>
+  </section>
+ 
+  <!-- Slide 5 — Elements Definition -->
+  <section class="slide">
+    <h1>🔬 So… what is an Element?</h1>
+    <div class="bubble" style="border-color:var(--blue);">
+      <p class="big rainbow"><span class="pop">🌟</span> An <b>Element</b> is a substance that
+      <u>cannot</u> be broken down into simpler substances by any
+      physical or chemical means. <span class="pop">🌟</span></p>
+    </div>
+    <div class="row" style="margin-top:30px;">
+      <div class="card element"><h3>Hydrogen</h3><p>💛 Tiny &amp; light</p></div>
+      <div class="card element"><h3>Oxygen</h3><p>💙 We breathe it!</p></div>
+      <div class="card element"><h3>Gold</h3><p>🟡 Shiny &amp; precious</p></div>
+    </div>
+  </section>
+ 
+  <!-- Slide 6 — Symbols intro -->
+  <section class="slide">
+    <h1>🔤 Elements wear Name Tags!</h1>
+    <div class="bubble">
+      <p>Every element has a <span class="rainbow">Symbol</span> —
+      a short nickname using <b>1 or 2 letters</b> 🏷️</p>
+      <p style="margin-top:14px;">A Swedish scientist named
+      <span class="badge">J.J. Berzelius</span> invented this system!</p>
+      <p style="margin-top:14px;">Today, an organization called
+      <span class="badge">IUPAC</span> 🌐 (International Union of Pure and Applied Chemistry)
+      approves names &amp; symbols of new elements.</p>
+    </div>
+  </section>
+ 
+  <!-- Slide 7 — Rule 1 -->
+  <section class="slide">
+    <h1>📏 Rule 1: First letter!</h1>
+    <div class="bubble">
+      <p>Most elements get their symbol from the <b>first letter (or two)</b> of their English name.</p>
+    </div>
+    <table style="margin-top:26px;">
+      <tr><th>Element</th><th>Symbol</th></tr>
+      <tr><td>Hydrogen 💧</td><td class="sym">H</td></tr>
+      <tr><td>Aluminium 🥫</td><td class="sym">Al</td></tr>
+      <tr><td>Cobalt 💎</td><td class="sym">Co</td></tr>
+    </table>
+  </section>
+ 
+  <!-- Slide 8 — Rule 2 -->
+  <section class="slide">
+    <h1>📏 Rule 2: Same first letter? Use 2!</h1>
+    <div class="bubble">
+      <p>If many elements share the <b>same first letter</b>, we use <b>two letters</b> so they don't get mixed up! 🤝</p>
+    </div>
+    <table style="margin-top:20px;">
+      <tr><th>Element</th><th>Symbol</th><th>Element</th><th>Symbol</th></tr>
+      <tr><td>Hydrogen</td><td class="sym">H</td><td>Helium</td><td class="sym">He</td></tr>
+      <tr><td>Boron</td><td class="sym">B</td><td>Beryllium</td><td class="sym">Be</td></tr>
+      <tr><td>Carbon</td><td class="sym">C</td><td>Calcium</td><td class="sym">Ca</td></tr>
+      <tr><td>Chlorine</td><td class="sym">Cl</td><td>Cobalt</td><td class="sym">Co</td></tr>
+    </table>
+  </section>
+ 
+  <!-- Slide 9 — Latin names -->
+  <section class="slide">
+    <h1>🏛️ Rule 3: Latin Surprises!</h1>
+    <div class="bubble">
+      <p>Some symbols come from the element's <span class="rainbow">Latin name</span>. Sneaky! 🤫</p>
+    </div>
+    <table style="margin-top:20px;">
+      <tr><th>Element</th><th>Latin Name</th><th>Symbol</th></tr>
+      <tr><td>Sodium</td><td class="latin">Natrium</td><td class="sym">Na</td></tr>
+      <tr><td>Potassium</td><td class="latin">Kalium</td><td class="sym">K</td></tr>
+      <tr><td>Iron</td><td class="latin">Ferrum</td><td class="sym">Fe</td></tr>
+      <tr><td>Copper</td><td class="latin">Cuprum</td><td class="sym">Cu</td></tr>
+      <tr><td>Gold</td><td class="latin">Aurum</td><td class="sym">Au</td></tr>
+    </table>
+  </section>
+ 
+  <!-- Slide 10 — What a symbol means -->
+  <section class="slide">
+    <h1>🤔 What does a Symbol mean?</h1>
+    <div class="bubble">
+      <p>A symbol stands for <b>TWO</b> things:</p>
+      <ul class="fun">
+        <li>The <b>name</b> of the element</li>
+        <li><b>One atom</b> of that element</li>
+      </ul>
+    </div>
+    <div class="row" style="margin-top:30px;align-items:center;">
+      <div class="atom" style="background:radial-gradient(circle at 30% 30%,#333,#000);">C</div>
+      <span class="arrow">➡️</span>
+      <div class="card element"><h3>Carbon</h3><p>…and 1 atom of Carbon!</p></div>
+    </div>
+  </section>
+ 
+  <!-- Slide 11 — Atom -->
+  <section class="slide">
+    <h1>⚛️ What is an Atom?</h1>
+    <div class="bubble" style="border-color:var(--red);">
+      <p class="big">An <span class="rainbow">Atom</span> is the <b>smallest unit</b> of any element or matter! 🤏</p>
+      <p style="margin-top:14px;">Imagine the tiniest, tiniest LEGO block — so small you can't see it — that builds up <b>everything</b> in the universe! 🌌</p>
+    </div>
+    <div class="emoji-row" style="margin-top:20px;">⚛️ ⚛️ ⚛️</div>
+  </section>
+ 
+  <!-- Slide 12 — Recap -->
+  <section class="slide">
+    <h1>🎉 Let's Recap! 🎉</h1>
+    <ul class="fun">
+      <li>Matter = <b>Pure</b> + <b>Impure</b> substances</li>
+      <li>Pure = <b>Elements</b> + <b>Compounds</b></li>
+      <li>💧 Water (H₂O) is a <b>compound</b></li>
+      <li>💛 Hydrogen &amp; 💙 Oxygen are <b>elements</b></li>
+      <li>Elements have short <b>symbols</b> (H, O, Na, Fe, Au…)</li>
+      <li>⚛️ <b>Atom</b> = smallest unit of matter</li>
+    </ul>
+    <h2 class="rainbow" style="margin-top:30px;">You're a Chemistry Star! ⭐🧑‍🔬</h2>
+  </section>
+ 
+</div>
+ 
+<div class="nav">
+  <button class="btn" onclick="go(-1)">⬅️ Back</button>
+  <div class="counter"><span id="cur">1</span> / <span id="tot">1</span></div>
+  <button class="btn" onclick="go(1)">Next ➡️</button>
+</div>
+ 
+<script>
+  const slides=document.querySelectorAll('.slide');
+  let idx=0;
+  document.getElementById('tot').textContent=slides.length;
+  function show(n){
+    slides.forEach(s=>s.classList.remove('active'));
+    slides[n].classList.add('active');
+    document.getElementById('cur').textContent=n+1;
+  }
+  function go(d){
+    idx=(idx+d+slides.length)%slides.length;
+    show(idx);
+  }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')go(1);
+    if(e.key==='ArrowLeft')go(-1);
+  });
+</script>
+</body>
+</html>
