@@ -1,30 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Carnatic 🎵</title>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
-  body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);color:#1d2b53;padding:40px 20px;text-align:center;}
-  .back{position:absolute;top:30px;left:30px;background:#a06cd5;color:white;text-decoration:none;
-    padding:10px 20px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;}
-  .big{font-size:clamp(80px,15vw,160px);animation:bounce 2s ease-in-out infinite;}
-  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
-  h1{font-size:clamp(40px,6vw,72px);margin:20px 0;
-    background:linear-gradient(90deg,#ff8fa3,#ff6ec7,#a06cd5,#4cc9f0);
-    -webkit-background-clip:text;background-clip:text;color:transparent;}
-  p{font-size:clamp(20px,2.6vw,28px);color:#a06cd5;max-width:600px;margin-top:10px;}
-  .badge{display:inline-block;background:#ffd166;color:#1d2b53;padding:10px 24px;border-radius:50px;
-    font-weight:bold;margin-top:30px;border:4px solid #ff8fa3;font-size:22px;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carnatic 🎵</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe0f0, #e0f7ff, #fff5d6);
+      color: #1d2b53;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .back {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      background: #a06cd5;
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: bold;
+      box-shadow: 0 5px 0 #7b4aaf;
+      z-index: 100;
+    }
+
+    .back:hover {
+      transform: translateY(-2px);
+    }
+
+    header {
+      text-align: center;
+      margin: 60px 0 40px 0;
+    }
+
+    .emoji {
+      font-size: clamp(60px, 12vw, 120px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      margin: 20px 0;
+      background: linear-gradient(90deg, #ff8fa3, #ff6ec7, #a06cd5, #4cc9f0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: #4cc9f0;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .accordion-container {
+      margin: 40px 0;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+      overflow: hidden;
+    }
+
+    .accordion-item {
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-header {
+      background: #fff8f0;
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 3px solid transparent;
+      border-left-color: #a06cd5;
+    }
+
+    .accordion-header:hover {
+      background: #fff0e8;
+      padding-left: 24px;
+    }
+
+    .accordion-header.active {
+      background: #f5f0ff;
+      border-left-color: #a06cd5;
+    }
+
+    .accordion-title {
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: bold;
+      color: #a06cd5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .accordion-icon {
+      font-size: 24px;
+    }
+
+    .accordion-toggle {
+      font-size: 20px;
+      color: #a06cd5;
+      transition: transform .3s ease;
+    }
+
+    .accordion-header.active .accordion-toggle {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+      padding: 0 20px;
+    }
+
+    .accordion-content.active {
+      max-height: 500px;
+      padding: 20px;
+    }
+
+    .song-details {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .song-name {
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: bold;
+      color: #ff6ec7;
+      margin-bottom: 12px;
+    }
+
+    .audio-player {
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 8px;
+    }
+
+    .song-description {
+      font-size: clamp(12px, 1.5vw, 14px);
+      color: #666;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 18px;
+      color: #a06cd5;
+    }
+  </style>
 </head>
 <body>
   <a class="back" href="../index.html">⬅️ Back to Music</a>
-  <div class="big">🎵</div>
-  <h1>Carnatic</h1>
-  <p>Classical Indian music traditions & ragas</p>
-  <div class="badge">🚧 Coming Soon 🚧</div>
+  <div class="container">
+    <header>
+      <div class="emoji">🎵</div>
+      <h1>Carnatic</h1>
+      <p class="subtitle">Classical Indian music traditions & ragas 🎶</p>
+    </header>
+
+    <div class="accordion-container">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title">
+            <span class="accordion-icon">🎵</span>
+            <span>Jayathi Jayathi</span>
+          </div>
+          <span class="accordion-toggle">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="song-details">
+            <div class="song-name">🎤 Jayathi Jayathi</div>
+            <audio controls class="audio-player">
+              <source src="Jayathi jayathi.ogg" type="audio/ogg">
+              Your browser does not support the audio element.
+            </audio>
+            <div class="song-description">
+              A beautiful classical Carnatic composition, this song is a devotional piece that celebrates victory and triumph. The melodious raga and intricate musical patterns make it a perfect introduction to classical Indian music traditions.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Made with 💖 for Shreshta's learning adventure</footer>
+
+  <script>
+    function toggleAccordion(header) {
+      header.classList.toggle('active');
+      const content = header.nextElementSibling;
+      content.classList.toggle('active');
+    }
+  </script>
 </body>
 </html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Number Line Worksheet</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+      --green: #06d6a0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 0px;
+      z-index: 10;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0 30px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(18px, 4vw, 26px);
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      background: #e0e0e0;
+      border-radius: 10px;
+      height: 20px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, var(--green), var(--teal));
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .worksheet-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 4px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0, 0, 0, .08);
+    }
+
+    .question-section {
+      margin-bottom: 25px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--pink);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--purple);
+    }
+
+    .question {
+      margin-bottom: 15px;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      border-left: 4px solid var(--teal);
+    }
+
+    .question-text {
+      font-weight: bold;
+      color: var(--ink);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .sub-question {
+      margin: 10px 0;
+      padding-left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sub-question-text {
+      flex: 1;
+      font-size: 14px;
+    }
+
+    .answer-input {
+      padding: 8px 12px;
+      border: 2px solid var(--teal);
+      border-radius: 6px;
+      font-size: 14px;
+      width: 150px;
+      font-family: inherit;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: var(--pink);
+      box-shadow: 0 0 5px rgba(255, 142, 163, 0.5);
+    }
+
+    .buttons-container {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, .1);
+    }
+
+    .btn-save {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .15);
+    }
+
+    .btn-submit {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .15);
+    }
+
+    .btn-clear {
+      background: var(--yellow);
+      color: var(--ink);
+    }
+
+    .btn-clear:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .15);
+    }
+
+    .message {
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      display: block;
+    }
+
+    .message.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      display: block;
+    }
+
+    .submission-history {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      border-left: 4px solid var(--teal);
+    }
+
+    .submission-history h3 {
+      color: var(--purple);
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .submission-item {
+      padding: 8px;
+      background: #f9f9f9;
+      border-radius: 6px;
+      margin: 5px 0;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .submission-time {
+      font-weight: bold;
+      color: var(--purple);
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">📏</div>
+      <h1>Number Line Worksheet</h1>
+      <p class="subtitle">Complete the worksheet and save your answers! 📝</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill">0%</div>
+    </div>
+
+    <form id="worksheetForm">
+      <div class="worksheet-card">
+        <div class="question-section">
+          <div class="section-title">1. Fill in the blanks using number line:</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) An integer on the number line is greater than every number on its ________</span>
+              <input type="text" class="answer-input" name="q1i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) An integer on the number line is greater than every number to its ________</span>
+              <input type="text" class="answer-input" name="q1ii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) 2 is greater than -4 implies 2 is to the __________ of -4</span>
+              <input type="text" class="answer-input" name="q1iii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) -3 is __________ than 2 and 3 is __________ than -2</span>
+              <input type="text" class="answer-input" name="q1iv" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(v) -4 is __________ than -8 and 4 is __________ than 8</span>
+              <input type="text" class="answer-input" name="q1v" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vi) 5 is __________ than 2 and -5 is __________ than -2</span>
+              <input type="text" class="answer-input" name="q1vi" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vii) -6 is __________ than 3 and opposite of -6 is __________ than opposite of 3</span>
+              <input type="text" class="answer-input" name="q1vii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(viii) 8 is __________ than -5 and -8 is __________ than 5</span>
+              <input type="text" class="answer-input" name="q1viii" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">2. Which integer is greater in each pair?</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) -15 or -23</span>
+              <input type="text" class="answer-input" name="q2i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) -12 or 15</span>
+              <input type="text" class="answer-input" name="q2ii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) 0 or 8</span>
+              <input type="text" class="answer-input" name="q2iii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) 0 or -3</span>
+              <input type="text" class="answer-input" name="q2iv" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">3. Which integer is smaller in each pair?</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) 0 or -6</span>
+              <input type="text" class="answer-input" name="q3i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) 2 or -3</span>
+              <input type="text" class="answer-input" name="q3ii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) 15 or -51</span>
+              <input type="text" class="answer-input" name="q3iii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) 13 or 0</span>
+              <input type="text" class="answer-input" name="q3iv" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">4. Replace * with &lt; or &gt; to make true:</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) 3 * 0</span>
+              <input type="text" class="answer-input" name="q4i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) 0 * -8</span>
+              <input type="text" class="answer-input" name="q4ii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) -9 * -3</span>
+              <input type="text" class="answer-input" name="q4iii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) -3 * 3</span>
+              <input type="text" class="answer-input" name="q4iv" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(v) 5 * -1</span>
+              <input type="text" class="answer-input" name="q4v" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vi) -13 * 0</span>
+              <input type="text" class="answer-input" name="q4vi" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vii) -8 * -18</span>
+              <input type="text" class="answer-input" name="q4vii" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">5. Arrange in ascending order using number line:</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) -8, 0, -5, 5, 4, -1</span>
+              <input type="text" class="answer-input" name="q5i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) 3, -3, 4, -7, 0, -6, 2</span>
+              <input type="text" class="answer-input" name="q5ii" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">6. Arrange in descending order using number line:</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) -5, -3, 8, 15, 0, -2</span>
+              <input type="text" class="answer-input" name="q6i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) 12, 23, -1, 0, 7, 6</span>
+              <input type="text" class="answer-input" name="q6ii" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">7. True or False statements:</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) The smallest integer is 0</span>
+              <input type="text" class="answer-input" name="q7i" placeholder="T/F">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) The opposite of -17 is 17</span>
+              <input type="text" class="answer-input" name="q7ii" placeholder="T/F">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) The opposite of zero is zero</span>
+              <input type="text" class="answer-input" name="q7iii" placeholder="T/F">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) Every negative integer is smaller than 0</span>
+              <input type="text" class="answer-input" name="q7iv" placeholder="T/F">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(v) 0 is greater than every positive integer</span>
+              <input type="text" class="answer-input" name="q7v" placeholder="T/F">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vi) Zero is neither negative nor positive, so it is not an integer</span>
+              <input type="text" class="answer-input" name="q7vi" placeholder="T/F">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">8. Use number line to evaluate additions:</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) (+7) + (+4)</span>
+              <input type="text" class="answer-input" name="q8i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) 0 + (+6)</span>
+              <input type="text" class="answer-input" name="q8ii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) (+5) + 0</span>
+              <input type="text" class="answer-input" name="q8iii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) (-4) + (+5)</span>
+              <input type="text" class="answer-input" name="q8iv" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(v) 0 + (-2)</span>
+              <input type="text" class="answer-input" name="q8v" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vi) (-1) + (+4)</span>
+              <input type="text" class="answer-input" name="q8vi" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vii) (+4) + (-2)</span>
+              <input type="text" class="answer-input" name="q8vii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(viii) (+3) + (-6)</span>
+              <input type="text" class="answer-input" name="q8viii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ix) 3 + (-7)</span>
+              <input type="text" class="answer-input" name="q8ix" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(x) (-1) + (-2)</span>
+              <input type="text" class="answer-input" name="q8x" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(xi) (-3) + (-4)</span>
+              <input type="text" class="answer-input" name="q8xi" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(xii) (-2) + (-5)</span>
+              <input type="text" class="answer-input" name="q8xii" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">9. Use number line to evaluate subtractions:</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) (+10) - (+2)</span>
+              <input type="text" class="answer-input" name="q9i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) (+8) - (-5)</span>
+              <input type="text" class="answer-input" name="q9ii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) (-6) - (+2)</span>
+              <input type="text" class="answer-input" name="q9iii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) (-7) - (+5)</span>
+              <input type="text" class="answer-input" name="q9iv" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(v) (+4) - (-2)</span>
+              <input type="text" class="answer-input" name="q9v" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vi) (-8) - (-4)</span>
+              <input type="text" class="answer-input" name="q9vi" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="question-section">
+          <div class="section-title">10. Find the integer which is:</div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) 3 more than -1</span>
+              <input type="text" class="answer-input" name="q10i" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) 5 less than 2</span>
+              <input type="text" class="answer-input" name="q10ii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) 5 more than -9</span>
+              <input type="text" class="answer-input" name="q10iii" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) 4 less than -4</span>
+              <input type="text" class="answer-input" name="q10iv" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(v) 7 more than 0</span>
+              <input type="text" class="answer-input" name="q10v" placeholder="Answer">
+            </div>
+          </div>
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(vi) 7 less than -8</span>
+              <input type="text" class="answer-input" name="q10vi" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <div class="buttons-container">
+          <button type="button" class="btn btn-save" onclick="saveAnswers()">💾 Save Locally</button>
+          <button type="button" class="btn btn-submit" onclick="downloadAnswers()">⬇️ Download Answers</button>
+          <button type="button" class="btn btn-clear" onclick="clearAnswers()">🗑️ Clear All</button>
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <div class="submission-history" id="historySection" style="display: none;">
+          <h3>✅ Download History</h3>
+          <div id="historyList"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+      loadAnswers();
+      displayHistory();
+    });
+
+    function saveAnswers() {
+      const form = document.getElementById('worksheetForm');
+      const formData = new FormData(form);
+      const answers = Object.fromEntries(formData);
+      localStorage.setItem('numberLineWorksheet', JSON.stringify(answers));
+      showMessage('✅ Your answers have been saved locally!', 'success');
+      updateProgress();
+    }
+
+    function downloadAnswers() {
+      const form = document.getElementById('worksheetForm');
+      const formData = new FormData(form);
+      const answers = Object.fromEntries(formData);
+      const timestamp = new Date().toLocaleString();
+      localStorage.setItem('numberLineWorksheet', JSON.stringify(answers));
+
+      let downloadContent = `Number Line Worksheet - Answers\n`;
+      downloadContent += `Downloaded on: ${timestamp}\n\n`;
+      downloadContent += `========================================\n\n`;
+
+      const sections = {
+        'Section 1: Fill in blanks': ['q1i', 'q1ii', 'q1iii', 'q1iv', 'q1v', 'q1vi', 'q1vii', 'q1viii'],
+        'Section 2: Which is greater': ['q2i', 'q2ii', 'q2iii', 'q2iv'],
+        'Section 3: Which is smaller': ['q3i', 'q3ii', 'q3iii', 'q3iv'],
+        'Section 4: Replace < or >': ['q4i', 'q4ii', 'q4iii', 'q4iv', 'q4v', 'q4vi', 'q4vii'],
+        'Section 5: Ascending order': ['q5i', 'q5ii'],
+        'Section 6: Descending order': ['q6i', 'q6ii'],
+        'Section 7: True or False': ['q7i', 'q7ii', 'q7iii', 'q7iv', 'q7v', 'q7vi'],
+        'Section 8: Addition operations': ['q8i', 'q8ii', 'q8iii', 'q8iv', 'q8v', 'q8vi', 'q8vii', 'q8viii', 'q8ix', 'q8x', 'q8xi', 'q8xii'],
+        'Section 9: Subtraction operations': ['q9i', 'q9ii', 'q9iii', 'q9iv', 'q9v', 'q9vi'],
+        'Section 10: Find the integer': ['q10i', 'q10ii', 'q10iii', 'q10iv', 'q10v', 'q10vi']
+      };
+
+      for (const [section, questions] of Object.entries(sections)) {
+        downloadContent += `${section}\n`;
+        downloadContent += `-`.repeat(section.length) + `\n`;
+        questions.forEach(q => {
+          const answer = answers[q] || '(no answer)';
+          downloadContent += `${q}: ${answer}\n`;
+        });
+        downloadContent += `\n`;
+      }
+
+      const blob = new Blob([downloadContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Number_Line_Worksheet_${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      addToHistory(timestamp);
+      let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+      submissions.push({
+        timestamp: timestamp,
+        answered: Object.values(answers).filter(v => v.trim()).length
+      });
+      localStorage.setItem('submissions', JSON.stringify(submissions));
+      showMessage('✅ Answers downloaded successfully!', 'success');
+      displayHistory();
+    }
+
+    function addToHistory(timestamp) {
+      let history = JSON.parse(localStorage.getItem('submissionHistory') || '[]');
+      history.push(timestamp);
+      localStorage.setItem('submissionHistory', JSON.stringify(history));
+    }
+
+    function displayHistory() {
+      const history = JSON.parse(localStorage.getItem('submissionHistory') || '[]');
+      const submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+      if (history.length === 0) {
+        document.getElementById('historySection').style.display = 'none';
+        return;
+      }
+      document.getElementById('historySection').style.display = 'block';
+      const historyList = document.getElementById('historyList');
+      historyList.innerHTML = '';
+      history.forEach((time, index) => {
+        const sub = submissions[index];
+        const answered = sub ? sub.answered : '?';
+        const item = document.createElement('div');
+        item.className = 'submission-item';
+        item.innerHTML = `<span class="submission-time">Download ${index + 1}:</span> ${time} (${answered} answers)`;
+        historyList.appendChild(item);
+      });
+    }
+
+    function loadAnswers() {
+      const saved = localStorage.getItem('numberLineWorksheet');
+      if (saved) {
+        const answers = JSON.parse(saved);
+        for (const [key, value] of Object.entries(answers)) {
+          const input = document.querySelector(`[name="${key}"]`);
+          if (input) {
+            input.value = value;
+          }
+        }
+      }
+      updateProgress();
+    }
+
+    function clearAnswers() {
+      if (confirm('Are you sure you want to clear all answers?')) {
+        document.getElementById('worksheetForm').reset();
+        localStorage.removeItem('numberLineWorksheet');
+        showMessage('🗑️ All answers have been cleared!', 'info');
+        updateProgress();
+      }
+    }
+
+    function updateProgress() {
+      const inputs = document.querySelectorAll('.answer-input');
+      let filled = 0;
+      inputs.forEach(input => {
+        if (input.value.trim() !== '') {
+          filled++;
+        }
+      });
+      const percentage = Math.round((filled / inputs.length) * 100);
+      const progressFill = document.getElementById('progressFill');
+      progressFill.style.width = percentage + '%';
+      progressFill.textContent = percentage + '%';
+    }
+
+    function showMessage(text, type) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.className = `message ${type}`;
+      setTimeout(() => {
+        message.className = 'message';
+      }, 4000);
+    }
+
+    document.addEventListener('input', updateProgress);
+  </script>
+</body>
+</html>

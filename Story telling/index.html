@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Story Telling 📚</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    /* Navigation buttons */
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 0px;
+      z-index: 10;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0 30px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size:clamp(12px,2vw,15px);
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* Accordion Styles */
+    .stories-container {
+      background: var(--cream);
+      border-radius:16px;
+      padding: 20px;
+      border:3px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0, 0, 0, .08);
+    }
+
+    .story-accordion {
+      margin-bottom: 15px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid #ddd;
+    }
+
+    .story-header {
+      background: linear-gradient(90deg, #ffe0f0, #fff5d6);
+      padding:16px 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--purple);
+      transition: all 0.3s ease;
+    }
+
+    .story-header:hover {
+      background: linear-gradient(90deg, #ffb3d9, #ffe0b3);
+    }
+
+    .story-header.active {
+      background: linear-gradient(90deg, #ff8fa3, #ff6ec7);
+      color: white;
+    }
+
+    .story-icon {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .story-header.active .story-icon {
+      transform: rotate(180deg);
+    }
+
+    .story-parts {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: white;
+    }
+
+    .story-parts.active {
+      max-height: 800px;
+      padding: 20px;
+    }
+
+    .part-item {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .part-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .part-title {
+      font-weight: bold;
+      color: var(--purple);
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .audio-player {
+      width: 100%;
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, .1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Home">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">📚</div>
+      <h1>Story Telling</h1>
+      <p class="subtitle">Explore magical tales, adventures, and timeless stories!</p>
+    </div>
+
+    <div class="stories-container">
+      <!-- Who Are You Story -->
+      <div class="story-accordion">
+        <div class="story-header" onclick="toggleStory(this)">
+          <span>📖 Who Are You?</span>
+          <span class="story-icon">▼</span>
+        </div>
+        <div class="story-parts">
+          <!-- Part 1 -->
+          <div class="part-item">
+            <div class="part-title">🎤 Part 1</div>
+            <audio controls class="audio-player">
+              <source src="Who are you Part 1.ogg" type="audio/ogg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <!-- Part 2 -->
+          <div class="part-item">
+            <div class="part-title">🎤 Part 2</div>
+            <audio controls class="audio-player">
+              <source src="Who are you Part 2.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more stories here as accordions -->
+      <!-- Example structure for future stories:
+      <div class="story-accordion">
+        <div class="story-header" onclick="toggleStory(this)">
+          <span>📖 Story Name</span>
+          <span class="story-icon">▼</span>
+        </div>
+        <div class="story-parts">
+          <div class="part-item">
+            <div class="part-title">🎤 Part 1</div>
+            <audio controls class="audio-player">
+              <source src="filename.mp3" type="audio/mpeg">
+            </audio>
+          </div>
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+
+  <script>
+    function toggleStory(header) {
+      const parts = header.nextElementSibling;
+      const isActive = header.classList.contains('active');
+
+      // Close all other stories
+      document.querySelectorAll('.story-header').forEach(h => {
+        if (h !== header) {
+          h.classList.remove('active');
+          h.nextElementSibling.classList.remove('active');
+        }
+      });
+
+      // Toggle current story
+      if (isActive) {
+        header.classList.remove('active');
+        parts.classList.remove('active');
+      } else {
+        header.classList.add('active');
+        parts.classList.add('active');
+      }
+    }
+  </script>
+</body>
+
+</html>

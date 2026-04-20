@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Place Value Worksheet</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+      --green: #06d6a0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Navigation buttons */
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 0px;
+      z-index: 10;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0 30px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(18px, 4vw, 26px);
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      background: #e0e0e0;
+      border-radius: 10px;
+      height: 20px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, var(--green), var(--teal));
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .worksheet-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 4px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0, 0, 0, .08);
+    }
+
+    .question-section {
+      margin-bottom: 25px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--pink);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--purple);
+    }
+
+    .question {
+      margin-bottom: 15px;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      border-left: 4px solid var(--teal);
+    }
+
+    .question-text {
+      font-weight: bold;
+      color: var(--ink);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .sub-question {
+      margin: 10px 0;
+      padding-left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sub-question-text {
+      flex: 1;
+      font-size: 14px;
+    }
+
+    .answer-input {
+      padding: 8px 12px;
+      border: 2px solid var(--teal);
+      border-radius: 6px;
+      font-size: 14px;
+      width: 150px;
+      font-family: inherit;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: var(--pink);
+      box-shadow: 0 0 5px rgba(255, 142, 163, 0.5);
+    }
+
+    .buttons-container {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, .1);
+    }
+
+    .btn-save {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .15);
+    }
+
+    .btn-submit {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .15);
+    }
+
+    .btn-clear {
+      background: var(--yellow);
+      color: var(--ink);
+    }
+
+    .btn-clear:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .15);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      display: block;
+    }
+
+    .message.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      display: block;
+    }
+
+    .submission-history {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      border-left: 4px solid var(--teal);
+    }
+
+    .submission-history h3 {
+      color: var(--purple);
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .submission-item {
+      padding: 8px;
+      background: #f9f9f9;
+      border-radius: 6px;
+      margin: 5px 0;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .submission-time {
+      font-weight: bold;
+      color: var(--purple);
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">📍</div>
+      <h1>Place Value Worksheet</h1>
+      <p class="subtitle">Complete the worksheet and save your answers! 📝</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill">0%</div>
+    </div>
+
+    <form id="worksheetForm">
+      <div class="worksheet-card">
+        <!-- Worksheet 1 -->
+        <!-- Section 1: Units -->
+        <div class="question-section">
+          <div class="section-title">1. Fill in the blanks (Units):</div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) In 20 kg, the unit is __________, taken __________ times</span>
+              <input type="text" class="answer-input" name="w1s1i" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) In 80 m, the unit is __________, taken __________ times</span>
+              <input type="text" class="answer-input" name="w1s1ii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) If unit cm is taken 5 times, the quantity is</span>
+              <input type="text" class="answer-input" name="w1s1iii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) If unit km is taken 24 times, the quantity is</span>
+              <input type="text" class="answer-input" name="w1s1iv" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Place Values -->
+        <div class="question-section">
+          <div class="section-title">2. Find the place values:</div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) Place value of 6 in 24,673</span>
+              <input type="text" class="answer-input" name="w1s2i" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) Place value of 8 in 8,039</span>
+              <input type="text" class="answer-input" name="w1s2ii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) Place value of 5 in 3,25,648</span>
+              <input type="text" class="answer-input" name="w1s2iii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) Place value of 6 in 6,439</span>
+              <input type="text" class="answer-input" name="w1s2iv" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Place Value Differences -->
+        <div class="question-section">
+          <div class="section-title">3. Place Value Differences:</div>
+
+          <div class="question">
+            <div class="question-text">Find difference between place values of 3 and 5 in 3945</div>
+            <input type="text" class="answer-input" name="w1s3i" placeholder="Answer" style="width: 100%;">
+          </div>
+        </div>
+
+        <!-- Section 4: Multiple Place Values -->
+        <div class="question-section">
+          <div class="section-title">4. In the number 40562:</div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) Local value of 5</span>
+              <input type="text" class="answer-input" name="w1s4i" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) Place value of 6</span>
+              <input type="text" class="answer-input" name="w1s4ii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) Sum of place values of 5 and 6</span>
+              <input type="text" class="answer-input" name="w1s4iii" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Read and Write Numbers -->
+        <div class="question-section">
+          <div class="section-title">5. Read and write in words and expanded form:</div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) 35,000</span>
+              <input type="text" class="answer-input" name="w1s5i" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) 76,000</span>
+              <input type="text" class="answer-input" name="w1s5ii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) 6,23,000</span>
+              <input type="text" class="answer-input" name="w1s5iii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) 40,075</span>
+              <input type="text" class="answer-input" name="w1s5iv" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(v) 50,004</span>
+              <input type="text" class="answer-input" name="w1s5v" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6: Difference with Repeated Digits -->
+        <div class="question-section">
+          <div class="section-title">6. Place Value with Repeated Digits:</div>
+
+          <div class="question">
+            <div class="question-text">Find difference in place values of two sevens in 8,72,574</div>
+            <input type="text" class="answer-input" name="w1s6i" placeholder="Answer" style="width: 100%;">
+          </div>
+        </div>
+
+        <!-- Worksheet 2 -->
+        <!-- Section 7: Fill in blanks - Number Patterns -->
+        <div class="question-section">
+          <div class="section-title">7. Fill in the blanks (Number Patterns):</div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(i) 999 + 1 =</span>
+              <input type="text" class="answer-input" name="w2s1i" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(ii) 10,000 - 1 =</span>
+              <input type="text" class="answer-input" name="w2s1ii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iii) 10 coins - one coin =</span>
+              <input type="text" class="answer-input" name="w2s1iii" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(iv) ₹ 99 + ₹ 1 =</span>
+              <input type="text" class="answer-input" name="w2s1iv" placeholder="Answer">
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="sub-question">
+              <span class="sub-question-text">(v) 10,000 boys - 1 boy =</span>
+              <input type="text" class="answer-input" name="w2s1v" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 8: School Students -->
+        <div class="question-section">
+          <div class="section-title">8. Analyze Number of Digits:</div>
+
+          <div class="question">
+            <div class="question-text">Would the number of students in your school be a 3-digit, 4-digit, or 5-digit number? Explain.</div>
+            <input type="text" class="answer-input" name="w2s2i" placeholder="Answer" style="width: 100%;">
+          </div>
+        </div>
+
+        <!-- Section 9: Smallest Number Greater Than -->
+        <div class="question-section">
+          <div class="section-title">9. Number Relationships:</div>
+
+          <div class="question">
+            <div class="question-text">Write the smallest number which is just more than 9,99,999</div>
+            <input type="text" class="answer-input" name="w2s3i" placeholder="Answer" style="width: 100%;">
+          </div>
+        </div>
+
+        <!-- Section 10: Descending Order -->
+        <div class="question-section">
+          <div class="section-title">10. Descending Order:</div>
+
+          <div class="question">
+            <div class="question-text">Starting from greatest 5-digit number, write previous five numbers in descending order</div>
+            <input type="text" class="answer-input" name="w2s4i" placeholder="Answer" style="width: 100%;">
+          </div>
+        </div>
+
+        <!-- Section 11: Ascending Order -->
+        <div class="question-section">
+          <div class="section-title">11. Ascending Order:</div>
+
+          <div class="question">
+            <div class="question-text">Starting from smallest 7-digit number, write next four numbers in ascending order</div>
+            <input type="text" class="answer-input" name="w2s5i" placeholder="Answer" style="width: 100%;">
+          </div>
+        </div>
+
+        <!-- Section 12: Counting Between Numbers -->
+        <div class="question-section">
+          <div class="section-title">12. Count Numbers Between:</div>
+
+          <div class="question">
+            <div class="question-text">How many numbers lie between largest 3-digit and smallest 4-digit number?</div>
+            <input type="text" class="answer-input" name="w2s6i" placeholder="Answer" style="width: 100%;">
+          </div>
+        </div>
+
+        <!-- Section 13: Total 5-digit Numbers -->
+        <div class="question-section">
+          <div class="section-title">13. Count Total Numbers:</div>
+
+          <div class="question">
+            <div class="question-text">How many 5-digit numbers are there in all?</div>
+            <input type="text" class="answer-input" name="w2s7i" placeholder="Answer" style="width: 100%;">
+          </div>
+        </div>
+
+        <div class="buttons-container">
+          <button type="button" class="btn btn-save" onclick="saveAnswers()">💾 Save Locally</button>
+          <button type="button" class="btn btn-submit" onclick="downloadAnswers()">⬇️ Download Answers</button>
+          <button type="button" class="btn btn-clear" onclick="clearAnswers()">🗑️ Clear All</button>
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <div class="submission-history" id="historySection" style="display: none;">
+          <h3>✅ Download History</h3>
+          <div id="historyList"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Load answers and history when page loads
+    window.addEventListener('load', function() {
+      loadAnswers();
+      displayHistory();
+    });
+
+    function saveAnswers() {
+      const form = document.getElementById('worksheetForm');
+      const formData = new FormData(form);
+      const answers = Object.fromEntries(formData);
+
+      // Save to localStorage
+      localStorage.setItem('placeValueWorksheet', JSON.stringify(answers));
+
+      // Show success message
+      showMessage('✅ Your answers have been saved locally!', 'success');
+      updateProgress();
+    }
+
+    function downloadAnswers() {
+      const form = document.getElementById('worksheetForm');
+      const formData = new FormData(form);
+      const answers = Object.fromEntries(formData);
+
+      // Get timestamp
+      const timestamp = new Date().toLocaleString();
+
+      // Save locally
+      localStorage.setItem('placeValueWorksheet', JSON.stringify(answers));
+
+      // Create download content
+      let downloadContent = `Place Value Worksheet - Answers\n`;
+      downloadContent += `Downloaded on: ${timestamp}\n\n`;
+      downloadContent += `========================================\n\n`;
+
+      // Add all answers in a readable format
+      const sections = {
+        'Section 1: Units': ['w1s1i', 'w1s1ii', 'w1s1iii', 'w1s1iv'],
+        'Section 2: Place Values': ['w1s2i', 'w1s2ii', 'w1s2iii', 'w1s2iv'],
+        'Section 3: Place Value Differences': ['w1s3i'],
+        'Section 4: Multiple Place Values': ['w1s4i', 'w1s4ii', 'w1s4iii'],
+        'Section 5: Read and Write Numbers': ['w1s5i', 'w1s5ii', 'w1s5iii', 'w1s5iv', 'w1s5v'],
+        'Section 6: Repeated Digits': ['w1s6i'],
+        'Section 7: Number Patterns': ['w2s1i', 'w2s1ii', 'w2s1iii', 'w2s1iv', 'w2s1v'],
+        'Section 8: School Students': ['w2s2i'],
+        'Section 9: Smallest Number': ['w2s3i'],
+        'Section 10: Descending Order': ['w2s4i'],
+        'Section 11: Ascending Order': ['w2s5i'],
+        'Section 12: Count Between': ['w2s6i'],
+        'Section 13: Total 5-digit Numbers': ['w2s7i']
+      };
+
+      for (const [section, questions] of Object.entries(sections)) {
+        downloadContent += `${section}\n`;
+        downloadContent += `-`.repeat(section.length) + `\n`;
+        questions.forEach(q => {
+          const answer = answers[q] || '(no answer)';
+          downloadContent += `${q}: ${answer}\n`;
+        });
+        downloadContent += `\n`;
+      }
+
+      // Create and trigger download
+      const blob = new Blob([downloadContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Place_Value_Worksheet_${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      // Save to history
+      addToHistory(timestamp);
+
+      let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+      submissions.push({
+        timestamp: timestamp,
+        answered: Object.values(answers).filter(v => v.trim()).length
+      });
+      localStorage.setItem('submissions', JSON.stringify(submissions));
+
+      showMessage('✅ Answers downloaded successfully!', 'success');
+      displayHistory();
+    }
+
+    function addToHistory(timestamp) {
+      let history = JSON.parse(localStorage.getItem('submissionHistory') || '[]');
+      history.push(timestamp);
+      localStorage.setItem('submissionHistory', JSON.stringify(history));
+    }
+
+    function displayHistory() {
+      const history = JSON.parse(localStorage.getItem('submissionHistory') || '[]');
+      const submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+
+      if (history.length === 0) {
+        document.getElementById('historySection').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('historySection').style.display = 'block';
+      const historyList = document.getElementById('historyList');
+      historyList.innerHTML = '';
+
+      history.forEach((time, index) => {
+        const sub = submissions[index];
+        const answered = sub ? sub.answered : '?';
+        const item = document.createElement('div');
+        item.className = 'submission-item';
+        item.innerHTML = `<span class="submission-time">Download ${index + 1}:</span> ${time} (${answered} answers)`;
+        historyList.appendChild(item);
+      });
+    }
+
+    function loadAnswers() {
+      const saved = localStorage.getItem('placeValueWorksheet');
+      if (saved) {
+        const answers = JSON.parse(saved);
+        for (const [key, value] of Object.entries(answers)) {
+          const input = document.querySelector(`[name="${key}"]`);
+          if (input) {
+            input.value = value;
+          }
+        }
+      }
+      updateProgress();
+    }
+
+    function clearAnswers() {
+      if (confirm('Are you sure you want to clear all answers?')) {
+        document.getElementById('worksheetForm').reset();
+        localStorage.removeItem('placeValueWorksheet');
+
+        showMessage('🗑️ All answers have been cleared!', 'info');
+        updateProgress();
+      }
+    }
+
+    function updateProgress() {
+      const inputs = document.querySelectorAll('.answer-input');
+      let filled = 0;
+
+      inputs.forEach(input => {
+        if (input.value.trim() !== '') {
+          filled++;
+        }
+      });
+
+      const percentage = Math.round((filled / inputs.length) * 100);
+      const progressFill = document.getElementById('progressFill');
+      progressFill.style.width = percentage + '%';
+      progressFill.textContent = percentage + '%';
+    }
+
+    function showMessage(text, type) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.className = `message ${type}`;
+
+      setTimeout(() => {
+        message.className = 'message';
+      }, 4000);
+    }
+
+    // Update progress as user types
+    document.addEventListener('input', updateProgress);
+  </script>
+</body>
+</html>

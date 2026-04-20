@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Place Value</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Navigation buttons */
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 0px;
+      z-index: 10;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0 30px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size:clamp(12px,2vw,15px);
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .content-card {
+      background: var(--cream);
+      border-radius:16px;
+      padding:16px 12px;
+      margin-bottom: 25px;
+      border:3px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0, 0, 0, .08);
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .resource-card {
+      background: white;
+      border-radius: 15px;
+      padding:12px 10px;
+      border: 3px solid var(--teal);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .resource-card:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 8px 15px rgba(0,0,0,.15);}
+
+    .resource-icon {
+      font-size:28px;
+      margin-bottom:6px;
+    }
+
+    .resource-title {
+      font-weight: bold;
+      color: var(--pink);
+      margin-bottom: 8px;
+      font-size:12px;
+    }
+
+    .resource-desc {
+      font-size:11px;
+      color: #666;
+    }
+
+    .description {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink);
+      margin-top: 15px;
+    }
+
+    .learning-points {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    .learning-points h3 {
+      color: var(--purple);
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .learning-points ul {
+      list-style-position: inside;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .learning-points li {
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">📍</div>
+      <h1>Place Value</h1>
+      <p class="subtitle">Master the concept of place value! 📚</p>
+    </div>
+
+    <div class="content-card">
+      <div class="description">
+        Place value is one of the most important concepts in mathematics. It helps us understand how numbers are constructed and why the position of each digit matters. Every digit in a number has a specific place value based on its position. In this chapter, you'll explore how digits combine to form numbers and learn to work with place values in different contexts.
+      </div>
+
+      <div class="learning-points">
+        <h3>📖 What You'll Learn:</h3>
+        <ul>
+          <li>Understanding units and place values</li>
+          <li>Finding place values of digits in numbers</li>
+          <li>Comparing and analyzing digits based on positions</li>
+          <li>Writing numbers in expanded form</li>
+          <li>Understanding digit quantities and their relationships</li>
+          <li>Solving problems with number patterns</li>
+          <li>Counting numbers in different ranges</li>
+        </ul>
+      </div>
+
+      <div class="resources-grid">
+        <a href="worksheet.html" class="resource-card">
+          <div class="resource-icon">📝</div>
+          <div class="resource-title">Worksheet</div>
+          <div class="resource-desc">Complete interactive worksheet with two sets of problems!</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

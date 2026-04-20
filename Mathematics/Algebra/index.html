@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mathematics ➗</title>
+<title>Algebra 📊</title>
 <style>
   :root{
     --pink:#ff6ec7;
@@ -52,61 +52,66 @@
     font-weight:bold;
     margin-top:10px;
   }
-  .lessons-grid{
+  .topics-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
     gap:16px;
     margin:40px 0;
   }
-  .lesson-card{
+  .topic-card{
     background:var(--cream);
     border-radius:16px;
     padding:16px 12px;
-    border:3px solid var(--teal);
+    border:3px solid var(--yellow);
     box-shadow:0 4px 12px rgba(0,0,0,.08);
     text-decoration:none;
     color:inherit;
     transition:all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor:pointer;
   }
-  .lesson-card:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 12px 24px rgba(0,0,0,.15);}
-  .lesson-emoji{font-size:36px;margin-bottom:6px;
+  .topic-card:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .topic-emoji{font-size:36px;margin-bottom:6px;
   }
-  .lesson-card h2{font-size:clamp(14px,2.5vw,18px);
+  .topic-card h2{font-size:clamp(14px,2.5vw,18px);
     color:var(--pink);
     margin-bottom:10px;
   }
-  .lesson-card p{font-size:clamp(12px,1.5vw,14px);
+  .topic-card p{font-size:clamp(12px,1.5vw,14px);
     color:var(--ink);
     line-height:1.5;
   }
 </style>
 </head>
 <body>
-  <a class="back" href="../index.html">⬅️ Home</a>
+  <a class="back" href="../index.html">⬅️ Back to Mathematics</a>
   <div class="container">
     <header>
-      <div class="emoji">➗</div>
-      <h1>Mathematics</h1>
-      <p class="subtitle">Explore numbers, shapes, and calculations! ✨</p>
+      <div class="emoji">📊</div>
+      <h1>Algebra</h1>
+      <p class="subtitle">Explore equations, variables, and algebraic expressions! ✨</p>
     </header>
 
-    <div class="lessons-grid">
-      <a href="arithmetic/index.html" class="lesson-card">
-        <div class="lesson-emoji">🔢</div>
-        <h2>Arithmetic</h2>
-        <p>Master the fundamentals of addition, subtraction, multiplication, and division!</p>
-      </a>
-      <a href="algebra/index.html" class="lesson-card">
-        <div class="lesson-emoji">📊</div>
-        <h2>Algebra</h2>
-        <p>Explore variables, equations, and algebraic expressions with interactive lessons!</p>
-      </a>
-      <a href="geometry/index.html" class="lesson-card">
-        <div class="lesson-emoji">📐</div>
-        <h2>Geometry</h2>
-        <p>Learn about shapes, angles, and spatial relationships with fun interactive lessons!</p>
-      </a>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <div class="topic-emoji">🔤</div>
+        <h2>Variables</h2>
+        <p>Understand what variables are and how to use them in math!</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-emoji">⚖️</div>
+        <h2>Equations</h2>
+        <p>Learn to solve linear and algebraic equations step by step!</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-emoji">📈</div>
+        <h2>Functions</h2>
+        <p>Explore functions, graphs, and how they relate to real-world scenarios!</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-emoji">🧮</div>
+        <h2>Expressions</h2>
+        <p>Master algebraic expressions and simplify them like a pro!</p>
+      </div>
     </div>
   </div>
 </body>

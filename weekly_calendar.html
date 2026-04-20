@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly Calendar</title>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+      background: linear-gradient(135deg, #ffe0f0 0%, #e0f7ff 50%, #fff5d6 100%);
+      padding: 20px;
+      color: #1d2b53;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 0px;
+      z-index: 100;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .icon-btn {
+      background: #a06cd5;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0 30px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(18px, 4vw, 26px);
+      color: #a06cd5;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: #4cc9f0;
+      font-weight: bold;
+    }
+
+    .toolbar {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .toolbar-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #a06cd5;
+    }
+
+    .legend {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-work {
+      background: #ff6ec7;
+    }
+
+    .dot-personal {
+      background: #ffd166;
+    }
+
+    .dot-meeting {
+      background: #4cc9f0;
+    }
+
+    .dot-health {
+      background: #06d6a0;
+    }
+
+    .dot-other {
+      background: #ef476f;
+    }
+
+    .export-btn {
+      background: #06d6a0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform .2s;
+      font-size: 14px;
+    }
+
+    .export-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+    }
+
+    .calendar-wrapper {
+      background: white;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+    }
+
+    .calendar-scroll {
+      min-width: 100%;
+      display: inline-block;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: 80px repeat(7, 1fr);
+      gap: 1px;
+      background: #e0e0e0;
+    }
+
+    .time-header {
+      background: #f5f5f5;
+      padding: 10px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: bold;
+      color: #666;
+    }
+
+    .day-header {
+      background: #a06cd5;
+      color: white;
+      padding: 15px 10px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .day-header .date {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+
+    .time-slot {
+      background: white;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      min-height: 40px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .time-slot:hover {
+      background: #f9f9f9;
+    }
+
+    .time-slot.selecting {
+      background: #e3f2fd;
+    }
+
+    .time-label {
+      font-size: 11px;
+      color: #999;
+      padding: 0 5px;
+    }
+
+    .event {
+      background: #ff6ec7;
+      color: white;
+      padding: 5px 8px;
+      border-radius: 5px;
+      font-size: 12px;
+      margin: 3px 0;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .event.work {
+      background: #ff6ec7;
+    }
+
+    .event.personal {
+      background: #ffd166;
+    }
+
+    .event.meeting {
+      background: #4cc9f0;
+    }
+
+    .event.health {
+      background: #06d6a0;
+    }
+
+    .event.other {
+      background: #ef476f;
+    }
+
+    .event:hover {
+      opacity: 0.8;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      animation: slideIn 0.3s;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #a06cd5;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #1d2b53;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #a06cd5;
+      box-shadow: 0 0 5px rgba(160, 108, 213, 0.3);
+    }
+
+    .category-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .category-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .category-option input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .category-option.selected {
+      border-color: #a06cd5;
+      background: #f5f0ff;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform .2s;
+      font-size: 14px;
+    }
+
+    .btn-save {
+      background: #06d6a0;
+      color: white;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-delete {
+      background: #ef476f;
+      color: white;
+    }
+
+    .btn-delete:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+      background: #ddd;
+      color: #333;
+    }
+
+    .btn-cancel:hover {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .calendar-grid {
+        grid-template-columns: 60px repeat(7, 1fr);
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .legend {
+        width: 100%;
+      }
+
+      .day-header {
+        font-size: 12px;
+        padding: 10px 5px;
+      }
+
+      .time-slot {
+        min-height: 35px;
+        padding: 5px;
+      }
+
+      .time-label {
+        font-size: 10px;
+      }
+
+      .event {
+        font-size: 11px;
+        padding: 3px 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="index.html" style="text-decoration: none;">
+      <button class="icon-btn" title="Back to Home">⬅️</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">📅</div>
+      <h1>Weekly Calendar</h1>
+      <p class="subtitle">Plan your week and manage your time! ⏰</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="toolbar-title">📅 Weekly Calendar</div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot dot-work"></div>
+          <span>Work</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot dot-personal"></div>
+          <span>Personal</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot dot-meeting"></div>
+          <span>Meeting</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot dot-health"></div>
+          <span>Health</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot dot-other"></div>
+          <span>Other</span>
+        </div>
+      </div>
+      <button class="export-btn" onclick="exportToExcel()">📊 Export to Excel</button>
+    </div>
+
+    <div class="calendar-wrapper">
+      <div class="calendar-scroll">
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Modal -->
+  <div id="eventModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">Add/Edit Event</div>
+      <form id="eventForm" onsubmit="saveEvent(event)">
+        <div class="form-group">
+          <label for="eventTitle">Event Title:</label>
+          <input type="text" id="eventTitle" placeholder="Enter event title" required />
+        </div>
+
+        <div class="form-group">
+          <label>Category:</label>
+          <div class="category-group" id="categoryGroup">
+            <label class="category-option">
+              <input type="radio" name="category" value="work" checked />
+              <span>Work</span>
+            </label>
+            <label class="category-option">
+              <input type="radio" name="category" value="personal" />
+              <span>Personal</span>
+            </label>
+            <label class="category-option">
+              <input type="radio" name="category" value="meeting" />
+              <span>Meeting</span>
+            </label>
+            <label class="category-option">
+              <input type="radio" name="category" value="health" />
+              <span>Health</span>
+            </label>
+            <label class="category-option">
+              <input type="radio" name="category" value="other" />
+              <span>Other</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="submit" class="modal-btn btn-save">Save Event</button>
+          <button type="button" class="modal-btn btn-delete" onclick="deleteEvent()" id="deleteBtn" style="display: none;">Delete Event</button>
+          <button type="button" class="modal-btn btn-cancel" onclick="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const HOURS = Array.from({ length: 17 }, (_, i) => 6 + i); // 6 AM to 10 PM
+    let events = [];
+    let selectedSlots = [];
+    let currentEvent = null;
+    let isSelecting = false;
+
+    // Initialize calendar on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadEvents();
+      buildCalendarGrid();
+      renderEvents();
+    });
+
+    function buildCalendarGrid() {
+      const grid = document.getElementById('calendar-grid');
+      grid.innerHTML = '';
+
+      // Add time header (empty corner)
+      const corner = document.createElement('div');
+      corner.className = 'time-header';
+      corner.innerHTML = 'Time';
+      grid.appendChild(corner);
+
+      // Add day headers
+      const today = new Date();
+      DAYS.forEach((day, index) => {
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'day-header';
+        const date = new Date(today);
+        date.setDate(today.getDate() - today.getDay() + index + 1);
+        dayHeader.innerHTML = `${day}<div class="date">${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>`;
+        grid.appendChild(dayHeader);
+      });
+
+      // Add time slots
+      HOURS.forEach((hour) => {
+        [0, 30].forEach((minute) => {
+          // Time label
+          const timeLabel = document.createElement('div');
+          timeLabel.className = 'time-label';
+          timeLabel.textContent = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+          grid.appendChild(timeLabel);
+
+          // Time slots for each day
+          DAYS.forEach((day, dayIndex) => {
+            const slot = document.createElement('div');
+            slot.className = 'time-slot';
+            slot.dataset.day = dayIndex;
+            slot.dataset.hour = hour;
+            slot.dataset.minute = minute;
+            slot.dataset.slotId = `${dayIndex}-${hour}-${minute}`;
+
+            slot.addEventListener('mousedown', () => startSelection(slot));
+            slot.addEventListener('mouseover', () => highlightSelection(slot));
+            slot.addEventListener('mouseup', () => endSelection(slot));
+            slot.addEventListener('click', () => {
+              if (selectedSlots.length === 0) {
+                selectSlot(slot);
+              }
+            });
+
+            grid.appendChild(slot);
+          });
+        });
+      });
+    }
+
+    function startSelection(slot) {
+      isSelecting = true;
+      selectedSlots = [];
+      slot.classList.add('selecting');
+      selectedSlots.push(slot);
+    }
+
+    function highlightSelection(slot) {
+      if (!isSelecting) return;
+      slot.classList.add('selecting');
+      if (!selectedSlots.includes(slot)) {
+        selectedSlots.push(slot);
+      }
+    }
+
+    function endSelection(slot) {
+      if (!isSelecting || selectedSlots.length === 0) return;
+      isSelecting = false;
+
+      if (selectedSlots.length > 0) {
+        openModal(selectedSlots[0]);
+        selectedSlots.forEach(s => s.classList.remove('selecting'));
+      }
+    }
+
+    function selectSlot(slot) {
+      const modal = document.getElementById('eventModal');
+      const dayIndex = parseInt(slot.dataset.day);
+      const hour = parseInt(slot.dataset.hour);
+      const minute = parseInt(slot.dataset.minute);
+
+      const existingEvent = events.find(e => e.day === dayIndex && e.hour === hour && e.minute === minute);
+
+      if (existingEvent) {
+        currentEvent = existingEvent;
+        document.getElementById('eventTitle').value = existingEvent.title;
+        document.querySelector(`input[value="${existingEvent.category}"]`).checked = true;
+        document.getElementById('deleteBtn').style.display = 'block';
+      } else {
+        currentEvent = { day: dayIndex, hour, minute };
+        document.getElementById('eventTitle').value = '';
+        document.querySelector('input[value="work"]').checked = true;
+        document.getElementById('deleteBtn').style.display = 'none';
+      }
+
+      updateCategoryDisplay();
+      modal.style.display = 'block';
+    }
+
+    function updateCategoryDisplay() {
+      document.querySelectorAll('.category-option').forEach(option => {
+        const input = option.querySelector('input[type="radio"]');
+        if (input.checked) {
+          option.classList.add('selected');
+        } else {
+          option.classList.remove('selected');
+        }
+      });
+    }
+
+    function openModal(slot) {
+      const modal = document.getElementById('eventModal');
+      const dayIndex = parseInt(slot.dataset.day);
+      const hour = parseInt(slot.dataset.hour);
+      const minute = parseInt(slot.dataset.minute);
+
+      const existingEvent = events.find(e => e.day === dayIndex && e.hour === hour && e.minute === minute);
+
+      if (existingEvent) {
+        currentEvent = existingEvent;
+        document.getElementById('eventTitle').value = existingEvent.title;
+        document.querySelector(`input[value="${existingEvent.category}"]`).checked = true;
+        document.getElementById('deleteBtn').style.display = 'block';
+      } else {
+        currentEvent = { day: dayIndex, hour, minute };
+        document.getElementById('eventTitle').value = '';
+        document.querySelector('input[value="work"]').checked = true;
+        document.getElementById('deleteBtn').style.display = 'none';
+      }
+
+      updateCategoryDisplay();
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('eventModal').style.display = 'none';
+      currentEvent = null;
+      selectedSlots = [];
+    }
+
+    function saveEvent(e) {
+      e.preventDefault();
+      const title = document.getElementById('eventTitle').value;
+      const category = document.querySelector('input[name="category"]:checked').value;
+
+      if (!currentEvent) return;
+
+      const existingIndex = events.findIndex(
+        ev => ev.day === currentEvent.day && ev.hour === currentEvent.hour && ev.minute === currentEvent.minute
+      );
+
+      if (existingIndex >= 0) {
+        events[existingIndex] = { ...currentEvent, title, category };
+      } else {
+        events.push({ ...currentEvent, title, category });
+      }
+
+      saveEvents();
+      renderEvents();
+      closeModal();
+    }
+
+    function deleteEvent() {
+      if (!currentEvent) return;
+      events = events.filter(
+        e => !(e.day === currentEvent.day && e.hour === currentEvent.hour && e.minute === currentEvent.minute)
+      );
+      saveEvents();
+      renderEvents();
+      closeModal();
+    }
+
+    function renderEvents() {
+      // Clear all events
+      document.querySelectorAll('.event').forEach(el => el.remove());
+
+      // Render events
+      events.forEach(event => {
+        const slots = document.querySelectorAll(`[data-day="${event.day}"][data-hour="${event.hour}"][data-minute="${event.minute}"]`);
+        slots.forEach(slot => {
+          const eventEl = document.createElement('div');
+          eventEl.className = `event ${event.category}`;
+          eventEl.textContent = event.title;
+          eventEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectSlot(slot);
+          });
+          slot.appendChild(eventEl);
+        });
+      });
+    }
+
+    function saveEvents() {
+      localStorage.setItem('weeklyCalendarEvents', JSON.stringify(events));
+    }
+
+    function loadEvents() {
+      const saved = localStorage.getItem('weeklyCalendarEvents');
+      events = saved ? JSON.parse(saved) : [];
+    }
+
+    function exportToExcel() {
+      const data = [];
+      const today = new Date();
+
+      // Header
+      data.push(['Weekly Calendar - ' + today.toLocaleDateString()]);
+      data.push([]);
+
+      // Column headers
+      const headers = ['Time', ...DAYS];
+      data.push(headers);
+
+      // Data rows
+      HOURS.forEach((hour) => {
+        [0, 30].forEach((minute) => {
+          const row = [`${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`];
+
+          DAYS.forEach((day, dayIndex) => {
+            const event = events.find(e => e.day === dayIndex && e.hour === hour && e.minute === minute);
+            row.push(event ? `${event.title} (${event.category})` : '');
+          });
+
+          data.push(row);
+        });
+      });
+
+      // Create workbook
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(data);
+
+      // Set column widths
+      ws['!cols'] = [{ wch: 12 }, ...Array(7).fill({ wch: 20 })];
+
+      XLSX.utils.book_append_sheet(wb, ws, 'Weekly Calendar');
+      XLSX.writeFile(wb, `Weekly_Calendar_${today.toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('eventModal');
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Update category display on radio change
+    document.querySelectorAll('input[name="category"]').forEach(radio => {
+      radio.addEventListener('change', updateCategoryDisplay);
+    });
+  </script>
+</body>
+</html>

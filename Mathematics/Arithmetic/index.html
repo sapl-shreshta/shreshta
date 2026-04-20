@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arithmetic 🔢</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:var(--ink);
+    padding:20px;
+    min-height:100vh;
+  }
+  .container{
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .back{
+    position:fixed;top:30px;left:30px;
+    background:var(--purple);color:white;text-decoration:none;
+    padding:12px 24px;border-radius:50px;font-weight:bold;
+    box-shadow:0 5px 0 #7b4aaf;
+    z-index:100;
+  }
+  .back:hover{transform:translateY(-2px);}
+  header{
+    text-align:center;
+    margin:60px 0 40px 0;
+  }
+  .emoji{font-size:clamp(60px,12vw,120px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+  h1{
+    font-size:clamp(40px,6vw,72px);margin:20px 0;
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{
+    font-size:clamp(18px,2.5vw,24px);
+    color:var(--blue);
+    font-weight:bold;
+    margin-top:10px;
+  }
+  .topics-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:16px;
+    margin:40px 0;
+  }
+  .topic-card{
+    background:var(--cream);
+    border-radius:16px;
+    padding:16px 12px;
+    border:3px solid var(--red);
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    text-decoration:none;
+    color:inherit;
+    transition:all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor:pointer;
+  }
+  .topic-card:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .topic-emoji{font-size:36px;margin-bottom:6px;
+  }
+  .topic-card h2{font-size:clamp(14px,2.5vw,18px);
+    color:var(--pink);
+    margin-bottom:10px;
+  }
+  .topic-card p{font-size:clamp(12px,1.5vw,14px);
+    color:var(--ink);
+    line-height:1.5;
+  }
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">⬅️ Back to Mathematics</a>
+  <div class="container">
+    <header>
+      <div class="emoji">🔢</div>
+      <h1>Arithmetic</h1>
+      <p class="subtitle">Master the fundamentals of numbers and basic calculations! ✨</p>
+    </header>
+
+    <div class="topics-grid">
+      <a href="Number_System/index.html" class="topic-card" style="text-decoration:none;color:inherit;">
+        <div class="topic-emoji">🔢</div>
+        <h2>Number System</h2>
+        <p>Understand the fundamentals of different number systems and how numbers work!</p>
+      </a>
+      <a href="Estimation/index.html" class="topic-card" style="text-decoration:none;color:inherit;">
+        <div class="topic-emoji">🎯</div>
+        <h2>Estimation</h2>
+        <p>Learn to estimate and approximate numbers in real-world situations!</p>
+      </a>
+      <a href="Indian_and_International_System/index.html" class="topic-card" style="text-decoration:none;color:inherit;">
+        <div class="topic-emoji">🌍</div>
+        <h2>Indian & International System</h2>
+        <p>Explore the Indian and International number naming systems!</p>
+      </a>
+      <a href="Place_Value/index.html" class="topic-card" style="text-decoration:none;color:inherit;">
+        <div class="topic-emoji">📍</div>
+        <h2>Place Value</h2>
+        <p>Master the concept of place value and understand number positions!</p>
+      </a>
+      <a href="Natural_and_Whole_Numbers/index.html" class="topic-card" style="text-decoration:none;color:inherit;">
+        <div class="topic-emoji">1️⃣</div>
+        <h2>Natural & Whole Numbers</h2>
+        <p>Learn about natural numbers, whole numbers, and their properties!</p>
+      </a>
+      <a href="Negative_Numbers_and_Integers/index.html" class="topic-card" style="text-decoration:none;color:inherit;">
+        <div class="topic-emoji">➖</div>
+        <h2>Negative Numbers & Integers</h2>
+        <p>Understand negative numbers, integers, and operations with them!</p>
+      </a>
+      <a href="Number_Line/index.html" class="topic-card" style="text-decoration:none;color:inherit;">
+        <div class="topic-emoji">📏</div>
+        <h2>Number Line</h2>
+        <p>Visualize numbers on a number line and understand ordering!</p>
+      </a>
+      <div class="topic-card">
+        <div class="topic-emoji">🔗</div>
+        <h2>HCF and LCM</h2>
+        <p>Learn about Highest Common Factor and Least Common Multiple!</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-emoji">🎲</div>
+        <h2>Playing with Numbers</h2>
+        <p>Explore interesting patterns and fun number games and tricks!</p>
+      </div>
+      <div class="topic-card">
+        <div class="topic-emoji">🔲</div>
+        <h2>Sets</h2>
+        <p>Understand sets, elements, and operations with sets!</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
