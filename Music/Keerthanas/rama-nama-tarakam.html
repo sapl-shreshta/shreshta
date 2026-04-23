@@ -25,7 +25,8 @@
       font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
     }
 
-    html, body {
+    html,
+    body {
       height: 100%;
       overflow-x: hidden;
     }
@@ -95,9 +96,12 @@
     }
 
     @keyframes bounce {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0);
       }
+
       50% {
         transform: translateY(-20px);
       }
@@ -212,6 +216,56 @@
     .lyrics-content::-webkit-scrollbar-thumb:hover {
       background: #7b4aaf;
     }
+
+    /* Meanings styling */
+    .lyrics-with-meanings {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .lyrics-text {
+      flex: 1;
+      min-width: 250px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--pink);
+      line-height: 1.8;
+      font-size: 16px;
+      color: #333;
+      text-align: center;
+    }
+
+    .meanings-text {
+      flex: 1;
+      min-width: 250px;
+      background: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--teal);
+      line-height: 1.8;
+      font-size: 14px;
+      color: #2d5016;
+    }
+
+    .section-header {
+      font-weight: bold;
+      color: var(--purple);
+      margin-top: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .meaning-title {
+      font-weight: bold;
+      color: var(--pink);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
   </style>
 </head>
 
@@ -247,32 +301,85 @@
     <!-- Lyrics -->
     <div class="card lyrics-card">
       <div class="lyrics-header">
-        <h2>📖 Lyrics</h2>
+        <h2>📖 Lyrics - Rama Nama Tarakam</h2>
         <a href="Rama Nama Taarakam Lyrics.pdf" class="download-btn" download>
           ⬇️ Download PDF
         </a>
       </div>
-      <div class="lyrics-content" >Rama Nama Tarakam
+      <div class="section-header">📍 VERSE 1</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+        Rama Rama Rama Rama Rama Nama Tarakam <br>
+        Rama Krishna Vasudeva Bhakti Mukti Dayakam
+        </div>
+        <div class="meanings-text">
+        <span class="meaning-title">Word-Word Meaning:</span><br>
+        రామ Rama = Rama<br>
+        నామ nama = name<br>
+        తారకం tarakam = garland<br>
+        వాసుదేవ Vasudeva = lord vasudeva (krishna)<br>
+        భక్తి bhakti = devotion<br>
+        ముక్తి mukti = salvation<br>
+        దాయకం dayakam = the one that gives<br>
 
-Rama Rama Rama Rama Rama Nama Tarakam
+        <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+        A garland of Rama's name (means a chanting of Rama's name) is the one that is equivalent to singing praises of
+        Rama, Krishna, Vasudeva (all forms of Vishnu)
+        and is the one that gives devotion and salvation to humans
+        </div>
+      </div>
+      <div class="section-header">📍 VERSE 2</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+        (Janaki Manoharam Sarva-loka Nayakam) X 2<br>
+        (Shankaradi Sevya-mana Punya Nama Kirtanam) X 2<br>
+        Rama Rama Rama Rama Rama Nama Tarakam<br>
+        Rama Krishna Vasudeva Bhakti Mukti Dayakam.
+        </div>
+        <div class="meanings-text">
+        <span class="meaning-title">Word-Word Meaning:</span><br>
+        జానకి janaki = sita devi<br>
+        మానవహారం Manoharam = the one who is very much loved by<br>
+        సర్వ sarva = entire<br>
+        లోక loka = world<br>
+        నాయకం nayakam = king of<br>
+        శంకరాది shankaradi = God Shiva and others<br>
+        సేవ్యమాన sevyamana = prayed by<br>
+        పుణ్య punya = sacred<br>
+        నామ nama = name<br>
+        కీర్తనం keerthanam = song<br>
 
-Rama Krishna Vasudeva Bhakti Mukti Dayakam
+        <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+        The one who is the most loved by Sita devi and is the world of the entire world.
+        He is also the one who is prayed by Shiva and other Gods and whose name is like a sacred song.
+        </div>
+      </div>
+      <div class="section-header">📍 VERSE 3</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+        (Dheera Shura Vanditam Ravanadi Naashakam) X 2<br>
+        (Anjaneya Jeeva Naama Raja Mantra Roopakam) X 2<br>
+        Rama Rama Rama Rama Rama Nama Tarakam<br>
+        Rama Krishna Vasudeva Bhakti Mukti Dayakam.
+        </div>
+        <div class="meanings-text">
+        <span class="meaning-title">Word-Word Meaning:</span><br>
+        ధీర dheera = brave<br>
+        శూర shoora = strong<br>
+        వందితం vanditam = the one that is prayed by<br>
+        రావణ ఆది Ravanadi = Ravana and others<br>
+        నాశకం Naashakam = the one that caused defeat to<br>
+        ఆంజనేయ Anjaneya = Hanuman<br>
+        జీవ jeeva = living being<br>
+        నామ nama = name<br>
+        రాజ raja = king<br>
+        మంత్ర mantra = sacred chant<br>
+        రూపకం roopakam = form<br>
 
-(Janaki Manoharam Sarva-loka Nayakam) X 2
-(Shankaradi Sevya-mana Punya Nama Kirtanam) X 2
-
-Rama Rama Rama Rama Rama Nama Tarakam, Rama Krishna Vasudeva Bhakti
-
-Mukti Dayakam.
-
-(Dheera Shura Vanditam Ravanadi Naashakam) X 2
-
-(Anjaneya Jeeva Naama Raja Mantra Roopakam) X 2
-
-Rama Rama Rama Rama Rama Nama Tarakam, Rama Krishna Vasudeva Bhakti
-
-Mukti Dayakam.</div>
-    </div>
+        <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+        He is the brave and strong Lord who is prayed by Ravana and others. He is also the one whose name is worshipped by Hanuman and other devotees. The sacred name of Rama is the greatest mantra and the form of the divine King.
+        </div>
+      </div>     </div>
   </div>
 </body>
 
