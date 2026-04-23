@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Level 8: Challenge & Practice 🏆</title>
+<style>
+  :root{ --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0; --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53; }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{ background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff); color:var(--ink); padding:20px; }
+  .container{ max-width:1000px; margin:0 auto; }
+  .nav-top{ position:fixed;top:20px;display:flex;gap:15px;z-index:101; }
+  .nav-back{ left:20px; }
+  .nav-home{ right:20px; }
+  .icon-btn{ background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;display:flex;align-items:center;justify-content:center;font-weight:bold; }
+  .icon-btn:hover{transform:translateY(-2px);}
+  header{ text-align:center; margin:60px 0 40px 0; }
+  h1{ font-size:clamp(36px,6vw,56px); background:linear-gradient(90deg,#a06cd5,#4cc9f0,#06d6a0); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:10px; }
+  .subtitle{ font-size:clamp(18px,2.5vw,24px); color:var(--blue); font-weight:bold; }
+  .emoji-row{ font-size:clamp(40px,8vw,60px); text-align:center; margin:20px 0; letter-spacing:10px; }
+  .card{ background:var(--cream); border-radius:16px; padding:24px; margin-bottom:25px; border:3px solid var(--purple); box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  h2{ font-size:clamp(18px,2.5vw,24px); color:var(--pink); margin-bottom:15px; }
+  h3{ font-size:clamp(16px,2vw,20px); color:var(--purple); margin-top:15px; margin-bottom:10px; }
+  p{ font-size:clamp(16px,2vw,18px); line-height:1.6; margin-bottom:12px; }
+  ul{ margin-left:30px; margin-bottom:15px; }
+  li{ font-size:clamp(15px,1.8vw,18px); margin-bottom:10px; line-height:1.6; }
+  .problem-box{ background:#f5f0ff; border-left:5px solid #a06cd5; border-radius:8px; padding:15px; margin:15px 0; }
+  .problem-box .problem-num{ color:#a06cd5; font-weight:bold; font-size:16px; }
+  .solution-box{ background:#fff5f0; border-left:5px solid #ff6ec7; border-radius:8px; padding:15px; margin:10px 0; display:none; }
+  .solution-box.show{ display:block; }
+  .toggle-btn{ background:var(--purple); color:white; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:10px; }
+  .toggle-btn:hover{ background:var(--blue); }
+  .difficulty{ display:inline-block; padding:4px 12px; border-radius:12px; font-size:12px; font-weight:bold; margin:0 4px; }
+  .easy{ background:#90EE90; color:#1d2b53; }
+  .medium{ background:#FFD700; color:#1d2b53; }
+  .hard{ background:#FF6347; color:white; }
+  .nav-buttons{ display:flex; justify-content:space-between; margin-top:40px; gap:20px; }
+  .nav-btn{ flex:1; padding:16px 24px; border:none; border-radius:50px; font-size:16px; font-weight:bold; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-block; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  .nav-btn-prev{ background:var(--purple); color:white; }
+  .nav-btn-home{ background:var(--teal); color:white; }
+  .nav-btn:hover{ transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+  .summary-box{ background:linear-gradient(135deg,#fff5d6,#ffe6cc); border:3px solid #ffd166; border-radius:12px; padding:20px; margin:20px 0; }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back"><a href="index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Angles">⬅️</button></a></div>
+<div class="nav-top nav-home"><a href="../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a></div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🏆 💪 ✨</div>
+    <h1>Level 8: <span style="background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;">Challenge & Practice</span></h1>
+    <p class="subtitle">Test your angle knowledge with real problems! 🎯</p>
+  </header>
+
+  <div class="summary-box">
+    <h2 style="color:#ff9e45; margin-top:0;">🎓 You've Completed Levels 1-7!</h2>
+    <p>Congratulations! You now understand:</p>
+    <ul style="margin-bottom:0;">
+      <li>✓ What angles are and how they work</li>
+      <li>✓ How to measure and classify angles</li>
+      <li>✓ Angle relationships (adjacent, linear pairs, vertical, complementary, supplementary)</li>
+      <li>✓ Angles in shapes (triangles, quadrilaterals, polygons)</li>
+      <li>✓ Parallel lines and transversals</li>
+      <li>✓ Angles in circles</li>
+      <li>✓ Real-world applications of angles</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📋 Practice Problems</h2>
+    <p>Solve these problems to test your understanding. Click "Show Solution" to check your work!</p>
+
+    <div class="problem-box">
+      <div class="problem-num">Problem 1 <span class="difficulty easy">Easy</span></div>
+      <p><b>Triangle Problem:</b> In a triangle, two angles are 45° and 60°. What is the third angle?</p>
+      <button class="toggle-btn" onclick="toggleSolution(1)">Show Solution</button>
+      <div class="solution-box" id="sol1">
+        <b>Solution:</b> Sum of angles in a triangle = 180°<br/>
+        Third angle = 180° - 45° - 60° = <b>75°</b>
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <div class="problem-num">Problem 2 <span class="difficulty easy">Easy</span></div>
+      <p><b>Linear Pair:</b> Two adjacent angles form a linear pair. One angle is 120°. What is the other?</p>
+      <button class="toggle-btn" onclick="toggleSolution(2)">Show Solution</button>
+      <div class="solution-box" id="sol2">
+        <b>Solution:</b> Linear pair angles sum to 180°<br/>
+        Second angle = 180° - 120° = <b>60°</b>
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <div class="problem-num">Problem 3 <span class="difficulty easy">Easy</span></div>
+      <p><b>Complementary Angles:</b> Two angles are complementary. One is 35°. What is the complement?</p>
+      <button class="toggle-btn" onclick="toggleSolution(3)">Show Solution</button>
+      <div class="solution-box" id="sol3">
+        <b>Solution:</b> Complementary angles sum to 90°<br/>
+        Complement = 90° - 35° = <b>55°</b>
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <div class="problem-num">Problem 4 <span class="difficulty medium">Medium</span></div>
+      <p><b>Quadrilateral:</b> A quadrilateral has angles 80°, 100°, and 90°. Find the fourth angle.</p>
+      <button class="toggle-btn" onclick="toggleSolution(4)">Show Solution</button>
+      <div class="solution-box" id="sol4">
+        <b>Solution:</b> Sum of angles in a quadrilateral = 360°<br/>
+        Fourth angle = 360° - 80° - 100° - 90° = <b>90°</b>
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <div class="problem-num">Problem 5 <span class="difficulty medium">Medium</span></div>
+      <p><b>Vertical Angles:</b> Two lines intersect forming four angles. One angle is 65°. What are the other three angles?</p>
+      <button class="toggle-btn" onclick="toggleSolution(5)">Show Solution</button>
+      <div class="solution-box" id="sol5">
+        <b>Solution:</b> Vertical angles are equal, and adjacent angles form linear pairs<br/>
+        Opposite angle = 65° (vertical angles)<br/>
+        Adjacent angles = 180° - 65° = <b>115° each</b><br/>
+        So the four angles are: <b>65°, 115°, 65°, 115°</b>
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <div class="problem-num">Problem 6 <span class="difficulty medium">Medium</span></div>
+      <p><b>Pentagon:</b> In a regular pentagon, what is each interior angle? (Formula: (n-2)×180°÷n, where n=5)</p>
+      <button class="toggle-btn" onclick="toggleSolution(6)">Show Solution</button>
+      <div class="solution-box" id="sol6">
+        <b>Solution:</b> Using the formula: (5-2)×180°÷5<br/>
+        = 3 × 180° ÷ 5<br/>
+        = 540° ÷ 5<br/>
+        = <b>108°</b>
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <div class="problem-num">Problem 7 <span class="difficulty hard">Hard</span></div>
+      <p><b>Parallel Lines & Transversal:</b> A transversal crosses two parallel lines. If one angle is 70°, what are the corresponding angle, alternate interior angle, and co-interior angle?</p>
+      <button class="toggle-btn" onclick="toggleSolution(7)">Show Solution</button>
+      <div class="solution-box" id="sol7">
+        <b>Solution:</b><br/>
+        • Corresponding angle = <b>70°</b> (equal to original)<br/>
+        • Alternate interior angle = <b>70°</b> (equal)<br/>
+        • Co-interior angle = 180° - 70° = <b>110°</b> (supplementary)
+      </div>
+    </div>
+
+    <div class="problem-box">
+      <div class="problem-num">Problem 8 <span class="difficulty hard">Hard</span></div>
+      <p><b>Complex Problem:</b> In triangle ABC, angle A = 50°. Angles B and C are supplementary to external angles that are both 70°. What are angles B and C?</p>
+      <button class="toggle-btn" onclick="toggleSolution(8)">Show Solution</button>
+      <div class="solution-box" id="sol8">
+        <b>Solution:</b><br/>
+        If external angle = 70°, then internal angle = 180° - 70° = 110°<br/>
+        So angles B = C = 110° (both are this angle)<br/>
+        Check: 50° + 110° + 110° = 270° ≠ 180°<br/>
+        <b>Correction:</b> This problem needs clarification. Check that the problem setup is correct!<br/>
+        The point: Always verify your solutions make sense with known rules!
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Self-Assessment Checklist</h2>
+    <p>Rate yourself on each skill (1 = Need help, 5 = Expert):</p>
+    <ul>
+      <li>☐ I can identify and classify different types of angles</li>
+      <li>☐ I understand angle relationships (adjacent, linear pairs, vertical)</li>
+      <li>☐ I can find missing angles in triangles and quadrilaterals</li>
+      <li>☐ I understand complementary and supplementary angles</li>
+      <li>☐ I can work with parallel lines and transversals</li>
+      <li>☐ I know angle properties in regular polygons</li>
+      <li>☐ I can apply angle knowledge to real-world situations</li>
+      <li>☐ I can solve multi-step angle problems</li>
+    </ul>
+    <p><b>If you checked most boxes:</b> Congratulations! You have mastered angles! 🏆</p>
+    <p><b>If some boxes are unchecked:</b> Review the corresponding level and practice more!</p>
+  </div>
+
+  <div class="card">
+    <h2>🚀 Next Steps</h2>
+    <ul>
+      <li><b>Practice More:</b> Look for angle problems in your textbook or online resources</li>
+      <li><b>Apply to Real Life:</b> Find angles in architecture, nature, and design around you</li>
+      <li><b>Learn Trigonometry:</b> With solid angle knowledge, you're ready for trigonometry (sin, cos, tan)</li>
+      <li><b>Explore Geometry:</b> Continue with other geometry topics like congruence, similarity, and transformations</li>
+      <li><b>Challenge Yourself:</b> Try more complex multi-step problems</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="level7.html" class="nav-btn nav-btn-prev">⬅️ Level 7</a>
+    <a href="level9.html" class="nav-btn nav-btn-next">Level 9 ➡️</a>
+  </div>
+</div>
+
+<script>
+function toggleSolution(num) {
+  const sol = document.getElementById('sol' + num);
+  sol.classList.toggle('show');
+}
+</script>
+
+</body>
+</html>

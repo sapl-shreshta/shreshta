@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Angles Worksheet 2 - Relationships & Shapes 📐</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+    color:var(--ink);
+    padding:20px;
+  }
+
+  .container{
+    max-width:900px;
+    margin:0 auto;
+  }
+
+  /* Navigation buttons */
+  .nav-top{
+    position:fixed;top:20px;display:flex;gap:15px;z-index:101;
+  }
+  .nav-back{
+    left:20px;
+  }
+  .nav-home{
+    right:20px;
+  }
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{
+    text-align:center;
+    margin:60px 0 30px 0;
+  }
+
+  h1{
+    font-size:clamp(32px,5vw,48px);
+    color:var(--purple);
+    margin-bottom:10px;
+  }
+
+  .subtitle{
+    font-size:clamp(16px,2vw,22px);
+    color:var(--blue);
+    font-weight:bold;
+  }
+
+  .emoji-row{
+    font-size:clamp(40px,8vw,60px);
+    text-align:center;
+    margin:15px 0;
+    letter-spacing:10px;
+  }
+
+  .instructions{
+    background:var(--yellow);
+    border:3px solid var(--orange);
+    border-radius:15px;
+    padding:20px;
+    margin:20px 0;
+    font-size:clamp(16px,2vw,18px);
+    line-height:1.6;
+  }
+
+  .note{
+    background:linear-gradient(135deg,#ffd6e7,#ffe6f0);
+    border-left:5px solid var(--pink);
+    padding:15px;
+    margin:20px 0;
+    border-radius:10px;
+    font-size:clamp(15px,2vw,17px);
+    font-weight:bold;
+  }
+
+  .questions-section{
+    background:var(--cream);
+    border-radius:20px;
+    padding:30px;
+    border:4px solid var(--purple);
+    box-shadow:0 8px 0 rgba(0,0,0,.08);
+    margin:30px 0;
+  }
+
+  .question{
+    margin:25px 0;
+    padding:20px;
+    background:white;
+    border-left:5px solid var(--blue);
+    border-radius:10px;
+  }
+
+  .question-num{
+    font-weight:bold;
+    color:var(--purple);
+    font-size:clamp(18px,2.2vw,24px);
+    margin-bottom:10px;
+  }
+
+  .question-text{
+    font-size:clamp(16px,2vw,20px);
+    margin-bottom:15px;
+    line-height:1.6;
+  }
+
+  .answer-input{
+    font-size:clamp(15px,2vw,19px);
+    padding:10px;
+    border:2px solid var(--purple);
+    border-radius:5px;
+    width:150px;
+    margin:10px 0;
+    font-family:inherit;
+  }
+
+  .answer-input:focus{
+    outline:none;
+    border-color:var(--pink);
+    box-shadow:0 0 5px rgba(160, 108, 213, 0.3);
+  }
+
+  .diagram-svg{
+    margin:20px 0;
+    text-align:center;
+  }
+
+  .diagram-svg svg{
+    max-width:300px;
+    height:auto;
+  }
+
+  .true-false{
+    font-size:clamp(15px,2vw,19px);
+    margin:12px 0;
+    padding:10px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+  }
+
+  .true-false input[type="radio"]{
+    margin-right:10px;
+    cursor:pointer;
+  }
+
+  .btn-group{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    margin:30px 0;
+    flex-wrap:wrap;
+  }
+
+  .btn{
+    border:none;
+    border-radius:50px;
+    padding:14px 32px;
+    font-size:clamp(16px,2vw,20px);
+    cursor:pointer;
+    box-shadow:0 6px 0;
+    transition:transform .15s;
+    font-weight:bold;
+    font-family:inherit;
+  }
+
+  .btn-submit{
+    background:var(--teal);
+    color:white;
+    box-shadow:0 6px 0 #047857;
+  }
+
+  .btn-reset{
+    background:var(--orange);
+    color:white;
+    box-shadow:0 6px 0 #cc6600;
+  }
+
+  .btn:hover{
+    transform:translateY(-2px);
+  }
+
+  .btn:active{
+    transform:translateY(3px);
+    box-shadow:0 3px 0 currentColor;
+    filter:brightness(0.9);
+  }
+
+  .nav-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+    gap:20px;
+  }
+
+  .nav-btn{
+    flex:1;
+    padding:16px 24px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all .3s;
+    text-decoration:none;
+    display:inline-block;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+
+  .nav-btn-prev{
+    background:var(--purple);
+    color:white;
+  }
+
+  .nav-btn-next{
+    background:var(--teal);
+    color:white;
+  }
+
+  .nav-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+  }
+
+  @media(max-width:600px){
+    .container{
+      padding:10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Angles">⬅️</button>
+  </a>
+</div>
+
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📐 🔗 ✨</div>
+    <h1>Angles Worksheet 2</h1>
+    <p class="subtitle">Complementary, Supplementary & Angle Relationships 🌟</p>
+  </header>
+
+  <div class="instructions">
+    <b>Instructions:</b> Answer all questions carefully. Show your work where needed. Mark complementary and supplementary angles correctly!
+  </div>
+
+  <div class="note">
+    <b>📌 Remember:</b><br/>
+    • <b>Complementary angles</b> add up to <b>90°</b><br/>
+    • <b>Supplementary angles</b> add up to <b>180°</b><br/>
+    • <b>Vertical angles</b> are always <b>equal</b>
+  </div>
+
+  <div class="questions-section">
+    <h2 style="text-align:center; color:var(--pink); margin-bottom:20px;">Complementary Angles (Sum = 90°)</h2>
+
+    <div class="question">
+      <div class="question-num">1. Find the complement of 35°</div>
+      <div class="question-text">The complement of 35° is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">2. Find the complement of 42°</div>
+      <div class="question-text">The complement of 42° is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">3. Are 28° and 62° complementary angles?</div>
+      <div class="true-false">
+        <label><input type="radio" name="q3" value="yes"> Yes</label>
+        <label><input type="radio" name="q3" value="no"> No</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">4. Are 45° and 45° complementary angles?</div>
+      <div class="true-false">
+        <label><input type="radio" name="q4" value="yes"> Yes</label>
+        <label><input type="radio" name="q4" value="no"> No</label>
+      </div>
+    </div>
+
+    <h2 style="text-align:center; color:var(--pink); margin-top:40px; margin-bottom:20px;">Supplementary Angles (Sum = 180°)</h2>
+
+    <div class="question">
+      <div class="question-num">5. Find the supplement of 120°</div>
+      <div class="question-text">The supplement of 120° is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">6. Find the supplement of 75°</div>
+      <div class="question-text">The supplement of 75° is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">7. Are 105° and 75° supplementary angles?</div>
+      <div class="true-false">
+        <label><input type="radio" name="q7" value="yes"> Yes</label>
+        <label><input type="radio" name="q7" value="no"> No</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">8. Are 90° and 90° supplementary angles?</div>
+      <div class="true-false">
+        <label><input type="radio" name="q8" value="yes"> Yes</label>
+        <label><input type="radio" name="q8" value="no"> No</label>
+      </div>
+    </div>
+
+    <h2 style="text-align:center; color:var(--pink); margin-top:40px; margin-bottom:20px;">Vertical Angles & Linear Pairs</h2>
+
+    <div class="question">
+      <div class="question-num">9. When two lines intersect, they form a pair of vertical angles. If one angle is 58°, what is the measure of its vertical angle?</div>
+      <div class="question-text">The vertical angle is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">10. Two adjacent angles form a linear pair. One angle measures 130°. What is the measure of the other angle?</div>
+      <div class="question-text">The other angle is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">11. If two lines intersect and form angles of 72°, 108°, 72°, and 108°, identify which angles are vertical angles.</div>
+      <div class="question-text" style="font-size:14px; margin:10px 0;">
+        <label><input type="radio" name="q11" value="first"> Angles 1 and 2 are vertical</label><br/>
+        <label><input type="radio" name="q11" value="opposite"> Angles 1 and 3 are vertical</label><br/>
+        <label><input type="radio" name="q11" value="neither"> None are vertical</label>
+      </div>
+    </div>
+
+    <h2 style="text-align:center; color:var(--pink); margin-top:40px; margin-bottom:20px;">Triangle Angles (Sum = 180°)</h2>
+
+    <div class="question">
+      <div class="question-num">12. In a triangle, two angles are 45° and 65°. Find the third angle.</div>
+      <div class="question-text">The third angle is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">13. In a triangle, one angle is 90° and another is 35°. Find the third angle.</div>
+      <div class="question-text">The third angle is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">14. Can a triangle have two right angles (90° each)?</div>
+      <div class="true-false">
+        <label><input type="radio" name="q14" value="yes"> Yes</label>
+        <label><input type="radio" name="q14" value="no"> No</label>
+      </div>
+      <div style="font-size:14px; color:#666; margin-top:10px;">Hint: Think about what the angles would sum to.</div>
+    </div>
+
+    <h2 style="text-align:center; color:var(--pink); margin-top:40px; margin-bottom:20px;">Quadrilateral Angles (Sum = 360°)</h2>
+
+    <div class="question">
+      <div class="question-num">15. In a quadrilateral, three angles are 85°, 95°, and 100°. Find the fourth angle.</div>
+      <div class="question-text">The fourth angle is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+    <div class="question">
+      <div class="question-num">16. In a rectangle (all angles are 90°), what is the sum of all four angles?</div>
+      <div class="question-text">The sum is: <input type="number" class="answer-input" placeholder="__°"> °</div>
+    </div>
+
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-submit" onclick="alert('Worksheet submitted! Check your answers with a teacher or parent. ✨')">✅ Submit Answers</button>
+    <button class="btn btn-reset" onclick="location.reload()">🔄 Clear All</button>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="worksheet.html" class="nav-btn nav-btn-prev">⬅️ Worksheet 1</a>
+    <a href="index.html" class="nav-btn nav-btn-next">Angles Home ➡️</a>
+  </div>
+</div>
+
+</body>
+</html>

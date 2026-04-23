@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Level 10: Angle Constructions & Mastery 🏆</title>
+<style>
+  :root{ --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0; --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53; }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{ background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff); color:var(--ink); padding:20px; }
+  .container{ max-width:1000px; margin:0 auto; }
+  .nav-top{ position:fixed;top:20px;display:flex;gap:15px;z-index:101; }
+  .nav-back{ left:20px; }
+  .nav-home{ right:20px; }
+  .icon-btn{ background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;display:flex;align-items:center;justify-content:center;font-weight:bold; }
+  .icon-btn:hover{transform:translateY(-2px);}
+  header{ text-align:center; margin:60px 0 40px 0; }
+  h1{ font-size:clamp(36px,6vw,56px); background:linear-gradient(90deg,#a06cd5,#4cc9f0,#06d6a0); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:10px; }
+  .subtitle{ font-size:clamp(18px,2.5vw,24px); color:var(--blue); font-weight:bold; }
+  .emoji-row{ font-size:clamp(40px,8vw,60px); text-align:center; margin:20px 0; letter-spacing:10px; }
+  .card{ background:var(--cream); border-radius:16px; padding:24px; margin-bottom:25px; border:3px solid var(--purple); box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  h2{ font-size:clamp(18px,2.5vw,24px); color:var(--pink); margin-bottom:15px; }
+  h3{ font-size:clamp(16px,2vw,20px); color:var(--purple); margin-top:15px; margin-bottom:10px; }
+  p{ font-size:clamp(16px,2vw,18px); line-height:1.6; margin-bottom:12px; }
+  ul{ margin-left:30px; margin-bottom:15px; }
+  li{ font-size:clamp(15px,1.8vw,18px); margin-bottom:10px; line-height:1.6; }
+  .diagram-container{ display:flex; justify-content:center; flex-wrap:wrap; gap:20px; margin:20px 0; }
+  .diagram-box{ background:#f0f9ff; border:2px solid #4cc9f0; border-radius:12px; padding:15px; text-align:center; flex:0 1 220px; }
+  .diagram-box svg{ max-width:100%; height:auto; margin-bottom:10px; }
+  .diagram-label{ font-weight:bold; color:var(--purple); font-size:14px; margin-top:10px; }
+  .steps-box{ background:#fff5e6; border:3px solid #ffd166; border-radius:12px; padding:15px; margin:15px 0; }
+  .steps-box h4{ color:#ff9e45; margin-bottom:10px; }
+  .steps-box ol{ margin-left:20px; }
+  .challenge-box{ background:#fff5f0; border:3px solid #ff6ec7; border-radius:12px; padding:15px; margin:15px 0; }
+  .challenge-box h4{ color:#ff6ec7; margin-bottom:10px; }
+  .nav-buttons{ display:flex; justify-content:space-between; margin-top:40px; gap:20px; }
+  .nav-btn{ flex:1; padding:16px 24px; border:none; border-radius:50px; font-size:16px; font-weight:bold; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-block; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  .nav-btn-prev{ background:var(--purple); color:white; }
+  .nav-btn-home{ background:var(--teal); color:white; }
+  .nav-btn:hover{ transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+  .summary-box{ background:linear-gradient(135deg,#fff5d6,#ffe6cc); border:3px solid #ffd166; border-radius:12px; padding:20px; margin:20px 0; }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back"><a href="index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Angles">⬅️</button></a></div>
+<div class="nav-top nav-home"><a href="../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a></div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🏆 ⭐ ✨</div>
+    <h1>Level 10: <span style="background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;">Angle Constructions & Mastery</span></h1>
+    <p class="subtitle">Master angle constructions and become an angle expert! 🎯</p>
+  </header>
+
+  <div class="summary-box">
+    <h2 style="color:#ff9e45; margin-top:0;">🎓 Congratulations!</h2>
+    <p>You've completed Levels 1-9! You now understand angles at an advanced level, including trigonometry! This final level brings it all together with constructions and expert-level challenges.</p>
+  </div>
+
+  <div class="card">
+    <h2>✏️ Constructing Angles with Compass & Straightedge</h2>
+    <p>Before protractors existed, mathematicians constructed angles using only a compass and straightedge. These techniques are still valuable today!</p>
+
+    <h3>Constructing a 90° Angle</h3>
+    <div class="steps-box">
+      <h4>Steps:</h4>
+      <ol>
+        <li>Draw a straight line</li>
+        <li>Choose a point on the line (vertex)</li>
+        <li>Using compass, draw a circle centered at the vertex</li>
+        <li>Mark the two intersection points on the line</li>
+        <li>From each intersection, draw larger circles (same radius)</li>
+        <li>Connect the vertex to where these circles intersect (above the line)</li>
+        <li>This creates a perfect 90° angle!</li>
+      </ol>
+    </div>
+
+    <div class="diagram-container">
+      <div class="diagram-box">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="30" y1="150" x2="170" y2="150" stroke="#1d2b53" stroke-width="2"/>
+          <circle cx="100" cy="150" r="40" fill="none" stroke="#4cc9f0" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <circle cx="60" cy="150" r="50" fill="none" stroke="#a06cd5" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <circle cx="140" cy="150" r="50" fill="none" stroke="#a06cd5" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <line x1="100" y1="150" x2="100" y2="60" stroke="#06d6a0" stroke-width="3"/>
+          <circle cx="100" cy="150" r="3" fill="#ff6ec7"/>
+          <rect x="90" y="140" width="10" height="10" fill="none" stroke="#06d6a0" stroke-width="2"/>
+          <text x="105" y="165" font-size="12" fill="#1d2b53" font-weight="bold">90°</text>
+        </svg>
+        <div class="diagram-label">Constructing 90° with Compass</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📐 Constructing Other Common Angles</h2>
+
+    <h3>Constructing a 60° Angle</h3>
+    <p>This uses an equilateral triangle since all angles in an equilateral triangle are 60°!</p>
+    <ul>
+      <li>Draw a line segment</li>
+      <li>Using compass, set radius to the segment length</li>
+      <li>Draw circles from both endpoints</li>
+      <li>Connect an endpoint to the circle intersection point</li>
+      <li>You get a 60° angle!</li>
+    </ul>
+
+    <h3>Constructing 45° and 30°</h3>
+    <ul>
+      <li><b>45°:</b> Construct 90°, then bisect it (divide it in half)</li>
+      <li><b>30°:</b> Construct 60°, then bisect it</li>
+      <li><b>Any angle:</b> Use angle bisector construction</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🔍 Angle Bisector Construction</h2>
+    <p>An angle bisector divides any angle into two equal parts (like cutting it perfectly in half).</p>
+    <div class="steps-box">
+      <h4>How to Bisect an Angle:</h4>
+      <ol>
+        <li>Place compass at the angle's vertex</li>
+        <li>Draw an arc that crosses both sides of the angle</li>
+        <li>From the two arc intersections, draw circles with the same radius</li>
+        <li>These circles intersect at a point</li>
+        <li>Draw a line from the vertex through this intersection point</li>
+        <li>This line perfectly bisects the angle!</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Expert Problem-Solving Challenges</h2>
+
+    <div class="challenge-box">
+      <h4>Challenge 1: Multi-Angle Problem</h4>
+      <p><b>Setup:</b> Two parallel lines crossed by a transversal. The transversal also crosses another line, creating a complex angle pattern.</p>
+      <p><b>Challenge:</b> Find all 12+ angles if you only know one angle is 65°.</p>
+      <p><b>Skills needed:</b> Parallel line angles, linear pairs, vertical angles, supplementary angles</p>
+    </div>
+
+    <div class="challenge-box">
+      <h4>Challenge 2: Triangle Construction</h4>
+      <p><b>Setup:</b> You know three angles of different triangles and some side lengths.</p>
+      <p><b>Challenge:</b> Determine if the angles are valid, construct the triangles, and calculate missing sides using trigonometry.</p>
+      <p><b>Skills needed:</b> Triangle angle sum rule, Pythagorean theorem, trigonometry</p>
+    </div>
+
+    <div class="challenge-box">
+      <h4>Challenge 3: Polygon Analysis</h4>
+      <p><b>Setup:</b> You have an irregular polygon with some angles and side lengths given.</p>
+      <p><b>Challenge:</b> Find all missing angles, areas, and perimeters.</p>
+      <p><b>Skills needed:</b> Polygon angle formulas, decomposition into triangles, geometry</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🌟 Mastery Checklist</h2>
+    <p>Rate yourself on each skill (1=Need review, 5=Expert):</p>
+    <ul style="list-style:none;">
+      <li>☐ I can classify any angle type instantly</li>
+      <li>☐ I understand and apply all angle relationships</li>
+      <li>☐ I can solve multi-step angle problems</li>
+      <li>☐ I can find angles in triangles and polygons</li>
+      <li>☐ I understand parallel lines and transversals</li>
+      <li>☐ I can use trigonometry to solve problems</li>
+      <li>☐ I can construct angles with compass and straightedge</li>
+      <li>☐ I can apply angles to real-world situations</li>
+      <li>☐ I can explain WHY angle rules work (proofs)</li>
+      <li>☐ I can solve complex, multi-concept problems</li>
+    </ul>
+    <p style="margin-top:20px;"><b>If all or most boxes are checked:</b> You are an angle MASTER! 🏆</p>
+  </div>
+
+  <div class="card">
+    <h2>🚀 Your Next Steps</h2>
+    <ul>
+      <li><b>Advanced Trigonometry:</b> Learn about inverse trig functions, unit circles, and trigonometric identities</li>
+      <li><b>Coordinate Geometry:</b> Apply angles to the coordinate plane and analytic geometry</li>
+      <li><b>Calculus:</b> Learn how angles relate to rates of change and optimization</li>
+      <li><b>Physics:</b> Apply angle concepts to motion, forces, waves, and optics</li>
+      <li><b>Engineering:</b> Use angles in structural design, surveying, and navigation</li>
+      <li><b>3D Geometry:</b> Extend angle concepts to three-dimensional space</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🎓 Complete Journey Summary</h2>
+    <p><b>Levels 1-3:</b> Foundation - Understanding what angles are and how to measure them</p>
+    <p><b>Levels 4-6:</b> Relationships - How angles work together and interact</p>
+    <p><b>Level 7:</b> Application - Using angles in the real world</p>
+    <p><b>Level 8:</b> Practice - Solving problems and testing understanding</p>
+    <p><b>Level 9:</b> Trigonometry - Connecting angles to triangle sides with ratios</p>
+    <p><b>Level 10:</b> Mastery - Constructing angles and solving expert problems</p>
+    <p style="margin-top:20px; font-size:18px; color:#a06cd5; font-weight:bold;">You have successfully completed the complete Angles Learning Journey!</p>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="level9.html" class="nav-btn nav-btn-prev">⬅️ Level 9</a>
+    <a href="index.html" class="nav-btn nav-btn-home">Angles Home 🏠</a>
+  </div>
+</div>
+
+</body>
+</html>

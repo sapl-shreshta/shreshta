@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Level 7: Angles in Circles 🔁</title>
+<style>
+  :root{ --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0; --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53; }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{ background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff); color:var(--ink); padding:20px; }
+  .container{ max-width:1000px; margin:0 auto; }
+  .nav-top{ position:fixed;top:20px;display:flex;gap:15px;z-index:101; }
+  .nav-back{ left:20px; }
+  .nav-home{ right:20px; }
+  .icon-btn{ background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;display:flex;align-items:center;justify-content:center;font-weight:bold; }
+  .icon-btn:hover{transform:translateY(-2px);}
+  header{ text-align:center; margin:60px 0 40px 0; }
+  h1{ font-size:clamp(36px,6vw,56px); background:linear-gradient(90deg,#a06cd5,#4cc9f0,#06d6a0); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:10px; }
+  .subtitle{ font-size:clamp(18px,2.5vw,24px); color:var(--blue); font-weight:bold; }
+  .emoji-row{ font-size:clamp(40px,8vw,60px); text-align:center; margin:20px 0; letter-spacing:10px; }
+  .card{ background:var(--cream); border-radius:16px; padding:24px; margin-bottom:25px; border:3px solid var(--purple); box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  h2{ font-size:clamp(18px,2.5vw,24px); color:var(--pink); margin-bottom:15px; }
+  h3{ font-size:clamp(16px,2vw,20px); color:var(--purple); margin-top:15px; margin-bottom:10px; }
+  p{ font-size:clamp(16px,2vw,18px); line-height:1.6; margin-bottom:12px; }
+  ul{ margin-left:30px; margin-bottom:15px; }
+  li{ font-size:clamp(15px,1.8vw,18px); margin-bottom:10px; line-height:1.6; }
+  .rule-box{ background:#fff5f0; border:3px solid #ff6ec7; border-radius:12px; padding:15px; margin:15px 0; }
+  .diagram-container{ display:flex; justify-content:center; flex-wrap:wrap; gap:20px; margin:20px 0; }
+  .diagram-box{ background:#f0f9ff; border:2px solid #4cc9f0; border-radius:12px; padding:15px; text-align:center; flex:0 1 200px; }
+  .diagram-box svg{ max-width:100%; height:auto; margin-bottom:10px; }
+  .diagram-label{ font-weight:bold; color:var(--purple); font-size:14px; margin-top:10px; }
+  .app-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; margin:15px 0; }
+  .app-card{ background:linear-gradient(135deg,#f0f9ff,#fff5f0); border:2px solid #4cc9f0; border-radius:12px; padding:15px; }
+  .app-card h4{ color:#a06cd5; margin-bottom:8px; font-size:16px; }
+  .app-card p{ font-size:14px; margin:0; }
+  .nav-buttons{ display:flex; justify-content:space-between; margin-top:40px; gap:20px; }
+  .nav-btn{ flex:1; padding:16px 24px; border:none; border-radius:50px; font-size:16px; font-weight:bold; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-block; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  .nav-btn-prev{ background:var(--purple); color:white; }
+  .nav-btn-next{ background:var(--teal); color:white; }
+  .nav-btn:hover{ transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back"><a href="index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Angles">⬅️</button></a></div>
+<div class="nav-top nav-home"><a href="../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a></div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🔁 🌍 ✨</div>
+    <h1>Level 7: <span style="background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;">Angles in the Real World</span></h1>
+    <p class="subtitle">See how angles are used in real-world applications! 🌟</p>
+  </header>
+
+  <div class="card">
+    <h2>🔁 Circle Angles</h2>
+    <p>Circles have special angle relationships that are important in geometry and engineering:</p>
+
+    <h3>Central Angle</h3>
+    <p>A <b>central angle</b> has its vertex at the <b>center of the circle</b> and its sides extend to the circle.</p>
+    <ul>
+      <li>The angle measure equals the arc measure</li>
+      <li>A full circle = 360°</li>
+    </ul>
+
+    <h3>Inscribed Angle</h3>
+    <p>An <b>inscribed angle</b> has its vertex <b>on the circle</b> and its sides are chords of the circle.</p>
+    <div class="rule-box">
+      <b>⭐ Rule: Inscribed angle = ½ × Central angle (same arc)</b>
+    </div>
+
+    <h3>Special Circle Angle Rules</h3>
+    <ul>
+      <li><b>Angle in a semicircle:</b> Any angle inscribed in a semicircle = 90° (right angle!)</li>
+      <li><b>Angles in the same segment:</b> All inscribed angles subtending the same arc are equal</li>
+      <li><b>Tangent-radius angle:</b> A tangent line to a circle is always perpendicular (90°) to the radius at that point</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🏗️ Architecture & Construction</h2>
+    <p>Architects and builders use angles every day to design safe and beautiful structures:</p>
+    <div class="app-grid">
+      <div class="app-card">
+        <h4>🏠 Roof Design</h4>
+        <p>Roof angles determine water drainage and snow load capacity. Common angles: 30°-45°</p>
+      </div>
+      <div class="app-card">
+        <h4>🪟 Windows & Doors</h4>
+        <p>Right angles (90°) are essential for proper fit and functionality</p>
+      </div>
+      <div class="app-card">
+        <h4>🌉 Bridges</h4>
+        <p>Support angles must be precise to distribute weight safely</p>
+      </div>
+      <div class="app-card">
+        <h4>⛪ Arches</h4>
+        <p>Ancient and modern arches use specific angles for strength</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧭 Navigation & Direction</h2>
+    <p>Angles are critical for finding direction and location:</p>
+    <div class="app-grid">
+      <div class="app-card">
+        <h4>🧭 Compass Bearings</h4>
+        <p>Angles from North (0°) to measure direction: East 90°, South 180°, West 270°</p>
+      </div>
+      <div class="app-card">
+        <h4>✈️ Flight Paths</h4>
+        <p>Pilots use angles to navigate and maintain course</p>
+      </div>
+      <div class="app-card">
+        <h4>🗺️ Map Reading</h4>
+        <p>Angles help determine distance and direction between locations</p>
+      </div>
+      <div class="app-card">
+        <h4>🛰️ Satellite Navigation</h4>
+        <p>GPS uses precise angle calculations for positioning</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⚙️ Engineering & Mechanics</h2>
+    <p>Engineers use angles to make machines work correctly:</p>
+    <div class="app-grid">
+      <div class="app-card">
+        <h4>🔧 Gears</h4>
+        <p>Gears mesh at specific angles to transfer power efficiently</p>
+      </div>
+      <div class="app-card">
+        <h4>🚗 Vehicle Design</h4>
+        <p>Wheel alignment angles affect handling and tire wear</p>
+      </div>
+      <div class="app-card">
+        <h4>📡 Antenna Positioning</h4>
+        <p>Antennas must point at specific angles to receive signals</p>
+      </div>
+      <div class="app-card">
+        <h4>⚡ Solar Panels</h4>
+        <p>Panels positioned at optimal angles capture maximum sunlight</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎨 Art, Design & Photography</h2>
+    <p>Angles are fundamental to creating visually appealing works:</p>
+    <div class="app-grid">
+      <div class="app-card">
+        <h4>📐 Perspective Drawing</h4>
+        <p>Artists use angle principles to create 3D effects on flat surfaces</p>
+      </div>
+      <div class="app-card">
+        <h4>📸 Camera Angles</h4>
+        <p>Photographers choose camera angles to tell stories and create emotions</p>
+      </div>
+      <div class="app-card">
+        <h4>🎬 Film & Video</h4>
+        <p>Cinematographers use specific angles for cinematic effects</p>
+      </div>
+      <div class="app-card">
+        <h4>🎮 3D Graphics</h4>
+        <p>All 3D images are constructed using geometric angles</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⚽ Sports & Recreation</h2>
+    <p>Athletes and coaches use angles to improve performance:</p>
+    <div class="app-grid">
+      <div class="app-card">
+        <h4>🏀 Ball Trajectory</h4>
+        <p>Launch angle (45° is often optimal) affects distance in many sports</p>
+      </div>
+      <div class="app-card">
+        <h4>⛳ Golf</h4>
+        <p>Club face angle and swing plane angles affect ball flight</p>
+      </div>
+      <div class="app-card">
+        <h4>🏐 Volleyball</h4>
+        <p>Serving and attacking angles determine effectiveness</p>
+      </div>
+      <div class="app-card">
+        <h4>🚴 Cycling</h4>
+        <p>Body position angles affect aerodynamics and power</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎓 What You've Learned in Level 7</h2>
+    <ul>
+      <li>✓ Central and inscribed angles in circles</li>
+      <li>✓ Special rules for circle angles (90° in semicircle, etc.)</li>
+      <li>✓ How architecture uses angles in buildings and structures</li>
+      <li>✓ How navigation relies on angles and bearings</li>
+      <li>✓ How engineers use angles in machines and mechanisms</li>
+      <li>✓ How angles appear in art, design, and photography</li>
+      <li>✓ How athletes use angles to improve performance</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="level6.html" class="nav-btn nav-btn-prev">⬅️ Level 6</a>
+    <a href="level8.html" class="nav-btn nav-btn-next">Level 8 ➡️</a>
+  </div>
+</div>
+
+</body>
+</html>

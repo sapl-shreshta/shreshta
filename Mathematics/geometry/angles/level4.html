@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Level 4: Angle Relationships 🔗</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+    color:var(--ink);
+    padding:20px;
+  }
+
+  .container{ max-width:1000px; margin:0 auto; }
+  .nav-top{ position:fixed;top:20px;display:flex;gap:15px;z-index:101; }
+  .nav-back{ left:20px; }
+  .nav-home{ right:20px; }
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+
+  header{ text-align:center; margin:60px 0 40px 0; }
+  h1{
+    font-size:clamp(36px,6vw,56px);
+    background:linear-gradient(90deg,#a06cd5,#4cc9f0,#06d6a0);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-bottom:10px;
+  }
+  .subtitle{ font-size:clamp(18px,2.5vw,24px); color:var(--blue); font-weight:bold; }
+  .emoji-row{ font-size:clamp(40px,8vw,60px); text-align:center; margin:20px 0; letter-spacing:10px; }
+
+  .card{ background:var(--cream); border-radius:16px; padding:24px; margin-bottom:25px; border:3px solid var(--purple); box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  h2{ font-size:clamp(18px,2.5vw,24px); color:var(--pink); margin-bottom:15px; }
+  h3{ font-size:clamp(16px,2vw,20px); color:var(--purple); margin-top:15px; margin-bottom:10px; }
+  p{ font-size:clamp(16px,2vw,18px); line-height:1.6; margin-bottom:12px; color:var(--ink); }
+  ul{ margin-left:30px; margin-bottom:15px; }
+  li{ font-size:clamp(15px,1.8vw,18px); margin-bottom:10px; line-height:1.6; }
+
+  .highlight{ background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:bold; }
+  .badge{ display:inline-block; background:var(--teal); color:white; padding:6px 12px; border-radius:16px; font-weight:bold; font-size:14px; }
+
+  .diagram-container{ display:flex; justify-content:center; flex-wrap:wrap; gap:20px; margin:20px 0; }
+  .diagram-box{ background:#f0f9ff; border:2px solid #4cc9f0; border-radius:12px; padding:15px; text-align:center; flex:0 1 220px; }
+  .diagram-box svg{ max-width:100%; height:auto; margin-bottom:10px; }
+  .diagram-label{ font-weight:bold; color:var(--purple); margin-top:10px; font-size:14px; }
+
+  .rule-box{ background:#fff5f0; border:3px solid #ff6ec7; border-radius:12px; padding:15px; margin:15px 0; }
+  .rule-title{ color:#ff6ec7; font-weight:bold; margin-bottom:10px; }
+
+  .nav-buttons{ display:flex; justify-content:space-between; margin-top:40px; gap:20px; }
+  .nav-btn{ flex:1; padding:16px 24px; border:none; border-radius:50px; font-size:16px; font-weight:bold; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-block; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  .nav-btn-prev{ background:var(--purple); color:white; }
+  .nav-btn-next{ background:var(--teal); color:white; }
+  .nav-btn:hover{ transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Angles">⬅️</button>
+  </a>
+</div>
+
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🔗 📐 ✨</div>
+    <h1>Level 4: <span class="highlight">Angle Relationships</span></h1>
+    <p class="subtitle">Discover how angles relate to each other! 🎯</p>
+  </header>
+
+  <div class="card">
+    <h2>👫 Adjacent Angles</h2>
+    <p>Adjacent angles are two angles that <b>share a common vertex</b> and <b>share a common side</b>, but do <b>not overlap</b>.</p>
+    <div class="diagram-container">
+      <div class="diagram-box">
+        <svg viewBox="0 0 160 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="80" y1="70" x2="130" y2="70" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="80" y1="70" x2="105" y2="40" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="80" y1="70" x2="60" y2="30" stroke="#1d2b53" stroke-width="3"/>
+          <path d="M 100 70 Q 95 60 88 50" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+          <path d="M 88 50 Q 75 40 65 35" fill="none" stroke="#4cc9f0" stroke-width="2.5"/>
+          <circle cx="80" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="95" y="60" font-size="12" fill="#06d6a0" font-weight="bold">40°</text>
+          <text x="60" y="45" font-size="12" fill="#4cc9f0" font-weight="bold">50°</text>
+        </svg>
+        <div class="diagram-label">Adjacent Angles (40° + 50°)</div>
+      </div>
+    </div>
+    <ul>
+      <li><b>Key feature:</b> They share one common side (the middle line)</li>
+      <li><b>Their sum:</b> Can be any value - they don't have a fixed total</li>
+      <li><b>Real example:</b> Slices in a pizza are adjacent angles</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📏 Linear Pair</h2>
+    <p>A linear pair is a special case of adjacent angles where the <b>two non-common sides form a straight line</b>.</p>
+    <div class="diagram-container">
+      <div class="diagram-box">
+        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="100" x2="180" y2="100" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="100" y1="100" x2="70" y2="30" stroke="#1d2b53" stroke-width="3"/>
+          <path d="M 85 95 Q 75 85 65 80" fill="none" stroke="#ff6ec7" stroke-width="2.5"/>
+          <path d="M 115 95 Q 125 85 135 80" fill="none" stroke="#4cc9f0" stroke-width="2.5"/>
+          <circle cx="100" cy="100" r="3" fill="#1d2b53"/>
+          <text x="55" y="80" font-size="12" fill="#ff6ec7" font-weight="bold">110°</text>
+          <text x="135" y="80" font-size="12" fill="#4cc9f0" font-weight="bold">70°</text>
+          <text x="95" y="125" font-size="13" fill="#1d2b53" font-weight="bold">Straight Line (180°)</text>
+        </svg>
+        <div class="diagram-label">Linear Pair: 110° + 70° = 180°</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-title">⭐ Key Rule: Linear Pair Angles Always Sum to 180°</div>
+      <p><b>If two angles form a linear pair:</b> Angle 1 + Angle 2 = 180°</p>
+      <p><b>Example:</b> 110° + 70° = 180°</p>
+    </div>
+    <ul>
+      <li><b>What it is:</b> Two adjacent angles on a straight line</li>
+      <li><b>The rule:</b> They always add to exactly 180°</li>
+      <li><b>Use it to find:</b> If you know one angle, subtract from 180° to find the other</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🔄 Vertically Opposite Angles</h2>
+    <p>When two straight lines cross, they form <b>four angles</b>. The angles that are <b>directly across from each other</b> are called vertically opposite angles.</p>
+    <div class="diagram-container">
+      <div class="diagram-box">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="30" y1="30" x2="170" y2="170" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="170" y1="30" x2="30" y2="170" stroke="#1d2b53" stroke-width="3"/>
+          <path d="M 80 80 Q 85 75 90 70" fill="none" stroke="#ff6ec7" stroke-width="2.5"/>
+          <path d="M 110 130 Q 115 135 120 140" fill="none" stroke="#ff6ec7" stroke-width="2.5"/>
+          <path d="M 70 110 Q 65 115 60 120" fill="none" stroke="#4cc9f0" stroke-width="2.5"/>
+          <path d="M 130 90 Q 135 85 140 80" fill="none" stroke="#4cc9f0" stroke-width="2.5"/>
+          <circle cx="100" cy="100" r="3" fill="#1d2b53"/>
+          <text x="75" y="50" font-size="13" fill="#ff6ec7" font-weight="bold">A=65°</text>
+          <text x="120" y="160" font-size="13" fill="#ff6ec7" font-weight="bold">C=65°</text>
+          <text x="35" y="120" font-size="13" fill="#4cc9f0" font-weight="bold">B=115°</text>
+          <text x="145" y="80" font-size="13" fill="#4cc9f0" font-weight="bold">D=115°</text>
+        </svg>
+        <div class="diagram-label">Vertical Angles: A=C, B=D</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-title">⭐ Key Rule: Vertically Opposite Angles Are Always Equal</div>
+      <p><b>If two lines intersect:</b> Angle A = Angle C, and Angle B = Angle D</p>
+    </div>
+    <ul>
+      <li><b>What it is:</b> Opposite angles formed when two lines cross</li>
+      <li><b>The rule:</b> They are always equal in measure</li>
+      <li><b>Bonus:</b> Adjacent angles at the intersection form linear pairs</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>✨ Complementary Angles</h2>
+    <p>Two angles are <b>complementary</b> if their <b>sum equals 90°</b>. They don't need to be adjacent!</p>
+    <div class="diagram-container">
+      <div class="diagram-box">
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <line x1="100" y1="140" x2="100" y2="30" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="100" y1="140" x2="170" y2="140" stroke="#1d2b53" stroke-width="3"/>
+          <path d="M 110 130 Q 120 125 130 115" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+          <path d="M 110 130 Q 105 120 100 110" fill="none" stroke="#ff6ec7" stroke-width="2.5"/>
+          <circle cx="100" cy="140" r="3" fill="#1d2b53"/>
+          <text x="125" y="115" font-size="12" fill="#06d6a0" font-weight="bold">60°</text>
+          <text x="80" y="110" font-size="12" fill="#ff6ec7" font-weight="bold">30°</text>
+          <text x="80" y="40" font-size="13" fill="#1d2b53" font-weight="bold">90° Angle</text>
+        </svg>
+        <div class="diagram-label">Complementary: 30° + 60° = 90°</div>
+      </div>
+      <div class="diagram-box">
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <line x1="100" y1="140" x2="30" y2="140" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="100" y1="140" x2="100" y2="30" stroke="#1d2b53" stroke-width="3"/>
+          <path d="M 90 130 Q 80 125 70 120" fill="none" stroke="#4cc9f0" stroke-width="2.5"/>
+          <path d="M 110 130 Q 115 120 120 110" fill="none" stroke="#ffd166" stroke-width="2.5"/>
+          <circle cx="100" cy="140" r="3" fill="#1d2b53"/>
+          <text x="50" y="115" font-size="12" fill="#4cc9f0" font-weight="bold">45°</text>
+          <text x="115" y="110" font-size="12" fill="#ffd166" font-weight="bold">45°</text>
+          <text x="80" y="40" font-size="13" fill="#1d2b53" font-weight="bold">90° Angle</text>
+        </svg>
+        <div class="diagram-label">Complementary: 45° + 45° = 90°</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-title">⭐ Key Rule: Complementary Angles Sum to 90°</div>
+      <p><b>Angle A + Angle B = 90°</b></p>
+      <p><b>Examples:</b> 30° + 60° = 90°, or 45° + 45° = 90°</p>
+    </div>
+    <ul>
+      <li><b>Key requirement:</b> The two angles must sum to exactly 90°</li>
+      <li><b>They can be:</b> Adjacent or separate</li>
+      <li><b>Use it to find:</b> Subtract from 90° to find its complement</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>➕ Supplementary Angles</h2>
+    <p>Two angles are <b>supplementary</b> if their <b>sum equals 180°</b>.</p>
+    <div class="diagram-container">
+      <div class="diagram-box">
+        <svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="100" x2="200" y2="100" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="100" y1="100" x2="50" y2="30" stroke="#1d2b53" stroke-width="3"/>
+          <path d="M 75 95 Q 65 85 55 75" fill="none" stroke="#ef476f" stroke-width="2.5"/>
+          <path d="M 125 95 Q 135 85 145 75" fill="none" stroke="#a06cd5" stroke-width="2.5"/>
+          <circle cx="100" cy="100" r="3" fill="#1d2b53"/>
+          <text x="40" y="70" font-size="12" fill="#ef476f" font-weight="bold">120°</text>
+          <text x="145" y="70" font-size="12" fill="#a06cd5" font-weight="bold">60°</text>
+          <text x="75" y="125" font-size="13" fill="#1d2b53" font-weight="bold">Straight Line (180°)</text>
+        </svg>
+        <div class="diagram-label">Supplementary: 120° + 60° = 180°</div>
+      </div>
+      <div class="diagram-box">
+        <svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="100" x2="200" y2="100" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="110" y1="100" x2="60" y2="30" stroke="#1d2b53" stroke-width="3"/>
+          <path d="M 85 95 Q 75 85 65 75" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+          <path d="M 135 95 Q 145 85 155 75" fill="none" stroke="#4cc9f0" stroke-width="2.5"/>
+          <circle cx="110" cy="100" r="3" fill="#1d2b53"/>
+          <text x="50" y="70" font-size="12" fill="#06d6a0" font-weight="bold">90°</text>
+          <text x="155" y="70" font-size="12" fill="#4cc9f0" font-weight="bold">90°</text>
+          <text x="75" y="125" font-size="13" fill="#1d2b53" font-weight="bold">Straight Line (180°)</text>
+        </svg>
+        <div class="diagram-label">Supplementary: 90° + 90° = 180°</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-title">⭐ Key Rule: Supplementary Angles Sum to 180°</div>
+      <p><b>Angle A + Angle B = 180°</b></p>
+      <p><b>Examples:</b> 120° + 60° = 180°, or 90° + 90° = 180°</p>
+    </div>
+    <ul>
+      <li><b>Key requirement:</b> The two angles must sum to exactly 180°</li>
+      <li><b>Connection:</b> Linear pairs are always supplementary!</li>
+      <li><b>Use it to find:</b> Subtract from 180° to find its supplement</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🎓 What You've Learned in Level 4</h2>
+    <ul>
+      <li>✓ Adjacent angles share a vertex and a side</li>
+      <li>✓ Linear pairs sum to 180° and form a straight line</li>
+      <li>✓ Vertically opposite angles are equal</li>
+      <li>✓ Complementary angles sum to 90°</li>
+      <li>✓ Supplementary angles sum to 180°</li>
+    </ul>
+  </div>
+
+  <div class="card" style="background:linear-gradient(135deg,#e8f5e9,#f0f9ff); border-color:#06d6a0;">
+    <h2 style="color:#06d6a0;">📝 Practice Your Skills!</h2>
+    <p>Ready to test your understanding of angle relationships? Try <b>Worksheet 2</b> with 16 practice problems covering complementary angles, supplementary angles, vertical angles, and more!</p>
+    <div style="text-align:center; margin:20px 0;">
+      <a href="worksheet2.html" style="display:inline-block; background:linear-gradient(90deg,#06d6a0,#4cc9f0); color:white; padding:14px 32px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:18px; box-shadow:0 4px 12px rgba(0,0,0,.08); transition:all .3s;">
+        ✏️ Go to Worksheet 2
+      </a>
+    </div>
+    <p style="text-align:center; font-size:14px; color:var(--purple); margin-top:15px;"><b>Topics Covered:</b> Complementary & Supplementary Angles, Vertical Angles, Linear Pairs, Triangle & Quadrilateral Angles</p>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="level3.html" class="nav-btn nav-btn-prev">⬅️ Level 3</a>
+    <a href="level5.html" class="nav-btn nav-btn-next">Level 5 ➡️</a>
+  </div>
+</div>
+
+</body>
+</html>

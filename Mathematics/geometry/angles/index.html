@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Angles - Let's Learn! 📐✨</title>
+<title>Angles - Complete Learning Path 📐</title>
 <style>
   :root{
     --pink:#ff6ec7;
@@ -29,16 +29,11 @@
     margin:0 auto;
   }
 
-  /* Navigation buttons */
   .nav-top{
     position:fixed;top:20px;display:flex;gap:15px;z-index:101;
   }
-  .nav-back{
-    left:20px;
-  }
-  .nav-home{
-    right:20px;
-  }
+  .nav-back{ left:20px; }
+  .nav-home{ right:20px; }
   .icon-btn{
     background:var(--purple);color:white;border:none;
     border-radius:50%;width:50px;height:50px;
@@ -57,7 +52,10 @@
 
   h1{
     font-size:clamp(36px,6vw,56px);
-    color:var(--purple);
+    background:linear-gradient(90deg,#06d6a0,#4cc9f0,#a06cd5);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
     margin-bottom:10px;
   }
 
@@ -67,25 +65,95 @@
     font-weight:bold;
   }
 
-  .card{
+  .emoji-row{
+    font-size:clamp(40px,8vw,60px);
+    text-align:center;
+    margin:20px 0;
+    letter-spacing:10px;
+  }
+
+  .levels-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:20px;
+    margin:40px 0;
+  }
+
+  .level-card{
     background:var(--cream);
     border-radius:16px;
-    padding:16px 12px;
-    margin-bottom:25px;
+    padding:20px;
     border:3px solid var(--purple);
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    text-decoration:none;
+    color:inherit;
+    transition:all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor:pointer;
+  }
+
+  .level-card:hover{
+    transform:translateY(-8px) scale(1.05);
+    box-shadow:0 12px 24px rgba(0,0,0,.15);
+  }
+
+  .level-emoji{
+    font-size:48px;
+    margin-bottom:10px;
+  }
+
+  .level-card h2{
+    font-size:clamp(16px,2.5vw,20px);
+    color:var(--pink);
+    margin-bottom:8px;
+  }
+
+  .level-card p{
+    font-size:clamp(13px,1.5vw,15px);
+    color:var(--ink);
+    line-height:1.5;
+    margin-bottom:12px;
+  }
+
+  .badge{
+    display:inline-block;
+    background:var(--teal);
+    color:white;
+    padding:4px 10px;
+    border-radius:12px;
+    font-weight:bold;
+    font-size:12px;
+  }
+
+  .description-card{
+    background:var(--cream);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:25px;
+    border:3px solid var(--teal);
     box-shadow:0 4px 12px rgba(0,0,0,.08);
   }
 
-  h2{
-    font-size:clamp(13px,2vw,16px);
+  .description-card h2{
     color:var(--pink);
+    margin-bottom:15px;
+    font-size:clamp(18px,2.5vw,24px);
+  }
+
+  .description-card p{
+    font-size:clamp(15px,2vw,18px);
+    line-height:1.6;
+    margin-bottom:12px;
+  }
+
+  ul{
+    margin-left:30px;
     margin-bottom:15px;
   }
 
-  p{
-    font-size:clamp(16px,2vw,20px);
+  li{
+    font-size:clamp(14px,1.8vw,17px);
+    margin-bottom:8px;
     line-height:1.6;
-    margin-bottom:10px;
   }
 
   .highlight{
@@ -96,158 +164,58 @@
     font-weight:bold;
   }
 
-  ul{
-    margin-left:30px;
-    margin-bottom:15px;
-  }
-
-  li{
-    font-size:clamp(16px,2vw,20px);
-    margin-bottom:8px;
-    line-height:1.5;
-  }
-
-  .emoji-row{
-    font-size:clamp(40px,8vw,60px);
-    text-align:center;
-    margin:20px 0;
-    letter-spacing:10px;
-  }
-
-  .worksheet-section{
-    background:linear-gradient(135deg,var(--yellow),var(--orange));
-    border-radius:16px;
-    padding:16px 12px;
-    text-align:center;
-    margin:30px 0;
-    border:3px solid var(--orange);
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-  }
-
-  .worksheet-btn{
-    background:var(--red);
-    color:white;
-    border:none;
-    border-radius:50px;
-    padding:16px 12px;
-    font-size:clamp(16px,2vw,22px);
-    cursor:pointer;
-    box-shadow:0 6px 0 #b43355;
-    transition:transform .15s;
-    font-weight:bold;
-    text-decoration:none;
-    display:inline-block;
-    margin-top:15px;
-  }
-
-  .worksheet-btn:hover{
-    transform:translateY(-2px);
-  }
-
-  .worksheet-btn:active{
-    transform:translateY(3px);
-    box-shadow:0 3px 0 #b43355;
-  }
-
-  .pop{
-    display:inline-block;
-    animation:pop 2s ease-in-out infinite;
-  }
-  @keyframes pop{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
-
-  .badge{
-    display:inline-block;
-    background:var(--teal);
-    color:white;
-    padding:16px 12px;
-    border-radius:16px;
-    font-weight:bold;
-    margin:4px;
-    border:3px solid var(--teal);
-  }
-
-  /* Accordion Styles */
-  .accordion{
-    margin:30px 0;
-  }
-
-  .accordion-header{
-    background:linear-gradient(135deg,var(--purple),var(--blue));
-    color:white;
+  .progress-path{
+    background:linear-gradient(135deg, #f0f9ff, #fff5f0);
+    border:3px solid #4cc9f0;
+    border-radius:12px;
     padding:20px;
-    border-radius:16px;
-    cursor:pointer;
+    margin:30px 0;
+  }
+
+  .progress-path h3{
+    color:#4cc9f0;
+    margin-bottom:15px;
+    text-align:center;
+  }
+
+  .path-steps{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    border:3px solid var(--purple);
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-    font-size:clamp(18px,2.5vw,24px);
-    font-weight:bold;
-    transition:transform .15s;
-  }
-
-  .accordion-header:hover{
-    transform:translateY(-2px);
-  }
-
-  .accordion-header.active{
-    background:linear-gradient(135deg,var(--blue),var(--teal));
-  }
-
-  .accordion-toggle{
-    font-size:28px;
-    transition:transform .3s;
-  }
-
-  .accordion-header.active .accordion-toggle{
-    transform:rotate(180deg);
-  }
-
-  .accordion-content{
-    display:none;
-    padding:20px 0;
-  }
-
-  .accordion-content.active{
-    display:block;
-  }
-
-  /* Diagram Styles */
-  .diagram-container{
-    display:flex;
-    justify-content:center;
-    margin:20px 0;
     flex-wrap:wrap;
-    gap:20px;
+    gap:10px;
   }
 
-  .diagram-box{
-    background:#f0f9ff;
-    border:2px solid #4cc9f0;
-    border-radius:12px;
-    padding:15px;
-    text-align:center;
+  .step{
     flex:1;
-    min-width:150px;
-  }
-
-  .diagram-box svg{
-    max-width:100%;
-    height:auto;
-  }
-
-  .diagram-label{
+    min-width:80px;
+    text-align:center;
+    padding:10px;
+    background:white;
+    border-radius:8px;
+    border:2px solid #a06cd5;
     font-weight:bold;
-    color:var(--purple);
-    margin-top:10px;
-    font-size:14px;
+    color:#a06cd5;
+  }
+
+  .arrow{
+    color:#a06cd5;
+    font-weight:bold;
+    font-size:24px;
+  }
+
+  @media(max-width:600px){
+    .path-steps{
+      flex-direction:column;
+    }
+    .arrow{
+      transform:rotate(90deg);
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- Top Navigation -->
 <div class="nav-top nav-back">
   <a href="../index.html" style="text-decoration:none;">
     <button class="icon-btn" title="Back to Geometry">⬅️</button>
@@ -262,277 +230,160 @@
 
 <div class="container">
   <header>
-    <div class="emoji-row">📐 📏 ✨ 🎯</div>
-    <h1>Understanding <span class="highlight">Angles</span>!</h1>
-    <p class="subtitle">Master the amazing world of angles! 🌟</p>
+    <div class="emoji-row">📐 📏 🎯</div>
+    <h1>Welcome to <span class="highlight">Angles Learning</span>!</h1>
+    <p class="subtitle">A complete journey from basics to angle relationships 🌟</p>
   </header>
 
-  <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">
-      <span>📚 Fundamentals of Angles</span>
-      <span class="accordion-toggle">▼</span>
-    </div>
-    <div class="accordion-content active">
-      <div class="card">
-        <h2>📐 What is an Angle?</h2>
-        <p>An <span class="highlight">angle</span> is formed when <b>two lines meet at a point</b>. That point is called the <span class="badge">vertex</span>.</p>
-        <p style="margin-top:15px;">Angles are everywhere around you:</p>
-        <ul>
-          <li>🏠 The corners of your room</li>
-          <li>📐 The corner of your notebook</li>
-          <li>⏰ The hands of a clock</li>
-          <li>🍕 A slice of pizza</li>
-          <li>✂️ Open scissors</li>
-        </ul>
-      </div>
+  <div class="description-card">
+    <h2>🎓 What You'll Learn</h2>
+    <p>This comprehensive 10-level course takes you through everything about angles, from understanding what an angle is to mastering constructions and expert-level applications. Each level builds on what you've learned, creating complete geometry understanding:</p>
+    <ul>
+      <li>💡 <b>Levels 1-3:</b> Understand angles, their parts, and how to measure them</li>
+      <li>🔗 <b>Level 4:</b> Discover powerful angle relationships</li>
+      <li>📐 <b>Level 5:</b> Explore angles in shapes and polygons</li>
+      <li>✂️ <b>Level 6:</b> Master parallel lines and transversals</li>
+      <li>🌍 <b>Level 7:</b> Apply angles to real-world situations</li>
+      <li>🏆 <b>Level 8:</b> Challenge yourself with complex problems</li>
+      <li>📊 <b>Level 9:</b> Bridge to trigonometry with angle ratios</li>
+      <li>⭐ <b>Level 10:</b> Master constructions and expert mastery</li>
+    </ul>
+  </div>
 
-      <div class="card">
-        <h2>📏 Types of Angles</h2>
-        <p>Angles are measured in <span class="badge">degrees (°)</span>. Different angles have different names:</p>
-        <ul>
-          <li><b>Right Angle:</b> Exactly 90° (like a corner of a square) <span class="pop">⊞</span></li>
-          <li><b>Acute Angle:</b> Less than 90° (sharp and pointy)</li>
-          <li><b>Obtuse Angle:</b> Between 90° and 180° (wide and open)</li>
-          <li><b>Straight Angle:</b> Exactly 180° (forms a straight line)</li>
-          <li><b>Reflex Angle:</b> Between 180° and 360° (extra wide!)</li>
-        </ul>
-        <div class="diagram-container">
-          <div class="diagram-box">
-            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-              <line x1="60" y1="60" x2="100" y2="60" stroke="#06d6a0" stroke-width="3"/>
-              <line x1="60" y1="60" x2="60" y2="20" stroke="#06d6a0" stroke-width="3"/>
-              <path d="M 80 60 L 80 40 L 60 40" fill="none" stroke="#ff6ec7" stroke-width="2"/>
-              <circle cx="60" cy="60" r="3" fill="#1d2b53"/>
-              <text x="85" y="55" font-size="12" fill="#ff6ec7" font-weight="bold">90°</text>
-            </svg>
-            <div class="diagram-label">Right Angle</div>
-          </div>
-          <div class="diagram-box">
-            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-              <line x1="60" y1="60" x2="100" y2="60" stroke="#4cc9f0" stroke-width="3"/>
-              <line x1="60" y1="60" x2="85" y2="35" stroke="#4cc9f0" stroke-width="3"/>
-              <path d="M 75 60 Q 80 55 85 50" fill="none" stroke="#a06cd5" stroke-width="2"/>
-              <circle cx="60" cy="60" r="3" fill="#1d2b53"/>
-              <text x="70" y="55" font-size="12" fill="#a06cd5" font-weight="bold">45°</text>
-            </svg>
-            <div class="diagram-label">Acute Angle</div>
-          </div>
-          <div class="diagram-box">
-            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-              <line x1="60" y1="60" x2="100" y2="60" stroke="#ff9e45" stroke-width="3"/>
-              <line x1="60" y1="60" x2="75" y2="80" stroke="#ff9e45" stroke-width="3"/>
-              <path d="M 75 60 Q 80 45 82 30" fill="none" stroke="#ef476f" stroke-width="2"/>
-              <circle cx="60" cy="60" r="3" fill="#1d2b53"/>
-              <text x="78" y="55" font-size="12" fill="#ef476f" font-weight="bold">120°</text>
-            </svg>
-            <div class="diagram-label">Obtuse Angle</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>🎯 How to Measure Angles?</h2>
-        <p>We use a tool called a <span class="badge">protractor</span> to measure angles!</p>
-        <p style="margin-top:15px;">Steps to measure an angle:</p>
-        <ul>
-          <li>Place the center of the protractor at the <b>vertex</b> (the point where lines meet)</li>
-          <li>Align one line of the angle with the <b>zero line</b> of the protractor</li>
-          <li>Read the number where the other line crosses the protractor</li>
-          <li>That's your angle in degrees! ✨</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>💡 Fun Facts about Angles!</h2>
-        <ul>
-          <li>A full rotation around a point is <b>360 degrees</b>! 🔄</li>
-          <li>The angles in a triangle always add up to <b>180 degrees</b>! 📐</li>
-          <li>A circle has angles that go from <b>0° to 360°</b>! 🔵</li>
-          <li>Protractors have been used for hundreds of years to measure angles! 📜</li>
-        </ul>
-      </div>
-
-      <div class="worksheet-section">
-        <h2 style="color:var(--ink);margin-bottom:10px;"><span class="pop">📝</span> Ready to Practice?</h2>
-        <p style="color:var(--ink);font-weight:bold;margin-bottom:15px;">Complete your angles worksheet right here on the site!</p>
-        <a href="worksheet.html" class="worksheet-btn">📝 Start Worksheet 1</a>
-      </div>
+  <div class="progress-path">
+    <h3>📍 Your Complete Learning Path</h3>
+    <div class="path-steps">
+      <div class="step">1</div>
+      <div class="arrow">→</div>
+      <div class="step">2</div>
+      <div class="arrow">→</div>
+      <div class="step">3</div>
+      <div class="arrow">→</div>
+      <div class="step">4</div>
+      <div class="arrow">→</div>
+      <div class="step">5</div>
+      <div class="arrow">→</div>
+      <div class="step">6</div>
+      <div class="arrow">→</div>
+      <div class="step">7</div>
+      <div class="arrow">→</div>
+      <div class="step">8</div>
+      <div class="arrow">→</div>
+      <div class="step">9</div>
+      <div class="arrow">→</div>
+      <div class="step">10</div>
     </div>
   </div>
 
-  <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">
-      <span>🔗 Angle Relationships</span>
-      <span class="accordion-toggle">▼</span>
-    </div>
-    <div class="accordion-content">
-      <div class="card">
-        <h2>👫 Adjacent Angles</h2>
-        <p>Adjacent angles are two angles that share a relationship:</p>
-        <ul>
-          <li>Share a common <span class="badge">vertex</span> (corner point)</li>
-          <li>Share a common side</li>
-          <li>Do not overlap</li>
-        </ul>
-        <p style="margin-top:15px;"><b>💡 Key Idea:</b> Adjacent angles are <b>next to each other</b>.</p>
-        <div class="diagram-container">
-          <div class="diagram-box">
-            <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-              <line x1="70" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
-              <line x1="70" y1="70" x2="95" y2="40" stroke="#1d2b53" stroke-width="2"/>
-              <line x1="70" y1="70" x2="50" y2="30" stroke="#1d2b53" stroke-width="2"/>
-              <path d="M 95 70 Q 92 65 88 62" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
-              <path d="M 88 62 Q 80 52 70 50" fill="none" stroke="#4cc9f0" stroke-width="2.5"/>
-              <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
-              <text x="95" y="82" font-size="13" fill="#06d6a0" font-weight="bold">30°</text>
-              <text x="65" y="42" font-size="13" fill="#4cc9f0" font-weight="bold">50°</text>
-              <text x="72" y="55" font-size="11" fill="#ff6ec7">Common</text>
-              <text x="72" y="67" font-size="11" fill="#ff6ec7">side</text>
-            </svg>
-            <div class="diagram-label">Adjacent Angles Example</div>
-          </div>
-        </div>
-        <div style="background:#eef6ff;padding:12px;border-left:4px solid #4cc9f0;margin-top:12px;border-radius:8px;">
-          <p><b>Example:</b> If one angle is 30° and the next angle is 50°, they are adjacent angles.</p>
-        </div>
-      </div>
+  <h2 style="text-align:center; color:#a06cd5; margin:40px 0 30px; font-size:clamp(24px,5vw,32px);">Choose Your Level</h2>
 
-      <div class="card">
-        <h2>📏 Linear Pair</h2>
-        <p>A linear pair is a special type of adjacent angles:</p>
-        <ul>
-          <li>They are <b>adjacent angles</b></li>
-          <li>Their non-common sides form a <b>straight line</b></li>
-        </ul>
-        <p style="margin-top:15px;"><b>💡 Key Rule:</b> Angles in a linear pair always add up to <span class="badge">180°</span>.</p>
-        <div class="diagram-container">
-          <div class="diagram-box">
-            <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-              <line x1="20" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
-              <line x1="70" y1="70" x2="85" y2="30" stroke="#1d2b53" stroke-width="2"/>
-              <path d="M 80 70 Q 77 60 75 50" fill="none" stroke="#a06cd5" stroke-width="2.5"/>
-              <path d="M 85 70 Q 90 68 110 70" fill="none" stroke="#ffd166" stroke-width="2.5"/>
-              <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
-              <text x="60" y="58" font-size="13" fill="#a06cd5" font-weight="bold">110°</text>
-              <text x="95" y="65" font-size="13" fill="#ffd166" font-weight="bold">70°</text>
-              <text x="50" y="85" font-size="11" fill="#1d2b53">Straight line = 180°</text>
-            </svg>
-            <div class="diagram-label">Linear Pair: 110° + 70° = 180°</div>
-          </div>
-        </div>
-        <div style="background:#eef6ff;padding:12px;border-left:4px solid #4cc9f0;margin-top:12px;border-radius:8px;">
-          <p><b>Example:</b> If one angle is 110°, the other angle is:</p>
-          <p style="margin-top:8px;">180° − 110° = <b>70°</b></p>
-        </div>
-      </div>
+  <div class="levels-grid">
+    <a href="level1.html" class="level-card">
+      <div class="level-emoji">🌱</div>
+      <h2>Level 1</h2>
+      <p><b>Intuitive Understanding</b></p>
+      <p>Start with basics: what angles are, real-life examples, turning, and rotation.</p>
+      <span class="badge">Beginner</span>
+    </a>
 
-      <div class="card">
-        <h2>🔄 Vertically Opposite Angles</h2>
-        <p>When two lines intersect, they form pairs of opposite angles:</p>
-        <ul>
-          <li>These angles are <b>across from each other</b></li>
-          <li>They are <b>not adjacent</b></li>
-        </ul>
-        <p style="margin-top:15px;"><b>💡 Key Rule:</b> Vertically opposite angles are always <span class="badge">equal</span>.</p>
-        <div class="diagram-container">
-          <div class="diagram-box">
-            <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-              <line x1="30" y1="30" x2="110" y2="110" stroke="#1d2b53" stroke-width="2"/>
-              <line x1="110" y1="30" x2="30" y2="110" stroke="#1d2b53" stroke-width="2"/>
-              <path d="M 65 55 Q 70 60 75 65" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
-              <path d="M 65 85 Q 70 80 75 75" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
-              <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
-              <text x="50" y="50" font-size="13" fill="#06d6a0" font-weight="bold">75°</text>
-              <text x="80" y="85" font-size="13" fill="#06d6a0" font-weight="bold">75°</text>
-              <text x="85" y="50" font-size="11" fill="#a06cd5">65°</text>
-              <text x="40" y="85" font-size="11" fill="#a06cd5">65°</text>
-            </svg>
-            <div class="diagram-label">Vertically Opposite: Equal angles</div>
-          </div>
-        </div>
-        <div style="background:#eef6ff;padding:12px;border-left:4px solid #4cc9f0;margin-top:12px;border-radius:8px;">
-          <p><b>Example:</b> If one angle is 75°, the opposite angle is also <b>75°</b>.</p>
-        </div>
-      </div>
+    <a href="level2.html" class="level-card">
+      <div class="level-emoji">🧱</div>
+      <h2>Level 2</h2>
+      <p><b>Parts of an Angle</b></p>
+      <p>Vertex, arms, and opening. Learn angle naming and five different types.</p>
+      <span class="badge">Elementary</span>
+    </a>
 
-      <div class="card">
-        <h2>✨ Complementary Angles</h2>
-        <p>Two angles are complementary if their sum equals <span class="badge">90°</span>.</p>
-        <p style="margin-top:15px;"><b>💡 Key Rule:</b> Complementary angles add up to <b>90°</b>.</p>
-        <div class="diagram-container">
-          <div class="diagram-box">
-            <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-              <line x1="70" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
-              <line x1="70" y1="70" x2="70" y2="20" stroke="#1d2b53" stroke-width="2"/>
-              <line x1="70" y1="70" x2="95" y2="40" stroke="#1d2b53" stroke-width="2"/>
-              <path d="M 85 70 Q 85 65 82 60" fill="none" stroke="#a06cd5" stroke-width="2.5"/>
-              <path d="M 82 60 Q 77 52 75 48" fill="none" stroke="#4cc9f0" stroke-width="2.5"/>
-              <path d="M 85 70 L 85 60 L 75 60" fill="none" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="2,2"/>
-              <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
-              <text x="80" y="60" font-size="12" fill="#a06cd5" font-weight="bold">40°</text>
-              <text x="60" y="48" font-size="12" fill="#4cc9f0" font-weight="bold">50°</text>
-              <text x="70" y="85" font-size="11" fill="#1d2b53">90°</text>
-            </svg>
-            <div class="diagram-label">Complementary: 40° + 50° = 90°</div>
-          </div>
-        </div>
-        <div style="background:#eef6ff;padding:12px;border-left:4px solid #4cc9f0;margin-top:12px;border-radius:8px;">
-          <p><b>Example:</b> 40° + 50° = <b>90°</b> ✓</p>
-        </div>
-      </div>
+    <a href="level3.html" class="level-card">
+      <div class="level-emoji">📏</div>
+      <h2>Level 3</h2>
+      <p><b>Measuring Angles</b></p>
+      <p>Degrees, protractors, and estimation techniques for angle measurement.</p>
+      <span class="badge">Intermediate</span>
+    </a>
 
-      <div class="card">
-        <h2>➕ Supplementary Angles</h2>
-        <p>Two angles are supplementary if their sum equals <span class="badge">180°</span>.</p>
-        <p style="margin-top:15px;"><b>💡 Key Rule:</b> Supplementary angles add up to <b>180°</b>.</p>
-        <div class="diagram-container">
-          <div class="diagram-box">
-            <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-              <line x1="20" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
-              <line x1="70" y1="70" x2="50" y2="25" stroke="#1d2b53" stroke-width="2"/>
-              <path d="M 75 70 Q 70 55 65 45" fill="none" stroke="#ff6ec7" stroke-width="2.5"/>
-              <path d="M 65 45 Q 55 35 50 30" fill="none" stroke="#ffd166" stroke-width="2.5"/>
-              <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
-              <text x="55" y="48" font-size="12" fill="#ff6ec7" font-weight="bold">120°</text>
-              <text x="80" y="62" font-size="12" fill="#ffd166" font-weight="bold">60°</text>
-              <text x="50" y="85" font-size="11" fill="#1d2b53">180° (Straight line)</text>
-            </svg>
-            <div class="diagram-label">Supplementary: 120° + 60° = 180°</div>
-          </div>
-        </div>
-        <div style="background:#eef6ff;padding:12px;border-left:4px solid #4cc9f0;margin-top:12px;border-radius:8px;">
-          <p><b>Example:</b> 120° + 60° = <b>180°</b> ✓</p>
-        </div>
-      </div>
+    <a href="level4.html" class="level-card">
+      <div class="level-emoji">🔗</div>
+      <h2>Level 4</h2>
+      <p><b>Angle Relationships</b></p>
+      <p>Adjacent, linear pairs, vertical, complementary, and supplementary angles.</p>
+      <span class="badge">Intermediate+</span>
+    </a>
 
-      <div class="card">
-        <h2>📝 Quick Summary</h2>
-        <ul>
-          <li><b>👫 Adjacent Angles</b> → Next to each other</li>
-          <li><b>📏 Linear Pair</b> → Adjacent + straight line = 180°</li>
-          <li><b>🔄 Vertically Opposite Angles</b> → Equal angles</li>
-          <li><b>✨ Complementary Angles</b> → Sum = 90°</li>
-          <li><b>➕ Supplementary Angles</b> → Sum = 180°</li>
-        </ul>
-      </div>
+    <a href="level5.html" class="level-card">
+      <div class="level-emoji">📐</div>
+      <h2>Level 5</h2>
+      <p><b>Angles in Shapes</b></p>
+      <p>Triangles (180°), quadrilaterals (360°), and regular polygons.</p>
+      <span class="badge">Advanced</span>
+    </a>
 
-      <div class="worksheet-section">
-        <h2 style="color:var(--ink);margin-bottom:10px;"><span class="pop">📋</span> Ready for More Practice?</h2>
-        <p style="color:var(--ink);font-weight:bold;margin-bottom:15px;">Download and complete the comprehensive angles worksheet!</p>
-        <a href="Worksheet_Angles.docx" class="worksheet-btn">📥 Download Worksheet 2</a>
-      </div>
-    </div>
+    <a href="level6.html" class="level-card">
+      <div class="level-emoji">✂️</div>
+      <h2>Level 6</h2>
+      <p><b>Parallel Lines & Transversals</b></p>
+      <p>Corresponding, alternate interior, and co-interior angle relationships.</p>
+      <span class="badge">Advanced</span>
+    </a>
+
+    <a href="level7.html" class="level-card">
+      <div class="level-emoji">🌍</div>
+      <h2>Level 7</h2>
+      <p><b>Real-World Applications</b></p>
+      <p>Architecture, navigation, engineering, art, sports, and circle angles.</p>
+      <span class="badge">Advanced+</span>
+    </a>
+
+    <a href="level8.html" class="level-card">
+      <div class="level-emoji">🏆</div>
+      <h2>Level 8</h2>
+      <p><b>Challenge & Practice</b></p>
+      <p>Complex problems, self-assessment, and next steps for advanced learning.</p>
+      <span class="badge">Expert</span>
+    </a>
+
+    <a href="level9.html" class="level-card">
+      <div class="level-emoji">📊</div>
+      <h2>Level 9</h2>
+      <p><b>Introduction to Trigonometry</b></p>
+      <p>Bridge angles and triangle sides with ratios: sin, cos, tan, and SOH CAH TOA.</p>
+      <span class="badge">Advanced</span>
+    </a>
+
+    <a href="level10.html" class="level-card">
+      <div class="level-emoji">⭐</div>
+      <h2>Level 10</h2>
+      <p><b>Angle Constructions & Mastery</b></p>
+      <p>Master constructions with compass & straightedge, and solve expert-level challenges.</p>
+      <span class="badge">Mastery</span>
+    </a>
+  </div>
+
+  <div class="description-card">
+    <h2>💡 How to Use This Course</h2>
+    <ul>
+      <li><b>Start at Level 1:</b> Even if you know some basics, starting here ensures you have a solid foundation</li>
+      <li><b>Take your time:</b> Understanding is more important than speed. Spend time on each concept</li>
+      <li><b>Use the visuals:</b> Each level includes diagrams and examples - pay close attention to them</li>
+      <li><b>Practice:</b> Try to draw angles, measure things around you, and find angles in real life</li>
+      <li><b>Ask questions:</b> If something doesn't make sense, review that section again or ask for help</li>
+      <li><b>Progress at your pace:</b> Move to the next level when you feel confident, not before!</li>
+    </ul>
+  </div>
+
+  <div class="description-card" style="border-color:#ffd166;">
+    <h2 style="color:#ff9e45;">⭐ Fun Facts About Angles</h2>
+    <ul>
+      <li>The word "angle" comes from the Latin word "angulus," meaning "corner"</li>
+      <li>Your eyes see angles! The angle between objects helps you judge distance</li>
+      <li>Architects and engineers use angles to design buildings, bridges, and roads</li>
+      <li>A triangle's three angles always add up to exactly 180°!</li>
+      <li>Bees build hexagons in honeycombs using perfect 120° angles</li>
+      <li>The sun's angle in the sky changes throughout the day, creating long and short shadows</li>
+    </ul>
   </div>
 
 </div>
-
-<script>
-function toggleAccordion(header) {
-  header.classList.toggle('active');
-  const content = header.nextElementSibling;
-  content.classList.toggle('active');
-}
-</script>
 
 </body>
 </html>

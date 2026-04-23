@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Level 3: Measuring Angles 📏</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+    color:var(--ink);
+    padding:20px;
+  }
+
+  .container{
+    max-width:1000px;
+    margin:0 auto;
+  }
+
+  .nav-top{
+    position:fixed;top:20px;display:flex;gap:15px;z-index:101;
+  }
+  .nav-back{ left:20px; }
+  .nav-home{ right:20px; }
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{
+    text-align:center;
+    margin:60px 0 40px 0;
+  }
+
+  h1{
+    font-size:clamp(36px,6vw,56px);
+    background:linear-gradient(90deg,#a06cd5,#4cc9f0,#06d6a0);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-bottom:10px;
+  }
+
+  .subtitle{
+    font-size:clamp(18px,2.5vw,24px);
+    color:var(--blue);
+    font-weight:bold;
+  }
+
+  .emoji-row{
+    font-size:clamp(40px,8vw,60px);
+    text-align:center;
+    margin:20px 0;
+    letter-spacing:10px;
+  }
+
+  .card{
+    background:var(--cream);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:25px;
+    border:3px solid var(--purple);
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+
+  h2{
+    font-size:clamp(18px,2.5vw,24px);
+    color:var(--pink);
+    margin-bottom:15px;
+  }
+
+  h3{
+    font-size:clamp(16px,2vw,20px);
+    color:var(--purple);
+    margin-top:15px;
+    margin-bottom:10px;
+  }
+
+  p{
+    font-size:clamp(16px,2vw,18px);
+    line-height:1.6;
+    margin-bottom:12px;
+    color:var(--ink);
+  }
+
+  ul{
+    margin-left:30px;
+    margin-bottom:15px;
+  }
+
+  li{
+    font-size:clamp(15px,1.8vw,18px);
+    margin-bottom:10px;
+    line-height:1.6;
+  }
+
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    font-weight:bold;
+  }
+
+  .badge{
+    display:inline-block;
+    background:var(--teal);
+    color:white;
+    padding:6px 12px;
+    border-radius:16px;
+    font-weight:bold;
+    margin:2px;
+    font-size:14px;
+  }
+
+  .diagram-container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin:20px 0;
+  }
+
+  .diagram-box{
+    background:#f0f9ff;
+    border:2px solid #4cc9f0;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+    flex:0 1 220px;
+  }
+
+  .diagram-box svg{
+    max-width:100%;
+    height:auto;
+    margin-bottom:10px;
+  }
+
+  .diagram-label{
+    font-weight:bold;
+    color:var(--purple);
+    margin-top:10px;
+    font-size:14px;
+  }
+
+  .steps-box{
+    background:#fff5e6;
+    border:3px solid #ffd166;
+    border-radius:12px;
+    padding:15px;
+    margin:15px 0;
+  }
+
+  .steps-box h3{
+    color:#ff9e45;
+    margin-top:0;
+  }
+
+  .steps-box ol{
+    margin-left:30px;
+  }
+
+  .circle-reference{
+    background:#eef6ff;
+    border:3px solid #4cc9f0;
+    border-radius:12px;
+    padding:15px;
+    margin:15px 0;
+  }
+
+  .facts-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:15px;
+    margin:15px 0;
+  }
+
+  .fact-card{
+    background:linear-gradient(135deg, #fff5f0, #f5f0ff);
+    border:2px solid #ff6ec7;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+  }
+
+  .fact-card .amount{
+    font-size:24px;
+    color:#a06cd5;
+    font-weight:bold;
+    margin:10px 0;
+  }
+
+  .fact-card p{
+    font-size:14px;
+    color:#1d2b53;
+  }
+
+  .protractor-section{
+    background:#f0f9ff;
+    border:3px solid #4cc9f0;
+    border-radius:12px;
+    padding:15px;
+    margin:15px 0;
+  }
+
+  .nav-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+    gap:20px;
+  }
+
+  .nav-btn{
+    flex:1;
+    padding:16px 24px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all .3s;
+    text-decoration:none;
+    display:inline-block;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+
+  .nav-btn-prev{
+    background:var(--purple);
+    color:white;
+  }
+
+  .nav-btn-next{
+    background:var(--teal);
+    color:white;
+  }
+
+  .nav-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+  }
+
+  .tip-box{
+    background:#fff5d6;
+    border:3px solid #ffd166;
+    border-radius:12px;
+    padding:12px;
+    margin:10px 0;
+    border-left:5px solid #ff9e45;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Angles">⬅️</button>
+  </a>
+</div>
+
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📏 🎯 ✨</div>
+    <h1>Level 3: <span class="highlight">Measuring Angles</span></h1>
+    <p class="subtitle">Learn to measure angles with precision! 📐</p>
+  </header>
+
+  <div class="card">
+    <h2>📊 What is a Degree?</h2>
+    <p>A <span class="badge">degree</span> is the <b>unit of measurement</b> we use for angles. The symbol is <b>°</b>.</p>
+    <p>A degree is 1/360th of a full circle. That means:</p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <p>🔵 One Full Circle</p>
+        <div class="amount">360°</div>
+        <p>A complete rotation</p>
+      </div>
+
+      <div class="fact-card">
+        <p>⬜ Right Angle</p>
+        <div class="amount">90°</div>
+        <p>A quarter circle</p>
+      </div>
+
+      <div class="fact-card">
+        <p>↔️ Straight Angle</p>
+        <div class="amount">180°</div>
+        <p>A half circle</p>
+      </div>
+
+      <div class="fact-card">
+        <p>📐 Three-Quarter Turn</p>
+        <div class="amount">270°</div>
+        <p>Three-quarters circle</p>
+      </div>
+    </div>
+
+    <div class="circle-reference">
+      <h3>🎯 Understanding the Circle as 360°</h3>
+      <p>Imagine a clock or a compass. If you start facing North and turn all the way around until you face North again, you've made a complete turn of <b>360°</b>.</p>
+      <ul>
+        <li><b>North to East:</b> 90° (quarter turn)</li>
+        <li><b>North to South:</b> 180° (half turn)</li>
+        <li><b>North to West:</b> 270° (three-quarter turn)</li>
+        <li><b>North to North:</b> 360° (full turn)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📏 The Protractor: Your Angle-Measuring Tool</h2>
+    <p>A <span class="badge">protractor</span> is a special tool used to <b>measure and draw angles</b>. It's a semicircle (half circle) with degree markings from 0° to 180°.</p>
+
+    <div class="protractor-section">
+      <h3>🔍 Parts of a Protractor</h3>
+      <ul>
+        <li><b>Semicircular shape:</b> Curved edge with degree markings</li>
+        <li><b>Degree markings:</b> Numbers from 0° to 180° (and sometimes both directions)</li>
+        <li><b>Center point:</b> A small dot or hole where you place the vertex</li>
+        <li><b>Straight edge:</b> The flat bottom side (0° line)</li>
+        <li><b>Two scales:</b> Outer scale (0-180 going one direction) and inner scale (0-180 going the other direction)</li>
+      </ul>
+    </div>
+
+    <div class="steps-box">
+      <h3>📋 Steps to Measure an Angle with a Protractor</h3>
+      <ol>
+        <li><b>Place the vertex:</b> Put the center point of the protractor exactly on the vertex (corner) of the angle</li>
+        <li><b>Align the baseline:</b> Line up one arm of the angle with the 0° line (the straight edge)</li>
+        <li><b>Read the scale:</b> See where the other arm of the angle crosses the degree markings</li>
+        <li><b>Check your answer:</b> Make sure you're reading the correct scale (inner or outer)</li>
+        <li><b>Record the measurement:</b> Write down the number with the degree symbol (°)</li>
+      </ol>
+    </div>
+
+    <div class="tip-box">
+      <b>💡 Pro Tip:</b> Most protractors have two scales. Always check which one your angle aligns with! If your angle opens to the right, use one scale; if it opens to the left, use the other.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Estimating Angles (Without a Protractor)</h2>
+    <p>Sometimes you don't have a protractor, so you can <b>estimate</b> angles by comparing them to familiar angles:</p>
+
+    <h3>Reference Angles to Remember</h3>
+    <ul>
+      <li><b>90° (Right Angle):</b> The corner of a square, book, or window. Use this as your main reference!</li>
+      <li><b>180° (Straight Angle):</b> A straight line, like the horizon</li>
+      <li><b>45°:</b> Halfway between 0° and 90° - the diagonal of a square</li>
+      <li><b>60°:</b> The angle in an equilateral triangle</li>
+      <li><b>30°:</b> Smaller than 45°, like one hour on a clock</li>
+    </ul>
+
+    <h3>How to Estimate</h3>
+    <ul>
+      <li>If the angle looks like a 90° corner, it's close to 90°</li>
+      <li>If it's smaller than 90°, estimate how much smaller (maybe 45°, 60°, or 30°?)</li>
+      <li>If it's larger than 90°, compare to 180° to estimate</li>
+      <li>Practice makes perfect! The more you estimate, the better you become</li>
+    </ul>
+
+    <div class="diagram-container">
+      <div class="diagram-box">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="70" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
+          <line x1="70" y1="70" x2="70" y2="20" stroke="#06d6a0" stroke-width="2"/>
+          <rect x="105" y="55" width="15" height="15" fill="none" stroke="#06d6a0" stroke-width="2"/>
+          <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="80" y="65" font-size="13" font-weight="bold" fill="#06d6a0">90°</text>
+          <text x="40" y="90" font-size="11" fill="#1d2b53">Reference</text>
+        </svg>
+        <div class="diagram-label">90° Reference Angle</div>
+      </div>
+
+      <div class="diagram-box">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="70" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
+          <line x1="70" y1="70" x2="100" y2="45" stroke="#4cc9f0" stroke-width="2"/>
+          <path d="M 90 70 Q 95 62 100 54" fill="none" stroke="#4cc9f0" stroke-width="2"/>
+          <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="85" y="65" font-size="13" font-weight="bold" fill="#4cc9f0">45°</text>
+          <text x="75" y="90" font-size="11" fill="#1d2b53">Half of 90°</text>
+        </svg>
+        <div class="diagram-label">45° Reference Angle</div>
+      </div>
+
+      <div class="diagram-box">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="70" x2="120" y2="70" stroke="#ffd166" stroke-width="2"/>
+          <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="50" y="55" font-size="13" font-weight="bold" fill="#ffd166">180°</text>
+          <text x="40" y="90" font-size="11" fill="#1d2b53">Straight Line</text>
+        </svg>
+        <div class="diagram-label">180° Reference Angle</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ Drawing Angles with a Protractor</h2>
+    <p>You can also use a protractor to <b>draw</b> angles of a specific size:</p>
+
+    <div class="steps-box">
+      <h3>📋 Steps to Draw an Angle</h3>
+      <ol>
+        <li><b>Draw a starting line:</b> Draw a horizontal line (this will be one arm)</li>
+        <li><b>Mark the vertex:</b> Choose a point on this line to be the vertex</li>
+        <li><b>Place the protractor:</b> Put the center of the protractor on the vertex</li>
+        <li><b>Find your angle:</b> Mark a dot where the desired angle measurement is (e.g., 60°)</li>
+        <li><b>Draw the second arm:</b> Use a ruler to connect the vertex to the dot you marked</li>
+        <li><b>Label it:</b> Write the angle measurement on your drawing</li>
+      </ol>
+    </div>
+
+    <h3>Example Angles to Draw</h3>
+    <ul>
+      <li>30° - A sharp angle (small opening)</li>
+      <li>60° - A moderate angle</li>
+      <li>90° - A perfect right angle</li>
+      <li>120° - A wide angle</li>
+      <li>150° - An even wider angle</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🌡️ Temperature vs Angles (Fun Analogy!)</h2>
+    <p>You might see the degree symbol (°) used for temperature too. But in angles, we're measuring the <b>opening</b> of an angle, not how hot something is!</p>
+    <ul>
+      <li><b>Temperature degree:</b> 25°C (degrees Celsius)</li>
+      <li><b>Angle degree:</b> 45° (angle measurement)</li>
+    </ul>
+    <p><b>💡 Remember:</b> Always pay attention to the context to know if you're talking about temperature or angles!</p>
+  </div>
+
+  <div class="card">
+    <h2>🎓 What You've Learned in Level 3</h2>
+    <ul>
+      <li>✓ A degree (°) is the unit for measuring angles</li>
+      <li>✓ A full circle = 360°, half circle = 180°, quarter circle = 90°</li>
+      <li>✓ A protractor is a tool for measuring angles (0° to 180°)</li>
+      <li>✓ How to measure angles using a protractor (5 simple steps)</li>
+      <li>✓ How to estimate angles without a protractor</li>
+      <li>✓ How to draw angles of specific measurements</li>
+      <li>✓ Key reference angles: 30°, 45°, 60°, 90°, 180°</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="level2.html" class="nav-btn nav-btn-prev">⬅️ Level 2</a>
+    <a href="level4.html" class="nav-btn nav-btn-next">Level 4 ➡️</a>
+  </div>
+</div>
+
+</body>
+</html>

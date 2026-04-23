@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Level 2: Parts of an Angle 🧱</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+    color:var(--ink);
+    padding:20px;
+  }
+
+  .container{
+    max-width:1000px;
+    margin:0 auto;
+  }
+
+  .nav-top{
+    position:fixed;top:20px;display:flex;gap:15px;z-index:101;
+  }
+  .nav-back{ left:20px; }
+  .nav-home{ right:20px; }
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{
+    text-align:center;
+    margin:60px 0 40px 0;
+  }
+
+  h1{
+    font-size:clamp(36px,6vw,56px);
+    background:linear-gradient(90deg,#a06cd5,#4cc9f0,#06d6a0);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-bottom:10px;
+  }
+
+  .subtitle{
+    font-size:clamp(18px,2.5vw,24px);
+    color:var(--blue);
+    font-weight:bold;
+  }
+
+  .emoji-row{
+    font-size:clamp(40px,8vw,60px);
+    text-align:center;
+    margin:20px 0;
+    letter-spacing:10px;
+  }
+
+  .card{
+    background:var(--cream);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:25px;
+    border:3px solid var(--purple);
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+
+  h2{
+    font-size:clamp(18px,2.5vw,24px);
+    color:var(--pink);
+    margin-bottom:15px;
+  }
+
+  h3{
+    font-size:clamp(16px,2vw,20px);
+    color:var(--purple);
+    margin-top:15px;
+    margin-bottom:10px;
+  }
+
+  p{
+    font-size:clamp(16px,2vw,18px);
+    line-height:1.6;
+    margin-bottom:12px;
+    color:var(--ink);
+  }
+
+  ul{
+    margin-left:30px;
+    margin-bottom:15px;
+  }
+
+  li{
+    font-size:clamp(15px,1.8vw,18px);
+    margin-bottom:10px;
+    line-height:1.6;
+  }
+
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    font-weight:bold;
+  }
+
+  .badge{
+    display:inline-block;
+    background:var(--teal);
+    color:white;
+    padding:6px 12px;
+    border-radius:16px;
+    font-weight:bold;
+    margin:2px;
+    font-size:14px;
+  }
+
+  .diagram-container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin:20px 0;
+  }
+
+  .diagram-box{
+    background:#f0f9ff;
+    border:2px solid #4cc9f0;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+    flex:0 1 220px;
+  }
+
+  .diagram-box svg{
+    max-width:100%;
+    height:auto;
+    margin-bottom:10px;
+  }
+
+  .diagram-label{
+    font-weight:bold;
+    color:var(--purple);
+    margin-top:10px;
+    font-size:14px;
+  }
+
+  .angle-types{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:20px;
+    margin:20px 0;
+  }
+
+  .angle-type-card{
+    background:linear-gradient(135deg, #f0f9ff, #f5f0ff);
+    border:2px solid #4cc9f0;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+  }
+
+  .angle-type-card h3{
+    color:#a06cd5;
+    margin-bottom:10px;
+  }
+
+  .angle-type-card svg{
+    max-width:100%;
+    height:auto;
+    margin:10px 0;
+  }
+
+  .angle-type-card p{
+    font-size:14px;
+    color:#1d2b53;
+  }
+
+  .naming-box{
+    background:#fff5f0;
+    border:3px solid #ff6ec7;
+    border-radius:12px;
+    padding:15px;
+    margin:15px 0;
+  }
+
+  .nav-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+    gap:20px;
+  }
+
+  .nav-btn{
+    flex:1;
+    padding:16px 24px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all .3s;
+    text-decoration:none;
+    display:inline-block;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+
+  .nav-btn-prev{
+    background:var(--purple);
+    color:white;
+  }
+
+  .nav-btn-next{
+    background:var(--teal);
+    color:white;
+  }
+
+  .nav-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Angles">⬅️</button>
+  </a>
+</div>
+
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🧱 📐 ✨</div>
+    <h1>Level 2: <span class="highlight">Parts of an Angle</span></h1>
+    <p class="subtitle">Learn the anatomy of angles! 🎯</p>
+  </header>
+
+  <div class="card">
+    <h2>🏗️ The Three Main Parts of an Angle</h2>
+    <p>Every angle has exactly <b>three important parts:</b></p>
+
+    <div class="diagram-container">
+      <div class="diagram-box">
+        <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+          <line x1="80" y1="80" x2="140" y2="80" stroke="#1d2b53" stroke-width="3"/>
+          <line x1="80" y1="80" x2="110" y2="50" stroke="#1d2b53" stroke-width="3"/>
+          <circle cx="80" cy="80" r="6" fill="#ff6ec7" stroke="white" stroke-width="2"/>
+          <text x="70" y="95" font-size="13" font-weight="bold" fill="#ff6ec7">Vertex</text>
+          <text x="110" y="95" font-size="12" fill="#1d2b53">Arm 1</text>
+          <text x="95" y="50" font-size="12" fill="#1d2b53">Arm 2</text>
+        </svg>
+        <div class="diagram-label">The Three Parts</div>
+      </div>
+    </div>
+
+    <h3>1. 📍 Vertex</h3>
+    <ul>
+      <li><b>Definition:</b> The point where the two lines meet</li>
+      <li><b>Remember:</b> It's the corner or intersection point</li>
+      <li><b>Example:</b> The point at the center of a clock</li>
+    </ul>
+
+    <h3>2. 📏 Arms (or Sides)</h3>
+    <ul>
+      <li><b>Definition:</b> The two lines (or rays) that form the angle</li>
+      <li><b>Remember:</b> They start from the vertex and extend outward</li>
+      <li><b>Both arms are important:</b> You need both to have an angle</li>
+      <li><b>Example:</b> The two hands of a clock are the arms</li>
+    </ul>
+
+    <h3>3. 🌊 The Opening</h3>
+    <ul>
+      <li><b>Definition:</b> The space between the two arms</li>
+      <li><b>Remember:</b> The size of this opening determines the angle size</li>
+      <li><b>Measured in:</b> Degrees (°)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📝 How to Name Angles</h2>
+    <p>Angles are named using <b>three letters</b> or <b>one number:</b></p>
+
+    <div class="naming-box">
+      <h3 style="color:#ff6ec7; margin-top:0;">Angle Notation: ∠ABC</h3>
+      <ul style="list-style:none; margin-left:0;">
+        <li><b>∠</b> = This symbol means "angle"</li>
+        <li><b>A and C</b> = Points on the two arms</li>
+        <li><b>B</b> = The vertex (always in the middle!)</li>
+        <li><b>Example:</b> ∠ABC = "angle ABC" (vertex at B)</li>
+      </ul>
+    </div>
+
+    <p><b>💡 Important:</b> The vertex letter <b>must be in the middle!</b></p>
+    <ul>
+      <li>✓ Correct: ∠ABC (B is the vertex)</li>
+      <li>✗ Wrong: ∠CAB (looks like A is the vertex)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📊 Five Types of Angles (Classification)</h2>
+    <p>Angles are classified by their size. Let's explore all five types:</p>
+
+    <div class="angle-types">
+      <div class="angle-type-card">
+        <h3>Acute Angle</h3>
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="70" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
+          <line x1="70" y1="70" x2="105" y2="50" stroke="#06d6a0" stroke-width="2"/>
+          <path d="M 90 70 Q 95 65 100 60" fill="none" stroke="#06d6a0" stroke-width="2"/>
+          <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="85" y="65" font-size="13" fill="#06d6a0" font-weight="bold">35°</text>
+        </svg>
+        <p><b>Less than 90°</b></p>
+        <p style="font-size: 13px;">Sharp and pointy, like a pencil tip!</p>
+      </div>
+
+      <div class="angle-type-card">
+        <h3>Right Angle</h3>
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="70" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
+          <line x1="70" y1="70" x2="70" y2="20" stroke="#4cc9f0" stroke-width="2"/>
+          <rect x="105" y="55" width="15" height="15" fill="none" stroke="#ff6ec7" stroke-width="2"/>
+          <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="80" y="65" font-size="13" fill="#4cc9f0" font-weight="bold">90°</text>
+        </svg>
+        <p><b>Exactly 90°</b></p>
+        <p style="font-size: 13px;">Perfect corner, like a square!</p>
+      </div>
+
+      <div class="angle-type-card">
+        <h3>Obtuse Angle</h3>
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="70" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
+          <line x1="70" y1="70" x2="85" y2="20" stroke="#ffd166" stroke-width="2"/>
+          <path d="M 90 70 Q 85 45 80 30" fill="none" stroke="#ffd166" stroke-width="2"/>
+          <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="80" y="50" font-size="13" fill="#ffd166" font-weight="bold">125°</text>
+        </svg>
+        <p><b>Between 90° and 180°</b></p>
+        <p style="font-size: 13px;">Wide open, like an open door!</p>
+      </div>
+
+      <div class="angle-type-card">
+        <h3>Straight Angle</h3>
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="70" x2="120" y2="70" stroke="#ff9e45" stroke-width="2"/>
+          <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="50" y="55" font-size="13" fill="#ff9e45" font-weight="bold">180°</text>
+        </svg>
+        <p><b>Exactly 180°</b></p>
+        <p style="font-size: 13px;">Forms a straight line!</p>
+      </div>
+
+      <div class="angle-type-card">
+        <h3>Reflex Angle</h3>
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="70" y1="70" x2="120" y2="70" stroke="#1d2b53" stroke-width="2"/>
+          <line x1="70" y1="70" x2="50" y2="30" stroke="#ef476f" stroke-width="2"/>
+          <path d="M 90 70 Q 80 45 60 35" fill="none" stroke="#ef476f" stroke-width="2"/>
+          <circle cx="70" cy="70" r="3" fill="#ff6ec7"/>
+          <text x="75" y="50" font-size="13" fill="#ef476f" font-weight="bold">270°</text>
+        </svg>
+        <p><b>Between 180° and 360°</b></p>
+        <p style="font-size: 13px;">Very wide open, the "big angle"!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎓 Quick Summary Table</h2>
+    <p>Here's a handy summary of all five angle types:</p>
+    <ul>
+      <li><b>🔸 Acute Angle:</b> 0° to 90° (sharp)</li>
+      <li><b>📐 Right Angle:</b> exactly 90° (corner)</li>
+      <li><b>🔶 Obtuse Angle:</b> 90° to 180° (wide)</li>
+      <li><b>➡️ Straight Angle:</b> exactly 180° (line)</li>
+      <li><b>🔵 Reflex Angle:</b> 180° to 360° (very wide)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>💡 Real-Life Examples of Angle Types</h2>
+    <ul>
+      <li><b>Acute:</b> The angle of a clock hand at 1:00, a slice of pizza, open scissors at a small angle</li>
+      <li><b>Right:</b> The corners of a book, window, or room, the "+" symbol</li>
+      <li><b>Obtuse:</b> A clock hand at 10:00, an open laptop screen, a wide-open door</li>
+      <li><b>Straight:</b> A closed book (flat), a horizon line, a ruler</li>
+      <li><b>Reflex:</b> The large angle when you open a door more than 180°, a boomerang shape</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🎓 What You've Learned in Level 2</h2>
+    <ul>
+      <li>✓ Every angle has 3 parts: vertex, two arms, and the opening</li>
+      <li>✓ How to name angles using three letters (∠ABC)</li>
+      <li>✓ Five types of angles: Acute, Right, Obtuse, Straight, and Reflex</li>
+      <li>✓ The size ranges for each angle type</li>
+      <li>✓ Real-life examples of each angle type</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="level1.html" class="nav-btn nav-btn-prev">⬅️ Level 1</a>
+    <a href="level3.html" class="nav-btn nav-btn-next">Level 3 ➡️</a>
+  </div>
+</div>
+
+</body>
+</html>
