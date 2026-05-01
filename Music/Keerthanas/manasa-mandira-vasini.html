@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manasa Mandira Vasini 🎵</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    /* Navigation buttons */
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 0px;
+      z-index: 10;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0 20px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(18px, 4vw, 26px);
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 4px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0, 0, 0, .08);
+    }
+
+    .card h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      color: var(--pink);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Lyrics Section */
+    .lyrics-card {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .lyrics-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .lyrics-header h2 {
+      flex: 1;
+      min-width: 200px;
+      margin: 0;
+    }
+
+    .download-btn {
+      background: var(--purple);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .download-btn:hover {
+      background: #7b4aaf;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Meanings styling - Side by side */
+    .lyrics-with-meanings {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .lyrics-text {
+      flex: 1;
+      min-width: 250px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--pink);
+      line-height: 1.8;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .meanings-text {
+      flex: 1;
+      min-width: 250px;
+      background: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--teal);
+      line-height: 1.8;
+      font-size: 14px;
+      color: #2d5016;
+    }
+
+    .section-header {
+      font-weight: bold;
+      color: var(--purple);
+      margin-top: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .meaning-title {
+      font-weight: bold;
+      color: var(--pink);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .song-info {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border-left: 4px solid var(--teal);
+    }
+
+    .song-info p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-top nav-back">
+    <a href="index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Songs">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">🎵</div>
+      <h1>Manasa Mandira Vasini</h1>
+      <p class="subtitle">Devi song honoring the Mother Goddess</p>
+    </div>
+
+    <!-- Song Info -->
+    <div class="card">
+      <div class="song-info">
+        <p><strong>Raga:</strong> Sallapa</p>
+        <p><strong>Tala:</strong> Adi</p>
+        <p><strong>Type:</strong> Devi Keerthana (Devotional prayer to the Divine Mother)</p>
+      </div>
+    </div>
+
+    <!-- Lyrics with Meanings -->
+    <div class="card lyrics-card">
+      <div class="lyrics-header">
+        <h2>📖 Lyrics & Meanings</h2>
+        <a href="Manasa mandira vasini bhasaya pdf.pdf" class="download-btn" download>
+          ⬇️ Download PDF
+        </a>
+      </div>
+
+      <!-- PALLAVI -->
+      <div class="section-header">📍 PALLAVI (Main Theme)</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Manasa Mandira Vasini<br>
+Bhasaya Visala Komala Kanti<br>
+Madalase Siva Sundari<br>
+Vardhaya Nija Atma Bhavana Kirana
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Word-by-Word Translation:</span>
+<strong>Manasa Mandira Vasini:</strong> Oh! the one who resides in the temple of my mind<br>
+<strong>Bhasaya:</strong> Please kindle<br>
+<strong>Visala:</strong> widespread<br>
+<strong>Komala:</strong> gentle/soft/smooth (like the full moon's light)<br>
+<strong>Kanti:</strong> light (wisdom, knowledge, bliss)<br>
+<strong>Madalase:</strong> Oh Madalasa! (the one with passionate, dozy eyes)<br>
+<strong>Siva Sundari:</strong> the consort of Lord Siva<br>
+<strong>Vardhaya:</strong> Please increase/instill<br>
+<strong>Nija Atma Bhavana Kirana:</strong> the light ray of true feeling of the self (the soul)<br><br>
+<strong style="color: var(--purple);">Meaning:</strong>
+Oh Mother who dwells in the temple of my heart, please kindle the gentle, widespread light of wisdom and bliss. O Madalasa, beautiful consort of Siva, please increase within me the rays of true self-realization.
+        </div>
+      </div>
+
+      <!-- CARANA 1 -->
+      <div class="section-header">📍 CARANA 1 (First Verse)</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Parashiva Dayite!<br>
+Vikasa Bharite!<br>
+Nana Jiva Kare!<br>
+Avagati Mudite!<br>
+Ananya Vidite!<br>
+Acale! Amale! Devi!
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Word-by-Word Translation:</span>
+<strong>Parashiva Dayite:</strong> Oh! beloved of Siva, the Supreme!<br>
+<strong>Vikasa Bharite:</strong> Oh! the one overflowing with bliss and light<br>
+<strong>Nana Jiva Kare:</strong> In all forms of living beings<br>
+<strong>Avagati Mudite:</strong> I understand/realize (that)<br>
+<strong>Ananya Vidite:</strong> You cannot be known by any other means; you are beyond human understanding<br>
+<strong>Acale:</strong> You are immobile, eternal (Eka Tattva - unchanging Reality)<br>
+<strong>Amale:</strong> Oh! the one without any impurities (absolute and pristine purity)<br>
+<strong>Devi:</strong> Oh Divine Mother!<br><br>
+<strong style="color: var(--purple);">Meaning:</strong>
+Oh beloved of Shiva! You exist in all living beings as pure consciousness and bliss. You are beyond all comprehension and words, eternal and immaculate. I bow to you, O Divine Mother!
+        </div>
+      </div>
+
+      <!-- CARANA 2 -->
+      <div class="section-header">📍 CARANA 2 (Second Verse)</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Vilasasi Bahudhā<br>
+Suyoga Saranau<br>
+Buddher Vāchā Pāre<br>
+Paramapi Madhure<br>
+Subhakti Rucire<br>
+Saranau Varaniyāsi
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Word-by-Word Translation:</span>
+<strong>Vilasasi Bahudhā:</strong> You are glorified in many forms and many ways<br>
+<strong>Suyoga Saranau:</strong> You are the great yogic energy flow yourself<br>
+<strong>Buddher Vāchā Pāre:</strong> You are beyond intellect and words; incomprehensible through mind and speech<br>
+<strong>Paramapi Madhure:</strong> Though you are so sweet in nature<br>
+<strong>Subhakti Rucire:</strong> adorable through devotion and love<br>
+<strong>Saranau Varaniyāsi:</strong> You are the best of all (of the highest qualities)<br><br>
+<strong style="color: var(--purple);">Meaning:</strong>
+You manifest in countless forms and ways, as the supreme yogic energy. Though beyond the reach of mind and words, your sweetness is felt by the devoted heart. You are the highest goal, accessible only through sincere devotion.
+        </div>
+      </div>
+
+      <!-- CARANA 3 -->
+      <div class="section-header">📍 CARANA 3 (Third Verse)</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Sulalita Hridaye!<br>
+Sadaiva Sadaye!<br>
+Nūnam Tvam Me Mātā<br>
+Guravararupē!<br>
+Sarasasanlāpe!<br>
+Bhavati Sacidānandā
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Word-by-Word Translation:</span>
+<strong>Sulalita Hridaye:</strong> O you with a very soft, compassionate heart<br>
+<strong>Sadaiva Sadaye:</strong> Always full of kindness and grace (Karuna)<br>
+<strong>Nūnam Tvam Me Mātā:</strong> Truly, you are my mother<br>
+<strong>Guravararupē:</strong> You are the highest form of a Guru (the master who dispels ignorance)<br>
+<strong>Sarasasanlāpe:</strong> charming and expressive of poetical sentiment; full of love<br>
+<strong>Bhavati Sacidānandā:</strong> You are Sat-Chit-Ananda (Truth + Consciousness + Bliss)<br><br>
+<strong style="color: var(--purple);">Meaning:</strong>
+O Mother with a tender, compassionate heart! You are eternally kind and merciful. You are my true mother and perfect Guru. Through your graceful expression of love, you reveal yourself as Sat-Chit-Ananda - the eternal, conscious, blissful reality.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

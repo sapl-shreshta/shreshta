@@ -1,0 +1,97 @@
+🌱 Level 1: Intuitive Understanding (Early Concepts)
+
+Start with what an angle is, without formal definitions.
+
+What is an angle? (two lines meeting at a point)
+Angles in real life (clock, door, scissors, pizza slice)
+Turning and rotation (quarter turn, half turn, full turn)
+Bigger vs smaller angles (visual comparison only)
+
+🧱 Level 2: Basic Definitions
+
+Introduce proper terms and structure.
+
+Vertex, arms (sides)
+Naming angles (∠ABC format)
+Types of angles:
+Acute (< 90°)
+Right (= 90°)
+Obtuse (90°–180°)
+Straight (= 180°)
+Reflex (> 180°)
+
+📏 Level 3: Measuring Angles
+
+Make it hands-on and visual.
+
+Units: degrees (°)
+Full circle = 360°
+Using a protractor
+Estimating angles
+Drawing angles of given measure
+
+🔄 Level 4: Angle Relationships (Foundation Logic)
+
+This is where reasoning starts.
+
+Adjacent angles
+Linear pair (sum = 180°)
+Vertically opposite angles (equal)
+Complementary angles (sum = 90°)
+Supplementary angles (sum = 180°)
+
+📐 Level 5: Angles in Shapes
+
+Connect angles to geometry.
+
+Angles in triangles (sum = 180°)
+Types of triangles based on angles
+Angles in quadrilaterals (sum = 360°)
+Regular polygons and their angles
+
+✂️ Level 6: Angles with Lines & Transversals
+
+This is a big conceptual jump.
+
+Parallel lines
+Transversal line
+Corresponding angles (equal)
+Alternate interior angles (equal)
+Co-interior angles (sum = 180°)
+
+🔁 Level 7: Angles in Circles
+
+More visual + slightly abstract.
+
+Central angle
+Inscribed angle
+Angle in a semicircle (90°)
+Angles in the same segment
+Tangent and radius angle (90°)
+
+📊 Level 8: Introduction to Trigonometry
+
+Now angles connect to ratios.
+
+What is trigonometry (angles + sides)
+Sine, cosine, tangent (basic idea)
+Right triangle relationships
+Using angles to find height/distance
+
+🔬 Level 9: Advanced Angle Concepts
+
+For deeper math thinking.
+
+Angle of elevation & depression
+Bearings (navigation)
+Radians (alternative to degrees)
+Unit circle (angles + coordinates)
+
+🧠 Level 10: Abstract & Problem Solving
+
+Where mastery happens.
+
+Multi-step angle problems
+Algebra with angles (solve for x)
+Proof-based problems (why rules work)
+Real-world applications (architecture, design)
