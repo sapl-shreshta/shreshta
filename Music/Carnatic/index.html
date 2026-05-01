@@ -77,8 +77,53 @@
       margin-top: 10px;
     }
 
+    .section-title {
+      font-size: clamp(20px, 4vw, 32px);
+      color: #a06cd5;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      text-align: center;
+      padding: 15px;
+      border-bottom: 3px solid #a06cd5;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      transition: all .3s ease;
+      border-radius: 8px;
+      background: #f5f0ff;
+      user-select: none;
+    }
+
+    .section-title:hover {
+      background: #f0e6ff;
+      transform: translateY(-2px);
+    }
+
+    .section-toggle {
+      font-size: 20px;
+      transition: transform .3s ease;
+    }
+
+    .section-title.collapsed .section-toggle {
+      transform: rotate(-90deg);
+    }
+
     .accordion-container {
-      margin: 40px 0;
+      transition: max-height .3s ease, opacity .3s ease;
+      max-height: 5000px;
+      opacity: 1;
+      overflow: hidden;
+    }
+
+    .accordion-container.collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    .accordion-container {
+      margin: 20px 0;
       background: white;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
@@ -146,7 +191,7 @@
     }
 
     .accordion-content.active {
-      max-height: 500px;
+      max-height: 1000px;
       padding: 20px;
     }
 
@@ -163,6 +208,16 @@
       margin-bottom: 12px;
     }
 
+    .raga-info {
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border-left: 4px solid #4cc9f0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
     .audio-player {
       width: 100%;
       margin-bottom: 12px;
@@ -171,8 +226,10 @@
 
     .song-description {
       font-size: clamp(12px, 1.5vw, 14px);
-      color: #666;
-      line-height: 1.5;
+      color: #333;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
 
     footer {
@@ -192,6 +249,11 @@
       <p class="subtitle">Classical Indian music traditions & ragas 🎶</p>
     </header>
 
+    <!-- SONGS SECTION -->
+    <h2 class="section-title" onclick="toggleSection(this)">
+      <span>🎤 Songs</span>
+      <span class="section-toggle">▼</span>
+    </h2>
     <div class="accordion-container">
       <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)">
@@ -227,16 +289,79 @@
           <div class="song-details">
             <div class="song-name">🎤 Noolai Padi</div>
             <div class="song-description">
-              <strong>Tamil Verse on Wisdom & Ethics</strong><br><br>
-              <strong>Noolai Padi - Sanga Tamil Noolai Padi</strong><br>
-              Noolai Padi - Murai Padi Noolai Padi<br>
-              Kalaiyil Padi Kadumpagal Padi<br>
-              Malai Iravu Porulpadum Padi<br>
-              (Noolai....)<br><br>
-              Karpavai Karkumpadi<br>
-              Valluvar Sonnapadi<br>
-              Karkathan Vendum Appadi<br>
-              Kallathavar Valvathepadi? (Noolai...)
+              <strong>Tamil Verse on Wisdom & Ethics</strong>
+
+Noolai Padi - Sanga Tamil Noolai Padi
+Noolai Padi - Murai Padi Noolai Padi
+Kalaiyil Padi Kadumpagal Padi
+Malai Iravu Porulpadum Padi
+(Noolai....)
+
+Karpavai Karkumpadi
+Valluvar Sonnapadi
+Karkathan Vendum Appadi
+Kallathavar Valvathepadi? (Noolai...)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GEETHAMS SECTION -->
+    <h2 class="section-title" onclick="toggleSection(this)">
+      <span>🎼 Geethams</span>
+      <span class="section-toggle">▼</span>
+    </h2>
+    <div class="accordion-container">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title">
+            <span class="accordion-icon">🎵</span>
+            <span>Kamala Jaadala</span>
+          </div>
+          <span class="accordion-toggle">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="song-details">
+            <div class="song-name">🎼 Kamala Jaadala</div>
+            <audio controls class="audio-player">
+              <source src="geetham - kamala jaadala.mpeg" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+            <div class="raga-info">
+              <strong>Ragam:</strong> Kalyani (65th Melakartha)<br>
+              <strong>Talum:</strong> Misra Chapu (Triputa Talum)<br>
+              <strong>Arohanam:</strong> S R2 G3 M2 P D2 N3 S<br>
+              <strong>Avarohanam:</strong> S N3 D2 P M2 G3 R2 S
+            </div>
+            <div class="song-description">
+Oh! Merciful one, with lotus-like ("kamalajadala") Eyes ("vimala su-nayana")!
+
+S   S   S       |  N    D           N    S     ||   N   D   P      |  D   P   M    P    ||
+Ka  mala        jaa   -     da   la       Vi   ma la       Su- na   ya  na
+
+You are an ocean ("ambudhe") of mercy ("karuna") and showed ("sharadhe") kindness ("varada") to the elephant king ("kari"), Gajendra.
+
+G   M   P    |  P   D     D    N    || D  P   M               |  P   G    R    S            ||
+Ka  ri Va        ra   da    Ka  ru    naa-  mbu        dhe  -    -     -
+
+You, the lord ("kaanthaa") of Lakshmi ("kamalaa") ...
+
+D    D    D   |   G   G             G    ,    ||  M   P    ,      |  M  G  R    S           ||
+Ka   ru   na     Sha ra   dhe  -       Ka  ma  -         laa -   -     -
+
+R    ,    ,       |  S    ,    ,     ,             ||   ,     ,     ,             |  ,    ,      ,      ,             ||
+Kaan- - -       thaa -   -    -                 -     -    -               - -        -               -
+
+You slew ("vibhedana") the demons ("asura") Keshi and Narakaasura.
+
+G   M   P     |  M   P  D   P            || N     D   P      |  D   P  M    P            ||
+Ke  -    shi    Na  ra kaa -            (a)su    ra Vi         bhe -  da    na
+
+Your exalted presence ("varadha") resides in the city ("pura") of Velapura. You are the greatest ("uttama") amongst Gods ("sura").
+
+G   M   P    |  P   D     D    N    || D  P  -  M          |  P   G    R    S            ||
+Va  ra  dha    Ve -      la      a      pu  ra  Su            ro   -    tta  ma
             </div>
           </div>
         </div>
@@ -251,6 +376,12 @@
       header.classList.toggle('active');
       const content = header.nextElementSibling;
       content.classList.toggle('active');
+    }
+
+    function toggleSection(sectionTitle) {
+      sectionTitle.classList.toggle('collapsed');
+      const container = sectionTitle.nextElementSibling;
+      container.classList.toggle('collapsed');
     }
   </script>
 </body>
