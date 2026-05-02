@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storytelling 📖</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Navigation buttons */
+    .nav-top {
+      position: fixed;
+      top: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 101;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 60px 0 40px 0;
+    }
+
+    .big {
+      font-size: clamp(60px, 12vw, 120px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      color: var(--purple);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .story-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 16px 12px;
+      border: 3px solid var(--orange);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+      text-decoration: none;
+      color: inherit;
+      transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .story-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, .15);
+    }
+
+    .story-icon {
+      font-size: 36px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .story-title {
+      font-size: clamp(14px, 2.5vw, 18px);
+      font-weight: bold;
+      color: var(--pink);
+      margin-bottom: 6px;
+    }
+
+    .story-desc {
+      font-size: clamp(12px, 1.5vw, 14px);
+      color: #666;
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 18px;
+      color: #a06cd5;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Home">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">📖</div>
+      <h1>Storytelling</h1>
+      <p class="subtitle">Stories from around the world 🌍✨</p>
+    </div>
+
+    <div class="story-grid">
+      <a href="the-mouse-bird-sausage.html" class="story-card">
+        <span class="story-icon">🐭</span>
+        <div class="story-title">The Mouse, the Bird & the Sausage</div>
+        <div class="story-desc">A classic fairy tale of friendship</div>
+      </a>
+    </div>
+  </div>
+
+  <footer>Made with 💖 for Shreshta's learning adventure</footer>
+</body>
+</html>
