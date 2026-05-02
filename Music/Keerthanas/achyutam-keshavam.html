@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Achyutam Keshavam Krishna Damodaram 🎵</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    /* Navigation buttons */
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 0px;
+      z-index: 10;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0 20px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(18px, 4vw, 26px);
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 4px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0, 0, 0, .08);
+    }
+
+    .card h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      color: var(--pink);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Lyrics Section */
+    .lyrics-card {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .lyrics-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .lyrics-header h2 {
+      flex: 1;
+      min-width: 200px;
+      margin: 0;
+    }
+
+    /* Meanings styling - Side by side */
+    .lyrics-with-meanings {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .lyrics-text {
+      flex: 1;
+      min-width: 250px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--pink);
+      line-height: 1.8;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .meanings-text {
+      flex: 1;
+      min-width: 250px;
+      background: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--teal);
+      line-height: 1.8;
+      font-size: 14px;
+      color: #2d5016;
+    }
+
+    .section-header {
+      font-weight: bold;
+      color: var(--purple);
+      margin-top: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .meaning-title {
+      font-weight: bold;
+      color: var(--pink);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .song-info {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border-left: 4px solid var(--teal);
+    }
+
+    .song-info p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-top nav-back">
+    <a href="index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Songs">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">🎵</div>
+      <h1>Achyutam Keshavam Krishna Damodaram</h1>
+      <p class="subtitle">Bhajan honoring the Divine Names of Lord Vishnu</p>
+    </div>
+
+    <!-- Song Info -->
+    <div class="card">
+      <div class="song-info">
+        <p><strong>Type:</strong> Bhajan (Devotional Prayer)</p>
+        <p><strong>Language:</strong> Hindi/Sanskrit</p>
+        <p><strong>Theme:</strong> Divine Names and Forms of Lord Vishnu</p>
+      </div>
+    </div>
+
+    <!-- Lyrics with Meanings -->
+    <div class="card lyrics-card">
+      <div class="lyrics-header">
+        <h2>📖 Lyrics & Meanings</h2>
+      </div>
+
+      <!-- MAIN REFRAIN -->
+      <div class="section-header">📍 MAIN REFRAIN (Achyutam Keshavam...)</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Achyutam Keshavam Krishna Damodaram
+Ram Naraynam Janaki Vallabham
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Meaning:</span>
+<strong>Achyutam:</strong> The one who is incapable of making any mistakes (infallible)<br>
+<strong>Keshavam:</strong> The one who killed the demon Keshi<br>
+<strong>Krishna Damodaram:</strong> Lord Krishna tied by Mother Yashoda around the waist<br>
+<strong>Ram Naraynam:</strong> The incarnation of Narayana as Ram<br>
+<strong>Janaki Vallabham:</strong> The beloved of Janaki (Sita)<br><br>
+These are the various names and forms of Lord Vishnu being invoked with devotion.
+        </div>
+      </div>
+
+      <!-- VERSE 1 -->
+      <div class="section-header">📍 VERSE 1</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Kaun Kehte Hai Bhagwan Aate Nahi
+Tum Meera Ke Jaise Bulate Nahi
+Achyutam Keshavam Krishna Damodaram
+Ram Naraynam Janaki Vallabham
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Meaning:</span>
+<strong>Kaun Kehte Hai Bhagwan Aate Nahi:</strong> Who says that God (Bhagwan) isn't near us?<br>
+<strong>Tum Meera Ke Jaise Bulate Nahi:</strong> You don't call Him like Meera Bai<br><br>
+Meera Bai's love and devotion are well known. Lord Krishna would always visit this devotee when they called Him with such purity of heart and sincere love. The message is that we should have the same level of faith and devotion as Meera Bai had.
+        </div>
+      </div>
+
+      <!-- VERSE 2 -->
+      <div class="section-header">📍 VERSE 2</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Kaun Kehte Hai Bhagwan Khate Nahi
+Ber Shabri Ke Jaise Khilate Nahi
+Achyutam Keshavam Krishna Damodaram
+Ram Naraynam Janaki Vallabham
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Meaning:</span>
+<strong>Kaun Kehte Hai Bhagwan Khate Nahi:</strong> Who says that God doesn't eat what we offer as Prasad?<br>
+<strong>Ber Shabri Ke Jaise Khilate Nahi:</strong> We don't offer forest fruit like Shabri did<br><br>
+Shabri was a simple tribal woman who lived in the forest and would collect the best berries every day hoping that one day Lord Rama would visit her. When Rama finally came during his exile, He accepted and ate her humble offerings of berries with great love. The message is that God accepts offerings made with pure devotion, no matter how humble.
+        </div>
+      </div>
+
+      <!-- VERSE 3 -->
+      <div class="section-header">📍 VERSE 3</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Kaun Kehte Hai Bhagwan Sote Nahi
+Maa Yashodha Ke Jaise Sulate Nahi
+Achyutam Keshavam Krishna Damodaram
+Ram Naraynam Janaki Vallabham
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Meaning:</span>
+<strong>Kaun Kehte Hai Bhagwan Sote Nahi:</strong> Who says that God does not sleep?<br>
+<strong>Maa Yashodha Ke Jaise Sulate Nahi:</strong> Is it because we don't rock him to sleep like Mother Yashoda<br><br>
+Mother Yashoda would rock baby Krishna to sleep with her tender love and care. The message is that God is close to those who treat Him with love and devotion like a mother cares for her child.
+        </div>
+      </div>
+
+      <!-- VERSE 4 -->
+      <div class="section-header">📍 VERSE 4</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Kaun Kehte Hai Bhagwan Nachte Nahi
+Gopiyo Ki Tarah Hum Nachate Nahi
+Achyutam Keshavam Krishna Damodaram
+Ram Naraynam Janaki Vallabham
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Meaning:</span>
+<strong>Kaun Kehte Hai Bhagwan Nachte Nahi:</strong> Who says that God doesn't dance with joy?<br>
+<strong>Gopiyo Ki Tarah Hum Nachate Nahi:</strong> We don't call him to dance like the loving Gopis<br><br>
+The Gopis (cowherd girls) would dance with Lord Krishna in the moonlit nights with pure love and joy. The message is that when we approach God with genuine love and celebration, He responds with His divine presence and bliss.
+        </div>
+      </div>
+
+      <!-- MIDDLE SECTION -->
+      <div class="section-header">📍 CONTEMPLATION</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Naam Japate Chalo Kaam Karte Chalo
+Har Samay Krishna Ka Dhyaan Karte Chalo
+Achyutam Keshavam Krishna Damodaram
+Ram Naraynam Janaki Vallabham
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Meaning:</span>
+<strong>Naam Japate Chalo:</strong> While walking, keep chanting the Lord's name<br>
+<strong>Kaam Karte Chalo:</strong> While working<br>
+<strong>Har Samay Krishna Ka Dhyaan Karte Chalo:</strong> At every moment keep meditating on Krishna<br><br>
+This teaches continuous remembrance of God through all daily activities. It's about integrating devotion into every aspect of life - work, walking, and all actions.
+        </div>
+      </div>
+
+      <!-- CLOSING -->
+      <div class="section-header">📍 CLOSURE</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+Yaad Aayegi Unko Kabhi Na Kabhi
+Krishan Darshan To Denge Kabhi Na Kabhi
+Achyutam Keshavam Krishna Damodaram
+Ram Naraynam Janaki Vallabham
+        </div>
+        <div class="meanings-text">
+<span class="meaning-title">Meaning:</span>
+<strong>Yaad Aayegi Unko Kabhi Na Kabhi:</strong> He will remember us someday<br>
+<strong>Krishna Darshan To Denge Kabhi Na Kabhi:</strong> And will give us His Darshan (divine vision) someday<br><br>
+This is the ultimate promise of the bhajan - that if we maintain true devotion and remember God sincerely, He will surely come to us and give us His divine grace and vision. The message is one of eternal hope and faith in the divine.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>
