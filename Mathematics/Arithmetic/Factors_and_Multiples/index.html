@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Factors and Multiples 🔗</title>
+  <style>
+    :root{
+      --pink:#ff6ec7;
+      --purple:#a06cd5;
+      --blue:#4cc9f0;
+      --teal:#06d6a0;
+      --yellow:#ffd166;
+      --orange:#ff9e45;
+      --red:#ef476f;
+      --cream:#fff8f0;
+      --ink:#1d2b53;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+    body{
+      background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+      color:var(--ink);
+      padding:20px;
+      min-height:100vh;
+    }
+    .container{max-width:900px;margin:0 auto;}
+    .back{
+      position:fixed;top:30px;left:30px;
+      background:var(--purple);color:white;text-decoration:none;
+      padding:12px 24px;border-radius:50px;font-weight:bold;
+      box-shadow:0 5px 0 #7b4aaf;z-index:100;
+    }
+    .back:hover{transform:translateY(-2px);}
+    header{text-align:center;margin:60px 0 30px 0;}
+    .emoji{font-size:clamp(40px,10vw,80px);animation:bounce 2s ease-in-out infinite;}
+    @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+    h1{
+      font-size:clamp(32px,5vw,48px);margin:20px 0;
+      color:var(--purple);
+    }
+    .subtitle{
+      font-size:clamp(14px,2vw,18px);
+      color:var(--blue);
+      font-weight:bold;
+    }
+    .content{margin:40px 0;}
+
+    /* Accordion Styles */
+    .accordion-container{
+      margin-bottom:20px;
+    }
+    .accordion-header{
+      background:linear-gradient(90deg,#ff6ec7,#ffd166);
+      color:white;
+      padding:16px 20px;
+      cursor:pointer;
+      border-radius:12px 12px 0 0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:clamp(16px,2vw,20px);
+      font-weight:bold;
+      transition:all 0.3s ease;
+      user-select:none;
+    }
+    .accordion-header:hover{
+      background:linear-gradient(90deg,#ff8fa3,#ffe0b3);
+      transform:translateY(-2px);
+    }
+    .accordion-header.active{
+      border-radius:12px 12px 0 0;
+    }
+    .accordion-icon{
+      transition:transform 0.3s ease;
+      font-size:20px;
+    }
+    .accordion-header.active .accordion-icon{
+      transform:rotate(180deg);
+    }
+    .accordion-content{
+      background:var(--cream);
+      border-radius:0 0 12px 12px;
+      padding:0;
+      max-height:0;
+      overflow:hidden;
+      transition:all 0.3s ease;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    .accordion-content.active{
+      max-height:10000px;
+      padding:24px;
+    }
+
+    .concept{
+      background:white;
+      border-radius:12px;
+      padding:20px;
+      margin-bottom:16px;
+      border-left:6px solid var(--orange);
+      box-shadow:inset 0 0 0 1px #f0f0f0;
+    }
+    .concept h2{
+      color:var(--purple);
+      font-size:clamp(18px,3vw,24px);
+      margin-bottom:12px;
+    }
+    .concept h3{
+      color:var(--pink);
+      font-size:16px;
+      margin-top:15px;
+      margin-bottom:8px;
+    }
+    .concept p{
+      line-height:1.6;
+      margin-bottom:10px;
+      font-size:15px;
+    }
+    .example{
+      background:#f0f0f0;
+      padding:12px;
+      border-radius:8px;
+      margin:10px 0;
+      border-left:4px solid var(--blue);
+      font-size:14px;
+    }
+    .trick{
+      background:#e8f5e9;
+      padding:12px;
+      border-radius:8px;
+      margin:10px 0;
+      border-left:4px solid var(--teal);
+      font-size:14px;
+      font-weight:bold;
+      color:#2d5016;
+    }
+    .important{
+      background:#fff3e0;
+      padding:12px;
+      border-radius:8px;
+      margin:10px 0;
+      border-left:4px solid var(--orange);
+      font-size:14px;
+      color:#e65100;
+    }
+    .summary-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:20px 0;
+      background:white;
+      border-radius:8px;
+      overflow:hidden;
+      box-shadow:0 2px 8px rgba(0,0,0,.1);
+      font-size:14px;
+    }
+    .summary-table th{
+      background:linear-gradient(90deg,#ff6ec7,#ffd166);
+      color:white;
+      padding:12px;
+      text-align:left;
+      font-weight:bold;
+    }
+    .summary-table td{
+      padding:12px;
+      border-bottom:1px solid #eee;
+    }
+    .summary-table tr:hover{background:#f9f9f9;}
+    .list-item{
+      margin:8px 0;
+      padding-left:20px;
+      line-height:1.6;
+    }
+    .list-item:before{
+      content:"•";
+      color:var(--purple);
+      font-weight:bold;
+      margin-left:-12px;
+      margin-right:8px;
+    }
+
+    /* Divisibility Rules Specific */
+    .rule-box{
+      background:#f5f5f5;
+      border-radius:10px;
+      padding:16px;
+      margin:12px 0;
+      border-left:5px solid var(--blue);
+    }
+    .rule-number{
+      font-size:18px;
+      font-weight:bold;
+      color:var(--purple);
+      margin-bottom:8px;
+    }
+    .rule-text{
+      font-size:15px;
+      line-height:1.6;
+      color:#333;
+      margin-bottom:10px;
+    }
+    .rule-example{
+      background:white;
+      padding:10px;
+      border-radius:6px;
+      border-left:3px solid var(--teal);
+      font-size:14px;
+      margin-top:8px;
+    }
+  </style>
+</head>
+<body>
+  <a class="back" href="../index.html">⬅️ Back to Arithmetic</a>
+  <div class="container">
+    <header>
+      <div class="emoji">🔗</div>
+      <h1>Factors and Multiples</h1>
+      <p class="subtitle">Understand relationships between numbers 📊</p>
+    </header>
+
+    <div class="content">
+
+      <!-- Definitions Accordion -->
+      <div class="accordion-container">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>📚 Definitions</span>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+
+          <!-- Factors -->
+          <div class="concept">
+            <h2>🔢 Factors</h2>
+            <p>A <strong>factor</strong> of a number is a number that divides it exactly (with no remainder).</p>
+
+            <h3>Example:</h3>
+            <div class="example">
+              Factors of <strong>12</strong> are:<br>
+              1, 2, 3, 4, 6, 12<br><br>
+              Because:<br>
+              <div class="list-item">12 ÷ 1 = 12</div>
+              <div class="list-item">12 ÷ 2 = 6</div>
+              <div class="list-item">12 ÷ 3 = 4</div>
+              <div class="list-item">12 ÷ 4 = 3</div>
+              <div class="list-item">12 ÷ 6 = 2</div>
+              <div class="list-item">12 ÷ 12 = 1</div>
+            </div>
+
+            <div class="trick">💡 Quick Trick: Factors are usually smaller than or equal to the number.</div>
+          </div>
+
+          <!-- Multiples -->
+          <div class="concept">
+            <h2>✖️ Multiples</h2>
+            <p>A <strong>multiple</strong> of a number is what you get when you multiply that number by whole numbers.</p>
+
+            <h3>Example:</h3>
+            <div class="example">
+              Multiples of <strong>5</strong>:<br>
+              5, 10, 15, 20, 25, 30…<br><br>
+              Because:<br>
+              <div class="list-item">5 × 1 = 5</div>
+              <div class="list-item">5 × 2 = 10</div>
+              <div class="list-item">5 × 3 = 15</div>
+              <div class="list-item">5 × 4 = 20</div>
+              <div class="list-item">5 × 5 = 25</div>
+            </div>
+
+            <div class="trick">💡 Quick Trick: Multiples can go on forever.</div>
+          </div>
+
+          <!-- Common Factors -->
+          <div class="concept">
+            <h2>🤝 Common Factors</h2>
+            <p>A <strong>common factor</strong> is a factor shared by two or more numbers.</p>
+
+            <h3>Example:</h3>
+            <div class="example">
+              Factors of 12: 1, 2, 3, 4, 6, 12<br>
+              Factors of 18: 1, 2, 3, 6, 9, 18<br><br>
+              <strong>Common factors: 1, 2, 3, 6</strong>
+            </div>
+          </div>
+
+          <!-- Common Multiples -->
+          <div class="concept">
+            <h2>🔄 Common Multiples</h2>
+            <p>A <strong>common multiple</strong> is a multiple shared by two or more numbers.</p>
+
+            <h3>Example:</h3>
+            <div class="example">
+              Multiples of 4: 4, 8, 12, 16, 20, 24…<br>
+              Multiples of 6: 6, 12, 18, 24, 30…<br><br>
+              <strong>Common multiples: 12, 24…</strong><br><br>
+              The smallest common multiple is called the <strong>LCM (Least Common Multiple)</strong>.
+            </div>
+          </div>
+
+          <!-- Even Numbers -->
+          <div class="concept">
+            <h2>🎯 Even Numbers</h2>
+            <p>An <strong>even number</strong> is divisible by 2.</p>
+
+            <h3>Examples:</h3>
+            <div class="example">
+              2, 4, 6, 8, 10, 12, 14, 16…
+            </div>
+
+            <div class="trick">💡 Quick Trick: Even numbers end in: 0, 2, 4, 6, 8</div>
+          </div>
+
+          <!-- Odd Numbers -->
+          <div class="concept">
+            <h2>🎲 Odd Numbers</h2>
+            <p>An <strong>odd number</strong> is not divisible by 2.</p>
+
+            <h3>Examples:</h3>
+            <div class="example">
+              1, 3, 5, 7, 9, 11, 13, 15…
+            </div>
+
+            <div class="trick">💡 Quick Trick: Odd numbers end in: 1, 3, 5, 7, 9</div>
+          </div>
+
+          <!-- Prime Numbers -->
+          <div class="concept">
+            <h2>✨ Prime Numbers</h2>
+            <p>A <strong>prime number</strong> has exactly <strong>two factors</strong>: 1 and itself.</p>
+
+            <h3>Examples:</h3>
+            <div class="example">
+              2, 3, 5, 7, 11, 13, 17, 19, 23…
+            </div>
+
+            <div class="important">
+              Important facts about primes:<br>
+              <div class="list-item">2 is the only even prime number.</div>
+              <div class="list-item">1 is NOT a prime number.</div>
+            </div>
+
+            <h3>Example:</h3>
+            <div class="example">
+              7 has only: 1 and 7<br>
+              So it is prime.
+            </div>
+          </div>
+
+          <!-- Composite Numbers -->
+          <div class="concept">
+            <h2>🧩 Composite Numbers</h2>
+            <p>A <strong>composite number</strong> has <strong>more than two factors</strong>.</p>
+
+            <h3>Examples:</h3>
+            <div class="example">
+              4, 6, 8, 9, 10, 12, 14, 15, 16…
+            </div>
+
+            <h3>Example:</h3>
+            <div class="example">
+              12 has: 1, 2, 3, 4, 6, 12<br>
+              So it is composite.
+            </div>
+          </div>
+
+          <!-- Twin Primes -->
+          <div class="concept">
+            <h2>👯 Twin Primes</h2>
+            <p><strong>Twin primes</strong> are two prime numbers that differ by 2.</p>
+
+            <h3>Examples:</h3>
+            <div class="example">
+              <div class="list-item">3 and 5</div>
+              <div class="list-item">5 and 7</div>
+              <div class="list-item">11 and 13</div>
+              <div class="list-item">17 and 19</div>
+              <div class="list-item">29 and 31</div>
+            </div>
+
+            <div class="important">Both numbers must be prime.</div>
+          </div>
+
+          <!-- Prime Triplet -->
+          <div class="concept">
+            <h2>🎭 Prime Triplet</h2>
+            <p>A <strong>prime triplet</strong> is a set of three prime numbers close together.</p>
+
+            <h3>The only prime triplet is:</h3>
+            <div class="example">
+              <strong>3, 5, 7</strong>
+            </div>
+
+            <h3>Why only one?</h3>
+            <div class="example">
+              Among any three consecutive odd numbers, one will usually be divisible by 3.
+            </div>
+          </div>
+
+          <!-- Co-prime Numbers -->
+          <div class="concept">
+            <h2>🔐 Co-prime Numbers</h2>
+            <p>Two numbers are <strong>co-prime</strong> if their only common factor is 1.</p>
+
+            <h3>Example:</h3>
+            <div class="example">
+              8 and 15<br><br>
+              Factors of 8: 1, 2, 4, 8<br>
+              Factors of 15: 1, 3, 5, 15<br><br>
+              Only common factor = 1<br>
+              So they are co-prime.
+            </div>
+
+            <div class="important">
+              Important: Co-prime numbers do NOT need to be prime themselves.<br><br>
+              Example: 8 and 9 are co-prime.
+            </div>
+          </div>
+
+          <!-- Perfect Number -->
+          <div class="concept">
+            <h2>💎 Perfect Number</h2>
+            <p>A <strong>perfect number</strong> is a number where the sum of its proper factors equals the number itself.</p>
+            <p><em>(Proper factors = all factors except the number itself.)</em></p>
+
+            <h3>Example: 6</h3>
+            <div class="example">
+              Factors of 6: 1, 2, 3, 6<br>
+              Proper factors: 1, 2, 3<br><br>
+              Sum: 1 + 2 + 3 = 6 ✓<br>
+              So 6 is a perfect number.
+            </div>
+
+            <h3>More Examples:</h3>
+            <div class="example">
+              <div class="list-item">28 (1 + 2 + 4 + 7 + 14 = 28)</div>
+              <div class="list-item">496</div>
+            </div>
+          </div>
+
+          <!-- Summary Table -->
+          <div class="concept">
+            <h2>📊 Quick Summary Table</h2>
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>Meaning</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Factor</strong></td>
+                  <td>Divides exactly</td>
+                  <td>3 is a factor of 12</td>
+                </tr>
+                <tr>
+                  <td><strong>Multiple</strong></td>
+                  <td>Result of multiplication</td>
+                  <td>24 is a multiple of 6</td>
+                </tr>
+                <tr>
+                  <td><strong>Common Factor</strong></td>
+                  <td>Shared factor</td>
+                  <td>2 is common factor of 8 and 10</td>
+                </tr>
+                <tr>
+                  <td><strong>Common Multiple</strong></td>
+                  <td>Shared multiple</td>
+                  <td>12 is common multiple of 3 and 4</td>
+                </tr>
+                <tr>
+                  <td><strong>Even Number</strong></td>
+                  <td>Divisible by 2</td>
+                  <td>14</td>
+                </tr>
+                <tr>
+                  <td><strong>Odd Number</strong></td>
+                  <td>Not divisible by 2</td>
+                  <td>15</td>
+                </tr>
+                <tr>
+                  <td><strong>Prime Number</strong></td>
+                  <td>Exactly 2 factors</td>
+                  <td>13</td>
+                </tr>
+                <tr>
+                  <td><strong>Composite Number</strong></td>
+                  <td>More than 2 factors</td>
+                  <td>12</td>
+                </tr>
+                <tr>
+                  <td><strong>Twin Primes</strong></td>
+                  <td>Prime numbers differing by 2</td>
+                  <td>11 and 13</td>
+                </tr>
+                <tr>
+                  <td><strong>Prime Triplet</strong></td>
+                  <td>Three close primes</td>
+                  <td>3, 5, 7</td>
+                </tr>
+                <tr>
+                  <td><strong>Co-prime Numbers</strong></td>
+                  <td>Only common factor is 1</td>
+                  <td>8 and 15</td>
+                </tr>
+                <tr>
+                  <td><strong>Perfect Number</strong></td>
+                  <td>Sum of proper factors equals number</td>
+                  <td>28</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Divisibility Rules Accordion -->
+      <div class="accordion-container">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>⚡ Divisibility Rules</span>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+
+          <!-- Divisibility by 2 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 2</div>
+            <div class="rule-text">
+              A number is divisible by 2 if its <strong>last digit is even</strong> (0, 2, 4, 6, or 8).
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 24 → Last digit is 4 (even) → Divisible by 2 ✓<br>
+              • 356 → Last digit is 6 (even) → Divisible by 2 ✓<br>
+              • 123 → Last digit is 3 (odd) → NOT divisible by 2 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 3 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 3</div>
+            <div class="rule-text">
+              A number is divisible by 3 if the <strong>sum of all its digits is divisible by 3</strong>.
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 123 → 1 + 2 + 3 = 6 → 6 is divisible by 3 → 123 is divisible by 3 ✓<br>
+              • 456 → 4 + 5 + 6 = 15 → 15 is divisible by 3 → 456 is divisible by 3 ✓<br>
+              • 124 → 1 + 2 + 4 = 7 → 7 is NOT divisible by 3 → 124 is NOT divisible by 3 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 4 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 4</div>
+            <div class="rule-text">
+              A number is divisible by 4 if its <strong>last two digits form a number divisible by 4</strong>.
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 312 → Last two digits are 12 → 12 ÷ 4 = 3 → Divisible by 4 ✓<br>
+              • 2520 → Last two digits are 20 → 20 ÷ 4 = 5 → Divisible by 4 ✓<br>
+              • 314 → Last two digits are 14 → 14 ÷ 4 = 3.5 → NOT divisible by 4 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 5 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 5</div>
+            <div class="rule-text">
+              A number is divisible by 5 if its <strong>last digit is 0 or 5</strong>.
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 125 → Last digit is 5 → Divisible by 5 ✓<br>
+              • 340 → Last digit is 0 → Divisible by 5 ✓<br>
+              • 342 → Last digit is 2 → NOT divisible by 5 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 6 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 6</div>
+            <div class="rule-text">
+              A number is divisible by 6 if it is <strong>divisible by both 2 AND 3</strong>.
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 234 → Divisible by 2 (ends in 4) AND sum 2+3+4=9 (divisible by 3) → Divisible by 6 ✓<br>
+              • 120 → Divisible by 2 (ends in 0) AND sum 1+2+0=3 (divisible by 3) → Divisible by 6 ✓<br>
+              • 123 → Divisible by 3 but NOT by 2 (ends in 3) → NOT divisible by 6 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 7 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 7</div>
+            <div class="rule-text">
+              <strong>Method:</strong> Remove the last digit, double it, and subtract from the remaining number. If the result is divisible by 7, then the original number is divisible by 7.
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 343 → Remove 3, double it (6), subtract from 34: 34 - 6 = 28 → 28 ÷ 7 = 4 → Divisible by 7 ✓<br>
+              • 119 → Remove 9, double it (18), subtract from 11: 11 - 18 = -7 → -7 ÷ 7 = -1 → Divisible by 7 ✓<br>
+              • 345 → Remove 5, double it (10), subtract from 34: 34 - 10 = 24 → 24 ÷ 7 = 3.4... → NOT divisible by 7 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 8 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 8</div>
+            <div class="rule-text">
+              A number is divisible by 8 if its <strong>last three digits form a number divisible by 8</strong>.
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 2536 → Last three digits are 536 → 536 ÷ 8 = 67 → Divisible by 8 ✓<br>
+              • 5432 → Last three digits are 432 → 432 ÷ 8 = 54 → Divisible by 8 ✓<br>
+              • 5433 → Last three digits are 433 → 433 ÷ 8 = 54.125 → NOT divisible by 8 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 9 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 9</div>
+            <div class="rule-text">
+              A number is divisible by 9 if the <strong>sum of all its digits is divisible by 9</strong>.
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 234 → 2 + 3 + 4 = 9 → 9 is divisible by 9 → 234 is divisible by 9 ✓<br>
+              • 729 → 7 + 2 + 9 = 18 → 18 is divisible by 9 → 729 is divisible by 9 ✓<br>
+              • 234 → 2 + 3 + 4 = 9 (wait, this was ✓). Let's try 235 → 2 + 3 + 5 = 10 → NOT divisible by 9 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 10 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 10</div>
+            <div class="rule-text">
+              A number is divisible by 10 if its <strong>last digit is 0</strong>.
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 240 → Last digit is 0 → Divisible by 10 ✓<br>
+              • 3450 → Last digit is 0 → Divisible by 10 ✓<br>
+              • 345 → Last digit is 5 → NOT divisible by 10 ✗
+            </div>
+          </div>
+
+          <!-- Divisibility by 11 -->
+          <div class="rule-box">
+            <div class="rule-number">📌 Divisibility by 11</div>
+            <div class="rule-text">
+              A number is divisible by 11 if the <strong>difference between the sum of digits in odd positions and sum of digits in even positions is divisible by 11</strong> (or equals 0).
+            </div>
+            <div class="rule-example">
+              <strong>Examples:</strong><br>
+              • 121 → Odd positions (1st, 3rd): 1 + 1 = 2 → Even positions (2nd): 2 → Difference: 2 - 2 = 0 → Divisible by 11 ✓<br>
+              • 1221 → Odd positions: 1 + 2 = 3 → Even positions: 2 + 1 = 3 → Difference: 3 - 3 = 0 → Divisible by 11 ✓<br>
+              • 123 → Odd positions: 1 + 3 = 4 → Even positions: 2 → Difference: 4 - 2 = 2 → NOT divisible by 11 ✗
+            </div>
+          </div>
+
+          <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+
+          <!-- General Properties of Divisibility -->
+          <div style="background: #f9f5ff; padding: 20px; border-radius: 12px; margin-top: 20px;">
+            <h2 style="color: var(--purple); font-size: 22px; margin-bottom: 20px;">⚡ General Properties of Divisibility</h2>
+
+            <!-- Property 1 -->
+            <div class="rule-box">
+              <div class="rule-number">✨ Property 1</div>
+              <div class="rule-text">
+                If a number is divisible by another number, then it is divisible by <strong>all factors of that number</strong>.
+              </div>
+              <div class="rule-example">
+                <strong>Example:</strong><br>
+                36 is divisible by 12.<br>
+                So 36 is also divisible by all factors of 12: <strong>1, 2, 3, 4, 6, and 12</strong> ✓
+              </div>
+            </div>
+
+            <!-- Property 2 -->
+            <div class="rule-box">
+              <div class="rule-number">✨ Property 2</div>
+              <div class="rule-text">
+                If a number is divisible by two <strong>co-prime numbers</strong>, then it is divisible by their <strong>product</strong>.<br>
+                <em>(Co-prime numbers have only 1 as a common factor.)</em>
+              </div>
+              <div class="rule-example">
+                <strong>Example 1:</strong><br>
+                30 is divisible by 3 and 5.<br>
+                Since 3 and 5 are co-prime, 30 is also divisible by: 3 × 5 = <strong>15</strong> ✓<br><br>
+
+                <strong>Example 2:</strong><br>
+                84 is divisible by 4 and 7.<br>
+                Since 4 and 7 are co-prime, 84 is divisible by: 4 × 7 = <strong>28</strong> ✓<br><br>
+
+                <strong>Important Note:</strong><br>
+                This works <strong>only when the numbers are co-prime</strong>.<br>
+                Example: 12 is divisible by 3 and 6, but NOT by 18 (because 3 and 6 are not co-prime) ✗
+              </div>
+            </div>
+
+            <!-- Property 3 -->
+            <div class="rule-box">
+              <div class="rule-number">✨ Property 3</div>
+              <div class="rule-text">
+                If two numbers are divisible by a number, then their <strong>sum is also divisible</strong> by that number.
+              </div>
+              <div class="rule-example">
+                <strong>Example:</strong><br>
+                20 and 44 are divisible by 4.<br>
+                20 + 44 = 64<br>
+                64 is also divisible by 4 ✓ (64 ÷ 4 = 16)
+              </div>
+            </div>
+
+            <!-- Property 4 -->
+            <div class="rule-box">
+              <div class="rule-number">✨ Property 4</div>
+              <div class="rule-text">
+                If two numbers are divisible by a number, then their <strong>difference is also divisible</strong> by that number.
+              </div>
+              <div class="rule-example">
+                <strong>Example:</strong><br>
+                44 and 20 are divisible by 4.<br>
+                44 − 20 = 24<br>
+                24 is also divisible by 4 ✓ (24 ÷ 4 = 6)
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Prime Number Testing Accordion -->
+      <div class="accordion-container">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>🔍 Deciding Whether a Number is Prime</span>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+
+          <div style="background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+            <h2 style="color: var(--purple); font-size: 22px; margin-bottom: 15px;">What is a Prime Number?</h2>
+            <p style="font-size: 15px; line-height: 1.6; margin-bottom: 15px;">
+              A <strong>prime number</strong> has exactly <strong>two factors</strong>:
+            </p>
+            <div class="list-item" style="font-size: 15px;">1</div>
+            <div class="list-item" style="font-size: 15px;">itself</div>
+
+            <h3 style="color: var(--pink); font-size: 18px; margin-top: 20px; margin-bottom: 15px;">How to Check if a Number is Prime:</h3>
+
+            <div style="background: #e3f2fd; padding: 16px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid var(--blue);">
+              <div style="font-weight: bold; color: var(--purple); margin-bottom: 10px; font-size: 15px;">Step 1: Find the square root range</div>
+              <p style="font-size: 14px; margin-bottom: 8px;">
+                Find the largest natural number <strong>m</strong> such that: <strong>m × m ≤ n</strong>
+              </p>
+              <p style="font-size: 13px; color: #666;">
+                (This means: Find the approximate square root of your number.)
+              </p>
+            </div>
+
+            <div style="background: #e3f2fd; padding: 16px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid var(--blue);">
+              <div style="font-weight: bold; color: var(--purple); margin-bottom: 10px; font-size: 15px;">Step 2: List all prime numbers</div>
+              <p style="font-size: 14px;">
+                List all prime numbers less than or equal to <strong>m</strong>.
+              </p>
+            </div>
+
+            <div style="background: #e3f2fd; padding: 16px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid var(--blue);">
+              <div style="font-weight: bold; color: var(--purple); margin-bottom: 10px; font-size: 15px;">Step 3: Check divisibility</div>
+              <p style="font-size: 14px; margin-bottom: 10px;">
+                Check whether the number is divisible by any of those prime numbers.
+              </p>
+              <div class="list-item" style="font-size: 14px;">If divisible → <strong>NOT prime</strong> ✗</div>
+              <div class="list-item" style="font-size: 14px;">If not divisible → <strong>PRIME</strong> ✓</div>
+            </div>
+          </div>
+
+          <!-- Example 1 -->
+          <div class="rule-box">
+            <div class="rule-number">📝 Example 1: Is 137 Prime?</div>
+            <div class="rule-text">
+              <strong>Step 1: Find m</strong><br>
+              11 × 11 = 121 ✓<br>
+              12 × 12 = 144 (too large)<br>
+              So m = 11<br><br>
+
+              <strong>Step 2: Prime numbers up to 11:</strong><br>
+              2, 3, 5, 7, 11<br><br>
+
+              <strong>Step 3: Check divisibility</strong><br>
+              137 is not divisible by any of them.<br><br>
+
+              <strong>Answer: 137 is PRIME ✓</strong>
+            </div>
+          </div>
+
+          <!-- Example 2 -->
+          <div class="rule-box">
+            <div class="rule-number">📝 Example 2: Is 331 Prime?</div>
+            <div class="rule-text">
+              <strong>Step 1: Find m</strong><br>
+              18 × 18 = 324 ✓<br>
+              19 × 19 = 361 (too large)<br>
+              So m = 18<br><br>
+
+              <strong>Step 2: Prime numbers up to 18:</strong><br>
+              2, 3, 5, 7, 11, 13, 17<br><br>
+
+              <strong>Step 3: Check divisibility</strong><br>
+              331 is not divisible by any of them.<br><br>
+
+              <strong>Answer: 331 is PRIME ✓</strong>
+            </div>
+          </div>
+
+          <!-- Example 3 -->
+          <div class="rule-box">
+            <div class="rule-number">📝 Example 3: Is 527 Prime?</div>
+            <div class="rule-text">
+              <strong>Step 1: Find m</strong><br>
+              22 × 22 = 484 ✓<br>
+              23 × 23 = 529 (too large)<br>
+              So m = 22<br><br>
+
+              <strong>Step 2: Prime numbers up to 22:</strong><br>
+              2, 3, 5, 7, 11, 13, 17, 19<br><br>
+
+              <strong>Step 3: Check divisibility</strong><br>
+              527 is divisible by 17!<br>
+              17 × 31 = 527<br><br>
+
+              <strong>Answer: 527 is NOT PRIME ✗</strong>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleAccordion(header) {
+      const content = header.nextElementSibling;
+      const isActive = header.classList.contains('active');
+
+      // Close other accordions
+      document.querySelectorAll('.accordion-header').forEach(h => {
+        if (h !== header) {
+          h.classList.remove('active');
+          h.nextElementSibling.classList.remove('active');
+        }
+      });
+
+      // Toggle current accordion
+      if (isActive) {
+        header.classList.remove('active');
+        content.classList.remove('active');
+      } else {
+        header.classList.add('active');
+        content.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
