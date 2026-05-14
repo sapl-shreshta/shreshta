@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cell 🔬</title>
+  <style>
+    :root{
+      --pink:#ff6ec7;
+      --purple:#a06cd5;
+      --blue:#4cc9f0;
+      --teal:#06d6a0;
+      --yellow:#ffd166;
+      --orange:#ff9e45;
+      --red:#ef476f;
+      --cream:#fff8f0;
+      --ink:#1d2b53;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+    body{
+      background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+      color:var(--ink);
+      padding:20px;
+      min-height:100vh;
+    }
+    .container{max-width:1000px;margin:0 auto;}
+    .back{
+      position:fixed;top:30px;left:30px;
+      background:var(--purple);color:white;text-decoration:none;
+      padding:12px 24px;border-radius:50px;font-weight:bold;
+      box-shadow:0 5px 0 #7b4aaf;z-index:100;
+    }
+    .back:hover{transform:translateY(-2px);}
+    header{text-align:center;margin:60px 0 30px 0;}
+    .emoji{font-size:clamp(40px,10vw,80px);animation:bounce 2s ease-in-out infinite;}
+    @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+    h1{
+      font-size:clamp(32px,5vw,48px);margin:20px 0;
+      color:var(--purple);
+    }
+    .subtitle{
+      font-size:clamp(14px,2vw,18px);
+      color:var(--blue);
+      font-weight:bold;
+    }
+    .content{margin:40px 0;}
+    .section{
+      background:var(--cream);
+      border-radius:16px;
+      padding:24px;
+      margin-bottom:20px;
+      border-left:6px solid var(--teal);
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    .section h2{
+      color:var(--purple);
+      font-size:clamp(20px,4vw,28px);
+      margin-bottom:12px;
+    }
+    .section h3{
+      color:var(--pink);
+      font-size:16px;
+      margin-top:15px;
+      margin-bottom:8px;
+    }
+    .section p{
+      line-height:1.6;
+      margin-bottom:10px;
+      font-size:15px;
+    }
+    .highlight{
+      background:#e8f5e9;
+      padding:16px;
+      border-radius:10px;
+      border-left:4px solid var(--teal);
+      margin:15px 0;
+    }
+    .organelle-box{
+      background:#f0f7ff;
+      padding:16px;
+      border-radius:10px;
+      border-left:4px solid var(--blue);
+      margin:12px 0;
+    }
+    .list-item{
+      margin:8px 0;
+      padding-left:20px;
+      line-height:1.6;
+      font-size:15px;
+    }
+    .list-item:before{
+      content:"•";
+      color:var(--purple);
+      font-weight:bold;
+      margin-left:-12px;
+      margin-right:8px;
+    }
+    .summary-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:20px 0;
+      background:white;
+      border-radius:8px;
+      overflow:hidden;
+      box-shadow:0 2px 8px rgba(0,0,0,.1);
+      font-size:13px;
+    }
+    .summary-table th{
+      background:linear-gradient(90deg,#8bc34a,#4caf50);
+      color:white;
+      padding:12px;
+      text-align:left;
+      font-weight:bold;
+    }
+    .summary-table td{
+      padding:12px;
+      border-bottom:1px solid #eee;
+    }
+    .summary-table tr:hover{background:#f9f9f9;}
+    .category-header{
+      background:linear-gradient(90deg,#e8f5e9,#c8e6c9);
+      padding:12px;
+      font-weight:bold;
+      color:#1b5e20;
+      border-radius:6px;
+      margin-top:15px;
+      margin-bottom:10px;
+    }
+    .faq{
+      background:#fff9c4;
+      padding:16px;
+      border-radius:10px;
+      border-left:4px solid var(--yellow);
+      margin:12px 0;
+    }
+    .faq-question{
+      font-weight:bold;
+      color:var(--purple);
+      margin-bottom:8px;
+    }
+    .faq-answer{
+      color:#333;
+      line-height:1.6;
+    }
+  </style>
+</head>
+<body>
+  <a class="back" href="../index.html">⬅️ Back to Biology</a>
+  <div class="container">
+    <header>
+      <div class="emoji">🔬</div>
+      <h1>Cell</h1>
+      <p class="subtitle">The Basic Unit of Life 🌿</p>
+      <div style="margin-top:20px;">
+        <a href="Cell_Biology_MCQ_Worksheet.html" style="display:inline-block; background:linear-gradient(90deg,#8bc34a,#4caf50); color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,.2);">
+          📝 MCQ Worksheet (100 Questions)
+        </a>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- What is a Cell -->
+      <div class="section">
+        <h2>🔍 What is a Cell?</h2>
+        <p>
+          A <strong>cell</strong> is the basic structural and functional unit of a living organism. According to <strong>cell theory postulates</strong>, a cell is the basic building block of life, which makes anything alive and is self-sufficient to carry out all the fundamental functions of an organism.
+        </p>
+        <div class="highlight">
+          <strong>Key Points:</strong>
+          <div class="list-item">Cells are the smallest units of life</div>
+          <div class="list-item">All living organisms are made of cells</div>
+          <div class="list-item">Cells reproduce to form new cells</div>
+          <div class="list-item">Cells contain genetic material (DNA)</div>
+        </div>
+      </div>
+
+      <!-- What are Cell Organelles -->
+      <div class="section">
+        <h2>🏗️ What are Cell Organelles?</h2>
+        <p>
+          The cellular components are called <strong>cell organelles</strong>. These cell organelles include both membrane and non-membrane bound organelles, present within the cells and are distinct in their structures and functions. They coordinate and function efficiently for the normal functioning of the cell.
+        </p>
+        <p>
+          A few of them function by providing shape and support, whereas some are involved in the locomotion and reproduction of a cell. There are various organelles present within the cell and are classified into three categories based on the presence or absence of membrane.
+        </p>
+
+        <div class="category-header">🔴 Organelles Without Membrane</div>
+        <div class="organelle-box">
+          <strong>Non-membrane-bound organelles:</strong>
+          <div class="list-item">Cell Wall</div>
+          <div class="list-item">Ribosomes</div>
+          <div class="list-item">Cytoskeleton</div>
+          <p style="font-size:14px; margin-top:10px; color:#666;">
+            <em>Found in both prokaryotic and eukaryotic cells</em>
+          </p>
+        </div>
+
+        <div class="category-header">🟡 Single Membrane-Bound Organelles</div>
+        <div class="organelle-box">
+          <strong>Single membrane-bound organelles:</strong>
+          <div class="list-item">Vacuole</div>
+          <div class="list-item">Lysosome</div>
+          <div class="list-item">Golgi Apparatus</div>
+          <div class="list-item">Endoplasmic Reticulum</div>
+          <p style="font-size:14px; margin-top:10px; color:#666;">
+            <em>Found only in eukaryotic cells</em>
+          </p>
+        </div>
+
+        <div class="category-header">🔵 Double Membrane-Bound Organelles</div>
+        <div class="organelle-box">
+          <strong>Double membrane-bound organelles:</strong>
+          <div class="list-item">Nucleus</div>
+          <div class="list-item">Mitochondria</div>
+          <div class="list-item">Chloroplast</div>
+          <p style="font-size:14px; margin-top:10px; color:#666;">
+            <em>Found only in eukaryotic cells</em>
+          </p>
+        </div>
+      </div>
+
+      <!-- Cell Organelles and Their Functions -->
+      <div class="section">
+        <h2>📋 List of Cell Organelles and Their Functions</h2>
+
+        <!-- Plasma Membrane -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #ff6ec7;">
+          <h3>Plasma Membrane (Cell Membrane / Cytoplasmic Membrane)</h3>
+          <p>
+            The plasma membrane is a <strong>selectively permeable membrane</strong> of the cells, which is composed of a <strong>lipid bilayer and proteins</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Acts as a selectively permeable membrane</div>
+          <div class="list-item">Permits entry of selective materials in and out of the cell</div>
+          <div class="list-item">Provides shape to the cell</div>
+          <div class="list-item">Protects the inner contents of the cell</div>
+          <p style="font-size:14px; margin-top:10px; color:#666;">
+            <em>Based on the fluid mosaic model: made of a lipid bilayer with embedded protein molecules</em>
+          </p>
+        </div>
+
+        <!-- Cytoplasm -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #4cc9f0;">
+          <h3>Cytoplasm</h3>
+          <p>
+            The cytoplasm is a <strong>jelly-like substance</strong> found between the cell membrane and nucleus. It is mainly composed of <strong>water, organic and inorganic compounds</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Serves as the medium where all cell organelles are embedded</div>
+          <div class="list-item">Contains enzymes responsible for controlling metabolic activities</div>
+          <div class="list-item">Site for most chemical reactions within the cell</div>
+        </div>
+
+        <!-- Nucleus -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #a06cd5;">
+          <h3>Nucleus</h3>
+          <p>
+            The nucleus is a <strong>double-membraned organelle</strong> found in all eukaryotic cells. It is the <strong>largest organelle</strong>, which functions as the control centre of the cellular activities.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Key Structures:</strong>
+          </p>
+          <div class="list-item">Nuclear membrane (porous, like cell membrane)</div>
+          <div class="list-item">Nucleolus (tiny spherical bodies)</div>
+          <div class="list-item">Chromosomes (carry genes)</div>
+          <div class="list-item">DNA (genetic material)</div>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Controls cellular activities, metabolism, and growth</div>
+          <div class="list-item">Stores the cell's DNA</div>
+          <div class="list-item">Nucleoli synthesize protein and RNA</div>
+          <div class="list-item">Controls hereditary characters and cell functions</div>
+        </div>
+
+        <!-- Mitochondria -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #ef476f;">
+          <h3>🔋 Mitochondria (Powerhouse of the Cell)</h3>
+          <p>
+            Mitochondria are called the <strong>powerhouses of the cell</strong> as they produce energy-rich molecules. They are <strong>double membrane-bound, sausage-shaped organelles</strong>, found in almost all eukaryotic cells.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Structure:</strong>
+          </p>
+          <div class="list-item">Outer membrane (continuous boundary with cytoplasm)</div>
+          <div class="list-item">Inner membrane (folded into cristae)</div>
+          <div class="list-item">Matrix (inner compartment)</div>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Sites of aerobic respiration</div>
+          <div class="list-item">Produces energy in the form of ATP</div>
+          <div class="list-item">Helps transform molecules (e.g., glucose → ATP)</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>Has their own circular DNA, RNA, ribosomes (70s), and molecules for protein synthesis</em>
+          </p>
+        </div>
+
+        <!-- Chloroplasts -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #06d6a0;">
+          <h3>🌿 Chloroplasts</h3>
+          <p>
+            Chloroplasts are <strong>double membrane-bound organelles</strong> which store chlorophyll and other carotenoid pigments. They are responsible for <strong>photosynthesis</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Key Structures:</strong>
+          </p>
+          <div class="list-item">Stroma (inner space)</div>
+          <div class="list-item">Thylakoids (flattened disc-like structures containing chlorophyll)</div>
+          <div class="list-item">Grana (stacked thylakoids)</div>
+          <div class="list-item">Stromal lamella (connect thylakoids of different grana)</div>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Sites of photosynthesis</div>
+          <div class="list-item">Traps light energy for photosynthesis</div>
+          <div class="list-item">Synthesis of carbohydrates and proteins</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>Contains double-stranded circular DNA, 70S ribosomes, and enzymes</em>
+          </p>
+        </div>
+
+        <!-- Endoplasmic Reticulum -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #ff9e45;">
+          <h3>Endoplasmic Reticulum</h3>
+          <p>
+            The Endoplasmic Reticulum is a <strong>network of membranous canals</strong> filled with fluid. They are the <strong>transport system of the cell</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Types:</strong>
+          </p>
+          <div style="margin:10px 0; padding:10px; background:white; border-radius:6px;">
+            <strong>Rough Endoplasmic Reticulum</strong>
+            <div class="list-item">Composed of cisternae, tubules, and vesicles</div>
+            <div class="list-item">Involved in protein manufacture</div>
+          </div>
+          <div style="margin:10px 0; padding:10px; background:white; border-radius:6px;">
+            <strong>Smooth Endoplasmic Reticulum</strong>
+            <div class="list-item">Storage organelle</div>
+            <div class="list-item">Produces lipids and steroids</div>
+            <div class="list-item">Responsible for detoxifying the cell</div>
+          </div>
+        </div>
+
+        <!-- Golgi Apparatus -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #4caf50;">
+          <h3>Golgi Apparatus (Golgi Complex)</h3>
+          <p>
+            Golgi Apparatus is a <strong>membrane-bound organelle</strong>, composed of a series of <strong>flattened, stacked pouches called cisternae</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Transporting proteins and lipids</div>
+          <div class="list-item">Modifying proteins and lipids</div>
+          <div class="list-item">Packaging to targeted destinations</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>Found in both plant and animal cells</em>
+          </p>
+        </div>
+
+        <!-- Lysosomes -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #ff6ec7;">
+          <h3>Lysosomes (Suicidal Bags 🧬)</h3>
+          <p>
+            Lysosomes are <strong>tiny, circular-shaped, single membrane-bound organelles</strong>, filled with <strong>digestive enzymes</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Helps in digestion of cellular materials</div>
+          <div class="list-item">Removes wastes</div>
+          <div class="list-item">Digests dead and damaged cells</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>Called "suicide bags" because they can break down or digest all wastes and damaged cells</em>
+          </p>
+        </div>
+
+        <!-- Ribosomes -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #2196f3;">
+          <h3>Ribosomes</h3>
+          <p>
+            Ribosomes are <strong>non-membrane-bound organelles</strong> found in close association with the endoplasmic reticulum. They are composed of <strong>2/3rd RNA and 1/3rd protein</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Types:</strong>
+          </p>
+          <div class="list-item">70S (found in prokaryotes)</div>
+          <div class="list-item">80S (found in eukaryotes)</div>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Protein synthesis in all living cells</div>
+          <div class="list-item">Ensures survival of the cell</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>Found either within the endoplasmic reticulum or freely floating in the cytoplasm</em>
+          </p>
+        </div>
+
+        <!-- Vacuoles -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #ffc107;">
+          <h3>Vacuoles</h3>
+          <p>
+            Vacuoles are <strong>storage bubbles of irregular shapes</strong> which are <strong>fluid-filled organelles enclosed by a membrane</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Stores food or nutrients needed for cell survival</div>
+          <div class="list-item">Stores waste products</div>
+          <div class="list-item">Protects the cell from contamination</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>Plant cells have larger vacuoles compared to animal cells</em>
+          </p>
+        </div>
+
+        <!-- Cytoskeleton -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #9c27b0;">
+          <h3>Cytoskeleton</h3>
+          <p>
+            It is a <strong>continuous network of filamentous proteinaceous structures</strong> that run throughout the cytoplasm, from the nucleus to the plasma membrane.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Provides shape to the cell</div>
+          <div class="list-item">Provides mechanical resistance against deformation</div>
+          <div class="list-item">Helps in cell motility during cytokinesis</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>Found in all living cells, notably in eukaryotes</em>
+          </p>
+        </div>
+
+        <!-- Cilia and Flagella -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #ff5722;">
+          <h3>Cilia and Flagella</h3>
+          <p>
+            <strong>Cilia</strong> are <strong>hair-like projections</strong>, small structures, present outside the cell wall. <strong>Flagella</strong> are slightly bigger structures.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Work like oars to move the cell</div>
+          <div class="list-item">Move the extracellular fluid</div>
+          <div class="list-item">Responsible for cell movements</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>The core is called an axoneme, which contains nine pairs of peripheral microtubules and central microtubules</em>
+          </p>
+        </div>
+
+        <!-- Centrosome and Centrioles -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #673ab7;">
+          <h3>Centrosome and Centrioles</h3>
+          <p>
+            The centrosome organelle is made up of <strong>two mutually perpendicular structures known as centrioles</strong>.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Structure:</strong>
+          </p>
+          <div class="list-item">Each centriole composed of 9 equally spaced peripheral fibrils</div>
+          <div class="list-item">Hub (proteinaceous core)</div>
+          <div class="list-item">Radial spokes (connect hub to peripheral fibrils)</div>
+          <p style="margin-top:10px;">
+            <strong>Functions:</strong>
+          </p>
+          <div class="list-item">Organize microtubules</div>
+          <div class="list-item">Give rise to basal bodies of cilia and flagella</div>
+          <div class="list-item">Give rise to spindle fibres during cell division</div>
+          <p style="margin-top:10px; font-size:14px; color:#666;">
+            <em>Found only in animal cells</em>
+          </p>
+        </div>
+
+        <!-- Plastids -->
+        <div style="background:#f5f5f5; padding:16px; border-radius:10px; margin:15px 0; border-left:5px solid #8bc34a;">
+          <h3>Plastids</h3>
+          <p>
+            Plastids are <strong>large, double membrane-bound organelles</strong> which contain pigments. Based on the type of pigments, plastids are of three types:
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Types:</strong>
+          </p>
+          <div style="margin:10px 0; padding:10px; background:white; border-radius:6px;">
+            <strong>Chloroplasts</strong>
+            <div class="list-item">Green coloured pigments (chlorophyll)</div>
+            <div class="list-item">Sites of photosynthesis</div>
+          </div>
+          <div style="margin:10px 0; padding:10px; background:white; border-radius:6px;">
+            <strong>Chromoplasts</strong>
+            <div class="list-item">Yellow, orange, red coloured pigments (carotenoids)</div>
+            <div class="list-item">Give colour to flowers and fruits</div>
+          </div>
+          <div style="margin:10px 0; padding:10px; background:white; border-radius:6px;">
+            <strong>Leucoplasts</strong>
+            <div class="list-item">Colorless plastids</div>
+            <div class="list-item">Store starch, proteins, and oils</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Summary Table -->
+      <div class="section">
+        <h2>📊 Summary Table - Cell Organelles at a Glance</h2>
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>Cell Organelle</th>
+              <th>Structure</th>
+              <th>Functions</th>
+              <th>Found In</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Plasma Membrane</strong></td>
+              <td>Double layer of lipids & proteins</td>
+              <td>Provides shape, selectively permeable</td>
+              <td>Plant & Animal</td>
+            </tr>
+            <tr>
+              <td><strong>Nucleus</strong></td>
+              <td>Double membrane, contains DNA</td>
+              <td>Controls cell activity, cell division</td>
+              <td>Eukaryotic</td>
+            </tr>
+            <tr>
+              <td><strong>Mitochondria</strong></td>
+              <td>Double membrane, sausage-shaped</td>
+              <td>Energy production (ATP)</td>
+              <td>Eukaryotic</td>
+            </tr>
+            <tr>
+              <td><strong>Chloroplasts</strong></td>
+              <td>Double membrane, green pigment</td>
+              <td>Photosynthesis</td>
+              <td>Plant only</td>
+            </tr>
+            <tr>
+              <td><strong>Endoplasmic Reticulum</strong></td>
+              <td>Network of membranous tubules</td>
+              <td>Protein & lipid synthesis</td>
+              <td>Eukaryotic</td>
+            </tr>
+            <tr>
+              <td><strong>Golgi Apparatus</strong></td>
+              <td>Stacked, flattened pouches</td>
+              <td>Transport & packaging proteins</td>
+              <td>Plant & Animal</td>
+            </tr>
+            <tr>
+              <td><strong>Lysosomes</strong></td>
+              <td>Single membrane, digestive enzymes</td>
+              <td>Digest waste & dead cells</td>
+              <td>Animal only</td>
+            </tr>
+            <tr>
+              <td><strong>Ribosomes</strong></td>
+              <td>Non-membrane bound</td>
+              <td>Protein synthesis</td>
+              <td>All cells</td>
+            </tr>
+            <tr>
+              <td><strong>Vacuoles</strong></td>
+              <td>Fluid-filled sacs</td>
+              <td>Store nutrients & waste</td>
+              <td>Plant & Animal</td>
+            </tr>
+            <tr>
+              <td><strong>Cytoplasm</strong></td>
+              <td>Jelly-like substance</td>
+              <td>Metabolic activities</td>
+              <td>All cells</td>
+            </tr>
+            <tr>
+              <td><strong>Cytoskeleton</strong></td>
+              <td>Filamentous proteins</td>
+              <td>Shape & support</td>
+              <td>All cells</td>
+            </tr>
+            <tr>
+              <td><strong>Centrioles</strong></td>
+              <td>Paired structures</td>
+              <td>Cell division organization</td>
+              <td>Animal only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- FAQs -->
+      <div class="section">
+        <h2>❓ Frequently Asked Questions</h2>
+
+        <div class="faq">
+          <div class="faq-question">Q: Which cell organelle is called the Powerhouse of the cell?</div>
+          <div class="faq-answer">
+            <strong>A:</strong> Mitochondria is the cell organelle and is called the Powerhouse of the cell as they carry out the cellular respiration and generate the energy molecules called ATP (Adenosine Triphosphate).
+          </div>
+        </div>
+
+        <div class="faq">
+          <div class="faq-question">Q: Where do we find Chloroplasts and Chromoplast pigments in plants?</div>
+          <div class="faq-answer">
+            <strong>A:</strong> Chloroplasts contain the green colour pigments, present in the leaves, green-coloured stems, etc. Chromoplasts contain the colourful pigments present in all colourful parts of the plant like flowers and fruits.
+          </div>
+        </div>
+
+        <div class="faq">
+          <div class="faq-question">Q: Why are Lysosomes known as suicide bags?</div>
+          <div class="faq-answer">
+            <strong>A:</strong> Lysosomes are called the suicidal bags because they are capable of breaking down or digesting all the wastes, dead and damaged cells.
+          </div>
+        </div>
+
+        <div class="faq">
+          <div class="faq-question">Q: What is Nucleoid?</div>
+          <div class="faq-answer">
+            <strong>A:</strong> Nucleoid is a non-membrane, irregular-shaped cell organelle present in all prokaryotic cells. They are the carriers of the genetic material of a cell.
+          </div>
+        </div>
+
+        <div class="faq">
+          <div class="faq-question">Q: What is the largest membrane-bound organelle in a eukaryotic cell?</div>
+          <div class="faq-answer">
+            <strong>A:</strong> The <strong>Nucleus</strong> is the largest membrane-bound organelle in a eukaryotic cell.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

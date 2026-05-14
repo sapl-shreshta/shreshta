@@ -7,36 +7,37 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
   body{
-    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
-    color:#1d2b53;padding:16px 12px;text-align:center;
+    min-height:100vh;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:#1d2b53;padding:16px 12px;
   }
-  .back{
-    position:absolute;top:30px;left:30px;
-    background:#a06cd5;color:white;text-decoration:none;
-    padding:12px 24px;border-radius:50px;font-weight:bold;
-    box-shadow:0 5px 0 #7b4aaf;
-  }
+  .top{max-width:1000px;margin:0 auto 30px;}
+  .back{display:inline-block;background:#a06cd5;color:white;text-decoration:none;padding:12px 24px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;}
   .big{font-size:clamp(80px,15vw,160px);animation:bounce 2s ease-in-out infinite;}
   @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
-  h1{
-    font-size:clamp(40px,6vw,72px);margin:20px 0;
-    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  p{font-size:clamp(20px,2.6vw,28px);color:#a06cd5;max-width:600px;margin-top:10px;}
-  .badge{
-    display:inline-block;background:#ffd166;color:#1d2b53;
-    padding:16px 12px;border-radius:50px;font-weight:bold;margin-top:30px;
-    border:3px solid #ff9e45;font-size:22px;
-  }
+  h1{font-size:clamp(40px,6vw,72px);text-align:center;margin:20px 0;background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{text-align:center;font-size:clamp(18px,2.2vw,24px);color:#a06cd5;margin-bottom:30px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:1000px;margin:0 auto;}
+  .topic{background:#fff8f0;border-radius:16px;padding:24px;text-decoration:none;color:#1d2b53;border:3px solid #8bc34a;box-shadow:0 4px 12px rgba(0,0,0,.08);display:block;transition:all .25s cubic-bezier(0.34,1.56,0.64,1);}
+  .topic:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .topic .icon{font-size:50px;display:block;margin-bottom:10px;}
+  .topic h3{font-size:24px;margin-bottom:6px;}
+  .topic p{font-size:18px;color:#555;}
+  .header{text-align:center;margin:60px 0 40px 0;}
 </style>
 </head>
 <body>
-  <a class="back" href="../index.html">⬅️ Home</a>
-  <div class="big">🌱</div>
-  <h1>Biology</h1>
-  <p>Awesome lessons are coming soon! Check back for fun activities ✨</p>
-  <div class="badge">🚧 Coming Soon 🚧</div>
+  <div class="top"><a class="back" href="../index.html">⬅️ Home</a></div>
+  <div class="header">
+    <div class="big">🌱</div>
+    <h1>Biology</h1>
+    <p class="sub">Explore the science of life! 🔬</p>
+  </div>
+  <div class="grid">
+    <a class="topic" href="Cell/index.html">
+      <span class="icon">🔬</span>
+      <h3>Cell</h3>
+      <p>The basic unit of life - explore cell organelles & functions!</p>
+    </a>
+  </div>
 </body>
 </html>
