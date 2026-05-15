@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Holiday Homework 🎉</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  body{
+    min-height:100vh;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:#1d2b53;padding:16px 12px;
+  }
+  .top{max-width:1000px;margin:0 auto 30px;}
+  .back{display:inline-block;background:#ff5722;color:white;text-decoration:none;padding:12px 24px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #d84315;}
+  .back:hover{transform:translateY(-2px);}
+  .big{font-size:clamp(80px,15vw,160px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+  h1{font-size:clamp(40px,6vw,72px);text-align:center;margin:20px 0;background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{text-align:center;font-size:clamp(18px,2.2vw,24px);color:#ff5722;margin-bottom:30px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:1000px;margin:0 auto;}
+  .topic{background:#fff8f0;border-radius:16px;padding:24px;text-decoration:none;color:#1d2b53;border:3px solid #ff5722;box-shadow:0 4px 12px rgba(0,0,0,.08);display:block;transition:all .25s cubic-bezier(0.34,1.56,0.64,1);}
+  .topic:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .topic .icon{font-size:50px;display:block;margin-bottom:10px;}
+  .topic h3{font-size:24px;margin-bottom:6px;color:#ff5722;}
+  .topic p{font-size:18px;color:#555;}
+  .header{text-align:center;margin:60px 0 40px 0;}
+  .content{max-width:1000px;margin:0 auto;padding:20px;text-align:center;}
+  .coming-soon{font-size:18px;color:#a06cd5;font-weight:bold;margin:40px 0;}
+</style>
+</head>
+<body>
+  <div class="top"><a class="back" href="../index.html">⬅️ Home</a></div>
+  <div class="header">
+    <div class="big">🎉</div>
+    <h1>Holiday Homework</h1>
+    <p class="sub">Fun learning activities for your holiday break! 🌟</p>
+  </div>
+
+  <div class="content">
+    <p class="coming-soon">Projects and assignments coming soon! Check back for exciting holiday learning opportunities. 📚✨</p>
+  </div>
+
+  <div class="grid">
+    <a class="topic" href="Activities/index.html">
+      <span class="icon">🎨</span>
+      <h3>Activities</h3>
+      <p>Fun and creative activities for your holiday break!</p>
+    </a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Activities 🎨</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  body{
+    min-height:100vh;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:#1d2b53;padding:16px 12px;
+  }
+  .top{max-width:1000px;margin:0 auto 30px;}
+  .back{display:inline-block;background:#ff5722;color:white;text-decoration:none;padding:12px 24px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #d84315;margin-right:10px;}
+  .back:hover{transform:translateY(-2px);}
+  .home{display:inline-block;background:#a06cd5;color:white;text-decoration:none;padding:12px 24px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;}
+  .home:hover{transform:translateY(-2px);}
+  .big{font-size:clamp(80px,15vw,160px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+  h1{font-size:clamp(40px,6vw,72px);text-align:center;margin:20px 0;background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{text-align:center;font-size:clamp(18px,2.2vw,24px);color:#ff5722;margin-bottom:30px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:1000px;margin:0 auto;}
+  .activity{background:#fff8f0;border-radius:16px;padding:24px;text-decoration:none;color:#1d2b53;border:3px solid #ffa726;box-shadow:0 4px 12px rgba(0,0,0,.08);display:block;transition:all .25s cubic-bezier(0.34,1.56,0.64,1);}
+  .activity:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .activity .icon{font-size:50px;display:block;margin-bottom:10px;}
+  .activity h3{font-size:24px;margin-bottom:6px;color:#ffa726;}
+  .activity p{font-size:18px;color:#555;}
+  .header{text-align:center;margin:60px 0 40px 0;}
+  .content{max-width:1000px;margin:0 auto;padding:20px;text-align:center;}
+  .coming-soon{font-size:18px;color:#a06cd5;font-weight:bold;margin:40px 0;}
+
+  .accordion-container{max-width:1000px;margin:40px auto;}
+  .accordion-item{margin-bottom:12px;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+  .accordion-header{background:#ff5722;color:white;padding:18px;cursor:pointer;font-weight:bold;font-size:16px;display:flex;align-items:center;transition:all .3s ease;}
+  .accordion-header:hover{background:#e64a19;transform:translateX(4px);}
+  .accordion-header::before{content:'▶';margin-right:12px;transition:transform .3s ease;display:inline-block;}
+  .accordion-item.active .accordion-header::before{transform:rotate(90deg);}
+  .accordion-content{background:#fff8f0;max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 18px;}
+  .accordion-item.active .accordion-content{max-height:2000px;padding:18px;}
+  .accordion-content p{line-height:1.8;margin:12px 0;color:#1d2b53;}
+  .accordion-content h3{color:#ff5722;margin:16px 0 10px 0;font-size:18px;}
+  .accordion-content ul{margin-left:24px;color:#1d2b53;}
+  .accordion-content li{margin:8px 0;line-height:1.6;}
+  .accordion-content a{color:#ff5722;text-decoration:none;font-weight:bold;}
+  .accordion-content a:hover{text-decoration:underline;}
+  .accordion-content strong{color:#ff5722;}
+</style>
+</head>
+<body>
+  <div class="top"><a class="back" href="../index.html">⬅️ Back to Holiday Homework</a><a class="home" href="../../index.html">🏠 Home</a></div>
+  <div class="header">
+    <div class="big">🎨</div>
+    <h1>Activities</h1>
+    <p class="sub">Fun and creative activities for your holiday! ✨</p>
+  </div>
+
+  <div class="accordion-container">
+    <div class="accordion-item">
+      <div class="accordion-header">🎭 All Strings Attached - My Puppet Show</div>
+      <div class="accordion-content">
+
+        <h3>🎭 Let's Do Something Different!</h3>
+        <p>Hello, young story tellers!</p>
+        <p>Instead of just reading a story... How about bringing one to life...?</p>
+        <p>You are going to step into the wonderful world of puppets…</p>
+        <p>Where stories come alive and characters can speak…</p>
+
+        <h3 style="margin-top:24px;">📚 A Little Puppet History</h3>
+        <p>Puppetry in India dates to ancient times, with references found in scriptures and texts like the <strong>Mahabharata</strong> and the <strong>Natya Shastra</strong>, which mention various forms of puppetry used for storytelling and entertainment.</p>
+        <p>Travelling artists moved from village to village using them to render stories of kings, heroes, animals etc.</p>
+        <p>Puppetry was not just an art form but also a medium for <strong>education and moral instruction</strong>, often used to convey stories of gods, kings, and common folk, blending entertainment with life lessons.</p>
+
+        <h3 style="margin-top:24px;">🎭 Meet the Puppet Family</h3>
+        <p>India's puppetry can be broadly categorized into <strong>four types</strong>: string puppets (marionettes), shadow puppets, rod puppets, and glove puppets.</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">String puppets (Kathputli – Rajasthan)</h4>
+        <p>These puppets are moved using strings. The puppeteer pulls the strings to make them dance and act. They are colourful and often show folk stories and kings and queens.</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Shadow puppets (Tholu Bommalataa - Andhra Pradesh, Karnataka, Kerala)</h4>
+        <p>These are flat puppets made of leather. They are shown behind a screen with light, and we see their shadows. They are often used to tell stories from epics like the Ramayana.</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Glove puppets (Pavakoothu - Kerala, Odisha, Uttar Pradesh)</h4>
+        <p>These puppets are worn on the hand like a glove. The fingers help in moving them. They are small but very lively and used for simple stories.</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Rod puppets (West Bengal, Odisha)</h4>
+        <p>These puppets are bigger and are controlled with sticks or rods. They can make strong and dramatic movements, which makes the performance very exciting to watch.</p>
+
+        <h3 style="margin-top:24px;">⭐ Step I: Choose a Simple Indian Folk Tale</h3>
+        <p>The stage is waiting, and the next puppet story will be yours. Create your own puppets and perform a small puppet show for your family.</p>
+        <p><strong>Some suggestions are:</strong></p>
+        <ul>
+          <li>PANCHANTRA</li>
+          <li>JATAKA TALES</li>
+          <li>AKBAR AND BIRBAL</li>
+          <li>TENALI RAM</li>
+          <li>BIBLE STORIES (Eg-Noah's ark/the Good Samaritan)</li>
+          <li>INDIAN MYTHOLOGICAL TALES - Eg-RAMAYANA/MAHABHARATA (any incident -Bhishma's vow/Eklavya's story)</li>
+          <li>ARABIAN NIGHTS</li>
+          <li>Or any other you can think of…</li>
+        </ul>
+
+        <h3 style="margin-top:24px;">✂️ Step II: Bring Your Puppets to Life</h3>
+        <p>Now the creative workshop begins. Use simple materials available at home…strings/paper/sticks/colors etc…</p>
+        <p><strong>See the following links which will help you make one:</strong></p>
+        <ul>
+          <li><a href="https://youtube.com/shorts/gCVlwxqI3Y0?si=6Q37fHgmVwvkYHY5" target="_blank">YouTube Tutorial 1</a></li>
+          <li><a href="https://youtube.com/shorts/3WK6n0Ki2aw?si=oWk8csjKcrRUYBNZ" target="_blank">YouTube Tutorial 2</a></li>
+          <li><a href="https://youtube.com/shorts/losij6LhJKo?si=vta_dV9Ku6Caw4E9" target="_blank">YouTube Tutorial 3</a></li>
+        </ul>
+        <p style="margin-top:20px;"><strong>Draw your main puppet here and color it!</strong> This is your chance to be creative and bring your character to life.</p>
+
+        <h3 style="margin-top:24px;">🎤 Step III: Give Them a Voice</h3>
+        <p>Every puppet has a personality and a voice.</p>
+        <p><strong>Practice how your puppet would speak…</strong></p>
+        <p>Try using different voices…Hard/soft/wise/funny etc.</p>
+
+        <h3 style="margin-top:24px;">🎭 Ta! Da! The Family Show…</h3>
+        <p>Now, it's time for the big moment…</p>
+        <p>Perform the puppet show for your family….</p>
+        <p>Use your puppets, speak in different voices and act out the story with fun and expression!</p>
+        <p style="font-weight:bold;color:#ff5722;font-size:18px;margin-top:20px;">ENJOY YOUR STAR MOMENT AND MAKE YOUR AUDIENCE SMILE….!</p>
+
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">🙏 Count Your Blessings - Quiet Joys, Loud Hearts</div>
+      <div class="accordion-content">
+
+        <h3 style="margin-top:0;">Introduction</h3>
+        <p>At times, we don't realise how blessed we are!!!</p>
+        <p>There are many people who touch our lives in small, subtle ways – our parents, grandparents, and most importantly, people whom we forget to notice. The security guard, soldiers who tirelessly protect the country, helpers, didis and bhaiyas who hold our hand every step of the way!</p>
+        <p><strong>Let's pause and count the blessings around us that we often forget…</strong></p>
+
+        <h3 style="margin-top:24px;">Segment 1: Week 1 - Gratitude Jar</h3>
+        <p>We will make a <strong>Gratitude Jar</strong>.</p>
+        <ul>
+          <li>You will think about all the people and things you are thankful for in your life.</li>
+          <li>Every day, write 1 blessing on a chit – like someone who helped you, made you smile, and made your day. Ex: My neighbour helped me cross the road, didi helped me to clean my study table etc.</li>
+          <li>Collect these chits of gratitude and put them into the jar.</li>
+          <li>You must decorate the jar and make it special. Use coloured paper, paint it, use stickers, draw smiley faces, tie a ribbon…..sky is the limit for your creativity!</li>
+        </ul>
+        <p style="font-weight:bold;color:#ff5722;">Make it as bright as your memories…..</p>
+        <p style="font-weight:bold;color:#ff5722;">We shall meet on Zoom to see your Gratitude Jars.</p>
+
+        <h3 style="margin-top:24px;">Segment 2 - Roots of Gratitude</h3>
+        <ul>
+          <li>Pick 10 of your dearest blessings. Draw a tree on a chart paper and stick your chits on the tree like leaves, making the tree bloom with blessings.</li>
+          <li>Bring this chart to school and share your personal anecdotes with your classmates.</li>
+        </ul>
+        <p style="font-weight:bold;color:#ff5722;">Let's celebrate a display of Gratitude together.</p>
+
+        <h3 style="margin-top:24px;">Segment 3: Week 2 - "One Day Without..." Challenge</h3>
+        <p>Let us challenge ourselves for a week only, by giving up one comfort every alternate day.</p>
+        <p><strong>Examples:</strong> no phone, no TV, no junk food, or no complaining. So for a week, you will challenge yourself 3 times and complete 3 entries this week.</p>
+        <p>Maintain a log of your experience, noting down:</p>
+        <ul>
+          <li>How you felt</li>
+          <li>The challenges you faced</li>
+          <li>What you learned</li>
+        </ul>
+
+        <h3 style="margin-top:24px;">🎥 Zoom Assignment</h3>
+        <p>Present your reflections on Zoom, sharing your experiences and key takeaways.</p>
+        <p style="font-weight:bold;color:#ff5722;margin-top:16px;">Reflect and appreciate the small things! ❤️</p>
+
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">📚 English Summer Reading</div>
+      <div class="accordion-content">
+
+        <h3>Summer Reading Challenge</h3>
+        <p>Dr. Seuss is a famous author who writes for children. He once said <strong>"The more you read, the more things you will know. The more you learn, the more places you will go."</strong></p>
+        <p>So, this Summer let us learn and grow by reading.</p>
+
+        <h3 style="margin-top:24px;">Books to Read</h3>
+        <p>Here are the titles of the 3 books you must read and write a Book Review for each book:</p>
+        <ul>
+          <li><strong>Thick as Thieves: Tales of Friendship</strong> by Ruskin Bond</li>
+          <li><strong>The Magic of the Lost Earrings</strong> by Sudha Murthy</li>
+          <li><strong>How and Why Tales</strong> by Geeta Ramanujam</li>
+        </ul>
+        <p style="margin-top:16px;"><strong>Note to parents:</strong> You can either buy the book online or source it from Appu World Library.</p>
+
+        <h3 style="margin-top:24px;">Book Review Format</h3>
+        <p>A Book Review is a description and analysis of a book. The purpose is to increase your understanding of the book and get a deeper meaning or message in it. It also helps get other people interested in reading the book you review.</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step 1: Read Thoroughly</h4>
+        <p>Pick up the book for the first week as per the schedule. As you read, make notes about main characters, plot, setting, and important events. Use sticky notes to mark parts you like or dislike.</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step 2: Author Introduction</h4>
+        <p>Write a 3-4 line introduction about the author. If well-known, mention previous popular work. If new, mention their previous profession.</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step 3: Short Summary</h4>
+        <p>Write a SHORT SUMMARY without giving away the ending. Answer these 'WH' questions:</p>
+        <ul>
+          <li>What is the story about?</li>
+          <li>Where does the story take place?</li>
+          <li>When does the story take place?</li>
+          <li>Who are the main characters and their role?</li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step 4: Characters</h4>
+        <p>Now write about the characters:</p>
+        <ul>
+          <li>Who was your favourite character and why?</li>
+          <li>What made the characters interesting?</li>
+          <li>Did any characters remind you of someone else or yourself?</li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step 5: Main Problem</h4>
+        <p>Write about the main problem in the story:</p>
+        <ul>
+          <li>What was the main problem/conflict in the story?</li>
+          <li>How does it unfold?</li>
+          <li>What are the surprises? <strong>But DON'T GIVE AWAY HOW THE PROBLEM IS RESOLVED.</strong></li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step 6: Message & Learning</h4>
+        <ul>
+          <li>Discuss the message you found in the book</li>
+          <li>Did the book teach you something new?</li>
+          <li>Did the book make you look at something in a new way?</li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step 7: Why You Liked It</h4>
+        <ul>
+          <li>What did you enjoy the most about the book? (Example: descriptive language, illustration, dialogues, etc.)</li>
+          <li>Your favourite scene</li>
+          <li>Any beautiful lines that you can never forget</li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step 8: Recommendation & Rating</h4>
+        <p><strong>Recommendation:</strong> Who do you think will enjoy reading this book and why? Do mention the age group too.</p>
+        <p><strong>Rating:</strong> On a scale of 1 to 10, give your rating for the book. You can draw stars to give the rating.</p>
+
+        <p style="margin-top:20px;font-weight:bold;color:#ff5722;">Come prepared to talk on Zoom to your aunties about the books you read! 📖</p>
+
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">🚂 India Unpacked - India on Track</div>
+      <div class="accordion-content">
+
+        <h3>The Great Indian Rail Journey</h3>
+        <p>A train ticket rests on your desk, stamped and ready, but with one unusual detail—there's no destination written on it!</p>
+        <p>Alongside lies a railway map of India, filled with winding tracks, busy cities, and endless possible routes.</p>
+        <p><strong>Your ticket will only make sense once you trace your own path across the map—choosing where the train goes, which direction it takes. You decide your travel route, covering ANY 4 states of India.</strong></p>
+
+        <h3 style="margin-top:24px;">Your Journey Begins</h3>
+        <ul>
+          <li><strong>Where does your train start?</strong></li>
+          <li><strong>Which direction do you travel first—north, south, east, or west?</strong></li>
+          <li><strong>Which four states of India will your journey include?</strong></li>
+          <li><strong>How does your train travel from one state to another?</strong></li>
+        </ul>
+        <p style="margin-top:16px;">You may draw your route on a map or describe it like a short travel plan.</p>
+
+        <h3 style="margin-top:24px;">At Each Stop... Notice</h3>
+        <p>As your train arrives in each state, collect information and details such as:</p>
+        <ul>
+          <li><strong>Food</strong> – What dishes is the state known for? Street food or traditional meals</li>
+          <li><strong>Clothing</strong> – Traditional dress, fabrics, or unique styles</li>
+          <li><strong>Culture</strong> – Festivals, dance forms, languages etc.</li>
+          <li><strong>Fun Facts</strong> – Something surprising or interesting</li>
+          <li><strong>Distinct Features</strong> – Climate, wildlife, art forms, or anything special to that state</li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Example: If one of your stops is Rajasthan:</h4>
+        <ul>
+          <li>🍛 You might try dal baati Churma</li>
+          <li>👗 Bright turbans and traditional Ghagra-choli</li>
+          <li>🏰 Visit the Hawa Mahal or explore desert fort</li>
+          <li>💃 Folk dances like Ghoomer</li>
+          <li>✨ It is home to the Thar Desert, the largest desert in India</li>
+        </ul>
+
+        <h3 style="margin-top:24px;">Present Your Travel Journey</h3>
+        <p>Choose one of the following ways to present your journey:</p>
+        <ul>
+          <li><strong>A creative chart, or</strong></li>
+          <li><strong>A travel pamphlet / brochure</strong></li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">You can include:</h4>
+        <ul>
+          <li>A map showing your route, drawings or pictures of monuments</li>
+          <li>Food sketches or labels</li>
+          <li>Small creative touches like "train tickets" etc.</li>
+        </ul>
+
+        <h3 style="margin-top:24px;">Reflection & Treasure Chest</h3>
+        <p>Once your journey is complete, take a moment to think:</p>
+        <ul>
+          <li>Which state did you find most interesting?</li>
+          <li>Which place would you like to visit in real life?</li>
+        </ul>
+        <p><strong>MEMORABILIA:</strong> If you had a TREASURE CHEST for keepsakes, what special items would you include from each state? (food/cultural traditions/memorable stories/monuments etc.)</p>
+
+        <p style="margin-top:20px;font-weight:bold;color:#ff5722;">Your journey begins with a blank ticket and a map full of possibilities—now it's up to you to plan your next vacation! 🌍</p>
+
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">💖 Labour of Love - Understanding Our Home</div>
+      <div class="accordion-content">
+
+        <h3>"Behind every meal, every clean room and every comfort... There is someone's time, care and effort."</h3>
+        <p>Hi there! I'm PENNY THE PIGGY BANK. And I want to show you some ways in which you can fill me up. How can you save some money? Sometimes, I have no idea where it disappears. I am curious...</p>
+
+        <p><strong>Let's solve this mystery together step by step!</strong></p>
+        <p>Your job is to observe, think, calculate and understand:</p>
+        <ul>
+          <li>How your home is cared for?</li>
+          <li>The effort behind everyday comforts</li>
+        </ul>
+
+        <h3 style="margin-top:24px;">Instructions</h3>
+        <ul>
+          <li>There are three segments to this exercise</li>
+          <li><strong>Complete ONE segment per week</strong></li>
+        </ul>
+
+        <h3 style="margin-top:24px;">Segment 1: Track Everything Your Family Spends</h3>
+        <p>Track everything your family spends in a week. Don't miss anything!</p>
+        <p>Record your data for:</p>
+        <ul>
+          <li><strong>Eating out / Swiggy</strong></li>
+          <li><strong>Groceries:</strong> Dairy, Meat & Seafood, Fruits & Veggies, Frozen, Drinks, Others</li>
+          <li><strong>Helpers at Home:</strong> Cook, Driver, Domestic Help (note salary per week)</li>
+          <li><strong>Bills:</strong> Electricity, Water, WiFi, Gas, Phone, Petrol, Education, House, Car, Credit Card</li>
+        </ul>
+        <p style="margin-top:16px;"><strong>Calculate: TOTAL EXPENDITURE</strong></p>
+
+        <h3 style="margin-top:24px;">Segment 2: "Food is not just what we eat. It is memory, comfort and care served on a plate."</h3>
+        <p>This week give mom and dad a well-deserved break. <strong>You are in charge of running the show!</strong></p>
+        <p>Put on your apron and cook yummy treats for your family – their favorites!</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Let's get cooking:</h4>
+        <ul>
+          <li><strong>Step 1:</strong> Fix the menu</li>
+          <li><strong>Step 2:</strong> List all the ingredients</li>
+          <li><strong>Step 3:</strong> Estimated cost of the ingredients used (grade 6 to 9)</li>
+          <li><strong>Step 4:</strong> Total cost of the entire meal</li>
+        </ul>
+        <p><strong>Remember the goal is not perfection but participation...</strong></p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Step b - THE SWIGGY TEST</h4>
+        <p>Now comes the twist... For each dish - find the cost of ordering it from swiggy / restaurant apps. Compare it with your home cooked version.</p>
+        <p><strong>Just for a moment pause and think how much we could save by cooking at home instead of ordering out so often. Our Wallet will always thank us...!!</strong></p>
+
+        <h3 style="margin-top:24px;">Segment 3: Become a Listener</h3>
+        <p>This week, you become a <strong>Listener</strong>. Your task is to understand that different people live differently, and every lifestyle is shaped by choices, responsibilities, and effort.</p>
+
+        <p>With the help of an adult, respectfully speak to 4–5 people such as:</p>
+        <ul>
+          <li>House helper</li>
+          <li>Driver</li>
+          <li>Security guard</li>
+          <li>Any other working helper in your community</li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Questions to Ask:</h4>
+        <ul>
+          <li>What does a typical day look like for you?</li>
+          <li>How many people are there in your family?</li>
+          <li>Usually what all is cooked at home?</li>
+          <li>How do you relax during the weekends? Do you watch TV, go see a movie or eat out?</li>
+          <li>What are the main expenditures?</li>
+        </ul>
+
+        <h3 style="margin-top:24px;">Reflection</h3>
+        <p>In the past three weeks you saw the weekly budget, you cooked and also had a conversation with some interesting helpers. What is your main take away from this activity?</p>
+        <ul>
+          <li>Did you realize how some of us are privileged compared to others?</li>
+          <li>What did you learn about saving money, helping at home and contributing together as a family?</li>
+        </ul>
+
+        <p style="margin-top:20px;font-weight:bold;color:#ff5722;">Our parents work tirelessly for us and everything they do is filled with care and sacrifice. – A genuine LABOUR OF ❤️</p>
+
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">🎬 Movie Time</div>
+      <div class="accordion-content">
+
+        <p>Take out your fluffiest pillow, and a large bowl of popcorn, let's sit back and enjoy.....</p>
+
+        <h3>Movie Challenge</h3>
+        <p><strong>You must watch at least four movies, but be ready for a Q&A session as well!</strong></p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">Recommended Movies:</h4>
+        <ul>
+          <li>Big Hero 6</li>
+          <li>Kung Fu Panda</li>
+          <li>The Karate Kid</li>
+          <li>The Chronicles of Narnia</li>
+          <li>My Father's Dragon</li>
+          <li>Wall-E</li>
+          <li>Makkhi</li>
+          <li>Secret Superstar</li>
+        </ul>
+
+        <p style="margin-top:20px;font-weight:bold;color:#ff5722;">Enjoy your movie marathon! 🍿🎥</p>
+
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">🌱 Power of Words - Plant Experiment</div>
+      <div class="accordion-content">
+
+        <h3>Do Words Really Matter?</h3>
+        <p>Even though we cannot see words, they can still affect how we feel inside.</p>
+        <p style="font-weight:bold;color:#ff5722;font-size:18px;">WORDS ARE POWERFUL.</p>
+        <p>Let's perform a small experiment to observe this in a simple way using plants.</p>
+
+        <h3 style="margin-top:24px;">The Masaru Emoto Experiment</h3>
+        <p>A scientist named <strong>Masaru Emoto</strong> did a very interesting experiment with water. He wanted to see if water could "feel" or "react" to words and emotions.</p>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">What he did:</h4>
+        <ul>
+          <li><strong>1.</strong> He spoke kind words to water ("thank you" "love.")</li>
+          <li><strong>2.</strong> He spoke mean words to water ("I hate you.")</li>
+          <li><strong>3.</strong> Then he freeze the water and looked at it closely</li>
+        </ul>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">What did he find?</h4>
+        <ul>
+          <li><strong>Water with kind words</strong> made beautiful patterns!</li>
+          <li><strong>Water with mean words</strong> looked messy</li>
+        </ul>
+
+        <h3 style="margin-top:24px;">Your Plant Experiment</h3>
+
+        <h4 style="color:#ff5722;margin:16px 0 8px 0;">What to do everyday:</h4>
+        <ul>
+          <li>Take 3 similar plants</li>
+          <li>Label them as:
+            <ul>
+              <li>Plant A</li>
+              <li>Plant B</li>
+              <li>Plant C</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>Place all the plants in different places. Water each of them regularly and ensure they receive proper sunlight and fresh air.</p>
+        <ul>
+          <li><strong>Speak kind words to Plant A</strong></li>
+          <li><strong>Speak harsh words to Plant B</strong></li>
+          <li><strong>Do not speak to Plant C at all, simply ignore it</strong></li>
+        </ul>
+
+        <p style="margin-top:16px;">Observe the plants carefully. Make a note of your observations (once in 15 days, over a period of 30 days). See the changes in their growth, leaves and well being.</p>
+
+        <h3 style="margin-top:24px;">Observation Recording</h3>
+        <p><strong>After 15 days and After 30 days, for each plant note:</strong></p>
+        <ul>
+          <li>Number of leaves</li>
+          <li>Colour of leaves</li>
+          <li>Changes observed</li>
+        </ul>
+
+        <h3 style="margin-top:24px;">Food for Thought</h3>
+        <ul>
+          <li>What do you think the plants needed most - Water or care and attention?</li>
+          <li>What does this teach us about the way we speak to others?</li>
+          <li>Do words affect feelings?</li>
+        </ul>
+
+        <p style="margin-top:20px;font-weight:bold;color:#ff5722;">Let's reflect on what we learned from this experiment! Would love to see the plants too! 🌿</p>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function() {
+        const item = this.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>
