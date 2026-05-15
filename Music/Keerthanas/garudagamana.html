@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garudagamana Tava Carana Kamalam 🎵</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    /* Navigation buttons */
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 0px;
+      z-index: 10;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0 20px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(18px, 4vw, 26px);
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 4px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0, 0, 0, .08);
+    }
+
+    .card h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      color: var(--pink);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Lyrics Section */
+    .lyrics-card {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .lyrics-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .lyrics-header h2 {
+      flex: 1;
+      min-width: 200px;
+      margin: 0;
+    }
+
+    /* Lyrics and Meanings styling */
+    .lyrics-with-meanings {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .lyrics-text {
+      flex: 1;
+      min-width: 250px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--pink);
+      line-height: 1.8;
+      font-size: 16px;
+      color: #333;
+      text-align: center;
+    }
+
+    .meanings-text {
+      flex: 1;
+      min-width: 250px;
+      background: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--teal);
+      line-height: 1.8;
+      font-size: 14px;
+      color: #2d5016;
+    }
+
+    .section-header {
+      font-weight: bold;
+      color: var(--purple);
+      margin-top: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .meaning-title {
+      font-weight: bold;
+      color: var(--pink);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .music-notation {
+      background: #fef3e2;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--orange);
+      margin-top: 15px;
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333;
+      overflow-x: auto;
+    }
+
+    .notation-title {
+      font-weight: bold;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-top nav-back">
+    <a href="index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Songs">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">🎵</div>
+      <h1>Garudagamana Tava Carana Kamalam</h1>
+      <p class="subtitle">Devotional hymn to Lord Vishnu</p>
+    </div>
+
+    <!-- Lyrics -->
+    <div class="card lyrics-card">
+      <div class="lyrics-header">
+        <h2>📖 Lyrics - Garudagamana Tava Carana Kamalam</h2>
+      </div>
+
+      <div class="section-header">📍 VERSE 1</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+          Garuḍagamana tava caraṇakamalamiha<br>
+          Manasi lasatu mama nityam | manasi lasatu mama nityam ॥<br>
+          Mama tāpamapākuru deva | mama pāpamapākuru deva ॥
+        </div>
+        <div class="meanings-text">
+          <span class="meaning-title">Word-Word Meaning:</span><br>
+          garuḍa-gamana = Oh (God), who travels on Garuda<br>
+          tava = your<br>
+          caraṇa-kamalam = lotus feet<br>
+          lasatu = let (it) shine<br>
+          nityam = always<br>
+          iha = here<br>
+          mama manasi = in my mind<br>
+          deva = O God<br>
+          apākuru = remove<br>
+          mama = my<br>
+          tāpam = sufferings<br>
+          pāpam = sins<br>
+          <br>
+          <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+          O God who travels on Garuda, let your lotus feet always shine in my mind. O God, remove my sufferings and sins.
+        </div>
+      </div>
+
+      <div class="section-header">📍 VERSE 2</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+          Jalajanayana vidhinamuciharaṇamukha<br>
+          Vibudhavinutapadapadma | vibudhavinutapadapadma<br>
+          Mama tāpamapākuru deva | mama pāpamapākuru deva ॥
+        </div>
+        <div class="meanings-text">
+          <span class="meaning-title">Word-Word Meaning:</span><br>
+          jalaja-nayana = O (God), whose eyes are like lotus<br>
+          pada-padma = O (God), who has lotus feet<br>
+          vinuta = that is worshipped by<br>
+          vibudha = numerous learned ones<br>
+          mukha = starting with<br>
+          vidhi = Brahma (and)<br>
+          namuci-haraṇa = Indra, the killer of Namuci<br>
+          <br>
+          <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+          O God whose eyes are like lotus flowers, whose lotus feet are worshipped by Brahma and other learned gods, remove my sufferings and sins.
+        </div>
+      </div>
+
+      <div class="section-header">📍 VERSE 3</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+          Bhujagaśayana bhava madanajanaka mama<br>
+          Jananamaraṇa-bhayahārī | jananamaraṇa-bhayahārī<br>
+          Mama tāpamapākuru deva | mama pāpamapākuru deva ॥
+        </div>
+        <div class="meanings-text">
+          <span class="meaning-title">Word-Word Meaning:</span><br>
+          bhujaga-śayana = O (God), whose bed is the serpent<br>
+          madana-janaka = O (God), the father of Kaama<br>
+          bhava = Become<br>
+          bhaya-hārī = dispeller of the fear<br>
+          janana-maraṇa = of life and death<br>
+          <br>
+          <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+          O God who rests on the cosmic serpent, the father of desire, become the dispeller of the fear of birth and death. Remove my sufferings and sins.
+        </div>
+      </div>
+
+      <div class="section-header">📍 VERSE 4</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+          Śaṅkhacakradhara duṣṭadaityahara<br>
+          Sarvaloka-śaraṇa | sarvaloka-śaraṇa<br>
+          Mama tāpamapākuru deva | mama pāpamapākuru deva ॥
+        </div>
+        <div class="meanings-text">
+          <span class="meaning-title">Word-Word Meaning:</span><br>
+          śaṅkha-cakra-dhara = O (God), who adorns the conch and the disc<br>
+          duṣṭa-daitya-hara = O (God), the destroyer of the wicked Asuras<br>
+          sarva-loka-śaraṇa = O (God), the sole refuge for the entire world<br>
+          <br>
+          <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+          O God who carries the sacred conch and disc, the destroyer of evil demons, the sole refuge for all worlds, remove my sufferings and sins.
+        </div>
+      </div>
+
+      <div class="section-header">📍 VERSE 5</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+          Agaṇita-guṇagaṇa aśaraṇaśaraṇada<br>
+          Vidalita-suraripujāla | vidalita-suraripujāla<br>
+          Mama tāpamapākuru deva | mama pāpamapākuru deva ॥
+        </div>
+        <div class="meanings-text">
+          <span class="meaning-title">Word-Word Meaning:</span><br>
+          agaṇita-guṇa-gaṇa = O (God), who possesses a collection of innumerable good qualities<br>
+          aśaraṇa-śaraṇada = O (God), who is the giver of protection to those without any refuge<br>
+          vidalita-sura-ripu-jāla = O (God), who destroyed the collection of Asuras, the enemies of the Devas<br>
+          <br>
+          <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+          O God possessing innumerable qualities, the giver of refuge to the helpless, who destroyed the armies of demons, remove my sufferings and sins.
+        </div>
+      </div>
+
+      <div class="section-header">📍 VERSE 6</div>
+      <div class="lyrics-with-meanings">
+        <div class="lyrics-text">
+          Bhaktavaryamiha bhūrikaruṇayā<br>
+          Pāhi bhāratītīrtham | pāhi bhāratītīrtham<br>
+          Mama tāpamapākuru deva | mama pāpamapākuru deva ॥
+        </div>
+        <div class="meanings-text">
+          <span class="meaning-title">Word-Word Meaning:</span><br>
+          pāhi = You protect<br>
+          iha = here<br>
+          bhūri-karuṇayā = with overwhelming compassion<br>
+          bhāratītīrtham = Sri Bharati Tirtha Swami<br>
+          bhakta-varyam = who is a principal devotee<br>
+          <br>
+          <strong style="color: var(--purple); display: block; margin-top: 10px;">Meaning:</strong>
+          O God, with your overwhelming compassion, please protect here Sri Bharati Tirtha Swami, the principal devotee. Remove my sufferings and sins.
+        </div>
+      </div>
+
+      <div class="music-notation">
+        <div class="notation-title">🎼 Music Notations:</div>
+        NSS SSS RS NSS SSS RS RGG GGP MGR , R, NNN RRR GP GR S, SRRG GG GPMG R, R, SND NNR, GPGR S,; SND NNR, GP __nrgr srgr__ S,
+        <br><br>
+        <em>Thanks to Sri Surya Subrahmanyam for the notation.</em>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>
