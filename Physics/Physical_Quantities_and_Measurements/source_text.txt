@@ -1,0 +1,93 @@
+
+===== SLIDE 1 =====
+Physical Quantities and Measurement | Understanding the Fundamentals of Measurement
+
+===== SLIDE 2 =====
+Introduction to Measurement | Measurement is the comparison of an unknown quantity with a known fixed quantity. | Why do we measure? | • To buy fruits by weight | • A tailor measures height to stitch clothes | • A doctor measures temperature when we are sick | • To understand and compare quantities | Every measurement consists of two parts: | • Magnitude (the numerical value) | • Unit (the standard of comparison)
+
+===== SLIDE 3 =====
+What are Physical Quantities? | Physical quantities are things we can measure, such as: | • Length | • Mass | • Area | • Time | • Temperature | • Volume | Classification of Physical Quantities | • Fundamental Quantities: Do not depend on other quantities | • Derived Quantities: Made from fundamental quantities
+
+===== SLIDE 4 =====
+Fundamental vs Derived Quantities | Fundamental Quantities | • Length | • Mass | • Time | • Temperature | • Electric Current | • Luminous Intensity | • Amount of Substance | (7 fundamental quantities total) | Derived Quantities | • Area (Length²) | • Volume (Length³) | • Speed (Distance/Time) | • Force | • Density (Mass/Volume) | • Pressure | Made from fundamental quantities
+
+===== SLIDE 5 =====
+Measuring Physical Quantities | To measure any physical quantity: | Two Essential Components | • Unit of measurement (e.g., metre for length) | • Magnitude of measurement (a number, e.g., 2 metres) | Formula | P = N × U | P = Physical quantity  |  N = Magnitude  |  U = Unit | Example | A bucket weighs 2 kg → kg is the unit, 2 is the magnitude
+
+===== SLIDE 6 =====
+Non-Standard Units (Historical) | Long ago, people used body parts and natural objects as standards. | Traditional Units of Length | • Cubit: Length of forearm (elbow to middle finger tip) | • Handspan: Distance from thumb to little finger | • Palm: Width of the hand | • Finger/Digit: Width of the middle finger | • Foot: Length of adult bare foot | Problem | These units varied from person to person - not reliable for science!
+
+===== SLIDE 7 =====
+The International System (SI Units) | In 1960, the General Conference of Weights and Measures adopted SI. | Seven Fundamental SI Units | • Length: metre (m) | • Mass: kilogram (kg) | • Time: second (s) | • Temperature: kelvin (K) | • Electric Current: ampere (A) | • Luminous Intensity: candela (cd) | • Amount of Substance: mole (mol)
+
+===== SLIDE 8 =====
+Rules for Writing SI Units | Unit Names | • Always written in small letters (metre, not Metre) | • Even if named after a scientist (newton, not Newton) | Unit Symbols | • Small letters, except from scientist names (m for metre, N for Newton) | • Symbols never end with a full stop: 5 m (not 5 m.) | Plurals &amp; Prefix | • Write unit names in plural: &quot;5 metres&quot; | • Never pluralize symbols: &quot;5 m&quot; (not 5 ms) | • Prefix symbols attach with no space: mg, km, cm
+
+===== SLIDE 9 =====
+Multiples and Submultiples of Units | Used to measure very large or very small quantities. | Common Submultiples | • Milli (m): 1/1000 (millimetre = 0.001 m) | • Centi (c): 1/100 (centimetre = 0.01 m) | • Deci (d): 1/10 (decimetre = 0.1 m) | Common Multiples | • Deca (da): 10 times | • Hecto (h): 100 times | • Kilo (k): 1000 times (kilometre = 1000 m)
+
+===== SLIDE 10 =====
+Measurement of Length | Length is the distance between two extreme ends of an object. | SI unit: metre (m) | Devices to Measure Length | • Ruler: For small objects (15 cm or 30 cm) | • Metre Rod: Fixed length of 1 metre, divided into 100 cm | • Measuring Tape: Flexible, for long lengths or curves | • Vernier Callipers: For precise small measurements | • Screw Gauge: For very small measurements | The smallest marking on a ruler is 1 millimetre (mm)
+
+===== SLIDE 11 =====
+How to Use a Ruler Correctly | Step-by-Step | • 1. Place ruler parallel to the object being measured | • 2. Align zero mark (or another mark) with one end | • 3. Read the measurement at the other end | • 4. If starting from mark other than zero, subtract | Important: Parallax Error | Position your eye directly above the mark - wrong positioning causes errors! | If Ruler is Broken | • Use another mark as starting point | • Example: Start from 1 cm mark, end at 6 cm → length = 6 - 1 = 5 cm
+
+===== SLIDE 12 =====
+Measurement of Area | Area is the space inside a two-dimensional shape. | SI unit: square metre (m²) | Formulas for Common Shapes | • Square: Area = Side × Side | • Rectangle: Area = Length × Breadth | • Triangle: Area = ½ × Base × Height | Unit Relationships | • 1 cm² = 100 mm² | • 1 m² = 10,000 cm² | • 1 km² = 10,00,000 m² | • 1 hectare = 10,000 m²
+
+===== SLIDE 13 =====
+Examples: Calculating Area | Example 1: Square Field | Side = 2 m | Area = 2 × 2 = 4 m² | Example 2: Rectangular Paper | Length = 30 cm, Breadth = 25 cm | Area = 30 × 25 = 750 cm² | Example 3: Triangle | Base = 15 cm, Height = 16 cm | Area = ½ × 15 × 16 = 120 cm²
+
+===== SLIDE 14 =====
+Measurement of Mass | Mass is the amount of matter in an object. | SI unit: kilogram (kg) | Units of Mass | • Milligram (mg): 1/1000 of a gram | • Gram (g): Common unit | • Kilogram (kg): Standard SI unit | • Quintal: 100 kg | • Metric Tonne: 1000 kg | Relationships | 1000 mg = 1 g  |  1000 g = 1 kg  |  100 kg = 1 quintal
+
+===== SLIDE 15 =====
+Devices to Measure Mass | 1. Beam Balance (Tarazu) | • Simplest instrument for measuring mass | • Has two pans suspended at equal distances | • Object on one pan, standard weights on other | • Sum of weights = mass of object | 2. Electronic Weighing Machine | • Modern device with digital display | • Displays mass directly on LCD panel | • No need for standard weights | 3. Physical Balance | • Highly sensitive for laboratory use
+
+===== SLIDE 16 =====
+Measurement of Time | Time is the gap between two events. | SI unit: second (s) | Common Units of Time | • 1 minute (min) = 60 seconds | • 1 hour (h) = 60 minutes | • 1 day = 24 hours | • 1 week = 7 days | • 1 year = 12 months | • 1 decade = 10 years | • 1 century = 100 years
+
+===== SLIDE 17 =====
+Devices to Measure Time | Ancient Devices | • Sundial: Used shadow movements of the sun | • Sand Clock: Sand falls from upper to lower chamber | Modern Devices | • Pendulum Clock: Swinging pendulum keeps time | • Analogue Clock: Has hour, minute, second hands | • Digital Clock: Displays time as numbers (hh:mm:ss) | • Stopwatch: Measures short time intervals accurately | Stopwatches can measure time as small as 0.01 seconds!
+
+===== SLIDE 18 =====
+Time: 12-Hour vs 24-Hour Clock | 12-Hour Clock System | • A.M. (ante meridiem): Midnight to noon | • P.M. (post meridiem): Noon to midnight | • Example: 6:15 a.m. (morning) vs 6:15 p.m. (evening) | 24-Hour Clock System | • Numbered 00:00 to 23:59 | • 00:00 = Midnight | • 12:00 = Noon | • 16:15 = 4:15 p.m. | Used by railways, airlines, military
+
+===== SLIDE 19 =====
+Converting 12-Hour to 24-Hour Time | A.M. times: Same or add 00 | • 06:30 a.m. = 06:30 | • 01:30 a.m. = 01:30 | • 12:30 a.m. = 00:30 | P.M. times: Add 12 hours | • 01:45 p.m. = 13:45 | • 03:50 p.m. = 15:50 | • 07:45 p.m. = 19:45 | • 11:15 p.m. = 23:15
+
+===== SLIDE 20 =====
+Measurement of Temperature | Temperature is the measure of hotness or coldness of an object. | SI unit: kelvin (K) | Other Temperature Scales | • Celsius (°C): Common scale | • Fahrenheit (°F): Used in some countries | • Kelvin (K): Scientific standard | Device used: Thermometer | Filled with mercury or alcohol for temperature measurement
+
+===== SLIDE 21 =====
+How a Thermometer Works | Structure | • Thin, long glass tube (capillary tube) | • Bulb at one end containing mercury or alcohol | • Markings on the tube showing temperature | How It Works | • Hot object → Mercury expands → Rises in tube | • Cold object → Mercury contracts → Falls in tube | • Mercury level shows temperature on the markings | Why Mercury? | • Opaque and shiny - easy to see through glass | • Does not stick to glass | • Good heat conductor
+
+===== SLIDE 22 =====
+Temperature Scales Explained | Celsius Scale | • 0°C = Freezing point of water (ice) | • 100°C = Boiling point of water (steam) | • Divided into 100 equal parts | Fahrenheit Scale | • 32°F = Freezing point of water | • 212°F = Boiling point of water | • Divided into 180 equal parts | Kelvin Scale | • 273 K = Freezing point of water | • 373 K = Boiling point of water
+
+===== SLIDE 23 =====
+Converting Between Temperature Scales | Celsius to Kelvin | K = °C + 273 | • 0°C = 0 + 273 = 273 K | • 10°C = 10 + 273 = 283 K | • -20°C = -20 + 273 = 253 K | Kelvin to Celsius | °C = K - 273 | • 273 K = 273 - 273 = 0°C | • 298 K = 298 - 273 = 25°C
+
+===== SLIDE 24 =====
+Types of Thermometers | 1. Clinical Thermometer | • Measures human body temperature | • Range: 35°C to 42°C | • Has a kink to prevent mercury falling back | • Normal body temperature: 37°C | 2. Laboratory Thermometer | • Measures temperatures: -10°C to 110°C | • High precision for scientific work | • No kink in the tube | 3. Maximum-Minimum Thermometer | • Used in weather forecasting
+
+===== SLIDE 25 =====
+How to Use a Clinical Thermometer | Steps | • 1. Shake thermometer so mercury falls below 35°C | • 2. Place bulb under tongue or in armpit | • 3. Hold for about 1 minute | • 4. Remove and read the temperature | • 5. Mercury level shows body temperature | Important Notes | • Kink prevents mercury flowing back into bulb | • If temperature &gt; 37°C, you have fever | • Jerk gently to reset mercury before next use
+
+===== SLIDE 26 =====
+Key Concepts Summary | Fundamental Concepts | • Measurement = Comparing unknown with known quantity | • Every measurement has magnitude and unit | • 7 fundamental physical quantities in SI system | • Derived quantities made from fundamentals | Measuring Techniques | • Length: Use ruler, measuring tape, calipers | • Area: Apply formulas for regular shapes | • Mass: Use beam balance or electronic scale | • Time: Use clocks, watches, stopwatches | • Temperature: Use thermometers (clinical/lab)
+
+===== SLIDE 27 =====
+Important Formulas &amp; Conversions | Area Formulas | • Square: A = side² | • Rectangle: A = length × breadth | • Triangle: A = ½ × base × height | Temperature Conversions | • Celsius to Kelvin: K = °C + 273 | • Kelvin to Celsius: °C = K - 273 | Length Conversions | • 10 mm = 1 cm  |  100 cm = 1 m  |  1000 m = 1 km
+
+===== SLIDE 28 =====
+Approximations and Accuracy | An approximation or estimation is a reasonable guess about the measure of a physical quantity. | Examples of Approximations | • Estimating height: &quot;About 5 feet 7 inches&quot; | • Cooking: Estimating quantity of salt | • Travel: Estimating time to reach a place | Advantages &amp; Disadvantages | • ✓ Advantages: Save time, quick estimates | • ✗ Disadvantages: Not accurate for science
+
+===== SLIDE 29 =====
+Glossary of Key Terms | • Measurement: Comparison of unknown with known quantity | • Physical Quantity: Any quantity that can be measured | • Fundamental Quantity: Does not depend on other quantities | • Derived Quantity: Derived from fundamental quantities | • Unit: Fixed standard for measuring quantities | • Parallax Error: Error from wrong eye positioning | • Area: Space occupied by 2D figure | • Mass: Amount of matter in an object | • Temperature: Degree of hotness or coldness | • Thermometer: Device to measure temperature
+
+===== SLIDE 30 =====
+Chapter Summary | ✓ Understood fundamental and derived physical quantities | ✓ Learned about SI units and international standards | ✓ Mastered measurement of length, area, mass, time, and temperature | ✓ Discovered devices and formulas for accurate measurements | ✓ Practiced unit conversions and calculations | Ready to measure the world!
+
+===== SLIDE 31 =====
+Thank You! | Physical Quantities and Measurement | Continue learning and exploring the wonders of measurement!
