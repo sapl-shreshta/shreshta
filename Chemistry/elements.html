@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Elements – The Building Blocks! ⚗️</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+    --metal:#b8c0cc;
+    --green:#43aa8b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow:hidden;}
+  body{background:linear-gradient(135deg,#e0ffe8,#e0f7ff,#fff5d6);color:var(--ink);}
+  .stage{position:relative;width:100vw;height:100vh;overflow:hidden;}
+  .slide{
+    position:absolute;inset:0;display:none;flex-direction:column;
+    align-items:center;justify-content:center;
+    padding:60px 60px 80px;text-align:center;
+    animation:fade .5s ease;
+  }
+  .slide.active{display:flex;}
+  @keyframes fade{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:scale(1);}}
+  h1{font-size:clamp(28px,4.5vw,58px);line-height:1.15;margin-bottom:18px;}
+  h2{font-size:clamp(22px,3.2vw,40px);margin-bottom:12px;}
+  p,li{font-size:clamp(16px,2vw,26px);line-height:1.5;}
+  .bubble{
+    background:var(--cream);border-radius:28px;padding:22px 32px;
+    box-shadow:0 8px 0 rgba(0,0,0,.08),0 18px 36px rgba(0,0,0,.1);
+    border:4px dashed var(--purple);max-width:1100px;width:100%;
+  }
+  .rainbow{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0,#a06cd5);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+  .nav{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:14px;z-index:100;}
+  .btn{
+    background:var(--pink);color:white;border:none;border-radius:50px;
+    padding:12px 22px;font-size:20px;cursor:pointer;
+    box-shadow:0 6px 0 #c14a9a;transition:transform .15s;
+    font-family:inherit;font-weight:bold;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn:active{transform:translateY(3px);box-shadow:0 3px 0 #c14a9a;}
+  .counter{background:rgba(255,255,255,.7);border-radius:50px;padding:10px 20px;font-weight:bold;color:var(--ink);}
+
+  /* Top nav */
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;}
+  .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;
+    width:50px;height:50px;font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  /* Floating decorations */
+  .float{position:absolute;font-size:38px;opacity:.65;animation:floatanim 6s ease-in-out infinite;}
+  @keyframes floatanim{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-18px) rotate(10deg);}}
+
+  /* Title */
+  .title-card h1{font-size:clamp(42px,7vw,84px);}
+  .emoji-row{font-size:clamp(44px,7vw,80px);margin:16px 0;letter-spacing:8px;}
+
+  /* Cards / grid */
+  .row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+  .card{
+    background:var(--cream);border-radius:22px;padding:18px 26px;
+    min-width:200px;max-width:280px;border:4px solid;
+    box-shadow:0 7px 0 rgba(0,0,0,.08);
+  }
+  .card h3{font-size:clamp(18px,2.2vw,28px);margin-bottom:6px;}
+  .card p{font-size:clamp(14px,1.8vw,22px);color:#555;}
+  .card.metal{border-color:#aaa7c0;}
+  .card.nonmetal{border-color:var(--teal);}
+  .card.metalloid{border-color:var(--orange);}
+  .card.noble{border-color:var(--blue);}
+  .card.element{border-color:var(--blue);}
+  .card.compound{border-color:var(--pink);}
+
+  /* Property table */
+  table{border-collapse:separate;border-spacing:8px;margin:14px auto;font-size:clamp(14px,1.8vw,22px);}
+  td,th{background:var(--cream);border-radius:12px;padding:8px 16px;border:3px solid var(--purple);text-align:left;}
+  th{background:var(--yellow);text-align:center;}
+  td.yes{background:#d4f7e6;color:#007a45;font-weight:bold;text-align:center;}
+  td.no{background:#ffe0e8;color:#c0003c;font-weight:bold;text-align:center;}
+  td.sym{background:var(--blue);color:white;font-weight:bold;font-size:clamp(18px,2.2vw,26px);text-align:center;}
+  td.cat{background:var(--yellow);font-weight:bold;text-align:center;}
+
+  /* Fun list */
+  ul.fun{list-style:none;text-align:left;max-width:920px;margin:10px auto;width:100%;}
+  ul.fun li{margin:8px 0;padding-left:38px;position:relative;font-size:clamp(15px,1.9vw,24px);}
+  ul.fun li::before{content:"⚡";position:absolute;left:0;top:0;}
+
+  /* Badge */
+  .badge{display:inline-block;background:var(--yellow);color:var(--ink);padding:5px 14px;border-radius:18px;font-weight:bold;margin:3px;border:3px solid var(--orange);}
+  .tag{background:var(--teal);color:white;padding:3px 12px;border-radius:12px;font-weight:bold;}
+
+  /* Number big display */
+  .big-num{font-size:clamp(60px,10vw,120px);font-weight:bold;line-height:1;}
+
+  /* Globe row for "where" */
+  .where-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:960px;width:100%;margin-top:16px;}
+  .where-card{background:var(--cream);border-radius:20px;padding:16px 20px;border:4px solid var(--purple);box-shadow:0 5px 0 rgba(0,0,0,.07);}
+  .where-card .icon{font-size:clamp(32px,5vw,54px);display:block;margin-bottom:8px;}
+  .where-card h3{font-size:clamp(15px,1.9vw,24px);margin-bottom:4px;}
+  .where-card p{font-size:clamp(13px,1.6vw,20px);color:#555;}
+
+  .pop{display:inline-block;animation:pop 2s ease-in-out infinite;}
+  @keyframes pop{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<div class="nav-top nav-back">
+  <a href="index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Chemistry">⬅️</button>
+  </a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="stage">
+
+  <!-- Floating decorations -->
+  <div class="float" style="top:6%;left:5%;">⚗️</div>
+  <div class="float" style="top:10%;right:7%;animation-delay:1.2s;">🔬</div>
+  <div class="float" style="bottom:14%;left:7%;animation-delay:2.4s;">✨</div>
+  <div class="float" style="bottom:10%;right:5%;animation-delay:3.6s;">⚛️</div>
+
+  <!-- Slide 1 — Title -->
+  <section class="slide active title-card">
+    <div class="emoji-row">⚗️🔬⚛️🌟</div>
+    <h1 class="rainbow">Elements — The Building Blocks of Everything!</h1>
+    <p style="font-size:clamp(20px,2.8vw,32px);color:var(--purple);margin-top:10px;">
+      From gold to oxygen — let's explore what everything is made of 🚀
+    </p>
+  </section>
+
+  <!-- Slide 2 — What is Matter? -->
+  <section class="slide">
+    <h1>🌍 Everything is made of <span class="rainbow">Matter</span>!</h1>
+    <div class="bubble" style="margin-top:20px;">
+      <p>Your chair, water, air, even <b>you</b> — all made of matter! 🤗</p>
+      <p style="margin-top:12px;">Matter is made of tiny building blocks. Scientists split matter into two big groups:</p>
+    </div>
+    <div class="row">
+      <div class="card element"><h3>✅ Pure Substances</h3><p>One type of particle — <b>Elements</b> &amp; <b>Compounds</b></p></div>
+      <div class="card compound"><h3>🥣 Mixtures</h3><p>Different particles mixed together</p></div>
+    </div>
+  </section>
+
+  <!-- Slide 3 — What is an Element? -->
+  <section class="slide">
+    <h1>🔬 What is an <span class="rainbow">Element</span>?</h1>
+    <div class="bubble" style="border-color:var(--blue);">
+      <p><span class="pop">⚡</span> An <b>element</b> is a pure substance that <u>cannot</u> be broken into simpler substances by any physical or chemical method. <span class="pop">⚡</span></p>
+      <p style="margin-top:14px;">An element is made of only <b>one type of atom</b> — the smallest particle that still has all the properties of that element.</p>
+    </div>
+    <div class="row">
+      <div class="card element"><h3>🟡 Gold</h3><p>Only gold atoms</p></div>
+      <div class="card element"><h3>💛 Hydrogen</h3><p>Only hydrogen atoms</p></div>
+      <div class="card element"><h3>💙 Oxygen</h3><p>Only oxygen atoms</p></div>
+    </div>
+  </section>
+
+  <!-- Slide 4 — How many elements? -->
+  <section class="slide">
+    <h1>🔢 How many Elements are there?</h1>
+    <div class="bubble" style="border-color:var(--teal);">
+      <p class="big-num rainbow">118</p>
+      <p style="margin-top:10px;">known elements in the universe today!</p>
+    </div>
+    <div class="row" style="margin-top:16px;">
+      <div class="card element" style="border-color:var(--teal);">
+        <h3>🌿 92</h3>
+        <p>Found <b>naturally</b> on Earth</p>
+      </div>
+      <div class="card element" style="border-color:var(--orange);">
+        <h3>🧪 26</h3>
+        <p>Made <b>artificially</b> by scientists</p>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:clamp(15px,1.9vw,24px);color:#666;">Examples: gold, silver, mercury, sulphur, hydrogen, oxygen, iron…</p>
+  </section>
+
+  <!-- Slide 5 — Characteristics of an Element -->
+  <section class="slide">
+    <h1>📋 Characteristics of an Element</h1>
+    <ul class="fun" style="max-width:860px;">
+      <li>Cannot be broken into simpler substances — it is the <b>basic form of matter</b></li>
+      <li>Is a <b>pure substance</b> — contains atoms of only one kind</li>
+      <li>Can exist on its own <em>or</em> combine with other elements to form <b>compounds</b></li>
+      <li>Exists in all <b>three states</b> — solid, liquid, and gas</li>
+      <li>Each element has a unique <b>symbol</b> of 1 or 2 letters</li>
+    </ul>
+  </section>
+
+  <!-- Slide 6 — Classification overview -->
+  <section class="slide">
+    <h1>🗂️ Types of Elements</h1>
+    <div class="bubble" style="margin-bottom:16px;">
+      <p>Elements are classified based on their <b>properties</b> into four groups:</p>
+    </div>
+    <div class="row">
+      <div class="card metal"><h3>🔩 Metals</h3><p>Shiny, hard, conduct electricity</p></div>
+      <div class="card nonmetal"><h3>🌿 Non-Metals</h3><p>Mostly gases or brittle solids</p></div>
+      <div class="card metalloid"><h3>🔶 Metalloids</h3><p>Properties of both!</p></div>
+      <div class="card noble"><h3>💨 Noble Gases</h3><p>Don't react with anything</p></div>
+    </div>
+  </section>
+
+  <!-- Slide 7 — Metals -->
+  <section class="slide">
+    <h1>🔩 Metals</h1>
+    <div class="bubble" style="border-color:#aaa7c0;">
+      <p>Most of the 118 elements are <b>metals</b>! They are found mainly in the Earth's crust and in seas and oceans.</p>
+      <p style="margin-top:8px;">Examples: <span class="badge">Gold</span> <span class="badge">Silver</span> <span class="badge">Iron</span> <span class="badge">Copper</span> <span class="badge">Aluminium</span> <span class="badge">Sodium</span> <span class="badge">Calcium</span></p>
+    </div>
+    <ul class="fun" style="max-width:860px;margin-top:12px;">
+      <li>Usually <b>hard solids</b> with a shiny, lustrous appearance ✨</li>
+      <li>Good <b>conductors</b> of heat and electricity ⚡</li>
+      <li>High melting and boiling points 🌡️</li>
+      <li><b>Malleable</b> (beaten into sheets) &amp; <b>ductile</b> (drawn into wires)</li>
+      <li><b>Sonorous</b> — produce a ringing sound when struck 🔔</li>
+    </ul>
+  </section>
+
+  <!-- Slide 8 — Non-Metals -->
+  <section class="slide">
+    <h1>🌿 Non-Metals</h1>
+    <div class="bubble" style="border-color:var(--teal);">
+      <p>Non-metals are abundant in the Earth's crust, oceans, and atmosphere.</p>
+      <p style="margin-top:8px;">Examples: <span class="badge">Hydrogen</span> <span class="badge">Oxygen</span> <span class="badge">Nitrogen</span> <span class="badge">Chlorine</span> <span class="badge">Sulphur</span> <span class="badge">Phosphorus</span></p>
+    </div>
+    <ul class="fun" style="max-width:860px;margin-top:12px;">
+      <li>Soft solids or <b>gases</b> — mostly brittle (break easily) 💨</li>
+      <li><b>No</b> shiny/lustrous appearance — dull surface</li>
+      <li><b>Bad conductors</b> of heat and electricity</li>
+      <li>Neither malleable nor ductile</li>
+      <li><b>Low</b> melting and boiling points &amp; not sonorous</li>
+    </ul>
+  </section>
+
+  <!-- Slide 9 — Metals vs Non-Metals comparison -->
+  <section class="slide">
+    <h1>⚖️ Metals vs Non-Metals</h1>
+    <table>
+      <tr><th>Property</th><th>Metals 🔩</th><th>Non-Metals 🌿</th></tr>
+      <tr><td>Appearance</td><td class="yes">Shiny / Lustrous</td><td class="no">Dull</td></tr>
+      <tr><td>Conducts electricity</td><td class="yes">Yes ✅</td><td class="no">No ❌</td></tr>
+      <tr><td>Malleable</td><td class="yes">Yes ✅</td><td class="no">No ❌</td></tr>
+      <tr><td>Ductile</td><td class="yes">Yes ✅</td><td class="no">No ❌</td></tr>
+      <tr><td>Sonorous</td><td class="yes">Yes 🔔</td><td class="no">No ❌</td></tr>
+      <tr><td>Melting/Boiling Point</td><td class="yes">High 🌡️</td><td class="no">Low 🌡️</td></tr>
+    </table>
+  </section>
+
+  <!-- Slide 10 — Metalloids -->
+  <section class="slide">
+    <h1>🔶 Metalloids — The Best of Both!</h1>
+    <div class="bubble" style="border-color:var(--orange);">
+      <p>Metalloids have properties of <b>both metals and non-metals</b>. They are in-between! 🤝</p>
+      <p style="margin-top:10px;">Examples: <span class="badge">Boron</span> <span class="badge">Silicon</span> <span class="badge">Arsenic</span> <span class="badge">Antimony</span></p>
+    </div>
+    <ul class="fun" style="max-width:860px;margin-top:14px;">
+      <li>Solid — can be shiny or dull</li>
+      <li>Ductile and malleable (like metals)</li>
+      <li>Conduct heat and electricity <b>better than non-metals</b>, but not as well as metals</li>
+      <li>Silicon is used to make <b>computer chips</b>! 💻</li>
+    </ul>
+  </section>
+
+  <!-- Slide 11 — Noble Gases -->
+  <section class="slide">
+    <h1>💨 Noble (Inert) Gases</h1>
+    <div class="bubble" style="border-color:var(--blue);">
+      <p>Noble gases are <b>gaseous elements</b> that do <u>not react</u> with any other elements — they are the lone wolves of chemistry! 🐺</p>
+      <p style="margin-top:10px;">Examples: <span class="badge">Helium</span> <span class="badge">Neon</span> <span class="badge">Argon</span> <span class="badge">Krypton</span> <span class="badge">Xenon</span> <span class="badge">Radon</span></p>
+    </div>
+    <ul class="fun" style="max-width:860px;margin-top:14px;">
+      <li>Present only in <b>traces</b> in the air</li>
+      <li>Helium fills <b>balloons</b> — lighter than air! 🎈</li>
+      <li>Neon glows beautifully in <b>neon signs</b> 💡</li>
+      <li>Completely <b>stable</b> — no need to share or bond!</li>
+    </ul>
+  </section>
+
+  <!-- Slide 12 — Where are common elements found? -->
+  <section class="slide">
+    <h1>🌐 Where are Elements Most Common?</h1>
+    <div class="where-grid">
+      <div class="where-card">
+        <span class="icon">🌌</span>
+        <h3>Universe</h3>
+        <p>Hydrogen &amp; Helium — together ~99% of all mass!</p>
+      </div>
+      <div class="where-card">
+        <span class="icon">🏔️</span>
+        <h3>Earth's Crust</h3>
+        <p>Oxygen → Silicon → Aluminium → Iron</p>
+      </div>
+      <div class="where-card">
+        <span class="icon">🌬️</span>
+        <h3>Atmosphere</h3>
+        <p>Nitrogen is the most common (~78%)</p>
+      </div>
+      <div class="where-card">
+        <span class="icon">🧍</span>
+        <h3>Human Body</h3>
+        <p>Carbon, Hydrogen &amp; Oxygen — the building blocks of cells</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 13 — Fun Facts -->
+  <section class="slide">
+    <h1>🌟 Fun Facts about Elements!</h1>
+    <ul class="fun" style="max-width:900px;">
+      <li><b>Aluminium</b> is the most common metal in the Earth's crust 🏔️</li>
+      <li><b>Iron</b> makes up a large part of the Earth's <b>core</b> 🌍</li>
+      <li><b>Mercury</b> is the only metal that is <b>liquid</b> at room temperature 🌡️</li>
+      <li><b>Bromine</b> is the only non-metal that is <b>liquid</b> at room temperature 🧴</li>
+      <li>Hydrogen + Helium together = about <b>99%</b> of the universe's mass 🌌</li>
+      <li>Metals are <b>malleable</b> (beaten into sheets) and <b>ductile</b> (drawn into wires) 🔧</li>
+    </ul>
+  </section>
+
+  <!-- Slide 14 — Recap -->
+  <section class="slide">
+    <h1>🎉 Let's Recap! 🎉</h1>
+    <ul class="fun" style="max-width:900px;">
+      <li>An <b>element</b> cannot be broken into simpler substances ⚗️</li>
+      <li>There are <b>118</b> elements — 92 natural, 26 artificial</li>
+      <li>Elements are classified as <b>Metals</b>, <b>Non-Metals</b>, <b>Metalloids</b>, and <b>Noble Gases</b></li>
+      <li>Metals are shiny, ductile, malleable, and conduct electricity ⚡</li>
+      <li>Non-metals are dull, brittle, and poor conductors</li>
+      <li>Metalloids are <em>in between</em> — like silicon in computer chips 💻</li>
+      <li>Noble gases don't react with anything — perfectly stable! 💨</li>
+    </ul>
+    <h2 class="rainbow" style="margin-top:24px;">You know your Elements now! 🧑‍🔬⭐</h2>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button class="btn" onclick="go(-1)">⬅️ Back</button>
+  <div class="counter"><span id="cur">1</span> / <span id="tot">1</span></div>
+  <button class="btn" onclick="go(1)">Next ➡️</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let idx = 0;
+  document.getElementById('tot').textContent = slides.length;
+  function show(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[n].classList.add('active');
+    document.getElementById('cur').textContent = n + 1;
+  }
+  function go(d) {
+    idx = (idx + d + slides.length) % slides.length;
+    show(idx);
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+    if (e.key === 'ArrowLeft') go(-1);
+  });
+</script>
+</body>
+</html>
