@@ -24,19 +24,37 @@
     background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  p{font-size:clamp(20px,2.6vw,28px);color:#a06cd5;max-width:600px;margin-top:10px;}
-  .badge{
-    display:inline-block;background:#ffd166;color:#1d2b53;
-    padding:16px 12px;border-radius:50px;font-weight:bold;margin-top:30px;
-    border:3px solid #ff9e45;font-size:22px;
+  p.sub{font-size:clamp(18px,2.4vw,26px);color:#a06cd5;max-width:600px;margin-top:10px;}
+
+  /* Topic cards */
+  .topics{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:36px;}
+  .topic-card{
+    background:white;border-radius:24px;padding:24px 22px;
+    box-shadow:0 8px 0 rgba(0,0,0,.1);
+    flex:1 1 220px;max-width:280px;text-align:center;
+    border-top:7px solid var(--c);
+    text-decoration:none;color:#1d2b53;
+    transition:transform .15s, box-shadow .15s;
+    display:block;
   }
+  .topic-card:hover{transform:translateY(-5px);box-shadow:0 13px 0 rgba(0,0,0,.08);}
+  .topic-card .icon{font-size:46px;margin-bottom:10px;}
+  .topic-card h2{font-size:20px;color:var(--c);margin-bottom:8px;}
+  .topic-card p{font-size:14px;color:#666;line-height:1.5;}
 </style>
 </head>
 <body>
   <a class="back" href="../index.html">⬅️ Home</a>
   <div class="big">⚖️</div>
   <h1>Civics</h1>
-  <p>Awesome lessons are coming soon! Check back for fun activities ✨</p>
-  <div class="badge">🚧 Coming Soon 🚧</div>
+  <p class="sub">Pick a topic to start learning! 🎉</p>
+
+  <div class="topics">
+    <a class="topic-card" style="--c:#ff6ec7" href="importance-of-civics.html">
+      <div class="icon">🏛️</div>
+      <h2>Importance of Civics</h2>
+      <p>Learn how government works, the 3 organs, and how civics shapes our villages!</p>
+    </a>
+  </div>
 </body>
 </html>

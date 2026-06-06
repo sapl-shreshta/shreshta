@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Importance of Civics 🏛️</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --green:#2E7D32;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow:hidden;}
+  body{background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);color:var(--ink);}
+
+  .stage{position:relative;width:100vw;height:100vh;overflow:hidden;}
+
+  .slide{
+    position:absolute;inset:0;display:none;flex-direction:column;
+    align-items:center;justify-content:center;
+    padding:40px 60px;text-align:center;
+    animation:fade .6s ease;overflow-y:auto;
+  }
+  .slide.active{display:flex;}
+  @keyframes fade{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:scale(1);}}
+
+  h1{font-size:clamp(30px,5vw,60px);line-height:1.15;margin-bottom:20px;}
+  h2{font-size:clamp(24px,3.5vw,44px);margin-bottom:16px;}
+  p,li{font-size:clamp(17px,2.2vw,26px);line-height:1.5;}
+
+  .bubble{
+    background:var(--cream);border-radius:30px;padding:24px 34px;
+    box-shadow:0 10px 0 rgba(0,0,0,.08),0 20px 40px rgba(0,0,0,.1);
+    border:4px dashed var(--purple);max-width:1100px;
+  }
+  .rainbow{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0,#a06cd5);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .nav{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    display:flex;gap:14px;z-index:100;
+  }
+  .btn{
+    background:var(--pink);color:white;border:none;
+    border-radius:50px;padding:12px 22px;font-size:20px;cursor:pointer;
+    box-shadow:0 6px 0 #c14a9a;transition:transform .15s;
+    font-family:inherit;font-weight:bold;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn:active{transform:translateY(3px);box-shadow:0 3px 0 #c14a9a;}
+  .counter{background:rgba(255,255,255,.7);border-radius:50px;padding:10px 20px;font-weight:bold;color:var(--ink);}
+
+  .float{position:absolute;font-size:40px;opacity:.7;animation:float 6s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-20px) rotate(10deg);}}
+
+  .title-card h1{font-size:clamp(44px,7vw,88px);}
+  .title-card .sub{font-size:clamp(20px,2.8vw,32px);margin-top:10px;color:var(--purple);}
+  .emoji-row{font-size:clamp(44px,7vw,80px);margin:20px 0;letter-spacing:10px;}
+
+  .row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+  .card{
+    background:var(--cream);border-radius:24px;padding:20px 24px;
+    min-width:190px;border:4px solid;box-shadow:0 8px 0 rgba(0,0,0,.08);
+  }
+  .card h3{font-size:clamp(20px,2.4vw,28px);margin-bottom:8px;}
+  .card p{font-size:clamp(14px,1.8vw,19px);}
+
+  .tag{background:var(--teal);color:white;padding:4px 12px;border-radius:12px;font-weight:bold;}
+
+  ul.fun{list-style:none;text-align:left;max-width:900px;margin:14px auto;}
+  ul.fun li{margin:10px 0;padding-left:42px;position:relative;font-size:clamp(16px,2vw,24px);}
+  ul.fun li::before{content:"🌟";position:absolute;left:0;top:0;}
+
+  .pop{display:inline-block;animation:pop 2s ease-in-out infinite;}
+  @keyframes pop{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+  /* stat blocks */
+  .stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+  .stat{
+    border-radius:24px;padding:30px 28px;min-width:220px;
+    text-align:center;box-shadow:0 8px 0 rgba(0,0,0,.12);color:white;
+  }
+  .stat .big-num{font-size:clamp(64px,10vw,100px);font-weight:bold;line-height:1;}
+  .stat .label{font-size:clamp(17px,2vw,22px);margin-top:8px;}
+
+  /* step rows */
+  ul.steps{list-style:none;text-align:left;max-width:950px;margin:16px auto;}
+  ul.steps li{
+    display:flex;align-items:flex-start;gap:14px;
+    background:var(--cream);border-radius:16px;padding:14px 18px;
+    margin-bottom:12px;border-left:6px solid var(--c,var(--teal));
+    box-shadow:0 4px 0 rgba(0,0,0,.07);
+    font-size:clamp(14px,1.8vw,21px);line-height:1.5;
+  }
+  ul.steps li .num{
+    background:var(--c,var(--teal));color:white;border-radius:50%;
+    min-width:36px;height:36px;display:flex;align-items:center;
+    justify-content:center;font-size:17px;font-weight:bold;flex-shrink:0;
+  }
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;}
+  .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;
+    width:50px;height:50px;font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Civics">⬅️</button>
+  </a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="stage">
+
+  <div class="float" style="top:5%;left:5%;">⚖️</div>
+  <div class="float" style="top:10%;right:7%;animation-delay:1s;">🏛️</div>
+  <div class="float" style="bottom:14%;left:7%;animation-delay:2s;">📜</div>
+  <div class="float" style="bottom:10%;right:6%;animation-delay:3s;">🌾</div>
+
+  <!-- Slide 1: Title -->
+  <section class="slide active title-card">
+    <div class="emoji-row">🏛️⚖️📜🇮🇳🌾</div>
+    <h1 class="rainbow">Importance of Civics</h1>
+    <p class="sub">How Government Creates Impact &amp; Why Every Citizen Matters 🚀</p>
+  </section>
+
+  <!-- Slide 2: What is Civics? -->
+  <section class="slide">
+    <h1>📖 What is Civics?</h1>
+    <div class="bubble">
+      <p>The word <span class="rainbow">Civics</span> refers to the study of our rights and duties as <b>citizens of a country</b>.</p>
+      <p style="margin-top:14px;">It helps us understand <span class="tag">our government</span> and how it works for every one of us!</p>
+    </div>
+    <ul class="fun" style="margin-top:20px;">
+      <li>Civics makes us <b>aware</b> of our rights and laws</li>
+      <li>It makes us <b>responsible</b> citizens</li>
+      <li>It guides us to be <b>law-abiding</b> members of society</li>
+    </ul>
+    <div class="bubble" style="margin-top:20px;border-color:var(--teal);">
+      <p>We enjoy many <b>Fundamental Rights</b> in our democratic country. At the same time, we are expected to perform certain <b>duties</b> too!</p>
+    </div>
+  </section>
+
+  <!-- Slide 3: Aware / Responsible / Law-Abiding -->
+  <section class="slide">
+    <h1>🌟 Civics Makes Us…</h1>
+    <div class="row">
+      <div class="card" style="border-color:var(--pink);">
+        <h3 style="color:var(--pink);">👀 Aware</h3>
+        <p>Keeps us informed about our rights, laws, and the happenings of our country.</p>
+      </div>
+      <div class="card" style="border-color:var(--teal);">
+        <h3 style="color:var(--teal);">🤝 Responsible</h3>
+        <p>Builds citizens who care about their community and participate actively in democracy.</p>
+      </div>
+      <div class="card" style="border-color:var(--blue);">
+        <h3 style="color:var(--blue);">📜 Law-Abiding</h3>
+        <p>Guides us to respect and follow the laws that keep everyone safe and happy.</p>
+      </div>
+    </div>
+    <div class="bubble" style="margin-top:30px;border-color:var(--purple);">
+      <p><span class="pop">🎓</span> <b>Study of Civics helps us evolve into responsible citizens!</b> <span class="pop">🎓</span></p>
+    </div>
+  </section>
+
+  <!-- Slide 4: 3 Organs intro -->
+  <section class="slide">
+    <h1>🏛️ The 3 Organs of Government</h1>
+    <div class="bubble">
+      <p>Civics helps us understand the <b>powers and functions</b> of the <span class="rainbow">3 organs of government</span>.</p>
+      <p style="margin-top:14px;">Together they keep our country running <b>smoothly and fairly!</b></p>
+    </div>
+    <div class="row">
+      <div class="card" style="border-color:var(--yellow);">
+        <h3 style="color:var(--orange);">📋 Legislature</h3>
+        <p>Makes Laws</p>
+      </div>
+      <div class="card" style="border-color:var(--pink);">
+        <h3 style="color:var(--pink);">⚙️ Executive</h3>
+        <p>Implements Laws</p>
+      </div>
+      <div class="card" style="border-color:var(--teal);">
+        <h3 style="color:var(--teal);">⚖️ Judiciary</h3>
+        <p>Interprets & Protects</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 5: Legislature -->
+  <section class="slide">
+    <h1>📋 Legislature</h1>
+    <div class="bubble">
+      <p>The <span class="rainbow">Legislature</span> is the organ of government that <b>makes laws</b> for the country.</p>
+    </div>
+    <ul class="fun" style="margin-top:20px;">
+      <li>Consists of <b>Parliament</b> at the national level</li>
+      <li>Parliament has two houses — <b>Lok Sabha</b> and <b>Rajya Sabha</b></li>
+      <li>Elected representatives debate and pass <b>new laws</b></li>
+      <li>Can also amend (change) existing laws when needed</li>
+    </ul>
+    <div class="bubble" style="margin-top:20px;border-color:var(--yellow);">
+      <p>The legislature is the <b>voice of the people</b> — it represents us all! 🗣️</p>
+    </div>
+  </section>
+
+  <!-- Slide 6: Executive -->
+  <section class="slide">
+    <h1>⚙️ Executive</h1>
+    <div class="bubble">
+      <p>The <span class="rainbow">Executive</span> is responsible for <b>implementing the laws</b> made by the legislature.</p>
+    </div>
+    <ul class="fun" style="margin-top:20px;">
+      <li>Runs the <b>day-to-day administration</b> of the country</li>
+      <li>Headed by the <b>President</b> at the national level</li>
+      <li>The <b>Council of Ministers</b> (led by the Prime Minister) assists the President</li>
+      <li>Makes sure laws are <b>carried out on the ground</b></li>
+    </ul>
+    <div class="bubble" style="margin-top:20px;border-color:var(--pink);">
+      <p>The executive <b>turns laws into action</b> for the benefit of all citizens! 🚀</p>
+    </div>
+  </section>
+
+  <!-- Slide 7: Judiciary -->
+  <section class="slide">
+    <h1>⚖️ Judiciary</h1>
+    <div class="bubble">
+      <p>The <span class="rainbow">Judiciary</span> <b>interprets the Constitution</b> and safeguards it.</p>
+    </div>
+    <ul class="fun" style="margin-top:20px;">
+      <li><b>Protects</b> Fundamental Rights from being violated</li>
+      <li>Settles <b>disputes</b> between citizens and the government</li>
+      <li>The <b>Supreme Court</b> is the highest court in India</li>
+      <li>Acts as a <b>guardian</b> of the Constitution</li>
+    </ul>
+    <div class="bubble" style="margin-top:20px;border-color:var(--teal);">
+      <p>The judiciary ensures that <b>no one is above the law</b> — not even the government! 🛡️</p>
+    </div>
+  </section>
+
+  <!-- Slide 8: Village Population -->
+  <section class="slide">
+    <h1>🌾 India's Villages</h1>
+    <div class="bubble">
+      <p>Did you know? A huge part of India's population lives in <b>villages!</b></p>
+    </div>
+    <div class="stats">
+      <div class="stat" style="background:linear-gradient(135deg,#2E7D32,#43A047);">
+        <div class="big-num">70%</div>
+        <div class="label">Live in Villages 🌾</div>
+      </div>
+      <div class="stat" style="background:linear-gradient(135deg,#FF6B00,#FFA040);">
+        <div class="big-num">30%</div>
+        <div class="label">Live in Towns &amp; Cities 🏙️</div>
+      </div>
+    </div>
+    <div class="bubble" style="margin-top:24px;border-color:var(--teal);">
+      <p>We need to pay a lot of attention to our villages to <b>develop them</b>! 💪</p>
+    </div>
+  </section>
+
+  <!-- Slide 9: Pre-Independence Challenges -->
+  <section class="slide">
+    <h1>😔 Challenges Before Independence</h1>
+    <div class="bubble">
+      <p>Before independence, <b>not much attention</b> was paid to the economic conditions of villages or to the backwardness of people.</p>
+    </div>
+    <ul class="fun" style="margin-top:20px;">
+      <li><b>Poverty</b> — No economic safety nets for rural families</li>
+      <li><b>Ignorance</b> — Lack of awareness about rights and governance</li>
+      <li><b>Superstitions</b> — Held communities back from progress</li>
+      <li><b>Illiteracy</b> — Most villagers had no access to education</li>
+      <li><b>Lack of Facilities</b> — No healthcare, roads, or electricity</li>
+    </ul>
+  </section>
+
+  <!-- Slide 10: Government Steps 1–5 -->
+  <section class="slide">
+    <h1>🚀 Government Steps After Independence — I</h1>
+    <ul class="steps">
+      <li style="--c:var(--pink);">
+        <span class="num">1</span>
+        <span><b>Abolished the Zamindari System</b> — Ended the exploitative landlord system; land redistributed to farmers.</span>
+      </li>
+      <li style="--c:var(--yellow);">
+        <span class="num">2</span>
+        <span><b>Five Year Plans</b> — Planned systematic village development in 5-year cycles.</span>
+      </li>
+      <li style="--c:var(--teal);">
+        <span class="num">3</span>
+        <span><b>Water for Irrigation</b> — Canals, tubewells, and River Valley Projects built to bring water to farms.</span>
+      </li>
+      <li style="--c:var(--blue);">
+        <span class="num">4</span>
+        <span><b>Better Farming</b> — Better seeds, fertilizers, and modern farm implements provided to farmers.</span>
+      </li>
+      <li style="--c:var(--purple);">
+        <span class="num">5</span>
+        <span><b>Free Primary Education</b> — Made free and compulsory for all children across the country. 📚</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Slide 11: Government Steps 6–10 -->
+  <section class="slide">
+    <h1>🚀 Government Steps After Independence — II</h1>
+    <ul class="steps">
+      <li style="--c:var(--pink);">
+        <span class="num">6</span>
+        <span><b>Primary Health Centres</b> — PHCs with qualified doctors opened in many villages. 🏥</span>
+      </li>
+      <li style="--c:var(--yellow);">
+        <span class="num">7</span>
+        <span><b>Electricity &amp; Renewable Energy</b> — Electricity reached most villages; solar energy and biogas introduced. 💡</span>
+      </li>
+      <li style="--c:var(--teal);">
+        <span class="num">8</span>
+        <span><b>Roads &amp; Transport</b> — Pucca roads linked villages; trucks and tractors transport produce to markets. 🚛</span>
+      </li>
+      <li style="--c:var(--blue);">
+        <span class="num">9</span>
+        <span><b>Post Offices &amp; Banks</b> — Established in most villages for financial services. 🏦</span>
+      </li>
+      <li style="--c:var(--purple);">
+        <span class="num">10</span>
+        <span><b>Cooperatives &amp; Cottage Industries</b> — Poultry farming, beekeeping, fishing and more encouraged. 🐓🐝🐟</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Slide 12: Key Takeaways -->
+  <section class="slide">
+    <h1>🎓 Key Takeaways</h1>
+    <ul class="fun">
+      <li><span class="pop">⚖️</span> <b>Civics</b> helps us become aware, responsible, and law-abiding citizens</li>
+      <li><span class="pop">📋</span> <b>Legislature</b> makes laws; <b>Executive</b> implements them; <b>Judiciary</b> safeguards them</li>
+      <li><span class="pop">🌾</span> <b>70%</b> of Indians live in villages — their development is a national priority</li>
+      <li><span class="pop">🚀</span> Since independence, government transformed villages through <b>education, healthcare, roads, electricity</b> and economic upliftment</li>
+      <li><span class="pop">🤝</span> Responsible citizenship begins with understanding <b>Civics!</b></li>
+    </ul>
+    <h2 class="rainbow" style="margin-top:28px;">Every Citizen Matters! 🇮🇳⚖️</h2>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button class="btn" onclick="go(-1)">⬅️ Back</button>
+  <div class="counter"><span id="cur">1</span> / <span id="tot">1</span></div>
+  <button class="btn" onclick="go(1)">Next ➡️</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let idx = 0;
+  document.getElementById('tot').textContent = slides.length;
+  function show(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[n].classList.add('active');
+    document.getElementById('cur').textContent = n + 1;
+  }
+  function go(d) {
+    idx = (idx + d + slides.length) % slides.length;
+    show(idx);
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+    if (e.key === 'ArrowLeft') go(-1);
+  });
+</script>
+</body>
+</html>
