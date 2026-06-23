@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahishasura Mardini Stotram 🙏</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --orange: #ff9e45;
+      --red: #ef476f;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5e6, #e6f3ff, #f0e6ff);
+      color: var(--ink);
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    /* Navigation buttons */
+    .nav-top {
+      position: fixed;
+      top: 10px;
+      display: flex;
+      gap: 15px;
+      z-index: 10;
+    }
+
+    .nav-back {
+      left: 20px;
+    }
+
+    .nav-home {
+      right: 20px;
+    }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .icon-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #7a3b97;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .big {
+      font-size: clamp(20px, 15vw, 40px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: clamp(18px, 4vw, 26px);
+      color: var(--purple);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: clamp(10px, 2.5vw, 16px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* Slide Container */
+    .slide-container {
+      position: relative;
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 4px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0, 0, 0, .08);
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .verse-number {
+      font-size: clamp(14px, 2vw, 18px);
+      color: var(--blue);
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .telugu-text {
+      font-size: clamp(14px, 2.5vw, 20px);
+      line-height: 1.8;
+      color: #d4af37;
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f5f5f0;
+      border-radius: 8px;
+      border-left: 4px solid #d4af37;
+    }
+
+    .english-text {
+      font-size: clamp(12px, 2vw, 16px);
+      line-height: 1.7;
+      color: #1d2b53;
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #e8f5e9;
+      border-radius: 8px;
+      border-left: 4px solid var(--teal);
+      font-style: italic;
+    }
+
+    .meaning-section {
+      margin-bottom: 20px;
+    }
+
+    .meaning-title {
+      font-weight: bold;
+      color: var(--purple);
+      margin-bottom: 10px;
+      font-size: clamp(12px, 1.8vw, 15px);
+    }
+
+    .word-meaning {
+      font-size: clamp(11px, 1.6vw, 14px);
+      line-height: 1.8;
+      color: #333;
+      text-align: left;
+      padding: 15px;
+      background: #f0f8ff;
+      border-radius: 8px;
+      border-left: 4px solid var(--blue);
+      margin-bottom: 15px;
+    }
+
+    .overall-meaning {
+      font-size: clamp(12px, 1.8vw, 15px);
+      line-height: 1.8;
+      color: #2d5016;
+      text-align: justify;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid var(--pink);
+    }
+
+    .word-meaning p {
+      margin: 5px 0;
+    }
+
+    /* Navigation Controls */
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: clamp(12px, 2vw, 16px);
+      font-weight: bold;
+      transition: all 0.3s ease;
+      min-width: 100px;
+    }
+
+    .nav-btn:hover {
+      background: #7b4aaf;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .slide-counter {
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: bold;
+      color: var(--purple);
+      min-width: 80px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 18px;
+      color: #a06cd5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-top nav-back">
+    <a href="index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Stotrams">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">👸</div>
+      <h1>Mahishasura Mardini Stotram</h1>
+      <p class="subtitle">Prayer to Mother Durga, destroyer of demons 🙏</p>
+    </div>
+
+    <div class="slide-container">
+      <!-- Slide 1 -->
+      <div class="slide active">
+        <div class="verse-number">📍 VERSE 1</div>
+        <div class="telugu-text">
+          అయి గిరినందిని నందితమేదిని విశ్ fregu వినోదిని నందినుతేగిరివరవింధ్యశిరోధినివాసిని విష్ణువిలాసిని జిష్ణునుతే ।భగవతి హే శితికంఠకుటుంబిని భూరికుటుంబిని భూరికృతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Ayi girinandini nanditamedini viśvavinodini nandanute girivaravindhyaśirodhinivāsini viṣṇuvilāsini jiṣṇunute. Bhagavati he śitikaṇṭhakuṭumbini bhūrikuṭumbini bhūrikṛte jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-section">
+          <div class="word-meaning">
+            <div class="meaning-title">Word-by-Word Meaning:</div>
+            <p><strong>అయి</strong> (ayi) – O | <strong>గిరినందిని</strong> (girinandini) – daughter of the mountain (giri: mountain | nandini: daughter)</p>
+            <p><strong>నందితమేదిని</strong> (nanditamedini) – who makes the earth happy (nandita: made happy | medini: earth)</p>
+            <p><strong>విశ్వవినోదిని</strong> (viśvavinodini) – who makes the universe rejoice (viśva: universe | vinodini: who makes rejoice)</p>
+            <p><strong>నందనుతే</strong> (nandanute) – praised by Nandin</p>
+            <p><strong>గిరివరవింధ్యశిరోధినివాసిని</strong> (girivaravindhyaśirodhinivāsini) – dwelling on Vindhya mountain peak</p>
+            <p><strong>విష్ణువిలాసిని</strong> (viṣṇuvilāsini) – giver of joy to Vishnu (viṣṇu: Vishnu | vilāsini: giver of joy)</p>
+            <p><strong>జిష్ణునుతే</strong> (jiṣṇunute) – praised by the victorious (jiṣṇu: victorious | nute: praised by)</p>
+            <p><strong>భగవతి</strong> (bhagavati) – O Goddess | <strong>హే</strong> (he) – O</p>
+            <p><strong>శితికంఠకుటుంబిని</strong> (śitikaṇṭhakuṭumbini) – wife of blue-necked Siva | <strong>భూరికుటుంబిని</strong> (bhūrikuṭumbini) – one with many families</p>
+            <p><strong>జయ జయ</strong> (jaya jaya) – victory, victory</p>
+          </div>
+          <div class="overall-meaning">
+            <div class="meaning-title">Overall Meaning:</div>
+            O daughter of the mountain, who makes the whole earth happy, who makes the whole universe rejoice, praised by Nandin. Dwelling on the peak of the great Vindhya mountain, glittering widely, giver of joy to Vishnu, praised by those desirous of victory. O Goddess, wife of the blue-necked Siva, One who has many families, One who has done a lot, be victorious, be victorious, O destroyer of the demon Mahisa, with beautiful braids of hair, daughter of the mountain Himalaya.
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 2</div>
+        <div class="telugu-text">
+          సురవరవర్షిణి దుర్ధరధర్షిణి దుర్ముఖమర్షిణి హర్షరతేత్రిభువనపోషిణి శంకరతోషిణి కల్మషమోషిణి ఘోరరతే ।దనుజనిరోషిణి దితిసుతరోషిణి దుర్మదశోషిణి సింధుసుతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Suravaravarṣiṇi durdharadharṣiṇi durmukhamarṣiṇi harṣarate tribhuvanapoṣiṇi śaṅkaratoṣiṇi kilbiṣamoṣiṇi ghoṣarate. Danujaniroṣiṇi ditisutaroṣiṇi durmadaśoṣiṇi sindhusute jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-section">
+          <div class="word-meaning">
+            <div class="meaning-title">Word-by-Word Meaning:</div>
+            <p><strong>సురవరవర్షిణి</strong> (suravaravarṣiṇi) – bestower of boons on gods (sura: god | vara: boon | varṣiṇi: bestower)</p>
+            <p><strong>దుర్ధరధర్షిణి</strong> (durdharadharṣiṇi) – assails those hard to control (durdhara: hard to control | dharṣiṇi: assails)</p>
+            <p><strong>దుర్ముఖమర్షిణి</strong> (durmukhamarṣiṇi) – tolerates those with ugly faces (durmukha: ugly faces | marṣiṇi: tolerates)</p>
+            <p><strong>త్రిభువనపోషిణి</strong> (tribhuvanapoṣiṇi) – nourishes the three worlds (tri: three | bhuvana: worlds | poṣiṇi: nourishes)</p>
+            <p><strong>శంకరతోషిణి</strong> (śaṅkaratoṣiṇi) – pleases Śaṅkara (śaṅkara: Śaṅkara | toṣiṇi: pleases)</p>
+            <p><strong>కల్మషమోషిణి</strong> (kilbiṣamoṣiṇi) – removes sins (kilbiṣa: sins | moṣiṇi: removes)</p>
+            <p><strong>దనుజనిరోషిణి</strong> (danujaniroṣiṇi) – angry with progeny of Danu (danuja: progeny of Danu | niroṣiṇi: angry with)</p>
+            <p><strong>దితిసుతరోషిణి</strong> (ditisutaroṣiṇi) – angry with sons of Diti (diti: Diti | suta: sons | roṣiṇi: angry with)</p>
+            <p><strong>దుర్మదశోషిణి</strong> (durmadaśoṣiṇi) – destroys evil intoxication of pride (durmada: evil intoxication of pride | śoṣiṇi: destroys)</p>
+          </div>
+          <div class="overall-meaning">
+            <div class="meaning-title">Overall Meaning:</div>
+            O bestower of boons on Gods, One who assails those hard to control, who tolerates those with ugly faces. One who nourishes the three worlds, One who pleases Sankara, One who removes sins. One who is angry with the progeny of Danu (demon), One who is angry with the sons of Diti (also demon), One who destroys those with evil intoxication of pride, daughter of the ocean.
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 3</div>
+        <div class="telugu-text">
+          అయి జగదంబ మదంబ కదంబవనప్రియవాసిని హాసరతేశిఖరి శిరోమణి తుంగహిమాలయ శృంగనిజాలయ మధ్యగతే ।మధుమధురే మధుకైటభగంజిని కైటభభంజిని రాసరతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Ayi jagadamba madamba kadambavanapriyavāsini hāsarate śikhariśiromaṇi tuṅgahimālayaśṛṅganijālayamadhyagate. Madhumadhure madhukaiṭabhagañjini kaiṭabhabhañjini rāsarate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-section">
+          <div class="word-meaning">
+            <div class="meaning-title">Word-by-Word Meaning:</div>
+            <p><strong>జగదంబ</strong> (jagadamba) – mother of the world (jagat: world | amba: mother)</p>
+            <p><strong>మదంబ</strong> (madamba) – my mother (mad: my | amba: mother)</p>
+            <p><strong>కదంబవనప్రియవాసిని</strong> (kadambavanapriyavāsini) – one who loves Kadamba forest (kadamba: Kadamba | vana: forest | priya: beloved | vāsini: dweller)</p>
+            <p><strong>హాసరతే</strong> (hāsarate) – engaged in smiling</p>
+            <p><strong>శిఖరిశిరోమణి</strong> (śikhariśiromaṇi) – crest jewel of peaks (śikhari: peak | śiraḥ: head | maṇi: jewel)</p>
+            <p><strong>తుంగహిమాలయ</strong> (tuṅgahimālaya) – tall Himalaya (tuṅga: tall | himālaya: Himalaya)</p>
+            <p><strong>శృంగనిజాలయ</strong> (śṛṅganijālaya) – dwelling on the peak (śṛṅga: peak | nija: own | ālaya: dwelling)</p>
+            <p><strong>మధుమధురే</strong> (madhumadhure) – sweet like honey (madhu: honey | madhura: sweet)</p>
+            <p><strong>మధుకైటభగంజిని</strong> (madhukaiṭabhagañjini) – destroyer of Madhu and Kaitabha (madhu: Madhu | kaiṭabha: Kaitabha | gañjini: destroyer)</p>
+            <p><strong>రాసరతే</strong> (rāsarate) – engaged in dancing</p>
+          </div>
+          <div class="overall-meaning">
+            <div class="meaning-title">Overall Meaning:</div>
+            O mother of the world, my mother, One who loves to dwell in a forest of Kadamba trees, One who keeps on smiling. One who is on her own dwelling on the tall peak of the Himalaya, the greatest among the mountains. One who is very sweet like honey, One has the treasure of demons Madhu and Kaitabha, destroyer of the demon Kaitabha, engaged in dancing.
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 4</div>
+        <div class="telugu-text">
+          అయి శతఖండ విఖండితరుండ వితుండితశుండ గజాధిపతేరిపుగజగండ విదారణచండ పరాక్రమశుండ మృగాధిపతే ।నిజభుజదండ నిపాతితఖండ విపాతితముండ భటాధిపతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Ayi śatakhaṇḍa vikhaṇḍitaruṇḍa vituṇḍitaśuṇḍa gajādhipate ripugajagaṇḍa vidāraṇacaṇḍa parākramaśuṇḍa mṛgādhipate. Nijabhujadaṇḍa nipātitakhaṇḍa vipātitamuṇḍa bhaṭādhipate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-section">
+          <div class="word-meaning">
+            <div class="meaning-title">Word-by-Word Meaning:</div>
+            <p><strong>అయి</strong> (ayi) – O | <strong>శతఖండ</strong> (śatakhaṇḍa) – hundred pieces (śata: hundred | khaṇḍa: pieces)</p>
+            <p><strong>విఖండితరుండ</strong> (vikhaṇḍitaruṇḍa) – split heads (vikhaṇḍita: split | ruṇḍa: heads)</p>
+            <p><strong>వితుండితశుండ</strong> (vituṇḍitaśuṇḍa) – cut trunks (vituṇḍita: cut | śuṇḍa: trunks)</p>
+            <p><strong>గజాధిపతే</strong> (gajādhipate) – O lord of elephants (gaja: elephant | adhipate: O lord)</p>
+            <p><strong>రిపుగజగండ</strong> (ripugajagaṇḍa) – enemy elephant temples (ripu: enemy | gaja: elephant | gaṇḍa: temples)</p>
+            <p><strong>విదారణచండ</strong> (vidāraṇacaṇḍa) – terrifying valor (vidāraṇa: tearing apart | caṇḍa: terrifying)</p>
+            <p><strong>పరాక్రమశుండ</strong> (parākramaśuṇḍa) – valor trunk (parākrama: valor | śuṇḍa: trunk)</p>
+            <p><strong>మృగాధిపతే</strong> (mṛgādhipate) – O lord of beasts (mṛga: beast | adhipate: O lord)</p>
+            <p><strong>నిజభుజదండ</strong> (nijabhujadaṇḍa) – own arm strength (nija: own | bhuja: arm | daṇḍa: strength)</p>
+            <p><strong>నిపాతితఖండ</strong> (nipātitakhaṇḍa) – cut into pieces (nipātita: cut | khaṇḍa: pieces)</p>
+            <p><strong>విపాతితముండ</strong> (vipātitamuṇḍa) – severed heads (vipātita: severed | muṇḍa: heads)</p>
+            <p><strong>భటాధిపతే</strong> (bhaṭādhipate) – O lord of warriors (bhaṭa: warrior | adhipate: O lord)</p>
+          </div>
+          <div class="overall-meaning">
+            <div class="meaning-title">Overall Meaning:</div>
+            O One who split the heads of demons into hundreds of pieces and One who cut the trunks of great battle elephants, whose great lion is skilled in terrifying valor in tearing apart the temples of enemy elephants. One who has cut down into pieces the heads of enemy chieftains with the strength of her own arms. Be victorious, be victorious, O destroyer of the demon Mahishasura, with beautiful braids of hair, daughter of the mountain.
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 5</div>
+        <div class="telugu-text">
+          అయి రణదుర్మద శత్రువధోదిత దుర్ధరనిర్జర శక్తిభృతేచతురవిచారధురీణ మహాశివ దూతకృత ప్రమథాధిపతే ।దురితదురీహ దురాశయ దుర్మతి దానవదూత కృతాంతమతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Ayi raṇadurmada śatruvadhodita durdharanirjara śaktibhṛte caturavicāra dhurīṇamahāśiva dūtakṛta pramathādhipate. Duritadurīha durāśaya durmati dānavaduta kṛtāntamate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-section">
+          <div class="word-meaning">
+            <div class="meaning-title">Word-by-Word Meaning:</div>
+            <p><strong>అయి</strong> (ayi) – O | <strong>రణదుర్మద</strong> (raṇadurmada) – battle arrogance (raṇa: battle | durmada: arrogance)</p>
+            <p><strong>శత్రువధోదిత</strong> (śatruvadhodita) – arisen for enemy's killing (śatru: enemy | vadha: killing | udita: arisen)</p>
+            <p><strong>దుర్ధరనిర్జర</strong> (durdharanirjara) – invincible and undiminishing (durdhara: invincible | nirjara: undiminishing)</p>
+            <p><strong>శక్తిభృతే</strong> (śaktibhṛte) – holder of power (śakti: power | bhṛte: holder)</p>
+            <p><strong>చతురవిచార</strong> (caturavicāra) – subtle thinking (catura: subtle | vicāra: thinking)</p>
+            <p><strong>ధురీణమహాశివ</strong> (dhurīṇamahāśiva) – great attendant of Shiva (dhurīṇa: attendant | mahāśiva: great Shiva)</p>
+            <p><strong>దూతకృత</strong> (dūtakṛta) – made messenger (dūta: messenger | kṛta: made)</p>
+            <p><strong>ప్రమథాధిపతే</strong> (pramathādhipate) – lord of Pramatha (pramatha: Pramatha | adhipate: lord)</p>
+            <p><strong>దురితదురీహ</strong> (duritadurīha) – sinful intentions (durita: sinful | durīha: intentions)</p>
+            <p><strong>దురాశయదుర్మతి</strong> (durāśayadurmati) – evil thoughts and mind (durāśaya: evil thoughts | durmati: evil mind)</p>
+            <p><strong>దానవదూత</strong> (dānavaduta) – demon's messenger (dānava: demon | duta: messenger)</p>
+            <p><strong>కృతాంతమతే</strong> (kṛtāntamate) – decided to destroy (kṛtānta: destroy | mate: decided)</p>
+          </div>
+          <div class="overall-meaning">
+            <div class="meaning-title">Overall Meaning:</div>
+            O One who holds the invincible and undiminishing striking force which arose on the occasion of killing the enemies who were hard to subdue on the battlefield, who made Pramatha, the great attendant of Shiva, a leader in subtle thinking, her commander. O who decided to destroy the messenger of demons who were sinful, with evil intentions, thoughts and mind. Be victorious, be victorious, O destroyer of the demon Mahishasura, with beautiful braids of hair, daughter of the mountain.
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 6</div>
+        <div class="telugu-text">
+          అయి శరణాగత వైరివధూవర వీరవరాభయదాయకరేత్రిభువన మస్తక శూలవిరోధి శిరోధికృతామల శూలకరే ।దుమిదుమితామర దుందుభినాద మహో ముఖరీకృత తిగ్మకరేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Ayi śaraṇāgata vairivadhuvara vīravarābhaya dāyakare tribhuvanamastaka śulavirodhi śiro'dhikṛtāmala śulakare. Dumidumitāmara dhundubhināda maho mukharīkṛta dink makare jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O One who gives protection to the great heroic husbands of the enemy wives who have come seeking refuge, One who holds in her hands a spotless spear pointed towards the head of the opponent who is causing a great pain for all the three worlds. One who is like the blazing hot sun, aroused by the power of resounding noise of the drums of Gods.
+        </div>
+      </div>
+
+      <!-- Slide 7 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 7</div>
+        <div class="telugu-text">
+          అయి నిజహుంకృతిమాత్ర నిరాకృత ధూమ్రవిలోచన ధూమ్రశతేసమరవిశోషిత శోణితబీజ సముద్భవశోణిత బీజలతే ।శివ శివ శుంభ నిశుంభ మహాహవ తర్పిత భూత పిశాచరతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Ayi nijahum̐kṛti mātra nirākṛta dhūmravilocana dhūmraśate samaraviśoṣita śoṇitabīja samudbhava śoṇitabījalate. Śiva śiva śumbha niśumbha mahāhava tarpita bhūta piśācarate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O One who has blown aside hundreds of streams of smoke coming from demons with smoking eyes merely with her own roaring, who is like a vine of blood-drops grown from the dried blood drops in battle. One who delights in the company of auspicious Shiva, Shumbha, Nishumbha, and the spirits who were fed during the great battle.
+        </div>
+      </div>
+
+      <!-- Slide 8 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 8</div>
+        <div class="telugu-text">
+          ధనురనుసంగ రణక్షణసంగ పరిస్ఫురదంగ నటత్కటకేకనక పిశంగ పృషత్కనిషంగరసద్భట శృంగ హతావటుకే ।కృతచతురంగ బలక్షితిరంగ ఘటద్బహురంగ రటద్బటుకేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Dhanur anuṣaṅga raṇakṣaṇa saṅga parisphuraddaṅga naṭat kaṭake kanaka piśaṅga pṛṣat kaniṣaṅga rasad bhaṭa śṛṅga hatāvaṭuke. Kṛta caturraṅga balakṣiti raṅga ghaṭad bahuraṅga raṭad baṭuke jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O One who decks herself with dancing ornaments on throbbing limbs at the moment of the battle, making her bow ready, who killed the huge enemy soldiers with a shining sword and with (arrows from) a quiver which has golden brown spots. One who made the battleground with fourfold army into a stage with a colorful drama with screaming young attendants.
+        </div>
+      </div>
+
+      <!-- Slide 9 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 9</div>
+        <div class="telugu-text">
+          సురలలనా తతథేయి తథేయి కృతాభినయోదర నృత్యరతేకృత కుకుథః కుకుథో గడదాదికతాల కుతూహల గానరతే ।ధుధుకుట ధుక్కుట ధింధిమిత ధ్వని ధీర మృదంగ నినాదరతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Suralalanā tatatheyi tatheyi kṛtābhinayodara nṛtyarate kṛta kukuthaḥ kukutho gaḍadādi katāla kutūhala gānarate. Dhudhukuṭa dhukkuṭa dhindhimita dhvani dhīra mṛdaṅga ninādarate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O you who take delight in the dancing of heavenly damsels made excellent by the acting, O you who are full of laughter, amorous gestures! O you who possess immeasurable love for afflicted persons bowing before you! O you who rejoice in the sustained/deep sound of the mṛdaṅga drum! Victory to you, vanquisher of the demon Mahisha, wearing attractive knotted hair, daughter of the mountain!
+        </div>
+      </div>
+
+      <!-- Slide 10 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 10</div>
+        <div class="telugu-text">
+          జయ జయ జప్య జయే జయ శబ్దపరస్తుతి తత్పర విశ్వనుతేభణ భణ భింజిమి భింకృతనూపుర సింజితమోహిత భూతపతే ।నటితనటార్ధ నటీనటనాయక నాటితనాట్య సుగానరతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Jaya jaya japya jayejaya śabda parastuti tatpara viśvanute bhaṇa bhaṇa bhiñjimi bhiṅkṛta nūpura śiñjita mohita bhūtapate. Naṭita naṭārdha naṭī naṭa nāyaka nāṭita nāṭya sugānarate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          Be victorious! whose victory should be sung, praised by the whole universe, who attracted the attention of Shiva by twinkling of bells making various sounds of dancing, who delights in beautiful singing and in dance-drama presented by a leading dancer acting out the role of an actress with half of his body.
+        </div>
+      </div>
+
+      <!-- Slides 11-21 continue below -->
+
+      <!-- Slide 11 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 11</div>
+        <div class="telugu-text">
+          అయి సుమనః సుమనః సుమనః సుమనః సుమనోహర కాంతియుతేశ్రిత రజనీ రజనీ రజనీ రజనీ రజనీకర వక్త్రవృతే ।సునయన విభ్రమర భ్రమర భ్రమర భ్రమర భ్రమరాధిపతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Ayi sumanaḥ sumanaḥ sumanaḥ sumanaḥ sumanohara kānti yuteśrita rajanī rajanī rajanī rajanī rajanī kara vaktra vṛte. Sunayana vibhramara bhramara bhramara bhramara bhramarādhipate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O Divine Mother, whose beautiful mind is united with a charming appearance, whose beautiful face makes subservient the beauty of the moonlight of night by hiding them with its own beauty, whose beautiful eyes conquer the beauty of the bees by its own beauty. Victory to you, destroyer of demon Mahishasura, who shine with beautiful locks of hair and who is the daughter of the mountain.
+        </div>
+      </div>
+
+      <!-- Slide 12 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 12</div>
+        <div class="telugu-text">
+          సహిత మహాహవ మల్లమ తల్లిక మల్లిత రల్లక మల్లరతేవిరచిత వల్లిక పల్లిక మల్లిక భిల్లిక భిల్లిక వర్గ వృతే ।సితకృత ఫుల్లసముల్లసితారుణ తల్లజ పల్లవ సల్లలితేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Sahita mahāhava mallama tallika mallita rallaka mallarate viracita vallika pallika mallika jhillika bhillika varga vṛte. Śita kṛta phulla samullasita aruṇa tallaja pallava sallalite jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O Divine Mother who is accompanied in the great battle against excellent wrestlers, by girls who appear tender like jasmine. On whose face plays a smile created by joy which appears like dawn shining forth with red color and blossoming the excellent buds. Victory to you, the destroyer of the demon Mahishasura, who has beautiful locks of hair and who is the daughter of the mountain.
+        </div>
+      </div>
+
+      <!-- Slide 13 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 13</div>
+        <div class="telugu-text">
+          అవిరలగండగలన్మదమేదుర మత్తమతంగజ రాజపతేత్రిభువనభూషణ భూతకలానిధి రూపపయోనిధి రాజసుతే ।అయి సుదతీజన లాలసమానస మోహనమన్మథ రాజసుతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Avirala gaṇḍa galan mada medura matta mataṅga rāja pate tribhuvana bhūṣaṇa bhūta kalā nidhi rūpa payo nidhi rāja sute. Ayi sudatī jana lālasa mānasa mohana manmatha rāja sute jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O You who are in charge of huge royal elephants in fury, princess, the daughter of the ocean, who has the beauty of the moon, the ornament of all the three worlds. O princess of Cupid who enchants the minds desirous of ladies with beautiful teeth, victory to you, destroyer of Mahishasura, with beautiful locks and daughter of the mountain.
+        </div>
+      </div>
+
+      <!-- Slide 14 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 14</div>
+        <div class="telugu-text">
+          కమలదలామల కోమలకాంతి కలాకలితామల భాలలతేసకలవిలాస కళానిలయ క్రమకేలిచలత్కలహంసకులే ।అలికుల సంకుల కువలయ మండల మౌలిమిలద్భకులాలి కులేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Kamala dalā mala komala kānti kalā kalitā mala bhāla late sakala vilāsa kalā nilaya krama keli chalat kala haṃsa kule. Ali kula saṅkula kuvalaya maṇḍala mauli milad bakula āli kule jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O Goddess whose spotless forehead is enhanced by the beautiful complexion, pure and delicate like that of lotus petals, whose flock of swans is moving sportingly with steps which are the marks of all beautiful arts. Whose bees from the bakula trees meet on the tops of lotus flowers which are crowded with bees. Victory to you, slayer of Mahishasura.
+        </div>
+      </div>
+
+      <!-- Slide 15 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 15</div>
+        <div class="telugu-text">
+          కరమురళీరవ వీజిత కూజిత లజ్జితకోకిల మంజుమతేమిలిత పులింద మనోహర గుంజిత రంజితశైల నికుంజగతే ।నిజగుణభూత మహాశబరీగణ సద్గుణసంభృత కేళితలేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Kara muralī rava vījita kūjita lajjita kokila mañjumate milita pulinda manohara guñjita rañjita śaila nikuñja gate. Nija guṇa bhūta mahā śabarī gaṇa sad guṇa sambhṛta kelitale jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O Goddess whose voice is sweeter than flute and cuckoo, whose sweet cooing sounds made with the flute have put to shame the Kokila bird. Who is in colorful mountain groves pleasantly resounding with the assembled mountain folks, whose playground is filled with good qualities of the flocks of the great tribal women. Victory to you, slayer of Mahishasura, with beautiful hair and daughter of the mountain.
+        </div>
+      </div>
+
+      <!-- Slide 16 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 16</div>
+        <div class="telugu-text">
+          కటితటపీత దుకూలవిచిత్ర మయూఖతిరస్కృత చంద్రరుచేప్రణతసురాసుర మౌళిమణిస్ఫుర దంశులసన్నఖ చంద్రరుచే ।జితకనకాచల మౌళిపదోర్జిత నిర్భరకుంజర కుంభకుచేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Kaṭi taṭa pīta dukūla vicitra mayūkha tiraskṛta candra ruce praṇata surāsura mauli maṇi sphura daṃśula sannakha candra ruce. Jita kanakācala mauli madorjita nirbhara kuñjara kumbha kuce jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O Goddess on whose radiant toe-nails prostate the devas and the asuras, who has set aside the brilliance of the moon with the colorful rays coming from the yellow silk, whose toe-nails shine like the moon because of the rays emanating from the crest jewels of the bowing gods and demons. Whose breasts outshine the temples of wild elephants and the high peaks of the golden mountains. Victory to you.
+        </div>
+      </div>
+
+      <!-- Slide 17 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 17</div>
+        <div class="telugu-text">
+          విజిత సహస్రకరైక సహస్రకరైక సహస్రకరైకనుతేకృత సురతారక సంగరతారక సంగరతారక సూనుసుతే ।సురథసమాధి సమానసమాధి సమాధి సమాధి సుజాతరతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Vijita sahasra karāika sahasra karāika sahasra karāika nute kṛta surā tāraka saṅgara tāraka saṅgara tāraka sūnu sute. Suratha samādhi samāna samādhi samādhi samādhi sujāta rate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O Goddess praised by the thousand hands of Sahasrarjuna, who had excelled the thousand-rayed Sun by his valor, who gave comfort to King Suratha and the vaisya Samadhi through your supreme compassion, one for whom pleasure is created by your grace. Victory to you, who has crushed the demon Mahisha, wearing charming knot of hair, daughter of Mountain Himalaya.
+        </div>
+      </div>
+
+      <!-- Slide 18 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 18</div>
+        <div class="telugu-text">
+          పదకమలం కరుణానిలయే వరివస్యతి యోఽనుదినం స శివేఅయి కమలే కమలానిలయే కమలానిలయః స కథం న భవేత్ ।తవ పదమేవ పరంపదమిత్యనుశీలయతో మమ కిం న శివేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Pada kamalaṃ karuṇā nilaye vari vasyati yo'nudinaṃ sa śive ayi kamale kamalā nilaye kamalā nilayaḥ sa kathaṃ na bhavet. Tava padam eva param padam ity anuśīlayato mama kiṃ na śive jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O abode of Lakshmi, if someone daily cherishes your lotus-like feet, which are an abode of compassion, then he becomes prosperous. O lotus-dwelling Lakshmi, how will he not become wealthy? O auspicious Goddess, is there anything that I would not have, if I earnestly believe that your feet are the highest goal to be achieved? Victory to you, destroyer of Mahishasura.
+        </div>
+      </div>
+
+      <!-- Slide 19 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 19</div>
+        <div class="telugu-text">
+          కనకలసత్కల సింధుజలైరనుసించినుతే గుణరంగభువంభజతి స కిం న శచీకుచకుంభ తటీపరిరంభ సుఖానుభవమ్ ।తవ చరణం శరణం కరవాణి నతామరవాణి నివాసి శివంజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Kanaka lasat kala sindhu jalaiḥ anuṣiñcati te guṇa raṅga bhuvam bhajati sa kiṃ na śacī kuca kumbha taṭī parirambha sukhānubhavam. Tava caraṇaṃ śaraṇaṃ karavāṇi natā maravāṇi nivāsi śivam jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O abode of Mahasaraswati, if someone bathes you with shining golden waters of the ocean, the playground of virtues, will he not experience in heaven the happiness equal to embracing the full bosom of Indra's wife Sachi? O Goddess worshipped by the speech of Gods, I take refuge in your feet, which are also the abode of Shiva. Victory to you, destroyer of Mahishasura.
+        </div>
+      </div>
+
+      <!-- Slide 20 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 20</div>
+        <div class="telugu-text">
+          తవ విమలేందుకులం వదనేందుమలం సకలం నను కూలయతేకిము పురుహూత పురీందుముఖీ సుముఖీభిరసౌ విముఖీక్రియతే ।మమ తు మతం శివనామధనే భవతీ కృపయా కిముత క్రియతేజయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Tava vimala indu kulam vadana indu malam sakalaṃ nanu kūlayate kimu puru hūta purī indu mukhī sumukhībhiḥ asau vimukhī kriyate. Mama tu mataṃ śiva nāma dhane bhavatī kṛpayā kimuta kriyate jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O Pure One, the person who looks upon your moon-like face together with its digits, will he ever be turned away by the ladies of Indra's city having moon-like and auspicious faces? O Goddess having the name of Siva as her treasure, my opinion is that with kindness you achieve it. Victory to you, who has crushed the demon Mahisha, wearing beautiful knot of hair, daughter of Mountain Himalaya.
+        </div>
+      </div>
+
+      <!-- Slide 21 -->
+      <div class="slide">
+        <div class="verse-number">📍 VERSE 21 (Final Verse)</div>
+        <div class="telugu-text">
+          అయి మయి దీనదయాలుతయా కృపయైవ త్వయా భవితవ్యముమేఅయి జగతో జననీ కృపయాసి యథాసి తథాఽనుభితాసిరతే ।యదుచితమత్ర భవత్యురరి కురుతాదురుతాపమపాకురు తే జయ జయ హే మహిషాసురమర్దిని రమ్యకపర్దిని శైలసుతే
+        </div>
+        <div class="english-text">
+          Ayi mayi dīna dayālu tayā kṛpayā eva tvayā bhavitavyam ume ayi jagato jananī kṛpayāsi yathāsi tathā'nubhitāsi rate. Yaducitam atra bhavatyurarī kurutādurutāpam apākurute jaya jaya he mahiṣāsuramardini ramyakapardini śailasute.
+        </div>
+        <div class="meaning-text">
+          <div class="meaning-title">Meaning:</div>
+          O Uma, you should be kindly disposed toward me because of your virtue of compassion toward the meek. O Mother of the world, with your grace, you may choose to do whatever is appropriate, she removes the great pain (of her devotees). Victory to you, destroyer of Mahishasura, with beautiful locks of hair and daughter of the mountain Himalaya.
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="controls">
+      <button class="nav-btn" id="prevBtn" onclick="previousSlide()">← Previous</button>
+      <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">21</span>
+      </div>
+      <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+
+  <footer>Made with 💖 for Shreshta's learning adventure</footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 21;
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide');
+
+      if (n > totalSlides) {
+        currentSlide = totalSlides;
+      }
+      if (n < 1) {
+        currentSlide = 1;
+      }
+
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[currentSlide - 1].classList.add('active');
+
+      document.getElementById('currentSlide').textContent = currentSlide;
+      document.getElementById('prevBtn').disabled = currentSlide === 1;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+    }
+
+    function nextSlide() {
+      currentSlide++;
+      showSlide(currentSlide);
+    }
+
+    function previousSlide() {
+      currentSlide--;
+      showSlide(currentSlide);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') previousSlide();
+    });
+
+    // Initialize
+    showSlide(currentSlide);
+  </script>
+</body>
+
+</html>
