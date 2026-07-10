@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Introduction to History - Mind Map</title>
+<style>
+  :root{
+    --purple:#a06cd5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:#1d2b53;
+    display:flex;
+    flex-direction:column;
+  }
+  header{
+    padding:8px 90px;
+    text-align:center;
+    flex-shrink:0;
+  }
+  h1{
+    font-size:clamp(20px,3vw,30px);
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0,#a06cd5);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{font-size:clamp(12px,1.4vw,14px);color:var(--purple);margin-top:2px;font-weight:bold;}
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;}
+  .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+  #mindmap-wrap{
+    flex:1;
+    min-height:0;
+    margin:0 16px 16px;
+    background:#ffffffcc;
+    border-radius:20px;
+    border:3px solid var(--purple);
+    box-shadow:0 8px 24px rgba(0,0,0,.1);
+    overflow:hidden;
+    position:relative;
+  }
+  #mindmap-wrap .markmap{
+    width:100%;
+    height:100%;
+  }
+  svg.markmap{display:block;width:100%;height:100%;--markmap-font-size:20px;--markmap-max-width:340px;}
+  svg.markmap .markmap-node text{font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  .hint{
+    position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+    background:#fff8f0;border:2px solid var(--purple);border-radius:20px;
+    padding:6px 16px;font-size:13px;color:#555;z-index:101;
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+  }
+  .mm-toolbar{transform:scale(1.3);transform-origin:bottom right;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to History">⬅️</button>
+  </a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<header>
+  <h1>🏛️ Introduction to History</h1>
+  <p class="sub">Click a circle to expand or collapse a branch — scroll to zoom, drag to pan</p>
+</header>
+
+<div id="mindmap-wrap">
+<div class="markmap">
+<script type="text/template">
+---
+markmap:
+  initialExpandLevel: 1
+  colorFreezeLevel: 2
+  maxWidth: 340
+  spacingHorizontal: 100
+  spacingVertical: 10
+---
+
+# Introduction to History
+
+## History and Prehistory
+- History means inquiry or research from Greek word historia
+- Study of past events in order based on written records
+- Prehistory is before written records, studied by fossils, tools, bones, and shelters
+- Important prehistoric discoveries: fire, wheel, no exact dates
+
+## Importance of Studying the Past
+- Understand ancestors' food, clothes, beliefs, and crafts
+- Learn about past societies and cultures
+- Know history and culture of our country and others
+- Culture includes manners, dress, language, religion, rituals, laws
+- History helps understand people, explain changes, give moral lessons, shape identity, and teach research skills
+
+## Chronology
+- Arrangement of events by time order
+- Helps understand sequence of events
+- BCE (Before Common Era) counts years before Jesus, backwards (100 BCE comes before 99 BCE)
+- CE (Common Era) counts years after Jesus, forwards (99 CE comes before 100 CE)
+
+## Geographical Factors
+- Geography shapes history of a region
+- Indian subcontinent includes India and neighbors
+- Fertile plains of Indus and Ganga rivers supported early settlements
+- Himalayas acted as barrier with some passes for contact
+- Deccan Plateau divided by mountains, rivers, and plateaus
+- Natural barriers like mountains protected regions
+
+## Causes of Cultural Diversity
+- People traveled for trade, livelihood, and exploration
+- Religious leaders spread teachings
+- Rulers expanded empires by conquest
+- Foreign travelers shared ideas and customs
+- Exchange of ideas created diverse culture
+
+## Sources of History
+### Literary Sources
+- Written records about social, political, economic, cultural life
+- Early writings on palm leaves or birch bark (manuscripts) before paper
+- Manuscripts on medicine, science, religion, preserved in temples and libraries
+- Languages: Sanskrit, Pali, Prakrit in north; Tamil in south
+- Indigenous works by Indian authors; foreign works by travelers like Megasthenes and Fa-Hien
+- Indigenous literature
+  - Sacred: Vedas, Ramayana, Mahabharata, Buddhist Tripitakas, Jain Angas
+  - Secular: poetry, drama, science, politics (e.g., Arthashastra by Kautilya)
+- Historians learn ancient languages and scripts (e.g., Prakrit, Brahmi)
+- Harappan script remains undeciphered
+
+### Archaeological Sources
+- Study of material remains by archaeologists through excavation
+- Inscriptions on stones, pillars, metal plates record kings' orders and victories
+- Study of inscriptions is epigraphy
+- Includes tools, weapons, pottery, paintings, sculptures, jewellery, coins, buildings, seals
+- Grains, plant remains, animal bones reveal food and livelihood
+- Monuments like temples, forts, Sanchi Stupa, Ashokan pillars show art and religion
+- Coins show kings, empires, trade, social conditions
+- Study of coins is numismatics
+
+## Conclusion
+- Literary, archaeological, and oral sources reveal complete past
+- Historians and archaeologists use these sources as clues like detectives
+- Studying history is an adventure piecing together evidence from the past
+</script>
+</div>
+</div>
+
+<div class="hint">🖱️ Click a circle to expand a branch · Drag to pan · Scroll (or pinch) to zoom</div>
+
+<script>
+  window.markmap = {
+    autoLoader: { toolbar: true }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>
