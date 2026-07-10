@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>World Mountains — Fold, Block &amp; Volcanic (Geography Class 6)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --fold-young:#e07a1f;
+    --fold-old:#c4491d;
+    --block:#4a5568;
+    --volcanic:#c0392b;
+    --bg:#f7f5f0;
+    --panel:#ffffff;
+    --ink:#2b2b2b;
+    --muted:#6b6b6b;
+    --border:#e2ddd3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:var(--bg);font-family:"Georgia","Times New Roman",serif;color:var(--ink);}
+  #app{display:flex;flex-direction:column;height:100vh;}
+  header{
+    padding:14px 20px;
+    background:var(--panel);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  header h1{
+    font-size:18px;
+    margin:0;
+    font-weight:600;
+    letter-spacing:0.2px;
+  }
+  header .subtitle{
+    font-size:12px;
+    color:var(--muted);
+    font-family:Arial, sans-serif;
+    margin-top:2px;
+  }
+  #legend{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    font-family:Arial, sans-serif;
+    font-size:12.5px;
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    padding:5px 10px;
+    border-radius:16px;
+    border:1px solid var(--border);
+    background:#fbfaf7;
+    user-select:none;
+    transition:opacity 0.15s ease, transform 0.1s ease;
+  }
+  .legend-item.off{opacity:0.35;}
+  .legend-item:active{transform:scale(0.97);}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,0.25);}
+  #map{flex:1;}
+  .leaflet-popup-content{font-family:Arial, sans-serif;font-size:13px;line-height:1.4;min-width:150px;}
+  .leaflet-popup-content b{font-size:14px;}
+  .mtn-photo{
+    display:block;
+    width:100%;
+    max-height:130px;
+    object-fit:cover;
+    border-radius:8px;
+    margin-bottom:6px;
+    border:1px solid var(--border);
+  }
+  .tag{
+    display:inline-block;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+    padding:1px 7px;
+    border-radius:10px;
+    color:#fff;
+    margin-top:4px;
+  }
+  footer{
+    padding:8px 20px;
+    font-family:Arial, sans-serif;
+    font-size:11px;
+    color:var(--muted);
+    background:var(--panel);
+    border-top:1px solid var(--border);
+  }
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:1000;}
+  .nav-back{left:20px;}
+  .nav-home{right:20px;}
+  .icon-btn{
+    background:#a06cd5;color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+</style>
+</head>
+<body>
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Landforms">⬅️</button>
+  </a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+<div id="app">
+  <header>
+    <div>
+      <h1>World Mountains — Classified Map</h1>
+      <div class="subtitle">Fold · Block · Volcanic mountains (Geography Class 6, Ch. 2)</div>
+    </div>
+    <div id="legend"></div>
+  </header>
+  <div id="map"></div>
+  <footer>Source: Geography Class-6 textbook, Chapter 2 — Movements of the Earth &amp; Types of Landforms. Coordinates are approximate range centroids for teaching/reference purposes.</footer>
+</div>
+<script>
+const categories = {
+  foldYoung: { label: "Fold — Young", color: "#e07a1f" },
+  foldOld:   { label: "Fold — Old",   color: "#c4491d" },
+  block:     { label: "Block",        color: "#4a5568" },
+  volcanic:  { label: "Volcanic",     color: "#c0392b" }
+};
+const commonsImg = (file) => `https://commons.wikimedia.org/wiki/Special:FilePath/${file}?width=400`;
+const mountains = [
+  // --- Young Fold Mountains ---
+  { name: "Himalayas", cat: "foldYoung", lat: 28.5, lng: 84.0, note: "Formed by collision of Indian & Eurasian plates", img: commonsImg("Himalayas.jpg") },
+  { name: "Rockies", cat: "foldYoung", lat: 45.0, lng: -110.0, note: "North America", img: commonsImg("Rocky_mountains_banner.jpg") },
+  { name: "Andes", cat: "foldYoung", lat: -20.0, lng: -68.0, note: "South America", img: commonsImg("Andes_mountains_panoramic_view.jpg") },
+  { name: "Alps", cat: "foldYoung", lat: 46.5, lng: 10.5, note: "Europe", img: commonsImg("Alps.jpg") },
+  { name: "Great Dividing Range", cat: "foldYoung", lat: -25.0, lng: 149.0, note: "Australia", img: commonsImg("The_great_dividing_range.jpg") },
+  { name: "Atlas Mountains", cat: "foldYoung", lat: 31.0, lng: -7.0, note: "Africa", img: commonsImg("Morocco_High_Atlas_Mountains.jpg") },
+  { name: "Pyrenees", cat: "foldYoung", lat: 42.6, lng: 1.0, note: "Europe (France–Spain border)", img: commonsImg("Central_pyrenees.jpg") },
+  { name: "Scandinavian Highlands", cat: "foldYoung", lat: 62.0, lng: 10.0, note: "Europe", img: commonsImg("Skibergfjell.JPG") },
+  { name: "Khingan Shan", cat: "foldYoung", lat: 50.0, lng: 121.0, note: "Asia", img: commonsImg("Yalu_river_(nonni_river_tributary)_in_Greater_Khingan_range,_Manchuria,_China.JPG") },
+  { name: "Zagros Mountains", cat: "foldYoung", lat: 33.0, lng: 47.0, note: "Asia (Middle East)", img: commonsImg("Zagros_mountains.jpg") },
+  { name: "Drakensberg", cat: "foldYoung", lat: -29.0, lng: 29.0, note: "Africa", img: commonsImg("Amphitheatre_Drakensberg.jpg") },
+  // --- Old Fold Mountains ---
+  { name: "Appalachians", cat: "foldOld", lat: 37.0, lng: -80.0, note: "North America — old, rounded, low", img: commonsImg("Appalachian_Mountains.jpg") },
+  { name: "Urals", cat: "foldOld", lat: 60.0, lng: 59.5, note: "Russia (Europe–Asia boundary) — old fold mountains", img: commonsImg("Landscape_view_in_Circumpolar_Urals.jpg") },
+  { name: "Aravalis", cat: "foldOld", lat: 25.0, lng: 73.0, note: "India — old fold mountains", img: commonsImg("Aravalli_Range.jpg") },
+  // --- Block Mountains ---
+  { name: "Black Forest", cat: "block", lat: 48.1, lng: 8.2, note: "Germany — east side of Rhine rift valley", img: commonsImg("Furtwangen_Schwarzwald_-_Black_forest.jpg") },
+  { name: "Vosges", cat: "block", lat: 48.3, lng: 7.1, note: "France — west side of Rhine rift valley", img: commonsImg("Autumn_on_the_Vosges_mountains.jpg") },
+  { name: "Vindhya Range", cat: "block", lat: 24.0, lng: 78.0, note: "India — north side of Narmada rift valley", img: commonsImg("Vindhya.jpg") },
+  { name: "Satpura Range", cat: "block", lat: 21.5, lng: 78.0, note: "India — south side of Narmada rift valley", img: commonsImg("Waterfall_in_the_Satpura_Range.jpg") },
+  { name: "Sierra Nevada", cat: "block", lat: 37.5, lng: -119.5, note: "USA — fault-block mountain (Fig. 2.6)", img: commonsImg("Sierra_Nevada_Mountains.JPG") },
+  // --- Volcanic Mountains ---
+  { name: "Kilimanjaro", cat: "volcanic", lat: -3.07, lng: 37.35, note: "Africa — volcanic mountain of accumulation", img: commonsImg("Mount_Kilimanjaro.jpg") },
+  { name: "Fujiyama (Mt. Fuji)", cat: "volcanic", lat: 35.36, lng: 138.73, note: "Japan — acidic lava, high dome, steep slopes", img: commonsImg("Mt._Fuji.jpg") },
+  { name: "Mauna Loa", cat: "volcanic", lat: 19.48, lng: -155.6, note: "Hawaii — basic lava, low dome, gentle slopes", img: commonsImg("Mauna_Loa_from_the_air.jpg") }
+];
+const map = L.map('map', {
+  worldCopyJump: false,
+  minZoom: 2,
+  maxBounds: [[-90, -180], [90, 180]],
+  maxBoundsViscosity: 1.0
+}).setView([20, 20], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors',
+  maxZoom: 18,
+  noWrap: true
+}).addTo(map);
+const layerGroups = {};
+Object.keys(categories).forEach(key => { layerGroups[key] = L.layerGroup().addTo(map); });
+mountains.forEach(m => {
+  const c = categories[m.cat];
+  const marker = L.circleMarker([m.lat, m.lng], {
+    radius: 8,
+    fillColor: c.color,
+    color: "#ffffff",
+    weight: 1.5,
+    fillOpacity: 0.9
+  });
+  marker.bindPopup(
+    `<img class="mtn-photo" src="${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.display='none'">
+     <b>${m.name}</b><br>${m.note}<br><span class="tag" style="background:${c.color}">${c.label}</span>`,
+    { maxWidth: 260 }
+  );
+  marker.addTo(layerGroups[m.cat]);
+});
+// Legend with toggle
+const legendEl = document.getElementById('legend');
+Object.entries(categories).forEach(([key, c]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="dot" style="background:${c.color}"></span><span>${c.label}</span>`;
+  item.addEventListener('click', () => {
+    if (map.hasLayer(layerGroups[key])) {
+      map.removeLayer(layerGroups[key]);
+      item.classList.add('off');
+    } else {
+      map.addLayer(layerGroups[key]);
+      item.classList.remove('off');
+    }
+  });
+  legendEl.appendChild(item);
+});
+</script>
+</body>
+</html>
