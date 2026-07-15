@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Physical Quantities and Measurement - Mind Map</title>
+<style>
+  :root{
+    --purple:#4cc9f0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:#1d2b53;
+    display:flex;
+    flex-direction:column;
+  }
+  header{
+    padding:8px 90px;
+    text-align:center;
+    flex-shrink:0;
+  }
+  h1{
+    font-size:clamp(20px,3vw,30px);
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0,#a06cd5);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{font-size:clamp(12px,1.4vw,14px);color:var(--purple);margin-top:2px;font-weight:bold;}
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;}
+  .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #3a9cc4;transition:transform .15s;
+    display:flex;align-items:center;justify-center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #3a9cc4;}
+  #mindmap-wrap{
+    flex:1;
+    min-height:0;
+    margin:0 16px 16px;
+    background:#ffffffcc;
+    border-radius:20px;
+    border:3px solid var(--purple);
+    box-shadow:0 8px 24px rgba(0,0,0,.1);
+    overflow:hidden;
+    position:relative;
+  }
+  #mindmap-wrap .markmap{
+    width:100%;
+    height:100%;
+  }
+  svg.markmap{display:block;width:100%;height:100%;--markmap-font-size:20px;--markmap-max-width:340px;}
+  svg.markmap .markmap-node text{font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  .hint{
+    position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+    background:#fff8f0;border:2px solid var(--purple);border-radius:20px;
+    padding:6px 16px;font-size:13px;color:#555;z-index:101;
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+  }
+  .mm-toolbar{transform:scale(1.3);transform-origin:bottom right;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Physical Quantities & Measurements">⬅️</button>
+  </a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<header>
+  <h1>📏 Physical Quantities and Measurement</h1>
+  <p class="sub">Click a circle to expand or collapse a branch — scroll to zoom, drag to pan</p>
+</header>
+
+<div id="mindmap-wrap">
+<div class="markmap">
+<script type="text/template">
+---
+markmap:
+  initialExpandLevel: 1
+  colorFreezeLevel: 2
+  maxWidth: 340
+  spacingHorizontal: 100
+  spacingVertical: 10
+---
+
+# Physical Quantities and Measurement
+
+## Introduction
+- Measurement helps us compare things like length, weight, and temperature
+- We use measurement daily for buying fruits, tailoring clothes, and checking health
+
+## Physical Quantities
+- Things we can measure: length, mass, time, temperature, volume
+- Fundamental Quantities: basic, not dependent on others (length, mass, time, temperature, electric current, luminous intensity, amount of substance)
+- Derived Quantities: made from fundamental ones (area, volume, speed, force, density)
+
+## Measurement of Physical Quantities
+- Comparing an unknown quantity with a known unit
+- Formula: P = N × U (Physical quantity = Magnitude × Unit)
+- Example: 2 kg (2 is magnitude, kg is unit)
+
+## Units
+- Fixed standards for measuring quantities
+- Standard Units (SI, CGS, FPS): reliable and internationally accepted
+- Non-standard Units (cubit, handspan): not reliable - body parts vary in size
+
+## SI Units (International System)
+- Established in 1960 for consistency worldwide
+- Seven Fundamental SI Units
+  - Length: metre (m)
+  - Mass: kilogram (kg)
+  - Time: second (s)
+  - Temperature: kelvin (K)
+  - Electric Current: ampere (A)
+  - Luminous Intensity: candela (cd)
+  - Amount of Substance: mole (mol)
+- Rules for SI Units
+  - Unit names in small letters (metre, newton)
+  - No full stop after symbols (5 m, not 5 m.)
+  - Symbols don't have plural (5 m, not 5 ms)
+  - Symbols from scientist names are capital (N for newton)
+
+## Multiples and Submultiples
+- Prefixes help measure very large or very small quantities
+- milli (m) = 1/1000 → 1 mm = 0.001 m
+- centi (c) = 1/100 → 1 cm = 0.01 m
+- kilo (k) = 1000 → 1 km = 1000 m
+- Example: 100000 m = 100 km, 0.004 m = 4 mm
+
+## Measuring Length
+- Length is the distance between two ends of an object
+- SI Unit: metre (m) | Smallest division on ruler: 1 mm
+- Instruments: Ruler, Metre rod, Measuring tape, Vernier callipers
+- How to Use a Ruler
+  - Lay ruler flat and parallel to object
+  - Line up zero mark with one end
+  - Look straight down (avoid parallax error)
+  - If ruler is broken: end reading - start reading
+
+## Measuring Area
+- Area is the space inside a 2D shape
+- SI Unit: square metre (m²)
+- Area Formulas
+  - Rectangle = length × breadth
+  - Square = side × side
+  - Triangle = ½ × base × height
+  - Irregular shapes: use graph paper and count squares
+
+## Measuring Mass
+- Mass is the amount of matter in an object
+- SI Unit: kilogram (kg)
+- Common Mass Units
+  - 1000 mg = 1 g (gram)
+  - 1000 g = 1 kg (kilogram)
+  - 100 kg = 1 quintal
+  - 1000 kg = 1 tonne
+- Instruments for Measuring Mass
+  - Beam Balance: two pans, compares with standard weights
+  - Electronic Balance: digital, high precision, instant reading
+  - Physical Balance: very sensitive, used in labs
+  - Check zero reading before measuring for accuracy
+
+## Measuring Time
+- Time is the interval between two events
+- SI Unit: second (s)
+- Time Units
+  - 60 s = 1 minute (min)
+  - 60 min = 1 hour (h)
+  - 24 hours = 1 day
+  - 100 years = 1 century
+- Instruments for Measuring Time
+  - Historical: Sundial, sand clock, water clock
+  - Modern: Mechanical clock, digital clock, stopwatch
+  - Stopwatch can measure time as small as 0.01 seconds
+- Clock Systems
+  - 12-hour system: day split into a.m. and p.m.
+  - 24-hour system: hours from 0 to 23 (used by railways)
+
+## Measuring Temperature
+- Temperature shows how hot or cold a body is
+- SI Unit: kelvin (K) | Common: degree Celsius (°C), Fahrenheit (°F)
+- How a Thermometer Works
+  - Contains glass tube with mercury or alcohol liquid
+  - Heat: liquid expands and rises up the tube
+  - Cold: liquid shrinks and falls down
+  - Level of liquid indicates temperature on markings
+- Types of Thermometers
+  - Clinical: measures body temperature (35-42°C), has a kink
+  - Laboratory: measures -10°C to 110°C, no kink
+  - Maximum-minimum: records highest and lowest temperatures
+  - Normal body temperature = 37°C
+- Temperature Conversion Formulas
+  - °F = (9/5 × °C) + 32
+  - °C = 5/9 (°F - 32)
+  - K = °C + 273
+  - Water freezes at 0°C (273 K) and boils at 100°C (373 K)
+</script>
+</div>
+</div>
+
+<div class="hint">🖱️ Click a circle to expand a branch · Drag to pan · Scroll (or pinch) to zoom</div>
+
+<script>
+  window.markmap = {
+    autoLoader: { toolbar: true }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>

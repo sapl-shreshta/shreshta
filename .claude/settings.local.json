@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls C:\\\\Users\\\\Harika\\\\Documents\\\\GitHub\\\\shreshta\\\\ *)",
+      "Bash(Select-Object FullName, Length)",
+      "Bash(Sort-Object FullName)"
+    ]
+  }
+}
