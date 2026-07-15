@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Physical Quantities & Measurement - Interactive Quiz</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background: #f5f5f5;
+    color: #333;
+  }
+
+  /* Password Screen */
+  .password-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .password-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .password-box h1 {
+    color: #667eea;
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
+
+  .password-box p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .password-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+
+  .password-input:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+
+  .password-btn {
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .password-btn:hover {
+    background: #764ba2;
+  }
+
+  .error-msg {
+    color: #e74c3c;
+    margin-top: 10px;
+    font-size: 14px;
+    display: none;
+  }
+
+  /* Quiz Screen */
+  .quiz-screen {
+    display: none;
+  }
+
+  .quiz-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: white;
+  }
+
+  .header {
+    text-align: center;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+
+  .header h1 {
+    color: #667eea;
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .score-box {
+    display: inline-block;
+    background: #667eea;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .section {
+    margin-bottom: 40px;
+    page-break-inside: avoid;
+  }
+
+  .section-title {
+    background: #667eea;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+
+  .question {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-left: 4px solid #667eea;
+    border-radius: 4px;
+    page-break-inside: avoid;
+  }
+
+  .question-text {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 15px;
+  }
+
+  .options {
+    margin-left: 20px;
+  }
+
+  .option {
+    padding: 10px 0;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  .option input[type="radio"] {
+    margin-right: 12px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+  }
+
+  .option:hover {
+    background: #e8e8e8;
+  }
+
+  .feedback {
+    margin-top: 12px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    display: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .feedback.correct {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+  }
+
+  .feedback.incorrect {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+  }
+
+  .controls {
+    text-align: center;
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .btn-primary {
+    background: #667eea;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #764ba2;
+  }
+
+  .btn-secondary {
+    background: #e74c3c;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background: #c0392b;
+  }
+
+  .btn-success {
+    background: #27ae60;
+    color: white;
+  }
+
+  .btn-success:hover {
+    background: #229954;
+  }
+
+  .results {
+    background: #e8f5e9;
+    border: 2px solid #4caf50;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 30px 0;
+    display: none;
+  }
+
+  .results h2 {
+    color: #2e7d32;
+    margin-bottom: 10px;
+    font-size: 28px;
+  }
+
+  .results p {
+    color: #555;
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: #4caf50;
+    width: 0%;
+    transition: width 0.3s;
+  }
+
+  @media print {
+    body {
+      background: white;
+    }
+    .password-screen, .controls, .results {
+      display: none !important;
+    }
+    .quiz-container {
+      padding: 0;
+      max-width: 100%;
+    }
+    .question {
+      page-break-inside: avoid;
+    }
+    .section {
+      page-break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div class="password-screen" id="passwordScreen">
+  <div class="password-box">
+    <h1>📋 Quiz Access</h1>
+    <p>Enter password to access the interactive quiz (130 questions)</p>
+    <input type="password" id="passwordInput" class="password-input" placeholder="Enter password" />
+    <button class="password-btn" onclick="checkPassword()">Start Quiz</button>
+    <div class="error-msg" id="errorMsg">❌ Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div class="quiz-screen" id="quizScreen">
+  <div class="quiz-container">
+    <div class="header">
+      <h1>📝 Physical Quantities and Measurement - Interactive Quiz</h1>
+      <div class="score-box">Score: <span id="scoreDisplay">0</span>/130 | Answered: <span id="answeredDisplay">0</span>/130</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="results" id="results">
+      <h2 id="resultTitle">Quiz Complete! 🎉</h2>
+      <p id="resultScore"></p>
+      <p id="resultPercentage"></p>
+      <p id="resultMessage"></p>
+    </div>
+
+    <!-- All Sections and Questions -->
+    <div id="questionsContainer"></div>
+
+    <div class="controls">
+      <button class="btn btn-primary" onclick="scrollToTop()">⬆️ Top</button>
+      <button class="btn btn-success" onclick="finishQuiz()">✓ Finish Quiz</button>
+      <button class="btn btn-primary" onclick="resetQuiz()">🔄 Reset</button>
+      <button class="btn btn-secondary" onclick="logout()">🚪 Logout</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CORRECT_PASSWORD = 'threddy@123';
+
+  // Answer key: question ID -> correct option letter (A, B, C, D)
+  const answerKey = {
+    'q1_1': 'B', 'q1_2': 'C', 'q1_3': 'A', 'q1_4': 'C', 'q1_5': 'C', 'q1_6': 'B',
+    'q2_1': 'D', 'q2_2': 'C', 'q2_3': 'D', 'q2_4': 'B', 'q2_5': 'C', 'q2_6': 'A', 'q2_7': 'C', 'q2_8': 'C', 'q2_9': 'A', 'q2_10': 'C',
+    'q3_1': 'B', 'q3_2': 'C', 'q3_3': 'B', 'q3_4': 'B', 'q3_5': 'C', 'q3_6': 'C', 'q3_7': 'B', 'q3_8': 'C', 'q3_9': 'B', 'q3_10': 'B',
+    'q4_1': 'B', 'q4_2': 'B', 'q4_3': 'C', 'q4_4': 'B', 'q4_5': 'C',
+    'q5_1': 'D', 'q5_2': 'C', 'q5_3': 'B', 'q5_4': 'B', 'q5_5': 'B', 'q5_6': 'C', 'q5_7': 'A', 'q5_8': 'B', 'q5_9': 'C', 'q5_10': 'A',
+    'q6_1': 'B', 'q6_2': 'B', 'q6_3': 'B', 'q6_4': 'C', 'q6_5': 'B', 'q6_6': 'C', 'q6_7': 'D', 'q6_8': 'B', 'q6_9': 'A', 'q6_10': 'C',
+    'q7_1': 'B', 'q7_2': 'C', 'q7_3': 'C', 'q7_4': 'B', 'q7_5': 'B', 'q7_6': 'C', 'q7_7': 'B', 'q7_8': 'C', 'q7_9': 'B', 'q7_10': 'C',
+    'q8_1': 'B', 'q8_2': 'B', 'q8_3': 'C', 'q8_4': 'B', 'q8_5': 'C', 'q8_6': 'C', 'q8_7': 'C', 'q8_8': 'C', 'q8_9': 'B', 'q8_10': 'B',
+    'q9_1': 'B', 'q9_2': 'C', 'q9_3': 'B', 'q9_4': 'C', 'q9_5': 'C', 'q9_6': 'B', 'q9_7': 'C', 'q9_8': 'C', 'q9_9': 'B', 'q9_10': 'C',
+    'q10_1': 'B', 'q10_2': 'A', 'q10_3': 'A', 'q10_4': 'B', 'q10_5': 'A', 'q10_6': 'B', 'q10_7': 'C', 'q10_8': 'A', 'q10_9': 'C', 'q10_10': 'B',
+    'q11_1': 'B', 'q11_2': 'C', 'q11_3': 'B', 'q11_4': 'B', 'q11_5': 'C', 'q11_6': 'B', 'q11_7': 'C', 'q11_8': 'B', 'q11_9': 'C', 'q11_10': 'B',
+    'q12_1': 'C', 'q12_2': 'B', 'q12_3': 'C', 'q12_4': 'C', 'q12_5': 'A', 'q12_6': 'C', 'q12_7': 'B', 'q12_8': 'B', 'q12_9': 'C', 'q12_10': 'B',
+    'q13_1': 'A', 'q13_2': 'C', 'q13_3': 'C', 'q13_4': 'C', 'q13_5': 'B', 'q13_6': 'B', 'q13_7': 'C', 'q13_8': 'A', 'q13_9': 'A', 'q13_10': 'B'
+  };
+
+  let score = 0;
+  let answered = 0;
+
+  function checkPassword() {
+    const input = document.getElementById('passwordInput').value;
+    const errorMsg = document.getElementById('errorMsg');
+
+    if (input === CORRECT_PASSWORD) {
+      document.getElementById('passwordScreen').style.display = 'none';
+      document.getElementById('quizScreen').style.display = 'block';
+      errorMsg.style.display = 'none';
+      generateQuiz();
+    } else {
+      errorMsg.style.display = 'block';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordInput').focus();
+    }
+  }
+
+  function generateQuiz() {
+    const questions = getAllQuestions();
+    const container = document.getElementById('questionsContainer');
+    let currentSection = '';
+    let sectionCount = 0;
+
+    questions.forEach((q, index) => {
+      if (q.section !== currentSection) {
+        currentSection = q.section;
+        sectionCount++;
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'section';
+        sectionDiv.innerHTML = `<div class="section-title">${q.section}</div>`;
+        container.appendChild(sectionDiv);
+      }
+
+      const questionDiv = document.createElement('div');
+      questionDiv.className = 'question';
+      questionDiv.innerHTML = `
+        <div class="question-text">${q.text}</div>
+        <div class="options">
+          ${q.options.map((opt, i) => `
+            <label class="option">
+              <input type="radio" name="${q.id}" value="${String.fromCharCode(65 + i)}" onchange="checkAnswer('${q.id}', this.value)">
+              ${String.fromCharCode(65 + i)}) ${opt}
+            </label>
+          `).join('')}
+        </div>
+        <div class="feedback" id="feedback-${q.id}"></div>
+      `;
+      container.lastChild.appendChild(questionDiv);
+    });
+  }
+
+  function checkAnswer(questionId, selectedValue) {
+    const correctAnswer = answerKey[questionId];
+    const feedback = document.getElementById(`feedback-${questionId}`);
+    const wasAnswered = !!document.querySelector(`input[name="${questionId}"]:checked`);
+
+    if (selectedValue === correctAnswer) {
+      feedback.className = 'feedback correct';
+      feedback.textContent = '✓ Correct!';
+      if (!wasAnswered) {
+        score++;
+        answered++;
+      }
+    } else {
+      feedback.className = 'feedback incorrect';
+      feedback.textContent = `✗ Incorrect. Correct answer is: ${correctAnswer}`;
+      if (wasAnswered) {
+        score--;
+      }
+      answered++;
+    }
+
+    updateScore();
+  }
+
+  function updateScore() {
+    document.getElementById('scoreDisplay').textContent = score;
+    document.getElementById('answeredDisplay').textContent = answered;
+    const percentage = (answered / 130) * 100;
+    document.getElementById('progressFill').style.width = percentage + '%';
+  }
+
+  function finishQuiz() {
+    if (answered === 0) {
+      alert('Please answer at least one question!');
+      return;
+    }
+
+    const percentage = (score / answered) * 100;
+    const results = document.getElementById('results');
+    const resultScore = document.getElementById('resultScore');
+    const resultPercentage = document.getElementById('resultPercentage');
+    const resultMessage = document.getElementById('resultMessage');
+
+    resultScore.textContent = `Your Score: ${score}/${answered} (out of 130 total questions)`;
+    resultPercentage.textContent = `Accuracy: ${percentage.toFixed(1)}%`;
+
+    if (percentage >= 90) {
+      resultMessage.textContent = '🌟 Excellent! Outstanding performance!';
+    } else if (percentage >= 75) {
+      resultMessage.textContent = '👍 Good! Keep practicing to improve.';
+    } else if (percentage >= 60) {
+      resultMessage.textContent = '📚 Fair. Review the concepts and try again.';
+    } else {
+      resultMessage.textContent = '💪 Keep learning! Review the material and practice more.';
+    }
+
+    results.style.display = 'block';
+    scrollToTop();
+  }
+
+  function resetQuiz() {
+    if (confirm('Are you sure you want to reset? All answers will be cleared.')) {
+      score = 0;
+      answered = 0;
+      updateScore();
+      document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+      document.querySelectorAll('.feedback').forEach(fb => fb.style.display = 'none');
+      document.getElementById('results').style.display = 'none';
+      scrollToTop();
+    }
+  }
+
+  function logout() {
+    document.getElementById('passwordScreen').style.display = 'flex';
+    document.getElementById('quizScreen').style.display = 'none';
+    document.getElementById('passwordInput').value = '';
+    score = 0;
+    answered = 0;
+    document.getElementById('questionsContainer').innerHTML = '';
+  }
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Question Data
+  function getAllQuestions() {
+    return [
+      // Section 1
+      { id: 'q1_1', section: 'Section 1: Fundamentals of Measurement (6 Questions)', text: 'Q1.1: Measurement is the process of:', options: ['Estimating unknown quantities', 'Comparing an unknown quantity with a known fixed amount', 'Recording numerical values', 'Taking observations'] },
+      { id: 'q1_2', section: 'Section 1: Fundamentals of Measurement (6 Questions)', text: 'Q1.2: Every measurement consists of:', options: ['Only magnitude', 'Only unit', 'Magnitude and unit', 'Time and space'] },
+      { id: 'q1_3', section: 'Section 1: Fundamentals of Measurement (6 Questions)', text: 'Q1.3: In the measurement "5 kg", what is the magnitude?', options: ['5', 'kg', '5 kg', 'kilograms'] },
+      { id: 'q1_4', section: 'Section 1: Fundamentals of Measurement (6 Questions)', text: 'Q1.4: Which of the following is NOT a reason for measurement?', options: ['Buying fruits at the market', 'A tailor stitching clothes', 'Estimating colors of objects', 'Doctor checking body temperature'] },
+      { id: 'q1_5', section: 'Section 1: Fundamentals of Measurement (6 Questions)', text: 'Q1.5: The formula for measurement can be written as:', options: ['P = N - U', 'P = N ÷ U', 'P = N × U', 'P = N + U'] },
+      { id: 'q1_6', section: 'Section 1: Fundamentals of Measurement (6 Questions)', text: 'Q1.6: In the measurement "2 metres", "metres" refers to:', options: ['Magnitude', 'Unit', 'Quantity', 'Standard'] },
+
+      // Section 2
+      { id: 'q2_1', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.1: Which of the following is NOT a fundamental quantity?', options: ['Length', 'Mass', 'Time', 'Area'] },
+      { id: 'q2_2', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.2: The number of fundamental physical quantities in SI system is:', options: ['5', '6', '7', '8'] },
+      { id: 'q2_3', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.3: Which of these is a fundamental quantity?', options: ['Area', 'Volume', 'Speed', 'Time'] },
+      { id: 'q2_4', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.4: Temperature is classified as:', options: ['Derived quantity', 'Fundamental quantity', 'Non-standard quantity', 'Relative quantity'] },
+      { id: 'q2_5', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.5: Density is made from which fundamental quantities?', options: ['Only mass', 'Only volume', 'Mass and volume', 'Mass and time'] },
+      { id: 'q2_6', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.6: Speed can be calculated from:', options: ['Distance ÷ Time', 'Distance × Time', 'Distance + Time', 'Distance - Time'] },
+      { id: 'q2_7', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.7: Which quantity depends on other quantities?', options: ['Length', 'Time', 'Force', 'Mass'] },
+      { id: 'q2_8', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.8: Area (Length × Length) is an example of:', options: ['Fundamental quantity', 'Base quantity', 'Derived quantity', 'Non-standard quantity'] },
+      { id: 'q2_9', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.9: The seven fundamental quantities include:', options: ['Length, mass, time, temperature, current, intensity, substance', 'Length, mass, time, area, volume, speed, force', 'Distance, weight, period, heat, voltage, brightness, density', 'Height, heaviness, duration, warmth, charge, light, matter'] },
+      { id: 'q2_10', section: 'Section 2: Physical Quantities (10 Questions)', text: 'Q2.10: Which is a derived quantity?', options: ['Electric current', 'Luminous intensity', 'Pressure', 'Amount of substance'] },
+
+      // Section 3
+      { id: 'q3_1', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.1: The SI system was established in:', options: ['1850', '1960', '1920', '2000'] },
+      { id: 'q3_2', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.2: SI is the abbreviation for:', options: ['System of International measures', 'Standard International Units', 'International System of Units', 'Standardized Instrument Units'] },
+      { id: 'q3_3', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.3: The SI unit of length is:', options: ['Centimetre', 'Metre', 'Kilometre', 'Millimetre'] },
+      { id: 'q3_4', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.4: The SI unit of mass is:', options: ['Gram', 'Kilogram', 'Milligram', 'Tonne'] },
+      { id: 'q3_5', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.5: The SI unit of time is:', options: ['Minute', 'Hour', 'Second', 'Day'] },
+      { id: 'q3_6', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.6: The SI unit of temperature is:', options: ['Degree Celsius', 'Degree Fahrenheit', 'Kelvin', 'Rankine'] },
+      { id: 'q3_7', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.7: How should SI unit names be written?', options: ['Always capitalized', 'In small letters', 'Alternating capitals', 'According to preference'] },
+      { id: 'q3_8', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.8: What is the correct way to write SI unit symbols?', options: ['With a full stop: m.', 'Pluralized: ms', 'Without a full stop: m', 'With spaces: m etres'] },
+      { id: 'q3_9', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.9: The symbol for Newton (named after scientist) should be:', options: ['n (small)', 'N (capital)', 'newton', 'Nt'] },
+      { id: 'q3_10', section: 'Section 3: SI Units (10 Questions)', text: 'Q3.10: Which is correct SI notation?', options: ['5 Metres', '5 metres', '5metres', '5 m.'] },
+
+      // Section 4
+      { id: 'q4_1', section: 'Section 4: Non-Standard Units (5 Questions)', text: 'Q4.1: Body-part measurements were used:', options: ['Before written records existed', 'Before reliable standard units were developed', 'For scientific experiments', 'In the SI system'] },
+      { id: 'q4_2', section: 'Section 4: Non-Standard Units (5 Questions)', text: 'Q4.2: A cubit is the distance from:', options: ['Thumb to little finger', 'Elbow to middle fingertip', 'Heel to toe', 'Shoulder to fingertip'] },
+      { id: 'q4_3', section: 'Section 4: Non-Standard Units (5 Questions)', text: 'Q4.3: Handspan measurement refers to:', options: ['Width of the palm', 'Length of a finger', 'Thumb to little finger distance', 'Wrist to elbow'] },
+      { id: 'q4_4', section: 'Section 4: Non-Standard Units (5 Questions)', text: 'Q4.4: The main problem with body-part units was:', options: ['They were too large', 'They varied from person to person', 'They were not visible', 'They required special tools'] },
+      { id: 'q4_5', section: 'Section 4: Non-Standard Units (5 Questions)', text: 'Q4.5: Which non-standard unit refers to the width of a hand?', options: ['Cubit', 'Handspan', 'Palm', 'Foot'] },
+
+      // Section 5
+      { id: 'q5_1', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.1: The prefix "milli" means:', options: ['10 times', '100 times', '1/10', '1/1000'] },
+      { id: 'q5_2', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.2: 1 millimetre equals:', options: ['0.1 m', '0.01 m', '0.001 m', '1 m'] },
+      { id: 'q5_3', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.3: The prefix "centi" means:', options: ['1/1000', '1/100', '100 times', '1/10'] },
+      { id: 'q5_4', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.4: 1 centimetre equals:', options: ['0.001 m', '0.01 m', '0.1 m', '1 m'] },
+      { id: 'q5_5', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.5: The prefix "kilo" means:', options: ['100 times', '1000 times', '1/100', '1/1000'] },
+      { id: 'q5_6', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.6: 1 kilometre equals:', options: ['100 m', '10 m', '1000 m', '10000 m'] },
+      { id: 'q5_7', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.7: Which conversion is correct?', options: ['1000 mm = 1 m', '100 mm = 1 m', '10 mm = 1 m', '1 mm = 1 m'] },
+      { id: 'q5_8', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.8: 5 km equals:', options: ['500 m', '5000 m', '50000 m', '500000 m'] },
+      { id: 'q5_9', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.9: The prefix "deci" means:', options: ['1/1000', '1/100', '1/10', '10 times'] },
+      { id: 'q5_10', section: 'Section 5: Prefixes (10 Questions)', text: 'Q5.10: Convert 500 cm to metres:', options: ['5 m', '50 m', '0.5 m', '0.05 m'] },
+
+      // Section 6
+      { id: 'q6_1', section: 'Section 6: Length (10 Questions)', text: 'Q6.1: Length is defined as:', options: ['The width of an object', 'The distance between two extreme ends', 'The height of an object', 'The perimeter of an object'] },
+      { id: 'q6_2', section: 'Section 6: Length (10 Questions)', text: 'Q6.2: The SI unit of length is:', options: ['Centimetre', 'Metre', 'Millimetre', 'Kilometre'] },
+      { id: 'q6_3', section: 'Section 6: Length (10 Questions)', text: 'Q6.3: The smallest marking on a ruler is:', options: ['1 centimetre', '1 millimetre', '0.5 cm', '0.1 cm'] },
+      { id: 'q6_4', section: 'Section 6: Length (10 Questions)', text: 'Q6.4: Which instrument can measure very small objects with precision?', options: ['Ruler', 'Measuring tape', 'Vernier callipers', 'Metre rod'] },
+      { id: 'q6_5', section: 'Section 6: Length (10 Questions)', text: 'Q6.5: A Screw Gauge is used for:', options: ['Measuring long distances', 'Measuring very small objects', 'Measuring curved objects', 'Marking measurements'] },
+      { id: 'q6_6', section: 'Section 6: Length (10 Questions)', text: 'Q6.6: When using a ruler, to avoid parallax error, you should:', options: ['Place ruler at an angle', 'Look sideways at the mark', 'Look straight down above the mark', 'Use extreme eye position'] },
+      { id: 'q6_7', section: 'Section 6: Length (10 Questions)', text: 'Q6.7: If a ruler is broken at the 2 cm mark and an object ends at 10 cm mark, its length is:', options: ['10 cm', '2 cm', '12 cm', '8 cm'] },
+      { id: 'q6_8', section: 'Section 6: Length (10 Questions)', text: 'Q6.8: Parallax error occurs when:', options: ['The ruler is wet', 'Your eyes are not directly above the mark', 'The object is too small', 'The ruler is dirty'] },
+      { id: 'q6_9', section: 'Section 6: Length (10 Questions)', text: 'Q6.9: A metre rod measures:', options: ['100 cm', '1000 cm', '10 cm', '1 cm'] },
+      { id: 'q6_10', section: 'Section 6: Length (10 Questions)', text: 'Q6.10: Which instrument is flexible?', options: ['Ruler', 'Metre rod', 'Measuring tape', 'Vernier callipers'] },
+
+      // Section 7
+      { id: 'q7_1', section: 'Section 7: Area (10 Questions)', text: 'Q7.1: Area is defined as:', options: ['The length of an object', 'The space inside a 2D shape', 'The volume of an object', 'The perimeter of an object'] },
+      { id: 'q7_2', section: 'Section 7: Area (10 Questions)', text: 'Q7.2: The SI unit of area is:', options: ['cm²', 'm', 'm²', 'km²'] },
+      { id: 'q7_3', section: 'Section 7: Area (10 Questions)', text: 'Q7.3: The formula for area of a rectangle is:', options: ['Side × Side', 'Length + Breadth', 'Length × Breadth', '2(Length + Breadth)'] },
+      { id: 'q7_4', section: 'Section 7: Area (10 Questions)', text: 'Q7.4: The formula for area of a square is:', options: ['4 × Side', 'Side × Side', '2 × Side', 'Diagonal²'] },
+      { id: 'q7_5', section: 'Section 7: Area (10 Questions)', text: 'Q7.5: The formula for area of a triangle is:', options: ['Base × Height', '½ × Base × Height', 'Base + Height', 'Base ÷ Height'] },
+      { id: 'q7_6', section: 'Section 7: Area (10 Questions)', text: 'Q7.6: A rectangular paper has length 30 cm and breadth 25 cm. Its area is:', options: ['550 cm²', '600 cm²', '750 cm²', '800 cm²'] },
+      { id: 'q7_7', section: 'Section 7: Area (10 Questions)', text: 'Q7.7: 1 cm² equals:', options: ['10 mm²', '100 mm²', '1000 mm²', '10000 mm²'] },
+      { id: 'q7_8', section: 'Section 7: Area (10 Questions)', text: 'Q7.8: 1 m² equals:', options: ['100 cm²', '1000 cm²', '10000 cm²', '100000 cm²'] },
+      { id: 'q7_9', section: 'Section 7: Area (10 Questions)', text: 'Q7.9: 1 hectare equals:', options: ['1000 m²', '10000 m²', '100000 m²', '1000000 m²'] },
+      { id: 'q7_10', section: 'Section 7: Area (10 Questions)', text: 'Q7.10: A square field has side 4 m. Its area is:', options: ['8 m²', '12 m²', '16 m²', '20 m²'] },
+
+      // Section 8
+      { id: 'q8_1', section: 'Section 8: Mass (10 Questions)', text: 'Q8.1: Mass is defined as:', options: ['The weight of an object', 'The amount of matter in an object', 'The density of an object', 'The volume of an object'] },
+      { id: 'q8_2', section: 'Section 8: Mass (10 Questions)', text: 'Q8.2: The SI unit of mass is:', options: ['Gram', 'Kilogram', 'Milligram', 'Tonne'] },
+      { id: 'q8_3', section: 'Section 8: Mass (10 Questions)', text: 'Q8.3: How many grams equal 1 kilogram?', options: ['10 g', '100 g', '1000 g', '10000 g'] },
+      { id: 'q8_4', section: 'Section 8: Mass (10 Questions)', text: 'Q8.4: A Beam Balance is also known as:', options: ['Electronic scale', 'Tarazu', 'Physical balance', 'Weighing machine'] },
+      { id: 'q8_5', section: 'Section 8: Mass (10 Questions)', text: 'Q8.5: Which instrument is most sensitive for lab use?', options: ['Beam balance', 'Electronic scale', 'Physical balance', 'Spring balance'] },
+      { id: 'q8_6', section: 'Section 8: Mass (10 Questions)', text: 'Q8.6: 1 quintal equals:', options: ['10 kg', '50 kg', '100 kg', '1000 kg'] },
+      { id: 'q8_7', section: 'Section 8: Mass (10 Questions)', text: 'Q8.7: 1 tonne equals:', options: ['100 kg', '500 kg', '1000 kg', '10000 kg'] },
+      { id: 'q8_8', section: 'Section 8: Mass (10 Questions)', text: 'Q8.8: How many milligrams are in 1 gram?', options: ['10 mg', '100 mg', '1000 mg', '10000 mg'] },
+      { id: 'q8_9', section: 'Section 8: Mass (10 Questions)', text: 'Q8.9: An Electronic Weighing Machine shows mass:', options: ['On a scale', 'On an LCD display', 'Using a pointer', 'Using weights'] },
+      { id: 'q8_10', section: 'Section 8: Mass (10 Questions)', text: 'Q8.10: Before measuring with a beam balance, you should:', options: ['Oil the balance', 'Check the zero reading', 'Adjust the temperature', 'Clean the environment'] },
+
+      // Section 9
+      { id: 'q9_1', section: 'Section 9: Time (10 Questions)', text: 'Q9.1: Time is defined as:', options: ['The length of a day', 'The gap between two events', 'The speed of motion', 'The duration of sunlight'] },
+      { id: 'q9_2', section: 'Section 9: Time (10 Questions)', text: 'Q9.2: The SI unit of time is:', options: ['Minute', 'Hour', 'Second', 'Day'] },
+      { id: 'q9_3', section: 'Section 9: Time (10 Questions)', text: 'Q9.3: How many seconds equal 1 minute?', options: ['30 s', '60 s', '90 s', '120 s'] },
+      { id: 'q9_4', section: 'Section 9: Time (10 Questions)', text: 'Q9.4: How many minutes equal 1 hour?', options: ['30 min', '45 min', '60 min', '120 min'] },
+      { id: 'q9_5', section: 'Section 9: Time (10 Questions)', text: 'Q9.5: How many hours equal 1 day?', options: ['12 hours', '20 hours', '24 hours', '30 hours'] },
+      { id: 'q9_6', section: 'Section 9: Time (10 Questions)', text: 'Q9.6: A stopwatch can measure time as small as:', options: ['0.1 seconds', '0.01 seconds', '1 second', '10 seconds'] },
+      { id: 'q9_7', section: 'Section 9: Time (10 Questions)', text: 'Q9.7: How many years equal 1 century?', options: ['50 years', '75 years', '100 years', '150 years'] },
+      { id: 'q9_8', section: 'Section 9: Time (10 Questions)', text: 'Q9.8: Which is an ancient device for measuring time?', options: ['Digital clock', 'Stopwatch', 'Sundial', 'Chronometer'] },
+      { id: 'q9_9', section: 'Section 9: Time (10 Questions)', text: 'Q9.9: A sand clock measures time using:', options: ['Water', 'Sand falling from one chamber to another', 'Pendulum motion', 'Electronic pulses'] },
+      { id: 'q9_10', section: 'Section 9: Time (10 Questions)', text: 'Q9.10: Which device uses a swinging pendulum?', options: ['Sand clock', 'Digital clock', 'Pendulum clock', 'Stopwatch'] },
+
+      // Section 10
+      { id: 'q10_1', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.1: A.M. stands for:', options: ['After Midday', 'Ante Meridiem', 'Around Morning', 'Afternoon'] },
+      { id: 'q10_2', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.2: P.M. stands for:', options: ['Post Meridiem', 'Period of Morning', 'Postmeridian', 'Power Maximum'] },
+      { id: 'q10_3', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.3: In 12-hour format, A.M. represents:', options: ['Midnight to Noon', 'Noon to Midnight', '12 PM to 12 AM', 'Evening hours'] },
+      { id: 'q10_4', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.4: In 12-hour format, P.M. represents:', options: ['Midnight to Noon', 'Noon to Midnight', 'Morning hours', 'Before midday'] },
+      { id: 'q10_5', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.5: In 24-hour format, what time is midnight?', options: ['00:00', '12:00', '24:00', '23:59'] },
+      { id: 'q10_6', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.6: In 24-hour format, what time is noon?', options: ['00:00', '12:00', '13:00', '24:00'] },
+      { id: 'q10_7', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.7: Convert 3:15 P.M. to 24-hour format:', options: ['03:15', '13:15', '15:15', '21:15'] },
+      { id: 'q10_8', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.8: Convert 06:30 to 12-hour format:', options: ['6:30 A.M.', '6:30 P.M.', '12:30 A.M.', '12:30 P.M.'] },
+      { id: 'q10_9', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.9: Who uses 24-hour clock format?', options: ['Shops', 'Schools', 'Railways and airlines', 'Homes'] },
+      { id: 'q10_10', section: 'Section 10: Clock Systems (10 Questions)', text: 'Q10.10: Convert 23:45 to 12-hour format:', options: ['11:45 A.M.', '11:45 P.M.', '1:45 P.M.', '1:45 A.M.'] },
+
+      // Section 11
+      { id: 'q11_1', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.1: Temperature is:', options: ['The same as heat', 'The measure of hotness or coldness', 'The amount of energy', 'The speed of molecules'] },
+      { id: 'q11_2', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.2: The SI unit of temperature is:', options: ['Degree Celsius', 'Degree Fahrenheit', 'Kelvin', 'Rankine'] },
+      { id: 'q11_3', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.3: How does a thermometer work?', options: ['By cooling the liquid', 'By mercury expansion/contraction', 'By measuring electrical resistance', 'By using a digital sensor'] },
+      { id: 'q11_4', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.4: When temperature increases, the liquid in a thermometer:', options: ['Shrinks and falls', 'Expands and rises', 'Stays the same', 'Changes color'] },
+      { id: 'q11_5', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.5: What is inside a thermometer bulb?', options: ['Water or oil', 'Air', 'Mercury or alcohol', 'Colored liquid'] },
+      { id: 'q11_6', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.6: The freezing point of water in Celsius is:', options: ['100°C', '0°C', '-10°C', '32°C'] },
+      { id: 'q11_7', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.7: The boiling point of water in Celsius is:', options: ['50°C', '75°C', '100°C', '212°C'] },
+      { id: 'q11_8', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.8: Normal human body temperature is:', options: ['35°C', '37°C', '40°C', '42°C'] },
+      { id: 'q11_9', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.9: What is the temperature range of a clinical thermometer?', options: ['0°C to 100°C', '10°C to 50°C', '35°C to 42°C', '-10°C to 110°C'] },
+      { id: 'q11_10', section: 'Section 11: Temperature (10 Questions)', text: 'Q11.10: A clinical thermometer has a kink because:', options: ['For decoration', 'To hold mercury and prevent it sliding back', 'To make it break-proof', 'To increase accuracy'] },
+
+      // Section 12
+      { id: 'q12_1', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.1: A clinical thermometer is used for:', options: ['Weather forecasting', 'Laboratory experiments', 'Measuring body temperature', 'Industrial purposes'] },
+      { id: 'q12_2', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.2: The range of a laboratory thermometer is:', options: ['0°C to 50°C', '-10°C to 110°C', '35°C to 42°C', '20°C to 80°C'] },
+      { id: 'q12_3', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.3: Which thermometer has a kink?', options: ['Laboratory thermometer', 'Maximum-minimum thermometer', 'Clinical thermometer', 'All thermometers'] },
+      { id: 'q12_4', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.4: A Maximum-Minimum thermometer is used for:', options: ['Body temperature', 'Science labs', 'Weather forecasting', 'Industrial heat'] },
+      { id: 'q12_5', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.5: A laboratory thermometer has no kink because:', options: ['It\'s for scientific precision', 'It\'s cheaper to make', 'It breaks easily', 'It doesn\'t need it'] },
+      { id: 'q12_6', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.6: Which thermometer records highest and lowest temperatures?', options: ['Clinical', 'Laboratory', 'Maximum-minimum', 'Digital'] },
+      { id: 'q12_7', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.7: If body temperature > 37°C, it indicates:', options: ['Normal temperature', 'Fever', 'Hypothermia', 'Nothing abnormal'] },
+      { id: 'q12_8', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.8: The accuracy of which thermometer is highest?', options: ['Clinical', 'Laboratory', 'Maximum-minimum', 'Digital'] },
+      { id: 'q12_9', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.9: Which thermometer range is most limited?', options: ['Laboratory (35°C to 42°C)', 'Maximum-minimum (-50°C to 50°C)', 'Clinical (35°C to 42°C)', 'Digital (any range)'] },
+      { id: 'q12_10', section: 'Section 12: Thermometer Types (10 Questions)', text: 'Q12.10: Before using a clinical thermometer, you should:', options: ['Rinse it with water', 'Shake it so mercury falls below 35°C', 'Heat it up', 'Calibrate it'] },
+
+      // Section 13
+      { id: 'q13_1', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.1: To convert Celsius to Kelvin, use:', options: ['K = °C + 273', 'K = °C - 273', 'K = °C × 273', 'K = °C ÷ 273'] },
+      { id: 'q13_2', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.2: Convert 0°C to Kelvin:', options: ['0 K', '100 K', '273 K', '373 K'] },
+      { id: 'q13_3', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.3: Convert 25°C to Kelvin:', options: ['248 K', '252 K', '298 K', '325 K'] },
+      { id: 'q13_4', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.4: Convert 100°C to Kelvin:', options: ['273 K', '297 K', '373 K', '473 K'] },
+      { id: 'q13_5', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.5: To convert Kelvin to Celsius, use:', options: ['°C = K + 273', '°C = K - 273', '°C = K × 273', '°C = K ÷ 273'] },
+      { id: 'q13_6', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.6: Convert 273 K to Celsius:', options: ['-273°C', '0°C', '100°C', '273°C'] },
+      { id: 'q13_7', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.7: Convert 298 K to Celsius:', options: ['15°C', '20°C', '25°C', '30°C'] },
+      { id: 'q13_8', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.8: What is absolute zero in Kelvin?', options: ['0 K', '100 K', '273 K', '373 K'] },
+      { id: 'q13_9', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.9: Water freezes at:', options: ['0°C or 273 K', '100°C or 373 K', '32°C or 273 K', '50°C or 323 K'] },
+      { id: 'q13_10', section: 'Section 13: Temperature Conversions (10 Questions)', text: 'Q13.10: Water boils at:', options: ['0°C or 273 K', '100°C or 373 K', '50°C or 323 K', '75°C or 348 K'] }
+    ];
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        checkPassword();
+      }
+    });
+    document.getElementById('passwordInput').focus();
+  });
+</script>
+</body>
+</html>
