@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subhashitas 🕉️</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe0f0, #e0f7ff, #fff5d6);
+      color: var(--ink);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .nav-top {
+      position: fixed;
+      top: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 101;
+    }
+
+    .nav-back { left: 20px; }
+    .nav-home { right: 20px; }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover { transform: translateY(-2px); }
+
+    .header {
+      text-align: center;
+      margin: 60px 0 30px 0;
+    }
+
+    .big {
+      font-size: clamp(50px, 10vw, 90px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      background: linear-gradient(90deg, #c77dff, #a06cd5, #ff6ec7, #ffd166);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: clamp(16px, 2.2vw, 22px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* Accordion */
+    .accordion {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .accordion-item {
+      background: var(--cream);
+      border-radius: 16px;
+      border: 3px solid var(--purple);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .08);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(90deg, #f3e6ff, #fff0f8);
+      transition: background .2s ease;
+    }
+
+    .accordion-header:hover { background: linear-gradient(90deg, #ecd9ff, #ffe6f2); }
+
+    .accordion-badge {
+      flex-shrink: 0;
+      background: var(--purple);
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(14px, 2vw, 18px);
+    }
+
+    .accordion-title {
+      flex: 1;
+      font-size: clamp(15px, 2.3vw, 20px);
+      font-weight: bold;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .accordion-title .devanagari-preview {
+      display: block;
+      font-size: clamp(17px, 2.6vw, 22px);
+      color: var(--purple);
+    }
+
+    .accordion-title .preview-sub {
+      display: block;
+      font-size: clamp(12px, 1.6vw, 14px);
+      color: #888;
+      font-weight: normal;
+      margin-top: 2px;
+    }
+
+    .accordion-arrow {
+      flex-shrink: 0;
+      font-size: 22px;
+      color: var(--purple);
+      transition: transform .3s ease;
+    }
+
+    .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease;
+      background: white;
+    }
+
+    .accordion-item.open .accordion-body {
+      max-height: 4000px;
+    }
+
+    .accordion-body-inner {
+      padding: 22px 22px 26px 22px;
+    }
+
+    .text-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 700px) {
+      .text-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .verse-block {
+      background: #f5f0ff;
+      border-left: 5px solid var(--purple);
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-size: clamp(15px, 2.2vw, 20px);
+      line-height: 2;
+      color: var(--ink);
+      white-space: pre-line;
+      margin-bottom: 0;
+    }
+
+    .translit-block {
+      background: #e8f8f2;
+      border-left: 5px solid var(--teal);
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-size: clamp(12px, 1.7vw, 15px);
+      line-height: 1.9;
+      color: #1d5a45;
+      font-style: italic;
+      white-space: pre-line;
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-weight: bold;
+      color: var(--purple);
+      font-size: clamp(14px, 2vw, 17px);
+      margin: 18px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .word-meaning-table {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 8px 14px;
+      background: #f0f8ff;
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-size: clamp(12px, 1.7vw, 14.5px);
+    }
+
+    .word-meaning-table .dev {
+      color: var(--purple);
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .word-meaning-table .tr {
+      color: #1d5a45;
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    .word-meaning-table .mean {
+      color: #333;
+    }
+
+    @media (max-width: 640px) {
+      .word-meaning-table {
+        grid-template-columns: 1fr;
+        row-gap: 2px;
+      }
+      .word-meaning-table .word-row {
+        margin-bottom: 10px;
+      }
+    }
+
+    .overall-meaning {
+      font-size: clamp(13px, 1.9vw, 16px);
+      line-height: 1.8;
+      color: #2d5016;
+      text-align: justify;
+      padding: 16px 18px;
+      background: #fff8e6;
+      border-left: 5px solid var(--yellow);
+      border-radius: 8px;
+      margin-top: 6px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 18px;
+      color: #a06cd5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Sanskrit">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">📜</div>
+      <h1>सुभाषितानि · Subhashitas</h1>
+      <p class="subtitle">Wise Sanskrit sayings, word by word 🌸</p>
+    </div>
+
+    <div class="accordion">
+
+      <!-- Subhashita 19 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-badge">१९</div>
+          <div class="accordion-title">
+            <span class="devanagari-preview">केयूराणि न भूषयन्ति...</span>
+            <span class="preview-sub">Speech alone is a person's true ornament 💬</span>
+          </div>
+          <div class="accordion-arrow">▼</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="section-title">📖 Sanskrit Text &amp; Transliteration</div>
+            <div class="text-columns">
+              <div class="verse-block">केयूराणि न भूषयन्ति पुरुषं हारा न चन्द्रोज्ज्वला
+न स्नानं न विलेपनं न कुसुमं नालङ्कृता मूर्धजाः ।
+वाण्येका समलङ्करोति पुरुषं या संस्कृता धार्यते
+क्षीयन्ते खलु भूषणानि सततं वाग्भूषणं भूषणम् ॥ १९॥</div>
+
+              <div class="translit-block">keyūrāṇi na bhūṣayanti puruṣaṃ hārā na candrojjvalā
+na snānaṃ na vilepanaṃ na kusumaṃ nālaṅkṛtā mūrdhajāḥ &#124;
+vāṇyekā samalaṅkaroti puruṣaṃ yā saṃskṛtā dhāryate
+kṣīyante khalu bhūṣaṇāni satataṃ vāgbhūṣaṇaṃ bhūṣaṇam &#124;&#124; 19&#124;&#124;</div>
+            </div>
+
+            <div class="section-title">🧩 Word-by-Word Meaning</div>
+            <div class="word-meaning-table">
+              <div class="dev">केयूराणि न भूषयन्ति</div><div class="tr">keyūrāṇi na bhūṣayanti</div><div class="mean">armlets do not adorn</div>
+              <div class="dev">पुरुषं</div><div class="tr">puruṣaṃ</div><div class="mean">a person</div>
+              <div class="dev">हारा न</div><div class="tr">hārā na</div><div class="mean">nor do necklaces/garlands</div>
+              <div class="dev">चन्द्रोज्ज्वला</div><div class="tr">candrojjvalā</div><div class="mean">bright/shining like the moon</div>
+
+              <div class="dev">न स्नानं</div><div class="tr">na snānaṃ</div><div class="mean">nor bathing</div>
+              <div class="dev">न विलेपनं</div><div class="tr">na vilepanaṃ</div><div class="mean">nor fragrant sandal-paste/unguents</div>
+              <div class="dev">न कुसुमं</div><div class="tr">na kusumaṃ</div><div class="mean">nor flowers</div>
+              <div class="dev">न अलङ्कृता मूर्धजाः</div><div class="tr">na alaṅkṛtā mūrdhajāḥ</div><div class="mean">nor well-decorated/dressed hair</div>
+
+              <div class="dev">वाणी एका</div><div class="tr">vāṇī ekā</div><div class="mean">speech alone</div>
+              <div class="dev">समलङ्करोति पुरुषं</div><div class="tr">samalaṅkaroti puruṣaṃ</div><div class="mean">truly adorns a person</div>
+              <div class="dev">या संस्कृता</div><div class="tr">yā saṃskṛtā</div><div class="mean">which, being refined/cultured</div>
+              <div class="dev">धार्यते</div><div class="tr">dhāryate</div><div class="mean">is held / practiced / used</div>
+
+              <div class="dev">क्षीयन्ते खलु</div><div class="tr">kṣīyante khalu</div><div class="mean">indeed decay / wear away</div>
+              <div class="dev">भूषणानि</div><div class="tr">bhūṣaṇāni</div><div class="mean">(all other) ornaments</div>
+              <div class="dev">सततं</div><div class="tr">satataṃ</div><div class="mean">(but) forever</div>
+              <div class="dev">वाग्भूषणं भूषणम्</div><div class="tr">vāgbhūṣaṇaṃ bhūṣaṇam</div><div class="mean">the ornament of speech is the (true) ornament</div>
+            </div>
+
+            <div class="section-title">💡 Overall Meaning</div>
+            <div class="overall-meaning">
+              Armlets do not truly adorn a person, nor do necklaces bright as the moon, nor bathing, nor fragrant
+              sandal-paste, nor flowers, nor beautifully dressed hair. Only refined, well-cultivated speech —
+              spoken with care — is the ornament that truly adorns a person. All other ornaments wear away and
+              fade with time, but the ornament of good speech lasts forever.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Subhashita 20 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-badge">२०</div>
+          <div class="accordion-title">
+            <span class="devanagari-preview">विद्या नाम नरस्य रूपमधिकं...</span>
+            <span class="preview-sub">Knowledge is a person's true wealth and beauty 📚</span>
+          </div>
+          <div class="accordion-arrow">▼</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="section-title">📖 Sanskrit Text &amp; Transliteration</div>
+            <div class="text-columns">
+              <div class="verse-block">विद्या नाम नरस्य रूपमधिकं प्रच्छन्नगुप्तं धनं
+विद्या भोगकरी यशस्सुखकरी विद्या गुरूणां गुरुः ।
+विद्या बन्धुजनो विदेशगमने विद्या परा देवता
+विद्या राजसु पूजिता न तु धनं विद्याविहीनः पशुः ॥ २०॥</div>
+
+              <div class="translit-block">vidyā nāma narasya rūpamadhikaṃ pracchannaguptaṃ dhanaṃ
+vidyā bhogakarī yaśassukhakarī vidyā gurūṇāṃ guruḥ &#124;
+vidyā bandhujano videśagamane vidyā parā devatā
+vidyā rājasu pūjitā na tu dhanaṃ vidyāvihīnaḥ paśuḥ &#124;&#124; 20&#124;&#124;</div>
+            </div>
+
+            <div class="section-title">🧩 Word-by-Word Meaning</div>
+            <div class="word-meaning-table">
+              <div class="dev">विद्या नाम</div><div class="tr">vidyā nāma</div><div class="mean">knowledge, indeed,</div>
+              <div class="dev">नरस्य रूपम् अधिकं</div><div class="tr">narasya rūpam adhikaṃ</div><div class="mean">is a person's extra/special beauty</div>
+              <div class="dev">प्रच्छन्नगुप्तं धनं</div><div class="tr">pracchannaguptaṃ dhanaṃ</div><div class="mean">a hidden, well-guarded treasure</div>
+
+              <div class="dev">विद्या भोगकरी</div><div class="tr">vidyā bhogakarī</div><div class="mean">knowledge gives enjoyment/prosperity</div>
+              <div class="dev">यशस्सुखकरी</div><div class="tr">yaśassukhakarī</div><div class="mean">gives fame and happiness</div>
+              <div class="dev">विद्या गुरूणां गुरुः</div><div class="tr">vidyā gurūṇāṃ guruḥ</div><div class="mean">knowledge is the teacher of (all) teachers</div>
+
+              <div class="dev">विद्या बन्धुजनः</div><div class="tr">vidyā bandhujanaḥ</div><div class="mean">knowledge is one's kinsman/companion</div>
+              <div class="dev">विदेशगमने</div><div class="tr">videśagamane</div><div class="mean">when travelling to a foreign land</div>
+              <div class="dev">विद्या परा देवता</div><div class="tr">vidyā parā devatā</div><div class="mean">knowledge is the supreme deity</div>
+
+              <div class="dev">विद्या राजसु पूजिता</div><div class="tr">vidyā rājasu pūjitā</div><div class="mean">knowledge is honoured among kings</div>
+              <div class="dev">न तु धनं</div><div class="tr">na tu dhanaṃ</div><div class="mean">not wealth</div>
+              <div class="dev">विद्याविहीनः पशुः</div><div class="tr">vidyāvihīnaḥ paśuḥ</div><div class="mean">one without knowledge is (like) an animal</div>
+            </div>
+
+            <div class="section-title">💡 Overall Meaning</div>
+            <div class="overall-meaning">
+              Knowledge is truly a person's finest beauty, and a hidden treasure that can never be stolen. Knowledge
+              brings prosperity, fame, and happiness; knowledge is the greatest teacher, the teacher of teachers.
+              Knowledge is one's true companion when far from home in a foreign land, and knowledge is like a
+              supreme deity to be revered. It is knowledge — not wealth — that is honoured in royal courts; a
+              person without knowledge is no better than an animal.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Subhashita 55 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-badge">५५</div>
+          <div class="accordion-title">
+            <span class="devanagari-preview">लोभश्चेदगुणेन किं...</span>
+            <span class="preview-sub">If there is greed, what need of other faults? 🪷</span>
+          </div>
+          <div class="accordion-arrow">▼</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="section-title">📖 Sanskrit Text &amp; Transliteration</div>
+            <div class="text-columns">
+              <div class="verse-block">लोभश्चेदगुणेन किं पिशुनता यद्यस्ति किं पातकैः
+सत्यं चेत्तपसा च किं शुचि मनो यद्यस्ति तीर्थेन किम् ।
+सौजन्यं यदि किं गुणैः सुमहिमा यद्यस्ति किं मण्डनैः
+सद्विद्या यदि किं धनैरपयशो यद्यस्ति किं मृत्युना ॥ ५५॥</div>
+
+              <div class="translit-block">lobhaścedaguṇena kiṃ piśunatā yadyasti kiṃ pātakaiḥ
+satyaṃ cettapasā ca kiṃ śuci mano yadyasti tīrthena kim &#124;
+saujanyaṃ yadi kiṃ guṇaiḥ sumahimā yadyasti kiṃ maṇḍanaiḥ
+sadvidyā yadi kiṃ dhanairapayaśo yadyasti kiṃ mṛtyunā &#124;&#124; 55&#124;&#124;</div>
+            </div>
+
+            <div class="section-title">🧩 Word-by-Word Meaning</div>
+            <div class="word-meaning-table">
+              <div class="dev">लोभः चेत्</div><div class="tr">lobhaḥ cet</div><div class="mean">if there is greed</div>
+              <div class="dev">किम् अगुणेन</div><div class="tr">kiṃ aguṇena</div><div class="mean">what need of (other) faults</div>
+              <div class="dev">पिशुनता यदि अस्ति</div><div class="tr">piśunatā yadi asti</div><div class="mean">if there is backbiting / slander</div>
+              <div class="dev">किं पातकैः</div><div class="tr">kiṃ pātakaiḥ</div><div class="mean">what need of (other) sins</div>
+
+              <div class="dev">सत्यं चेत्</div><div class="tr">satyaṃ cet</div><div class="mean">if there is truth</div>
+              <div class="dev">तपसा च किम्</div><div class="tr">tapasā ca kim</div><div class="mean">what need of penance / austerity</div>
+              <div class="dev">शुचि मनः यदि अस्ति</div><div class="tr">śuci manaḥ yadi asti</div><div class="mean">if the mind is pure</div>
+              <div class="dev">तीर्थेन किम्</div><div class="tr">tīrthena kim</div><div class="mean">what need of pilgrimage</div>
+
+              <div class="dev">सौजन्यं यदि</div><div class="tr">saujanyaṃ yadi</div><div class="mean">if there is good nature / kindliness</div>
+              <div class="dev">किं गुणैः</div><div class="tr">kiṃ guṇaiḥ</div><div class="mean">what need of (other) virtues</div>
+              <div class="dev">सुमहिमा यदि अस्ति</div><div class="tr">sumahimā yadi asti</div><div class="mean">if there is true greatness / glory</div>
+              <div class="dev">किं मण्डनैः</div><div class="tr">kiṃ maṇḍanaiḥ</div><div class="mean">what need of ornaments</div>
+
+              <div class="dev">सद्विद्या यदि</div><div class="tr">sadvidyā yadi</div><div class="mean">if there is good / true knowledge</div>
+              <div class="dev">किं धनैः</div><div class="tr">kiṃ dhanaiḥ</div><div class="mean">what need of wealth</div>
+              <div class="dev">अपयशः यदि अस्ति</div><div class="tr">apayaśaḥ yadi asti</div><div class="mean">if there is disgrace / ill-repute</div>
+              <div class="dev">किं मृत्युना</div><div class="tr">kiṃ mṛtyunā</div><div class="mean">what need of death</div>
+            </div>
+
+            <div class="section-title">💡 Overall Meaning</div>
+            <div class="overall-meaning">
+              If a person has greed, no other fault is needed — greed alone is enough. If a person indulges in
+              backbiting, no other sin is needed — that alone is enough. If one is truthful, penance is not needed;
+              truth itself is the highest austerity. If the mind is pure, there is no need to visit sacred pilgrim
+              places; a pure mind is itself the true pilgrimage. If a person is good-natured and kind, no other
+              virtue is needed — good nature contains them all. If a person has true greatness, no ornaments are
+              needed to prove it. If a person has good knowledge, no wealth is needed — knowledge itself is the
+              greatest wealth. And if a person lives in disgrace or dishonour, death is hardly needed to bring them
+              low — a life without honour is already like death.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more subhashitas below by copying an .accordion-item block -->
+
+    </div>
+  </div>
+
+  <footer>Made with 💖 for Shreshta's learning adventure</footer>
+
+  <script>
+    function toggleAccordion(headerEl) {
+      const item = headerEl.parentElement;
+      item.classList.toggle('open');
+    }
+  </script>
+</body>
+
+</html>
