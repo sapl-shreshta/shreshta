@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lines &amp; Relationships 📏</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);
+    color:var(--ink);
+    padding:20px;
+  }
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  /* Nav */
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  /* mascot / guide bubble */
+  .guide{
+    display:flex;align-items:center;gap:16px;
+    background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;
+    box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;
+    box-shadow:0 4px 0 #d97b1f;
+  }
+  .mascot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:50%;}
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  /* section cards */
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{
+    font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  /* tab buttons */
+  .tabbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .tab-btn{
+    background:white;border:3px solid var(--purple);color:var(--purple);
+    font-weight:bold;font-size:14px;padding:8px 16px;border-radius:14px;cursor:pointer;
+    transition:all .2s;
+  }
+  .tab-btn:hover{transform:translateY(-2px);}
+  .tab-btn.active{background:var(--purple);color:white;}
+
+  .stage{
+    background:white;border-radius:18px;padding:14px;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .obj-view{opacity:0;transition:opacity .3s ease;}
+  .obj-view.active{opacity:1;}
+  .caption{
+    text-align:center;font-size:clamp(14px,2vw,16px);font-weight:bold;
+    background:#f0e6ff;border-radius:12px;padding:10px 16px;min-height:24px;
+  }
+  .caption b{color:var(--pink);}
+
+  .info-box{
+    background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;
+    padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;
+  }
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+
+  .realworld{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .realworld .rw-frame{
+    position:relative;width:120px;height:120px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#e6f3ff,#f0e6ff);
+    display:flex;align-items:center;justify-content:center;font-size:60px;flex:0 0 auto;
+    border:3px solid var(--blue);
+  }
+  .realworld .rw-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .realworld p{font-size:14px;max-width:400px;}
+
+  .msg-box{
+    text-align:center;font-weight:bold;font-size:15px;padding:10px;border-radius:12px;
+    background:#eee;min-height:20px;transition:background .2s,color .2s;
+  }
+  .msg-box.good{background:#d4f7e8;color:#048848;}
+  .msg-box.bad{background:#ffe3ea;color:#c0245a;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;
+    padding:10px 18px;border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;
+    transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action.secondary:hover{transform:translateY(-2px);}
+  button.action:disabled{opacity:.5;cursor:not-allowed;}
+
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  /* dimension ladder */
+  .ladder-steps{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:14px;}
+  .ladder-step{
+    background:white;border:3px solid var(--yellow);color:var(--ink);font-weight:bold;
+    padding:10px 16px;border-radius:14px;cursor:pointer;font-size:14px;
+  }
+  .ladder-step.active{background:var(--yellow);}
+  .ladder-display{
+    background:white;border-radius:18px;min-height:220px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:14px;padding:20px;
+  }
+  .dot0d{width:22px;height:22px;border-radius:50%;background:var(--pink);animation:dotpulse 1.2s infinite;}
+  @keyframes dotpulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,110,199,.5);}50%{transform:scale(1.3);box-shadow:0 0 0 10px rgba(255,110,199,0);}}
+
+  .line1d{width:0;height:6px;background:var(--purple);border-radius:4px;animation:growline 1s forwards;}
+  @keyframes growline{from{width:0;}to{width:260px;}}
+
+  .plane2d{width:0;height:0;background:var(--blue);border-radius:10px;animation:growplane 1s forwards;}
+  @keyframes growplane{from{width:0;height:0;}to{width:160px;height:160px;}}
+
+  .cube-wrap{perspective:600px;}
+  .cube{
+    width:100px;height:100px;position:relative;transform-style:preserve-3d;
+    animation:spin 6s linear infinite;
+  }
+  @keyframes spin{from{transform:rotateX(-20deg) rotateY(0deg);}to{transform:rotateX(-20deg) rotateY(360deg);}}
+  .cube .face{
+    position:absolute;width:100px;height:100px;border:3px solid white;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;color:white;font-size:13px;
+    opacity:.92;
+  }
+  .face.front{background:var(--teal);transform:translateZ(50px);}
+  .face.back{background:var(--pink);transform:rotateY(180deg) translateZ(50px);}
+  .face.right{background:var(--purple);transform:rotateY(90deg) translateZ(50px);}
+  .face.left{background:var(--orange);transform:rotateY(-90deg) translateZ(50px);}
+  .face.top{background:var(--yellow);transform:rotateX(90deg) translateZ(50px);}
+  .face.bottom{background:var(--red);transform:rotateX(-90deg) translateZ(50px);}
+  .ladder-text{font-size:15px;font-weight:bold;text-align:center;max-width:480px;}
+
+  /* observation bars */
+  .bars-row{display:flex;gap:26px;align-items:flex-end;justify-content:center;flex-wrap:wrap;}
+  .bar-wrap{text-align:center;}
+  .bar{height:24px;border-radius:8px;}
+  .bar.b1{width:120px;background:var(--pink);}
+  .bar.b2{width:240px;background:var(--teal);}
+
+  input[type=range]{width:240px;accent-color:var(--purple);}
+
+  /* quiz */
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;
+    font-size:14px;font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Geometry">⬅️</button>
+  </a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📏 📍 ➡️</div>
+    <h1><span class="highlight">Lines &amp; Relationships</span></h1>
+    <p class="subtitle">Points, lines, rays, and how lines get along with each other!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">📐<img src="../shared/images/mascot.png" alt="" onerror="this.remove()"></div>
+    <p>Hi! I'm Ray the Ruler 👋 Let's explore the tiniest building blocks of geometry — and along the way,
+      YOU get to drag, click, and play with them. Ready? Let's go!</p>
+  </div>
+
+  <!-- 1. BASIC OBJECTS -->
+  <section class="section">
+    <h2>🔹 Meet the Basic Objects <span class="try-badge">Try me!</span></h2>
+    <p class="lead">Everything in geometry starts from just a dot. Click the buttons below and watch it transform!</p>
+
+    <div class="tabbar" id="obj-tabs">
+      <button class="tab-btn active" data-target="point">🔸 Point</button>
+      <button class="tab-btn" data-target="segment">📏 Line Segment</button>
+      <button class="tab-btn" data-target="ray">➡️ Ray</button>
+      <button class="tab-btn" data-target="line">↔️ Line</button>
+    </div>
+
+    <div class="stage">
+      <svg viewBox="0 0 480 140" width="480">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto-start-reverse">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#a06cd5"/>
+          </marker>
+        </defs>
+
+        <g class="obj-view active" id="view-point">
+          <circle cx="240" cy="70" r="9" fill="#ff6ec7"/>
+          <text x="240" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#1d2b53">P</text>
+        </g>
+
+        <g class="obj-view" id="view-segment">
+          <line x1="120" y1="70" x2="360" y2="70" stroke="#a06cd5" stroke-width="5"/>
+          <circle cx="120" cy="70" r="7" fill="#06d6a0"/>
+          <circle cx="360" cy="70" r="7" fill="#06d6a0"/>
+          <text x="120" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#1d2b53">A</text>
+          <text x="360" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#1d2b53">B</text>
+        </g>
+
+        <g class="obj-view" id="view-ray">
+          <line x1="120" y1="70" x2="440" y2="70" stroke="#a06cd5" stroke-width="5" marker-end="url(#arrow)"/>
+          <circle cx="120" cy="70" r="7" fill="#06d6a0"/>
+          <circle cx="260" cy="70" r="6" fill="#ffd166"/>
+          <text x="120" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#1d2b53">A</text>
+          <text x="260" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#1d2b53">B</text>
+        </g>
+
+        <g class="obj-view" id="view-line">
+          <line x1="10" y1="70" x2="470" y2="70" stroke="#a06cd5" stroke-width="5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+          <circle cx="170" cy="70" r="6" fill="#06d6a0"/>
+          <circle cx="310" cy="70" r="6" fill="#06d6a0"/>
+          <text x="170" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#1d2b53">A</text>
+          <text x="310" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#1d2b53">B</text>
+        </g>
+      </svg>
+      <p class="caption" id="obj-caption">A <b>Point</b> just shows a spot — like where treasure is buried on a map! It has no length, no width. We just call it <b>P</b>.</p>
+    </div>
+  </section>
+
+  <!-- 2. COLLINEAR -->
+  <section class="section">
+    <h2>🎯 Are They In a Row? (Collinear Points) <span class="try-badge">Drag D!</span></h2>
+    <p class="lead">Points that sit on the very same straight line are called <b>collinear points</b>.
+      A, B and C below already live on the same line. Can you drag point <b>D</b> onto the line too?</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 480 220" width="480" id="collinear-svg">
+        <line x1="30" y1="150" x2="450" y2="150" stroke="#cbd5e1" stroke-width="4"/>
+        <circle cx="70" cy="150" r="8" fill="#06d6a0"/><text x="70" y="130" text-anchor="middle" font-size="16" font-weight="bold">A</text>
+        <circle cx="240" cy="150" r="8" fill="#06d6a0"/><text x="240" y="130" text-anchor="middle" font-size="16" font-weight="bold">B</text>
+        <circle cx="410" cy="150" r="8" fill="#06d6a0"/><text x="410" y="130" text-anchor="middle" font-size="16" font-weight="bold">C</text>
+
+        <g id="pointD" style="cursor:grab;">
+          <circle cx="240" cy="60" r="14" fill="#ff9e45" stroke="#c0692a" stroke-width="2"/>
+          <text x="240" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1d2b53">D</text>
+        </g>
+      </svg>
+      <div class="msg-box" id="collinear-msg">👆 Drag the orange point D onto the grey line!</div>
+    </div>
+
+    <div class="info-box">📌 <b>Fun fact:</b> Any two points are always collinear (you can always draw a line through
+      just two dots) — the fun starts at 3 or more points!</div>
+  </section>
+
+  <!-- 2b CONCURRENT -->
+  <section class="section">
+    <h2>☂️ All Roads Lead to One Point (Concurrent Lines) <span class="try-badge">Try me!</span></h2>
+    <p class="lead">When 3 or more lines all pass through the <b>same</b> point, we call them <b>concurrent lines</b>,
+      and that shared point is the <b>point of concurrence</b>. Just like the spokes of an umbrella! Click below to add lines.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 400 300" width="360" id="concurrent-svg">
+        <circle cx="200" cy="150" r="7" fill="#1d2b53"/>
+        <text x="200" y="175" text-anchor="middle" font-size="15" font-weight="bold">O</text>
+        <g id="concurrent-lines"></g>
+      </svg>
+      <div class="msg-box good" id="concurrent-msg">0 concurrent lines through O so far...</div>
+      <div class="btnrow">
+        <button class="action" id="add-line-btn">➕ Add a Line</button>
+        <button class="action secondary" id="reset-lines-btn">🔄 Reset</button>
+      </div>
+    </div>
+
+    <div class="realworld">
+      <div class="rw-frame">☂️<img src="images/umbrella.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> Open umbrella spokes, bicycle wheel spokes, and the lines on a spider's web all meet
+        at one concurrent point!</p>
+    </div>
+  </section>
+
+  <!-- 3. RELATIONSHIPS -->
+  <section class="section">
+    <h2>🤝 How Do Two Lines Get Along? <span class="try-badge">Try me!</span></h2>
+    <p class="lead">Two lines on the same flat surface can behave in 3 different ways. Click each button to see (and hear about) how!</p>
+
+    <div class="tabbar" id="rel-tabs">
+      <button class="tab-btn active" data-target="intersecting">✂️ Intersecting</button>
+      <button class="tab-btn" data-target="parallel">🛤️ Parallel</button>
+      <button class="tab-btn" data-target="perpendicular">➕ Perpendicular</button>
+    </div>
+
+    <div class="stage">
+      <svg viewBox="0 0 400 220" width="360">
+        <g class="rel-view active" id="rel-intersecting">
+          <line x1="40" y1="60" x2="360" y2="180" stroke="#ff6ec7" stroke-width="5"/>
+          <line x1="40" y1="180" x2="360" y2="60" stroke="#4cc9f0" stroke-width="5"/>
+          <circle cx="200" cy="120" r="7" fill="#1d2b53"/>
+          <text x="200" y="105" text-anchor="middle" font-size="14" font-weight="bold">P</text>
+        </g>
+        <g class="rel-view" id="rel-parallel" style="opacity:0;">
+          <line x1="40" y1="70" x2="360" y2="70" stroke="#ff6ec7" stroke-width="5" marker-end="url(#arrow)"/>
+          <line x1="40" y1="150" x2="360" y2="150" stroke="#4cc9f0" stroke-width="5" marker-end="url(#arrow)"/>
+          <line x1="90" y1="70" x2="90" y2="150" stroke="#a06cd5" stroke-width="2" stroke-dasharray="4 4"/>
+          <line x1="260" y1="70" x2="260" y2="150" stroke="#a06cd5" stroke-width="2" stroke-dasharray="4 4"/>
+          <text x="65" y="115" text-anchor="middle" font-size="12" fill="#a06cd5">equal gap</text>
+        </g>
+        <g class="rel-view" id="rel-perpendicular" style="opacity:0;">
+          <line x1="200" y1="30" x2="200" y2="190" stroke="#ff6ec7" stroke-width="5"/>
+          <line x1="60" y1="110" x2="340" y2="110" stroke="#4cc9f0" stroke-width="5"/>
+          <rect x="200" y="90" width="20" height="20" fill="none" stroke="#1d2b53" stroke-width="2"/>
+          <text x="235" y="85" font-size="13" font-weight="bold">90°</text>
+        </g>
+      </svg>
+      <p class="caption" id="rel-caption">Two lines that <b>cross each other</b> at a point are called
+        <b>intersecting lines</b>. That crossing spot is called the point of intersection!</p>
+    </div>
+
+    <div class="realworld" id="rel-realworld">
+      <div class="rw-frame" id="rel-rw-frame">✂️</div>
+      <p id="rel-rw-text"><b>Real life:</b> Scissors, a big letter "X", and two roads crossing at a junction!</p>
+    </div>
+  </section>
+
+  <!-- 4. MEASURING -->
+  <section class="section">
+    <h2>📏 Measuring Line Segments <span class="try-badge">Try me!</span></h2>
+    <p class="lead">A line segment has a real, measurable length. Here are 3 ways to compare or measure them.</p>
+
+    <div class="tabbar" id="measure-tabs">
+      <button class="tab-btn active" data-target="observation">👀 Observation</button>
+      <button class="tab-btn" data-target="tracing">📄 Tracing</button>
+      <button class="tab-btn" data-target="ruler">📐 Ruler &amp; Divider</button>
+    </div>
+
+    <div class="stage">
+      <div class="measure-panel" id="panel-observation">
+        <div class="bars-row">
+          <div class="bar-wrap"><div class="bar b1"></div><p>Bar 1</p></div>
+          <div class="bar-wrap"><div class="bar b2"></div><p>Bar 2</p></div>
+        </div>
+        <p class="caption">Just by <b>looking</b>, Bar 2 is clearly longer! This is the fastest way to compare —
+          but only works when the difference is obvious.</p>
+      </div>
+
+      <div class="measure-panel" id="panel-tracing" style="display:none;">
+        <svg viewBox="0 0 380 170" width="360">
+          <text x="40" y="35" text-anchor="middle" font-size="13" font-weight="bold">A</text>
+          <text x="260" y="35" text-anchor="middle" font-size="13" font-weight="bold">B</text>
+          <line x1="40" y1="55" x2="260" y2="55" stroke="#4cc9f0" stroke-width="5"/>
+
+          <text x="100" y="155" text-anchor="middle" font-size="13" font-weight="bold">C</text>
+          <text x="220" y="155" text-anchor="middle" font-size="13" font-weight="bold">D</text>
+          <line x1="100" y1="135" x2="220" y2="135" stroke="#a06cd5" stroke-width="5"/>
+
+          <g id="tracing-copy">
+            <line x1="100" y1="135" x2="220" y2="135" stroke="#ff6ec7" stroke-width="5" stroke-dasharray="8 4"/>
+            <circle cx="100" cy="135" r="5" fill="#ff6ec7"/>
+            <circle cx="220" cy="135" r="5" fill="#ff6ec7"/>
+          </g>
+        </svg>
+        <div class="btnrow">
+          <button class="action" id="trace-btn">📄 Trace CD, then lay it on AB</button>
+          <button class="action secondary" id="trace-reset-btn">🔄 Reset</button>
+        </div>
+        <p class="caption" id="tracing-caption">First trace segment <b>CD</b> onto see-through paper. Then click the
+          button to slide it up so point <b>C</b> lands exactly on point <b>A</b> — where does <b>D</b> land?</p>
+      </div>
+
+      <div class="measure-panel" id="panel-ruler" style="display:none;">
+        <svg viewBox="0 0 400 140" width="380">
+          <text id="ruler-label-a" x="30" y="28" text-anchor="middle" font-size="14" font-weight="bold">A</text>
+          <text id="ruler-label-b" x="120" y="28" text-anchor="middle" font-size="14" font-weight="bold">B</text>
+          <line x1="30" y1="50" x2="30" y2="50" id="ruler-seg" stroke="#ff6ec7" stroke-width="6"/>
+          <circle cx="30" cy="50" r="8" fill="#06d6a0"/>
+          <circle cx="30" cy="50" r="10" fill="#ffd166" stroke="#c98a00" stroke-width="2" style="cursor:grab;" id="ruler-handle"/>
+          <g id="ruler-ticks"></g>
+          <line x1="30" y1="100" x2="390" y2="100" stroke="#1d2b53" stroke-width="3"/>
+        </svg>
+        <p class="caption" id="ruler-caption">Drag the yellow handle (point B) to stretch segment AB, then read its length on the ruler below!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DIMENSION LADDER -->
+  <section class="section">
+    <h2>🪜 The Dimension Ladder <span class="try-badge">Try me!</span></h2>
+    <p class="lead">Point, Line, Plane and Solid are all connected — each one adds a new direction! Click a step to explore.</p>
+
+    <div class="ladder-steps" id="ladder-steps">
+      <button class="ladder-step active" data-step="0">0D Point</button>
+      <button class="ladder-step" data-step="1">1D Line</button>
+      <button class="ladder-step" data-step="2">2D Plane</button>
+      <button class="ladder-step" data-step="3">3D Solid</button>
+    </div>
+
+    <div class="ladder-display" id="ladder-display">
+      <div class="dot0d"></div>
+      <p class="ladder-text">A <b>Point (0D)</b> — no length, no width, no height. Just a single location, like a pin on a map!</p>
+    </div>
+  </section>
+
+  <!-- 6. SPECIAL LINES -->
+  <section class="section">
+    <h2>✨ Special Lines: Perpendicular Bisector <span class="try-badge">Drag P!</span></h2>
+    <p class="lead">A <b>perpendicular bisector</b> is a super-fair line: it cuts a segment exactly in half (bisects it)
+      AND crosses it at a perfect 90°. Drag point P up and down — watch what stays true!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 400 260" width="380" id="bisector-svg">
+        <line x1="60" y1="180" x2="340" y2="180" stroke="#4cc9f0" stroke-width="5"/>
+        <circle cx="60" cy="180" r="7" fill="#1d2b53"/><text x="60" y="205" text-anchor="middle" font-size="14" font-weight="bold">A</text>
+        <circle cx="340" cy="180" r="7" fill="#1d2b53"/><text x="340" y="205" text-anchor="middle" font-size="14" font-weight="bold">B</text>
+        <circle cx="200" cy="180" r="5" fill="#06d6a0"/><text x="200" y="205" text-anchor="middle" font-size="13" font-weight="bold">M</text>
+        <line x1="200" y1="40" x2="200" y2="230" stroke="#a06cd5" stroke-width="3" stroke-dasharray="6 5"/>
+        <rect x="200" y="160" width="16" height="16" fill="none" stroke="#1d2b53" stroke-width="2"/>
+
+        <line id="line-PA" x1="200" y1="90" x2="60" y2="180" stroke="#ff6ec7" stroke-width="2" stroke-dasharray="4 4"/>
+        <line id="line-PB" x1="200" y1="90" x2="340" y2="180" stroke="#ff9e45" stroke-width="2" stroke-dasharray="4 4"/>
+        <g id="pointP" style="cursor:grab;">
+          <circle cx="200" cy="90" r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/>
+          <text x="200" y="70" text-anchor="middle" font-size="15" font-weight="bold">P</text>
+        </g>
+      </svg>
+      <p class="caption" id="bisector-caption">Drag P to see PA and PB update!</p>
+    </div>
+
+    <div class="info-box orange">🔮 <b>Coming soon:</b> an <b>angle bisector</b> is a similar idea, but instead of
+      cutting a straight segment in half, it cuts an <b>angle</b> exactly in half! You'll meet it in the Angles chapter.</div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 5</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- helper ---------- */
+function svgPoint(svg, evt){
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+function makeDraggable(svg, handle, onMove){
+  let dragging = false;
+  handle.addEventListener('pointerdown', e=>{
+    dragging = true; handle.setPointerCapture(e.pointerId); handle.style.cursor='grabbing';
+  });
+  handle.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    onMove(svgPoint(svg, e));
+  });
+  ['pointerup','pointercancel'].forEach(ev=>handle.addEventListener(ev, e=>{
+    dragging = false; handle.style.cursor='grab';
+  }));
+}
+
+/* ---------- 1. Basic objects tabs ---------- */
+const objCaptions = {
+  point: "A <b>Point</b> just shows a spot — like where treasure is buried on a map! It has no length, no width. We just call it <b>P</b>.",
+  segment: "A <b>Line Segment</b> (written ĀB, a bar over AB) has two fixed endpoints, A and B. It has a definite length you can measure!",
+  ray: "A <b>Ray</b> (written AB with an arrow) starts at A, passes through B, and keeps going forever in that one direction — like a flashlight beam!",
+  line: "A <b>Line</b> (written AB with a double arrow) has no endpoints at all — it stretches forever in BOTH directions!"
+};
+document.getElementById('obj-tabs').addEventListener('click', e=>{
+  const btn = e.target.closest('.tab-btn'); if(!btn) return;
+  document.querySelectorAll('#obj-tabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.obj-view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+btn.dataset.target).classList.add('active');
+  document.getElementById('obj-caption').innerHTML = objCaptions[btn.dataset.target];
+});
+
+/* ---------- 2. Collinear drag ---------- */
+(function(){
+  const svg = document.getElementById('collinear-svg');
+  const pointD = document.getElementById('pointD');
+  const msg = document.getElementById('collinear-msg');
+  makeDraggable(svg, pointD, p=>{
+    let x = Math.max(20, Math.min(460, p.x));
+    let y = Math.max(20, Math.min(210, p.y));
+    const onLine = Math.abs(y-150) <= 12;
+    if(onLine) y = 150;
+    pointD.querySelector('circle').setAttribute('cx', x);
+    pointD.querySelector('circle').setAttribute('cy', y);
+    pointD.querySelector('text').setAttribute('x', x);
+    pointD.querySelector('text').setAttribute('y', y-19);
+    if(onLine){
+      msg.textContent = "🎉 Yes! D is now collinear with A, B and C!";
+      msg.className = "msg-box good";
+    } else {
+      msg.textContent = "Keep going... drag D onto the grey line!";
+      msg.className = "msg-box";
+    }
+  });
+})();
+
+/* ---------- 2b. Concurrent lines ---------- */
+(function(){
+  const g = document.getElementById('concurrent-lines');
+  const msg = document.getElementById('concurrent-msg');
+  const colors = ['#ff6ec7','#4cc9f0','#06d6a0','#ffd166','#ff9e45','#ef476f','#a06cd5','#118ab2'];
+  let count = 0;
+  document.getElementById('add-line-btn').addEventListener('click', ()=>{
+    if(count >= 8) return;
+    const angle = (count*47 + 20) * Math.PI/180;
+    const x2 = 200 + 160*Math.cos(angle);
+    const y2 = 150 + 160*Math.sin(angle);
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',200); line.setAttribute('y1',150);
+    line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+    line.setAttribute('stroke', colors[count % colors.length]);
+    line.setAttribute('stroke-width', 4);
+    g.appendChild(line);
+    count++;
+    msg.textContent = count < 3
+      ? count + " line(s) through O so far — add at least 3 to call them concurrent!"
+      : "🎉 " + count + " concurrent lines, all meeting at point O!";
+  });
+  document.getElementById('reset-lines-btn').addEventListener('click', ()=>{
+    g.innerHTML = ''; count = 0;
+    msg.textContent = "0 concurrent lines through O so far...";
+  });
+})();
+
+/* ---------- 3. Relationships tabs ---------- */
+const relCaptions = {
+  intersecting: "Two lines that <b>cross each other</b> at one point are called <b>intersecting lines</b>. That crossing spot is the point of intersection!",
+  parallel: "Two lines that <b>never meet</b>, keeping the exact same distance apart forever, are called <b>parallel lines</b>.",
+  perpendicular: "Two lines that cross at an exact <b>90° angle</b> (a perfect corner) are called <b>perpendicular lines</b>."
+};
+const relRealworld = {
+  intersecting: {emoji:"✂️", img:"images/scissors.png", text:"<b>Real life:</b> Scissors, a big letter \"X\", and two roads crossing at a junction!"},
+  parallel: {emoji:"🛤️", img:"images/railway.png", text:"<b>Real life:</b> Railway tracks, the two edges of a ruler, and notebook lines!"},
+  perpendicular: {emoji:"➕", img:"images/crossroads.png", text:"<b>Real life:</b> A plus sign, a ladder standing straight against a wall, and window grids!"}
+};
+document.getElementById('rel-tabs').addEventListener('click', e=>{
+  const btn = e.target.closest('.tab-btn'); if(!btn) return;
+  document.querySelectorAll('#rel-tabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.rel-view').forEach(v=>v.style.opacity=0);
+  document.getElementById('rel-'+btn.dataset.target).style.opacity=1;
+  document.getElementById('rel-caption').innerHTML = relCaptions[btn.dataset.target];
+  const rw = relRealworld[btn.dataset.target];
+  document.getElementById('rel-rw-frame').innerHTML = rw.emoji + '<img src="'+rw.img+'" alt="" onerror="this.remove()">';
+  document.getElementById('rel-rw-text').innerHTML = rw.text;
+});
+
+/* ---------- 4. Measuring tabs ---------- */
+document.getElementById('measure-tabs').addEventListener('click', e=>{
+  const btn = e.target.closest('.tab-btn'); if(!btn) return;
+  document.querySelectorAll('#measure-tabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['observation','tracing','ruler'].forEach(name=>{
+    document.getElementById('panel-'+name).style.display = (name===btn.dataset.target) ? 'flex' : 'none';
+  });
+});
+document.querySelectorAll('.measure-panel').forEach(p=>p.style.display = p.id==='panel-observation' ? 'flex':'none');
+document.querySelectorAll('.measure-panel').forEach(p=>{p.style.flexDirection='column';p.style.alignItems='center';p.style.gap='10px';});
+
+/* tracing: click to slide the traced copy of CD so C lands on A, then compare D to B */
+(function(){
+  const copy = document.getElementById('tracing-copy');
+  const caption = document.getElementById('tracing-caption');
+  const traceBtn = document.getElementById('trace-btn');
+  const resetBtn = document.getElementById('trace-reset-btn');
+  const fromX=100, fromY=135, toX=40, toY=55; // C's start vs A's position
+  const dx = toX-fromX, dy = toY-fromY; // -60, -80
+  const dLandsAt = 220+dx; // where D ends up once C sits on A
+  let aligned = false;
+
+  function animate(toDx, toDy, done){
+    const startTime = performance.now(), duration = 650;
+    const fromDx = aligned ? dx : 0, fromDy = aligned ? dy : 0;
+    function step(t){
+      const p = Math.min(1, (t-startTime)/duration);
+      const e = p<0.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2;
+      const x = fromDx + (toDx-fromDx)*e, y = fromDy + (toDy-fromDy)*e;
+      copy.setAttribute('transform', 'translate('+x+','+y+')');
+      if(p<1) requestAnimationFrame(step); else done && done();
+    }
+    requestAnimationFrame(step);
+  }
+
+  traceBtn.addEventListener('click', ()=>{
+    if(aligned) return;
+    traceBtn.disabled = true;
+    animate(dx, dy, ()=>{
+      aligned = true; traceBtn.disabled = false;
+      caption.innerHTML = "C now sits exactly on A — and D lands at "+dLandsAt+", well <b>short of B (260)</b>. "
+        +"So <b>CD is shorter than AB</b>! (If D had landed exactly on B, they'd be equal. Past B would mean CD is longer.)";
+    });
+  });
+  resetBtn.addEventListener('click', ()=>{
+    if(!aligned){ animate(0,0); return; }
+    animate(0, 0, ()=>{
+      aligned = false;
+      caption.innerHTML = "First trace segment <b>CD</b> onto see-through paper. Then click the button to slide it up "
+        +"so point <b>C</b> lands exactly on point <b>A</b> — where does <b>D</b> land?";
+    });
+  });
+})();
+
+/* ruler drag */
+(function(){
+  const svg = document.querySelector('#panel-ruler svg');
+  const handle = document.getElementById('ruler-handle');
+  const seg = document.getElementById('ruler-seg');
+  const labelB = document.getElementById('ruler-label-b');
+  const caption = document.getElementById('ruler-caption');
+  const ticksG = document.getElementById('ruler-ticks');
+  const originX = 30, pxPerCm = 30;
+  for(let cm=0; cm<=12; cm++){
+    const x = originX + cm*pxPerCm;
+    const tick = document.createElementNS('http://www.w3.org/2000/svg','line');
+    tick.setAttribute('x1',x); tick.setAttribute('x2',x);
+    tick.setAttribute('y1',95); tick.setAttribute('y2', cm%5===0 ? 108 : 102);
+    tick.setAttribute('stroke','#1d2b53'); tick.setAttribute('stroke-width', cm%5===0?2:1);
+    ticksG.appendChild(tick);
+    if(cm%5===0){
+      const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',x); t.setAttribute('y',120); t.setAttribute('font-size','11');
+      t.setAttribute('text-anchor','middle'); t.textContent = cm;
+      ticksG.appendChild(t);
+    }
+  }
+  function setLength(cm){
+    const x = originX + cm*pxPerCm;
+    handle.setAttribute('cx', x); handle.setAttribute('cy', 50);
+    seg.setAttribute('x2', x); seg.setAttribute('y2', 50);
+    labelB.setAttribute('x', x);
+    caption.innerHTML = "Segment AB measures <b>"+cm+" cm</b> on the ruler!";
+  }
+  makeDraggable(svg, handle, p=>{
+    let x = Math.max(originX+15, Math.min(390, p.x));
+    const cm = Math.round(((x-originX)/pxPerCm)*2)/2;
+    setLength(cm);
+  });
+  setLength(3);
+})();
+
+/* ---------- 5. Dimension ladder ---------- */
+const ladderContent = {
+  0: '<div class="dot0d"></div><p class="ladder-text">A <b>Point (0D)</b> — no length, no width, no height. Just a single location, like a pin on a map!</p>',
+  1: '<div class="line1d"></div><p class="ladder-text">A <b>Line (1D)</b> — now we have <b>length</b>! But still no width — it\'s infinitely thin.</p>',
+  2: '<div class="plane2d"></div><p class="ladder-text">A <b>Plane (2D)</b> — length AND width! Like an endless flat sheet of paper stretching in every direction.</p>',
+  3: '<div class="cube-wrap"><div class="cube"><div class="face front">F</div><div class="face back">B</div><div class="face right">R</div><div class="face left">L</div><div class="face top">T</div><div class="face bottom">Bo</div></div></div><p class="ladder-text">A <b>Solid (3D)</b> — length, width, AND height! Now it takes up real space — you could hold it.</p>'
+};
+document.getElementById('ladder-steps').addEventListener('click', e=>{
+  const btn = e.target.closest('.ladder-step'); if(!btn) return;
+  document.querySelectorAll('.ladder-step').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ladder-display').innerHTML = ladderContent[btn.dataset.step];
+});
+
+/* ---------- 6. Perpendicular bisector drag ---------- */
+(function(){
+  const svg = document.getElementById('bisector-svg');
+  const pointP = document.getElementById('pointP');
+  const lineA = document.getElementById('line-PA');
+  const lineB = document.getElementById('line-PB');
+  const caption = document.getElementById('bisector-caption');
+  const A = {x:60,y:180}, B = {x:340,y:180};
+  const x = 200;
+  function updateP(y){
+    pointP.querySelector('circle').setAttribute('cy', y);
+    pointP.querySelector('text').setAttribute('y', y-20);
+    lineA.setAttribute('x1',x); lineA.setAttribute('y1',y);
+    lineB.setAttribute('x1',x); lineB.setAttribute('y1',y);
+    const pa = Math.hypot(x-A.x, y-A.y).toFixed(1);
+    const pb = Math.hypot(x-B.x, y-B.y).toFixed(1);
+    caption.innerHTML = "PA = "+pa+" &nbsp;&nbsp; PB = "+pb+" &nbsp; — always equal! 🎉";
+  }
+  updateP(90);
+  makeDraggable(svg, pointP, p=>{
+    const y = Math.max(45, Math.min(235, p.y));
+    updateP(y);
+  });
+})();
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"What do we call a part of a line with two fixed endpoints?", opts:["Ray","Line Segment","Plane","Point"], answer:1,
+   explain:"A line segment has two endpoints and a definite, measurable length."},
+  {q:"Points that all lie on the very same straight line are called...?", opts:["Concurrent points","Parallel points","Collinear points","Perpendicular points"], answer:2,
+   explain:"Collinear = 'co' (together) + 'linear' (on a line) — points together on one line!"},
+  {q:"Two lines that cross at exactly 90° are called...?", opts:["Parallel lines","Intersecting lines","Perpendicular lines","Concurrent lines"], answer:2,
+   explain:"Perpendicular lines meet at a perfect right angle (90°)."},
+  {q:"Many lines passing through the exact same point are called...?", opts:["Concurrent lines","Collinear lines","Parallel lines","Segments"], answer:0,
+   explain:"Concurrent lines all share one common point, called the point of concurrence."},
+  {q:"Which of these goes on forever in only ONE direction?", opts:["Line","Line Segment","Ray","Plane"], answer:2,
+   explain:"A ray starts at a fixed point and shoots off forever in just one direction, like a flashlight beam."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = quizData[qIndex];
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">
+      ${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}
+    </div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){
+        btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length;
+      } else {
+        btn.classList.add('wrong');
+        optBtns[item.answer].classList.add('correct');
+      }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're a geometry star! 🌟"
+          : score>=total*0.6 ? "Great job! You really know your lines! 🎉"
+          : "Nice try! Scroll up and explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>
+  `;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex = 0; score = 0; scoreBadge.textContent = "Score: 0 / "+quizData.length; renderQuestion();
+  });
+}
+renderQuestion();
+</script>
+</body>
+</html>

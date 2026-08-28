@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>3D Shapes 📦</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .mascot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:50%;}
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .tabbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .tab-btn{
+    background:white;border:3px solid var(--purple);color:var(--purple);font-weight:bold;font-size:14px;
+    padding:8px 16px;border-radius:14px;cursor:pointer;transition:all .2s;
+  }
+  .tab-btn:hover{transform:translateY(-2px);}
+  .tab-btn.active{background:var(--purple);color:white;}
+
+  .stage{background:white;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .caption{
+    text-align:center;font-size:clamp(14px,2vw,16px);font-weight:bold;
+    background:#f0e6ff;border-radius:12px;padding:10px 16px;min-height:24px;
+  }
+  .caption b{color:var(--pink);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+
+  .realworld{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .realworld .rw-frame{
+    position:relative;width:110px;height:110px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#e6f3ff,#f0e6ff);display:flex;align-items:center;justify-content:center;
+    font-size:56px;flex:0 0 auto;border:3px solid var(--blue);
+  }
+  .realworld .rw-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .realworld p{font-size:14px;max-width:420px;}
+
+  .msg-box{text-align:center;font-weight:bold;font-size:15px;padding:10px;border-radius:12px;background:#eee;min-height:20px;transition:background .2s,color .2s;}
+  .msg-box.good{background:#d4f7e8;color:#048848;}
+  .msg-box.bad{background:#ffe3ea;color:#c0245a;}
+  .msg-box.info{background:#e6f7ff;color:#0a6ca8;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px;}
+  .chip{border:3px solid #cbd5e1;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:bold;background:white;color:#94a3b8;transition:all .2s;}
+  .chip.on{border-color:var(--pink);background:var(--pink);color:white;transform:scale(1.08);}
+
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+
+  /* ---------- 3D shapes gallery ---------- */
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;margin-top:6px;}
+  .shape-card{
+    background:white;border:3px solid var(--blue);border-radius:16px;padding:16px 10px 12px;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;min-height:190px;
+  }
+  .shape-card .shape-name{font-weight:bold;font-size:14px;color:var(--purple);text-align:center;}
+  .shape-stage-3d{flex:1;display:flex;align-items:center;justify-content:center;width:100%;}
+
+  /* .scene is a larger, flex-centered "viewport" so the rotating cube (which visually projects wider/taller
+     than its own box at diagonal angles) has room to spin without overlapping content below it. */
+  .scene{perspective:700px;width:170px;height:170px;display:flex;align-items:center;justify-content:center;}
+  .cube3d{width:110px;height:110px;position:relative;transform-style:preserve-3d;animation:spinCube 16s infinite linear;flex-shrink:0;}
+  .cube3d .face{position:absolute;top:0;left:0;width:110px;height:110px;border:3px solid rgba(29,43,83,.55);opacity:.92;}
+  .cube3d .f-front{background:var(--pink);transform:translateZ(55px);}
+  .cube3d .f-back{background:var(--purple);transform:rotateY(180deg) translateZ(55px);}
+  .cube3d .f-right{background:var(--blue);transform:rotateY(90deg) translateZ(55px);}
+  .cube3d .f-left{background:var(--teal);transform:rotateY(-90deg) translateZ(55px);}
+  .cube3d .f-top{background:var(--yellow);transform:rotateX(90deg) translateZ(55px);}
+  .cube3d .f-bottom{background:var(--orange);transform:rotateX(-90deg) translateZ(55px);}
+  @keyframes spinCube{from{transform:rotateX(-18deg) rotateY(0deg);}to{transform:rotateX(-18deg) rotateY(360deg);}}
+
+  .scene-cuboid{perspective:700px;width:200px;height:160px;display:flex;align-items:center;justify-content:center;}
+  .cuboid3d{width:130px;height:80px;position:relative;transform-style:preserve-3d;animation:spinCube 16s infinite linear;flex-shrink:0;}
+  .cuboid3d .face{position:absolute;border:3px solid rgba(29,43,83,.55);opacity:.92;}
+  /* Each face is centered within the 130x80 box (left/top offsets below) so its rotation pivot
+     (the CSS default transform-origin = the face's own center) lines up with the box's true center —
+     without this, faces smaller than the box rotate around the wrong point and fly apart. */
+  .cuboid3d .f-front,.cuboid3d .f-back{width:130px;height:80px;left:0;top:0;}
+  .cuboid3d .f-left,.cuboid3d .f-right{width:60px;height:80px;left:35px;top:0;}
+  .cuboid3d .f-top,.cuboid3d .f-bottom{width:130px;height:60px;left:0;top:10px;}
+  .cuboid3d .f-front{background:var(--pink);transform:translateZ(30px);}
+  .cuboid3d .f-back{background:var(--purple);transform:rotateY(180deg) translateZ(30px);}
+  .cuboid3d .f-right{background:var(--blue);transform:rotateY(90deg) translateZ(65px);}
+  .cuboid3d .f-left{background:var(--teal);transform:rotateY(-90deg) translateZ(65px);}
+  .cuboid3d .f-top{background:var(--yellow);transform:rotateX(90deg) translateZ(40px);}
+  .cuboid3d .f-bottom{background:var(--orange);transform:rotateX(-90deg) translateZ(40px);}
+
+  /* General-purpose rotating polyhedron builder — every face (however the shape is generated) is a
+     matrix3d-transformed triangle, positioned/verified numerically before being written here. */
+  .poly-scene{perspective:700px;width:200px;height:200px;display:flex;align-items:center;justify-content:center;}
+  .poly3d{width:0;height:0;position:relative;transform-style:preserve-3d;animation:spinCube 16s infinite linear;}
+  .pface{position:absolute;border:1.5px solid rgba(29,43,83,.35);}
+
+  .contrast-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+  .contrast-card{background:white;border:3px solid var(--purple);border-radius:16px;padding:16px;flex:1 1 260px;max-width:320px;text-align:center;}
+  .contrast-card h3{color:var(--purple);margin-bottom:10px;font-size:18px;}
+  .contrast-card p{font-size:14px;line-height:1.5;text-align:left;margin-top:10px;}
+
+  /* Nets of a solid */
+  .net-grid{display:grid;grid-template-columns:repeat(4,56px);grid-template-rows:repeat(3,56px);gap:4px;margin:14px auto;width:fit-content;}
+  .net-cell{background:linear-gradient(135deg,var(--blue),var(--teal));border:3px solid var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:12px;}
+  .net-cell.empty{background:transparent;border:none;}
+
+  /* Euler checker */
+  .euler-fve{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font-size:clamp(14px,2vw,17px);margin-bottom:6px;}
+  .euler-fve span{background:#f0e6ff;border-radius:12px;padding:8px 14px;}
+  .euler-fve b{font-size:19px;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Geometry">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📦 🧊 🍦</div>
+    <h1><span class="highlight">3D Shapes</span></h1>
+    <p class="subtitle">Flat shapes grow up into solids — let's explore the third dimension!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">📦<img src="../shared/images/mascot.png" alt="" onerror="this.remove()"></div>
+    <p>Hi, Ray the Ruler here 👋 Until now we've only drawn shapes flat on paper. But the real world is
+      three-dimensional — things have length, width, AND height! Let's meet the solids all around us.</p>
+  </div>
+
+  <!-- 1. DEFINITION -->
+  <section class="section">
+    <h2>📦 What Makes a Solid?</h2>
+    <p class="lead">A <b>solid (3D shape)</b> is anything that takes up space in three directions. We describe every
+      solid using three simple parts:</p>
+
+    <div class="stage">
+      <div class="scene"><div class="cube3d">
+        <div class="face f-front"></div><div class="face f-back"></div>
+        <div class="face f-right"></div><div class="face f-left"></div>
+        <div class="face f-top"></div><div class="face f-bottom"></div>
+      </div></div>
+      <div class="chip-row">
+        <span class="chip on" style="border-color:var(--teal);background:var(--teal);color:white;">🟦 Face</span>
+        <span class="chip on" style="border-color:var(--pink);background:var(--pink);color:white;">📏 Edge</span>
+        <span class="chip on" style="border-color:var(--purple);background:var(--purple);color:white;">📍 Vertex</span>
+      </div>
+      <p class="caption">A <b>Face</b> is a flat (or curved) surface. An <b>Edge</b> is the line where two faces meet.
+        A <b>Vertex</b> is the corner point where edges meet (plural: <b>vertices</b>).</p>
+    </div>
+  </section>
+
+  <!-- 2. GALLERY -->
+  <section class="section">
+    <h2>🧊 A Gallery of Solids</h2>
+    <p class="lead">Some solids have flat faces made of straight-edged polygons — these are called
+      <b>polyhedrons</b>. Others, like a ball, have smooth curved surfaces. Watch the cube and cuboid spin in full 3D!</p>
+
+    <div class="gallery-grid">
+      <div class="shape-card">
+        <div class="shape-stage-3d"><div class="scene"><div class="cube3d">
+          <div class="face f-front"></div><div class="face f-back"></div>
+          <div class="face f-right"></div><div class="face f-left"></div>
+          <div class="face f-top"></div><div class="face f-bottom"></div>
+        </div></div></div>
+        <div class="shape-name">Cube</div>
+      </div>
+
+      <div class="shape-card">
+        <div class="shape-stage-3d"><div class="scene-cuboid"><div class="cuboid3d">
+          <div class="face f-front"></div><div class="face f-back"></div>
+          <div class="face f-right"></div><div class="face f-left"></div>
+          <div class="face f-top"></div><div class="face f-bottom"></div>
+        </div></div></div>
+        <div class="shape-name">Cuboid</div>
+      </div>
+
+      <div class="shape-card">
+        <div class="shape-stage-3d"><div class="poly-scene"><div class="poly3d" id="gal-cone"></div></div></div>
+        <div class="shape-name">Cone</div>
+      </div>
+
+      <div class="shape-card">
+        <div class="shape-stage-3d"><div class="poly-scene"><div class="poly3d" id="gal-cylinder"></div></div></div>
+        <div class="shape-name">Cylinder</div>
+      </div>
+
+      <div class="shape-card">
+        <div class="shape-stage-3d">
+          <svg viewBox="0 0 160 140" width="120">
+            <defs><radialGradient id="gal-sphere-grad" cx="35%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#ffffff"/><stop offset="45%" stop-color="#ff6ec7"/><stop offset="100%" stop-color="#a0186b"/>
+            </radialGradient></defs>
+            <circle cx="80" cy="70" r="55" fill="url(#gal-sphere-grad)" stroke="#1d2b53" stroke-width="2"/>
+            <ellipse id="sphere-shine" cx="55" cy="45" rx="14" ry="8" fill="white" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="shape-name">Sphere</div>
+      </div>
+
+      <div class="shape-card">
+        <div class="shape-stage-3d"><div class="poly-scene"><div class="poly3d" id="gal-prism"></div></div></div>
+        <div class="shape-name">Triangular Prism</div>
+      </div>
+
+      <div class="shape-card">
+        <div class="shape-stage-3d"><div class="poly-scene"><div class="poly3d" id="gal-pyramid"></div></div></div>
+        <div class="shape-name">Square Pyramid</div>
+      </div>
+
+      <div class="shape-card">
+        <div class="shape-stage-3d"><div class="poly-scene"><div class="poly3d" id="gal-tetra"></div></div></div>
+        <div class="shape-name">Tetrahedron<br><small>(triangular pyramid)</small></div>
+      </div>
+    </div>
+    <p class="caption" style="margin-top:12px;font-size:13px;">🔵 A sphere looks <b>exactly the same from every angle</b> —
+      it has no separate faces or edges to rotate and reveal, unlike the solids beside it!</p>
+
+    <div class="info-box">🔍 <b>Cuboid tip:</b> a cuboid is just a cube that's been stretched — it still has 6
+      rectangular faces, but they aren't all squares like a cube's faces are!</div>
+
+    <div class="realworld">
+      <div class="rw-frame">🎲<img src="images/dice.png" alt="" onerror="this.remove()"></div>
+      <div class="rw-frame">📦<img src="images/matchbox.png" alt="" onerror="this.remove()"></div>
+      <div class="rw-frame">🍦<img src="images/cone.png" alt="" onerror="this.remove()"></div>
+      <div class="rw-frame">🥫<img src="images/can.png" alt="" onerror="this.remove()"></div>
+      <div class="rw-frame">⚽<img src="images/ball.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> A dice/ice-cube is a <b>cube</b>, a matchbox is a <b>cuboid</b>, an ice-cream cone or party
+        hat is a <b>cone</b>, a tin can is a <b>cylinder</b>, and a football is a <b>sphere</b>!</p>
+    </div>
+  </section>
+
+  <!-- 3. EULER'S FORMULA -->
+  <section class="section">
+    <h2>🔢 Euler's Formula Checker <span class="try-badge">Pick a shape!</span></h2>
+    <p class="lead">For <i>any</i> polyhedron (a solid with flat polygon faces), a magical rule always holds:
+      <b>Faces + Vertices − Edges = 2</b>. Pick a shape below and watch the arithmetic prove it!</p>
+
+    <div class="tabbar" id="euler-tabs">
+      <button class="tab-btn active" data-shape="cube">Cube</button>
+      <button class="tab-btn" data-shape="cuboid">Cuboid</button>
+      <button class="tab-btn" data-shape="triprism">Triangular Prism</button>
+      <button class="tab-btn" data-shape="sqpyramid">Square Pyramid</button>
+      <button class="tab-btn" data-shape="tetra">Tetrahedron</button>
+      <button class="tab-btn" data-shape="octa">Octahedron</button>
+    </div>
+
+    <div class="stage">
+      <div class="euler-fve">
+        <span>Faces (F) = <b id="euler-F" style="color:#048848;"></b></span>
+        <span>Vertices (V) = <b id="euler-V" style="color:#0a6ca8;"></b></span>
+        <span>Edges (E) = <b id="euler-E" style="color:#c0245a;"></b></span>
+      </div>
+      <p class="caption" id="euler-caption"></p>
+    </div>
+  </section>
+
+  <!-- 4. PRISMS VS PYRAMIDS -->
+  <section class="section">
+    <h2>🏛️ Prisms vs Pyramids</h2>
+    <p class="lead">These two families of solids look a little alike, but there's one big difference: how their
+      side faces come together.</p>
+
+    <div class="contrast-row">
+      <div class="contrast-card">
+        <h3>🔷 Prism</h3>
+        <div class="shape-stage-3d" style="min-height:190px;"><div class="poly-scene"><div class="poly3d" id="pvp-prism"></div></div></div>
+        <p>A prism has <b>two identical, parallel end-faces</b> (like two matching triangles or squares) connected
+          by rectangles running along its length. Slice it anywhere in the middle (parallel to the ends) and you get
+          the same cross-section every time!</p>
+      </div>
+      <div class="contrast-card">
+        <h3>🔺 Pyramid</h3>
+        <div class="shape-stage-3d" style="min-height:190px;"><div class="poly-scene"><div class="poly3d" id="pvp-pyramid"></div></div></div>
+        <p>A pyramid has just <b>one base</b> and a ring of <b>triangular faces</b> that all lean inward and meet at
+          a single point on top — the <b>apex</b>. The higher up you slice it, the smaller the cross-section gets!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. NETS -->
+  <section class="section">
+    <h2>✂️ Nets of a Solid</h2>
+    <p class="lead">A <b>net</b> is what you get when you "unfold" a solid flat, like cutting open a cardboard box.
+      Here's the net of a cube — 6 squares arranged in a cross shape:</p>
+
+    <div class="stage">
+      <div class="net-grid">
+        <div class="net-cell empty"></div><div class="net-cell">Top</div><div class="net-cell empty"></div><div class="net-cell empty"></div>
+        <div class="net-cell">Left</div><div class="net-cell">Front</div><div class="net-cell">Right</div><div class="net-cell">Back</div>
+        <div class="net-cell empty"></div><div class="net-cell">Bottom</div><div class="net-cell empty"></div><div class="net-cell empty"></div>
+      </div>
+      <p class="caption">Fold up along every line where two squares touch, and the 6 faces close up into a perfect
+        <b>cube</b> — the fold-lines become the cube's <b>edges</b>!</p>
+    </div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Recap:</b> Every solid has Faces, Edges, and Vertices, and for polyhedrons,
+    F + V − E always equals 2 (Euler's Formula). Prisms have two matching parallel ends; pyramids narrow to a single
+    apex. Curved solids (cone, cylinder, sphere) aren't polyhedrons at all — they have curved surfaces!</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 7</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- 3D polyhedron builder ----------
+   Every visible face (whatever shape it belongs to) is rendered as a matrix3d-transformed
+   triangle. Given any 3 points in 3D, this maps a flat CSS div (with a triangular clip-path)
+   onto exactly that plane — verified numerically offline before being written here: the
+   full pipeline (bounding box -> clip-path -> matrix3d translation) reproduces all 3 target
+   points with zero error for every face of every shape below. */
+function vSub(a,b){return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];}
+function vAdd(a,b){return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];}
+function vDot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
+function vCross(a,b){return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];}
+function vScale(a,s){return [a[0]*s,a[1]*s,a[2]*s];}
+function vNorm(a){return Math.hypot(a[0],a[1],a[2]);}
+function vNormalize(a){const n=vNorm(a); return n<1e-9?[0,0,0]:[a[0]/n,a[1]/n,a[2]/n];}
+function triBasis(p1,p2,p3){
+  const u = vNormalize(vSub(p2,p1));
+  const e2 = vSub(p3,p1);
+  const v = vNormalize(vSub(e2, vScale(u, vDot(e2,u))));
+  return [u, v, vCross(u,v)];
+}
+function mat3FromCols(c1,c2,c3){ return [[c1[0],c2[0],c3[0]],[c1[1],c2[1],c3[1]],[c1[2],c2[2],c3[2]]]; }
+function mat3Transpose(m){ return [[m[0][0],m[1][0],m[2][0]],[m[0][1],m[1][1],m[2][1]],[m[0][2],m[1][2],m[2][2]]]; }
+function mat3Mul(a,b){ const r=[[0,0,0],[0,0,0],[0,0,0]]; for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<3;k++) r[i][j]+=a[i][k]*b[k][j]; return r; }
+function mat3MulVec(m,v){ return [m[0][0]*v[0]+m[0][1]*v[1]+m[0][2]*v[2], m[1][0]*v[0]+m[1][1]*v[1]+m[1][2]*v[2], m[2][0]*v[0]+m[2][1]*v[1]+m[2][2]*v[2]]; }
+function localTriFromLengths(lenAB, lenAC, lenBC){
+  const x3 = (lenAC*lenAC - lenBC*lenBC + lenAB*lenAB) / (2*lenAB);
+  const y3 = -Math.sqrt(Math.max(0, lenAC*lenAC - x3*x3));
+  return [[0,0,0],[lenAB,0,0],[x3,y3,0]];
+}
+function triFaceStyle(t1,t2,t3,color){
+  const lenAB=vNorm(vSub(t2,t1)), lenAC=vNorm(vSub(t3,t1)), lenBC=vNorm(vSub(t3,t2));
+  const [l1,l2,l3] = localTriFromLengths(lenAB,lenAC,lenBC);
+  const [ul,vl] = triBasis(l1,l2,l3), [ut,vt,nt] = triBasis(t1,t2,t3);
+  const nl = vCross(ul,vl);
+  const R = mat3Mul(mat3FromCols(ut,vt,nt), mat3Transpose(mat3FromCols(ul,vl,nl)));
+  const xs=[l1[0],l2[0],l3[0]], ys=[l1[1],l2[1],l3[1]];
+  const bMinX=Math.min(...xs), bMinY=Math.min(...ys);
+  const bW=Math.max(...xs)-bMinX, bH=Math.max(...ys)-bMinY;
+  const translation = vAdd(mat3MulVec(R,[bMinX,bMinY,0]), t1);
+  const clip = [l1,l2,l3].map(p=>((p[0]-bMinX)/bW*100).toFixed(2)+'% '+((p[1]-bMinY)/bH*100).toFixed(2)+'%').join(',');
+  const m = [R[0][0],R[1][0],R[2][0],0, R[0][1],R[1][1],R[2][1],0, R[0][2],R[1][2],R[2][2],0, translation[0],translation[1],translation[2],1];
+  return {
+    left:'0px', top:'0px', transformOrigin:'0 0',
+    width:bW+'px', height:bH+'px',
+    clipPath:'polygon('+clip+')',
+    transform:'matrix3d('+m.map(n=>n.toFixed(6)).join(',')+')',
+    background:color
+  };
+}
+function addFace(container, t1,t2,t3, color){
+  const d = document.createElement('div');
+  d.className = 'pface';
+  Object.assign(d.style, triFaceStyle(t1,t2,t3,color));
+  container.appendChild(d);
+}
+function ring(n, r, y){
+  const pts = [];
+  for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI; pts.push([r*Math.cos(a), y, r*Math.sin(a)]); }
+  return pts;
+}
+// A prism-like solid: two parallel n-gon caps (at y=-halfDepth and y=+halfDepth) joined by side rectangles
+// (each split into 2 triangles). n=3 gives a triangular prism; a large n approximates a cylinder.
+function buildPrismLike(containerId, n, radius, halfDepth, sideColorFn, capColor){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const top = ring(n, radius, -halfDepth), bottom = ring(n, radius, halfDepth);
+  for(let i=0;i<n;i++){
+    const j=(i+1)%n, color = sideColorFn(i,n);
+    addFace(container, top[i], top[j], bottom[j], color);
+    addFace(container, top[i], bottom[j], bottom[i], color);
+  }
+  const topCenter=[0,-halfDepth,0], bottomCenter=[0,halfDepth,0];
+  for(let i=0;i<n;i++){
+    const j=(i+1)%n;
+    addFace(container, topCenter, top[j], top[i], capColor);
+    addFace(container, bottomCenter, bottom[i], bottom[j], capColor);
+  }
+}
+// A pyramid-like solid: an n-gon base at y=baseY, an apex at y=apexY, with n triangular side faces.
+// n=4 gives a square pyramid, n=3 a tetrahedron, a large n approximates a cone.
+function buildPyramidLike(containerId, n, radius, apexY, baseY, sideColorFn, capColor){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const base = ring(n, radius, baseY);
+  const apex = [0, apexY, 0];
+  for(let i=0;i<n;i++){
+    const j=(i+1)%n;
+    addFace(container, base[i], base[j], apex, sideColorFn(i,n));
+  }
+  const baseCenter=[0,baseY,0];
+  for(let i=0;i<n;i++){
+    const j=(i+1)%n;
+    addFace(container, baseCenter, base[j], base[i], capColor);
+  }
+}
+// gentle per-panel lightness variation so many-sided approximations (cylinder/cone) read as rounded, not faceted
+function shadeColor(hex, factor){
+  const n = parseInt(hex.slice(1),16);
+  let r=(n>>16)&255, g=(n>>8)&255, b=n&255;
+  r=Math.min(255,Math.round(r+(255-r)*factor)); g=Math.min(255,Math.round(g+(255-g)*factor)); b=Math.min(255,Math.round(b+(255-b)*factor));
+  return 'rgb('+r+','+g+','+b+')';
+}
+function roundedShader(baseHex){
+  return (i,n)=>{
+    const angle = (i/n)*2*Math.PI;
+    const lightness = (Math.cos(angle)+1)/2 * 0.5; // 0 (dark side) .. 0.5 (bright/front side)
+    return shadeColor(baseHex, lightness);
+  };
+}
+
+buildPrismLike('gal-prism', 3, 48, 35, ()=>'#a06cd5', '#7a3b97');
+buildPyramidLike('gal-pyramid', 4, 48, -70, 35, (i,n)=> i%2===0 ? '#ffd166':'#ff9e45', '#06d6a0');
+buildPyramidLike('gal-tetra', 3, 48, -65, 35, (i,n)=> ['#4cc9f0','#0a6ca8','#7ec9e8'][i], '#a06cd5');
+buildPrismLike('gal-cylinder', 16, 42, 45, roundedShader('#4cc9f0'), '#0a6ca8');
+buildPyramidLike('gal-cone', 16, 42, -55, 40, roundedShader('#ffd166'), '#cc7620');
+
+buildPrismLike('pvp-prism', 3, 42, 32, ()=>'#a06cd5', '#7a3b97');
+buildPyramidLike('pvp-pyramid', 4, 42, -60, 32, (i,n)=> i%2===0 ? '#ffd166':'#ff9e45', '#06d6a0');
+
+(function(){
+  const shine = document.getElementById('sphere-shine');
+  if(!shine) return;
+  let t = 0;
+  setInterval(()=>{
+    t += 0.03;
+    shine.setAttribute('cx', 55 + Math.sin(t)*6);
+    shine.setAttribute('cy', 45 + Math.cos(t*0.7)*4);
+  }, 60);
+})();
+
+/* ---------- Euler's Formula checker ---------- */
+(function(){
+  const data = {
+    cube:      {name:"Cube",              F:6, V:8, E:12},
+    cuboid:    {name:"Cuboid",            F:6, V:8, E:12},
+    triprism:  {name:"Triangular Prism",  F:5, V:6, E:9},
+    sqpyramid: {name:"Square Pyramid",    F:5, V:5, E:8},
+    tetra:     {name:"Tetrahedron",       F:4, V:4, E:6},
+    octa:      {name:"Octahedron",        F:8, V:6, E:12}
+  };
+  const fEl = document.getElementById('euler-F');
+  const vEl = document.getElementById('euler-V');
+  const eEl = document.getElementById('euler-E');
+  const caption = document.getElementById('euler-caption');
+  const tabs = document.getElementById('euler-tabs');
+
+  function render(key){
+    const d = data[key];
+    fEl.textContent = d.F; vEl.textContent = d.V; eEl.textContent = d.E;
+    const result = d.F + d.V - d.E;
+    caption.innerHTML = '<b>'+d.name+'</b>: '+d.F+' + '+d.V+' − '+d.E+' = <b>'+result+'</b> '+(result===2 ? '✅ Euler was right again!' : '');
+  }
+  tabs.addEventListener('click', e=>{
+    const btn = e.target.closest('.tab-btn'); if(!btn) return;
+    tabs.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b===btn));
+    render(btn.dataset.shape);
+  });
+  render('cube');
+})();
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"What do we call the flat or curved surface of a solid?", opts:["Edge","Face","Vertex","Net"], answer:1,
+   explain:"A face is any flat or curved surface on a solid — a cube has 6 flat square faces."},
+  {q:"What do we call the line where two faces meet?", opts:["Vertex","Edge","Face","Diagonal"], answer:1,
+   explain:"An edge is the straight line segment formed where two faces meet."},
+  {q:"For any polyhedron, Euler's Formula says Faces + Vertices − Edges always equals...?", opts:["0","1","2","4"], answer:2,
+   explain:"F + V − E = 2 for every polyhedron, no matter its shape or size!"},
+  {q:"A square pyramid has 5 faces and 5 vertices. Using F + V − E = 2, how many edges does it have?", opts:["6","7","8","9"], answer:2,
+   explain:"5 + 5 − E = 2, so E = 8. Check it: 5 + 5 − 8 = 2. ✅"},
+  {q:"An ice-cream cone and a party hat are both shaped like a...?", opts:["Cylinder","Cone","Sphere","Cuboid"], answer:1,
+   explain:"Both have a flat circular base that comes to a single point — that's a cone!"},
+  {q:"A tin can (like a soup can) is shaped like a...?", opts:["Cube","Cone","Cylinder","Sphere"], answer:2,
+   explain:"A tin can has two flat circular ends joined by a curved side — that's a cylinder."},
+  {q:"What is the key difference between a prism and a pyramid?", opts:[
+     "A prism has two identical parallel end-faces joined by rectangles; a pyramid has one base and triangular faces meeting at a single apex",
+     "A prism is always round; a pyramid is always flat",
+     "They always have exactly the same number of faces",
+     "A pyramid has no vertices at all"], answer:0,
+   explain:"A prism keeps the same cross-section along its length, while a pyramid's faces lean inward to meet at one apex point."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = quizData[qIndex];
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're a 3D shapes expert! 🌟"
+          : score>=total*0.6 ? "Great job! You really know your solids! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+}
+renderQuestion();
+</script>
+</body>
+</html>

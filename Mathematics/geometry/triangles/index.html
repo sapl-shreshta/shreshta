@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Triangles 🔺</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .mascot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:50%;}
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .tabbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .tab-btn{
+    background:white;border:3px solid var(--purple);color:var(--purple);font-weight:bold;font-size:14px;
+    padding:8px 16px;border-radius:14px;cursor:pointer;transition:all .2s;
+  }
+  .tab-btn:hover{transform:translateY(-2px);}
+  .tab-btn.active{background:var(--purple);color:white;}
+
+  .stage{background:white;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .caption{
+    text-align:center;font-size:clamp(14px,2vw,16px);font-weight:bold;
+    background:#f0e6ff;border-radius:12px;padding:10px 16px;min-height:24px;
+  }
+  .caption b{color:var(--pink);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+
+  .realworld{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .realworld .rw-frame{
+    position:relative;width:110px;height:110px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#e6f3ff,#f0e6ff);display:flex;align-items:center;justify-content:center;
+    font-size:56px;flex:0 0 auto;border:3px solid var(--blue);
+  }
+  .realworld .rw-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .realworld p{font-size:14px;max-width:420px;}
+
+  .msg-box{text-align:center;font-weight:bold;font-size:15px;padding:10px;border-radius:12px;background:#eee;min-height:20px;transition:background .2s,color .2s;}
+  .msg-box.good{background:#d4f7e8;color:#048848;}
+  .msg-box.bad{background:#ffe3ea;color:#c0245a;}
+  .msg-box.info{background:#e6f7ff;color:#0a6ca8;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px;}
+  .chip{border:3px solid #cbd5e1;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:bold;background:white;color:#94a3b8;transition:all .2s;}
+  .chip.on{border-color:var(--pink);background:var(--pink);color:white;transform:scale(1.08);}
+
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Geometry">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🔺 📐 🔻</div>
+    <h1><span class="highlight">Triangles</span></h1>
+    <p class="subtitle">The simplest shape in geometry — and full of surprises!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">📐<img src="../shared/images/mascot.png" alt="" onerror="this.remove()"></div>
+    <p>Hi, Ray the Ruler here 👋 A triangle is the simplest closed shape there is — just 3 straight sides. Let's drag
+      some corners around and discover what makes triangles so special!</p>
+  </div>
+
+  <!-- 1. DEFINITION -->
+  <section class="section">
+    <h2>🔺 Meet a Triangle <span class="try-badge">Drag C!</span></h2>
+    <p class="lead">A <b>triangle</b> is a polygon made of just <b>3 sides</b>. It's the polygon with the
+      <b>fewest possible sides</b> — you can't close up a shape with only 1 or 2 straight lines!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 300 200" width="300" id="def-svg">
+        <path id="def-tri" fill="#a06cd5" fill-opacity=".15" stroke="#a06cd5" stroke-width="4"/>
+        <text x="35" y="175" font-size="14" font-weight="bold">A</text>
+        <text x="235" y="175" font-size="14" font-weight="bold">B</text>
+        <text id="def-labelC" font-size="14" font-weight="bold"></text>
+        <text id="def-labelAB" font-size="12" fill="#7a3b97"></text>
+        <text id="def-labelBC" font-size="12" fill="#7a3b97"></text>
+        <text id="def-labelCA" font-size="12" fill="#7a3b97"></text>
+        <g id="def-handle" style="cursor:grab;"><circle r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+      </svg>
+      <p class="caption">However you drag point C, this shape always has exactly <b>3 sides</b>, <b>3 vertices</b>,
+        and <b>3 angles</b> — the fewest a closed polygon can have!</p>
+    </div>
+
+    <div class="info-box">🔍 <b>Special case:</b> a triangle has <b>zero diagonals</b>! A diagonal connects two
+      <i>non-adjacent</i> vertices — but in a triangle, every vertex is already directly joined to both of the
+      others by a side. There's no "non-adjacent pair" left to connect. Every other polygon (4+ sides) has at
+      least one diagonal.</p></div>
+
+    <div class="realworld">
+      <div class="rw-frame">🔺<img src="images/pyramid.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> A slice of pizza, a road-work sign, and the Egyptian pyramids are all built from
+        triangles!</p>
+    </div>
+  </section>
+
+  <!-- 2. REGIONS -->
+  <section class="section">
+    <h2>🕵️ Interior, Exterior &amp; Boundary <span class="try-badge">Click anywhere!</span></h2>
+    <p class="lead">Just like an angle, a triangle splits the page into three regions. Click anywhere on the picture
+      below and I'll tell you which region you landed in!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 260" width="320" id="regions-svg" style="cursor:crosshair;">
+        <path id="regions-tri" fill="#06d6a0" fill-opacity=".2" stroke="#06d6a0" stroke-width="4"/>
+        <text x="35" y="235" font-size="14" font-weight="bold">A</text>
+        <text x="275" y="235" font-size="14" font-weight="bold">B</text>
+        <text x="160" y="40" font-size="14" font-weight="bold">C</text>
+        <g id="regions-marker" style="display:none;"><circle r="7" fill="#ef476f" stroke="white" stroke-width="2"/></g>
+      </svg>
+      <div class="msg-box" id="regions-msg">👆 Click anywhere in the box above!</div>
+      <div class="btnrow"><button class="action secondary" id="regions-reset">🔄 Reset</button></div>
+    </div>
+  </section>
+
+  <!-- 3. EXPLORE -->
+  <section class="section">
+    <h2>🔍 Explore a Triangle <span class="try-badge">Drag C!</span></h2>
+    <p class="lead">Drag point C around and switch tabs to explore four big ideas about triangles.</p>
+
+    <div class="tabbar" id="explore-tabs">
+      <button class="tab-btn active" data-tab="classify">🏷️ Classify</button>
+      <button class="tab-btn" data-tab="anglesum">➕ Angle Sum (180°)</button>
+      <button class="tab-btn" data-tab="exterior">📐 Exterior Angle</button>
+      <button class="tab-btn" data-tab="perimeter">📏 Perimeter</button>
+    </div>
+
+    <div class="stage">
+      <svg viewBox="0 0 380 260" width="380" id="explore-svg">
+        <line id="ext-dashed" x1="300" y1="220" x2="350" y2="220" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6 4" style="display:none;"/>
+        <path id="ext-arc" fill="none" stroke="#ef476f" stroke-width="3" style="display:none;"/>
+        <text id="ext-label" font-size="13" font-weight="bold" fill="#c0245a" style="display:none;"></text>
+        <text id="ext-pointD" x="352" y="225" font-size="13" font-weight="bold" style="display:none;">D</text>
+
+        <path id="tri-path" fill="#a06cd5" fill-opacity=".12" stroke="#a06cd5" stroke-width="4"/>
+
+        <path id="arc-A" fill="none" stroke="#06d6a0" stroke-width="3"/>
+        <path id="arc-B" fill="none" stroke="#4cc9f0" stroke-width="3"/>
+        <path id="arc-C" fill="none" stroke="#ff6ec7" stroke-width="3"/>
+        <text id="deg-A" font-size="13" font-weight="bold" fill="#048848"></text>
+        <text id="deg-B" font-size="13" font-weight="bold" fill="#0a6ca8"></text>
+        <text id="deg-C" font-size="13" font-weight="bold" fill="#c0245a"></text>
+
+        <text x="60" y="238" font-size="14" font-weight="bold">A</text>
+        <text x="300" y="238" font-size="14" font-weight="bold">B</text>
+        <text id="tri-labelC" font-size="14" font-weight="bold"></text>
+
+        <text id="side-AB" font-size="12" font-weight="bold" fill="#7a3b97" style="display:none;"></text>
+        <text id="side-BC" font-size="12" font-weight="bold" fill="#7a3b97" style="display:none;"></text>
+        <text id="side-CA" font-size="12" font-weight="bold" fill="#7a3b97" style="display:none;"></text>
+
+        <g id="tri-handle" style="cursor:grab;"><circle r="13" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+      </svg>
+
+      <div id="panel-classify">
+        <div class="chip-row">
+          <span class="chip" id="chip-scalene">Scalene</span>
+          <span class="chip" id="chip-isosceles">Isosceles</span>
+          <span class="chip" id="chip-equilateral">Equilateral</span>
+        </div>
+        <div class="chip-row">
+          <span class="chip" id="chip-acute">Acute</span>
+          <span class="chip" id="chip-right">Right</span>
+          <span class="chip" id="chip-obtuse">Obtuse</span>
+        </div>
+      </div>
+
+      <svg viewBox="0 0 340 90" width="340" id="anglesum-svg" style="display:none;background:#f8f8ff;border-radius:12px;">
+        <line x1="10" y1="70" x2="330" y2="70" stroke="#cbd5e1" stroke-width="3"/>
+        <path id="as-arc1" fill="none" stroke="#06d6a0" stroke-width="4"/>
+        <path id="as-arc2" fill="none" stroke="#4cc9f0" stroke-width="4"/>
+        <path id="as-arc3" fill="none" stroke="#ff6ec7" stroke-width="4"/>
+        <text id="as-t1" font-size="12" font-weight="bold" fill="#048848"></text>
+        <text id="as-t2" font-size="12" font-weight="bold" fill="#0a6ca8"></text>
+        <text id="as-t3" font-size="12" font-weight="bold" fill="#c0245a"></text>
+      </svg>
+
+      <p class="caption" id="explore-caption"></p>
+    </div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Recap:</b> Least sides of any polygon (3) &amp; zero diagonals. Classify by sides
+    (scalene/isosceles/equilateral) or by angles (acute/right/obtuse). The 3 interior angles always sum to 180°.
+    An exterior angle always equals the sum of the two remote interior angles. Perimeter = sum of all 3 sides.</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 7</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+function svgPoint(svg, evt){
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+function makeDraggable(svg, handle, onMove){
+  let dragging = false;
+  handle.addEventListener('pointerdown', e=>{ dragging=true; handle.setPointerCapture(e.pointerId); handle.style.cursor='grabbing'; });
+  handle.addEventListener('pointermove', e=>{ if(dragging) onMove(svgPoint(svg,e)); });
+  ['pointerup','pointercancel'].forEach(ev=>handle.addEventListener(ev, ()=>{ dragging=false; handle.style.cursor='grab'; }));
+}
+function angleFromPoint(vertex, p){
+  const dx = p.x-vertex.x, dy = p.y-vertex.y;
+  return (Math.atan2(-dy,dx)*180/Math.PI + 360) % 360;
+}
+function pointOnCircle(vertex, radius, deg){
+  const rad = deg*Math.PI/180;
+  return { x: vertex.x + radius*Math.cos(rad), y: vertex.y - radius*Math.sin(rad) };
+}
+function arcPathBetween(vertex, radius, fromDeg, toDeg){
+  const start = pointOnCircle(vertex, radius, fromDeg);
+  const end = pointOnCircle(vertex, radius, toDeg);
+  const diff = ((toDeg-fromDeg)+360) % 360;
+  const largeArc = diff>180 ? 1:0;
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 0 ${end.x} ${end.y}`;
+}
+function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+function dist(a,b){ return Math.hypot(a.x-b.x, a.y-b.y); }
+function angleAt(vertex, p1, p2){
+  const v1 = {x:p1.x-vertex.x, y:p1.y-vertex.y}, v2 = {x:p2.x-vertex.x, y:p2.y-vertex.y};
+  const mag1 = Math.hypot(v1.x,v1.y), mag2 = Math.hypot(v2.x,v2.y);
+  let cos = (v1.x*v2.x+v1.y*v2.y)/(mag1*mag2);
+  cos = clamp(cos,-1,1);
+  return Math.acos(cos)*180/Math.PI;
+}
+function distToSegment(p, a, b){
+  const l2 = (b.x-a.x)**2 + (b.y-a.y)**2;
+  if(l2===0) return Math.hypot(p.x-a.x, p.y-a.y);
+  let t = ((p.x-a.x)*(b.x-a.x) + (p.y-a.y)*(b.y-a.y)) / l2;
+  t = clamp(t,0,1);
+  return Math.hypot(p.x-(a.x+t*(b.x-a.x)), p.y-(a.y+t*(b.y-a.y)));
+}
+function pointInTriangle(pt,A,B,C){
+  const sign = (p1,p2,p3)=> (p1.x-p3.x)*(p2.y-p3.y)-(p2.x-p3.x)*(p1.y-p3.y);
+  const d1=sign(pt,A,B), d2=sign(pt,B,C), d3=sign(pt,C,A);
+  const hasNeg = (d1<0)||(d2<0)||(d3<0), hasPos = (d1>0)||(d2>0)||(d3>0);
+  return !(hasNeg && hasPos);
+}
+// interior-angle wedge helper: always sweeps the SHORT way (<=180) between the two direction rays,
+// regardless of the triangle's winding order.
+function wedgeArc(vertex, dirP1, dirP2, r){
+  const d1 = angleFromPoint(vertex,dirP1), d2 = angleFromPoint(vertex,dirP2);
+  const diff = ((d2-d1)+360)%360;
+  return diff<=180 ? arcPathBetween(vertex,r,d1,d2) : arcPathBetween(vertex,r,d2,d1);
+}
+function wedgeMidDeg(vertex, dirP1, dirP2){
+  const d1 = angleFromPoint(vertex,dirP1), d2 = angleFromPoint(vertex,dirP2);
+  const diff = ((d2-d1)+360)%360;
+  return diff<=180 ? (d1+diff/2)%360 : (d2+(360-diff)/2)%360;
+}
+
+/* ---------- 1. Definition widget ---------- */
+(function(){
+  const svg = document.getElementById('def-svg');
+  const tri = document.getElementById('def-tri');
+  const handle = document.getElementById('def-handle');
+  const labelC = document.getElementById('def-labelC');
+  const labelAB = document.getElementById('def-labelAB');
+  const labelBC = document.getElementById('def-labelBC');
+  const labelCA = document.getElementById('def-labelCA');
+  const A = {x:40,y:160}, B = {x:240,y:160};
+  function mid(p1,p2){ return {x:(p1.x+p2.x)/2, y:(p1.y+p2.y)/2}; }
+  function render(C){
+    tri.setAttribute('d', `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} Z`);
+    handle.setAttribute('transform', `translate(${C.x},${C.y})`);
+    labelC.setAttribute('x', C.x-6); labelC.setAttribute('y', C.y-16); labelC.textContent = 'C';
+    const mAB = mid(A,B), mBC = mid(B,C), mCA = mid(C,A);
+    labelAB.setAttribute('x', mAB.x-8); labelAB.setAttribute('y', mAB.y+16); labelAB.textContent = 'AB';
+    labelBC.setAttribute('x', mBC.x+6); labelBC.setAttribute('y', mBC.y); labelBC.textContent = 'BC';
+    labelCA.setAttribute('x', mCA.x-24); labelCA.setAttribute('y', mCA.y); labelCA.textContent = 'CA';
+  }
+  render({x:150,y:40});
+  makeDraggable(svg, handle, p=>render({x:clamp(p.x,20,280), y:clamp(p.y,20,150)}));
+})();
+
+/* ---------- 2. Regions detective ---------- */
+(function(){
+  const svg = document.getElementById('regions-svg');
+  const tri = document.getElementById('regions-tri');
+  const marker = document.getElementById('regions-marker');
+  const msg = document.getElementById('regions-msg');
+  const resetBtn = document.getElementById('regions-reset');
+  const DEFAULT_MSG = "👆 Click anywhere in the box above!";
+  const A = {x:50,y:220}, B = {x:290,y:220}, C = {x:160,y:50};
+  tri.setAttribute('d', `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} Z`);
+
+  svg.addEventListener('click', e=>{
+    const p = svgPoint(svg, e);
+    marker.style.display = 'block';
+    marker.setAttribute('transform', `translate(${p.x},${p.y})`);
+    const onEdge = distToSegment(p,A,B)<9 || distToSegment(p,B,C)<9 || distToSegment(p,C,A)<9;
+    if(onEdge){
+      msg.textContent = "📍 That's the Boundary — right on one of the sides!";
+      msg.className = "msg-box info";
+    } else if(pointInTriangle(p,A,B,C)){
+      msg.textContent = "✅ That's the Interior — inside the triangle!";
+      msg.className = "msg-box good";
+    } else {
+      msg.textContent = "🌍 That's the Exterior — outside the triangle!";
+      msg.className = "msg-box bad";
+    }
+  });
+  resetBtn.addEventListener('click', ()=>{
+    marker.style.display = 'none'; msg.textContent = DEFAULT_MSG; msg.className = "msg-box";
+  });
+})();
+
+/* ---------- 3. Explore a Triangle ---------- */
+(function(){
+  const svg = document.getElementById('explore-svg');
+  const triPath = document.getElementById('tri-path');
+  const handle = document.getElementById('tri-handle');
+  const labelC = document.getElementById('tri-labelC');
+  const arcA = document.getElementById('arc-A'), arcB = document.getElementById('arc-B'), arcC = document.getElementById('arc-C');
+  const degA = document.getElementById('deg-A'), degB = document.getElementById('deg-B'), degC = document.getElementById('deg-C');
+  const sideAB = document.getElementById('side-AB'), sideBC = document.getElementById('side-BC'), sideCA = document.getElementById('side-CA');
+  const extDashed = document.getElementById('ext-dashed'), extArc = document.getElementById('ext-arc'), extLabel = document.getElementById('ext-label'), extD = document.getElementById('ext-pointD');
+  const caption = document.getElementById('explore-caption');
+  const chipScalene = document.getElementById('chip-scalene'), chipIsosceles = document.getElementById('chip-isosceles'), chipEquilateral = document.getElementById('chip-equilateral');
+  const chipAcute = document.getElementById('chip-acute'), chipRight = document.getElementById('chip-right'), chipObtuse = document.getElementById('chip-obtuse');
+  const panelClassify = document.getElementById('panel-classify');
+  const asSvg = document.getElementById('anglesum-svg');
+  const asArc1 = document.getElementById('as-arc1'), asArc2 = document.getElementById('as-arc2'), asArc3 = document.getElementById('as-arc3');
+  const asT1 = document.getElementById('as-t1'), asT2 = document.getElementById('as-t2'), asT3 = document.getElementById('as-t3');
+
+  const A = {x:60,y:220}, B = {x:300,y:220}, D = {x:350,y:220};
+  const UNIT = 20;
+  let currentTab = 'classify';
+
+  function mid(p1,p2){ return {x:(p1.x+p2.x)/2, y:(p1.y+p2.y)/2}; }
+
+  function render(C){
+    triPath.setAttribute('d', `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} Z`);
+    handle.setAttribute('transform', `translate(${C.x},${C.y})`);
+    labelC.setAttribute('x', C.x-6); labelC.setAttribute('y', C.y-18); labelC.textContent = 'C';
+
+    const aA = angleAt(A,B,C), aB = angleAt(B,A,C), aC = angleAt(C,A,B);
+    arcA.setAttribute('d', wedgeArc(A,B,C,30));
+    arcB.setAttribute('d', wedgeArc(B,A,C,30));
+    arcC.setAttribute('d', wedgeArc(C,A,B,26));
+    const lpA = pointOnCircle(A,46,wedgeMidDeg(A,B,C));
+    const lpB = pointOnCircle(B,46,wedgeMidDeg(B,A,C));
+    const lpC = pointOnCircle(C,40,wedgeMidDeg(C,A,B));
+    degA.setAttribute('x',lpA.x-8); degA.setAttribute('y',lpA.y); degA.textContent = Math.round(aA)+'°';
+    degB.setAttribute('x',lpB.x-8); degB.setAttribute('y',lpB.y); degB.textContent = Math.round(aB)+'°';
+    degC.setAttribute('x',lpC.x-8); degC.setAttribute('y',lpC.y); degC.textContent = Math.round(aC)+'°';
+
+    const lenAB = dist(A,B)/UNIT, lenBC = dist(B,C)/UNIT, lenCA = dist(C,A)/UNIT;
+    const mAB = mid(A,B), mBC = mid(B,C), mCA = mid(C,A);
+    sideAB.setAttribute('x',mAB.x-14); sideAB.setAttribute('y',mAB.y+18); sideAB.textContent = lenAB.toFixed(1);
+    sideBC.setAttribute('x',mBC.x+8); sideBC.setAttribute('y',mBC.y); sideBC.textContent = lenBC.toFixed(1);
+    sideCA.setAttribute('x',mCA.x-30); sideCA.setAttribute('y',mCA.y); sideCA.textContent = lenCA.toFixed(1);
+
+    // classification
+    const sTol = 8, aTol = 2;
+    const sides = [lenAB*UNIT, lenBC*UNIT, lenCA*UNIT];
+    const eqCount = (Math.abs(sides[0]-sides[1])<sTol?1:0) + (Math.abs(sides[1]-sides[2])<sTol?1:0) + (Math.abs(sides[0]-sides[2])<sTol?1:0);
+    const sideClass = eqCount>=2 ? 'equilateral' : eqCount===1 ? 'isosceles' : 'scalene';
+    const maxAngle = Math.max(aA,aB,aC);
+    const angleClass = maxAngle>90+aTol ? 'obtuse' : Math.abs(maxAngle-90)<aTol ? 'right' : 'acute';
+    [chipScalene,chipIsosceles,chipEquilateral].forEach(c=>c.classList.remove('on'));
+    [chipAcute,chipRight,chipObtuse].forEach(c=>c.classList.remove('on'));
+    document.getElementById('chip-'+sideClass).classList.add('on');
+    document.getElementById('chip-'+angleClass).classList.add('on');
+
+    // exterior angle at B (extend A->B beyond B to D)
+    const extDeg = angleAt(B,C,D);
+    extArc.setAttribute('d', wedgeArc(B,C,D,44));
+    const lpExt = pointOnCircle(B,60,wedgeMidDeg(B,C,D));
+    extLabel.setAttribute('x',lpExt.x-10); extLabel.setAttribute('y',lpExt.y); extLabel.textContent = Math.round(extDeg)+'°';
+
+    // angle-sum mini diagram: three consecutive wedges from one point along a line
+    const P = {x:170,y:70};
+    asArc1.setAttribute('d', arcPathBetween(P,30,0,aA));
+    asArc2.setAttribute('d', arcPathBetween(P,30,aA,aA+aB));
+    asArc3.setAttribute('d', arcPathBetween(P,30,aA+aB,aA+aB+aC));
+    const p1 = pointOnCircle(P,44,aA/2), p2 = pointOnCircle(P,44,aA+aB/2), p3 = pointOnCircle(P,44,aA+aB+aC/2);
+    asT1.setAttribute('x',p1.x-8); asT1.setAttribute('y',p1.y); asT1.textContent = Math.round(aA)+'°';
+    asT2.setAttribute('x',p2.x-8); asT2.setAttribute('y',p2.y); asT2.textContent = Math.round(aB)+'°';
+    asT3.setAttribute('x',p3.x-8); asT3.setAttribute('y',p3.y); asT3.textContent = Math.round(aC)+'°';
+
+    updateCaption(aA,aB,aC,sideClass,angleClass,extDeg,lenAB,lenBC,lenCA);
+  }
+
+  function updateCaption(aA,aB,aC,sideClass,angleClass,extDeg,lenAB,lenBC,lenCA){
+    const names = {scalene:'Scalene',isosceles:'Isosceles',equilateral:'Equilateral',acute:'Acute',right:'Right',obtuse:'Obtuse'};
+    if(currentTab==='classify'){
+      caption.innerHTML = 'This is a <b>'+names[sideClass]+'</b> and <b>'+names[angleClass]+'</b> triangle!';
+    } else if(currentTab==='anglesum'){
+      caption.innerHTML = '∠A + ∠B + ∠C = '+Math.round(aA)+'° + '+Math.round(aB)+'° + '+Math.round(aC)+'° = <b>180°</b> — always!';
+    } else if(currentTab==='exterior'){
+      caption.innerHTML = 'Exterior ∠CBD = <b>'+Math.round(extDeg)+'°</b> = ∠A ('+Math.round(aA)+'°) + ∠C ('+Math.round(aC)+'°) — the two angles NOT next to it!';
+    } else if(currentTab==='perimeter'){
+      const total = (lenAB+lenBC+lenCA).toFixed(1);
+      caption.innerHTML = 'Perimeter = AB + BC + CA = '+lenAB.toFixed(1)+' + '+lenBC.toFixed(1)+' + '+lenCA.toFixed(1)+' = <b>'+total+' units</b>';
+    }
+  }
+
+  function setTab(tab){
+    currentTab = tab;
+    document.querySelectorAll('#explore-tabs .tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+    panelClassify.style.display = tab==='classify' ? 'block' : 'none';
+    asSvg.style.display = tab==='anglesum' ? 'block' : 'none';
+    const showExt = tab==='exterior';
+    [extDashed,extArc,extLabel,extD].forEach(el=>el.style.display = showExt ? 'block' : 'none');
+    [sideAB,sideBC,sideCA].forEach(el=>el.style.display = (tab==='perimeter') ? 'block' : 'none');
+    render(lastC);
+  }
+
+  let lastC = {x:170,y:80};
+  document.getElementById('explore-tabs').addEventListener('click', e=>{
+    const btn = e.target.closest('.tab-btn'); if(!btn) return;
+    setTab(btn.dataset.tab);
+  });
+  makeDraggable(svg, handle, p=>{
+    lastC = {x:clamp(p.x,20,340), y:clamp(p.y,30,205)};
+    render(lastC);
+  });
+  setTab('classify');
+})();
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"What is the fewest number of sides a polygon can have?", opts:["2","3","4","5"], answer:1,
+   explain:"A triangle (3 sides) is the polygon with the fewest possible sides — you need at least 3 straight lines to close up a shape."},
+  {q:"How many diagonals does a triangle have?", opts:["0","1","2","3"], answer:0,
+   explain:"Every vertex of a triangle is already joined to both other vertices by a side, so there's no non-adjacent pair left to connect."},
+  {q:"A triangle with all three sides of different lengths is called...?", opts:["Equilateral","Isosceles","Scalene","Right"], answer:2,
+   explain:"Scalene triangles have three different side lengths."},
+  {q:"A triangle with one angle greater than 90° is called...?", opts:["Acute","Right","Obtuse","Equilateral"], answer:2,
+   explain:"An obtuse triangle has one angle greater than 90°."},
+  {q:"The three interior angles of any triangle always add up to...?", opts:["90°","180°","270°","360°"], answer:1,
+   explain:"No matter the shape or size of the triangle, its three angles always sum to 180°."},
+  {q:"An exterior angle of a triangle is always equal to...?", opts:["The angle next to it","90° minus the opposite angle","The sum of the two remote (non-adjacent) interior angles","360° minus the perimeter"], answer:2,
+   explain:"An exterior angle always equals the sum of the two interior angles that are NOT next to it."},
+  {q:"The perimeter of a triangle is...?", opts:["The area inside it","The sum of all three side lengths","The largest angle","The number of vertices"], answer:1,
+   explain:"Perimeter is just the total distance around the outside — add up all three sides."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = quizData[qIndex];
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're a triangle expert! 🌟"
+          : score>=total*0.6 ? "Great job! You really know your triangles! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+}
+renderQuestion();
+</script>
+</body>
+</html>
