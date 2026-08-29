@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Constants &amp; Variables 🔡</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+    --green:#06d6a0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:var(--ink);
+    padding:10px;
+    min-height:100vh;
+  }
+  .container{max-width:900px;margin:0 auto;padding-bottom:60px;}
+
+  /* nav */
+  .nav-top{position:fixed;top:14px;display:flex;gap:0;z-index:200;}
+  .nav-back{left:14px;} .nav-home{right:14px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;
+    width:48px;height:48px;font-size:22px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #7a3b97;}
+
+  /* stars tracker */
+  .stars-bar{
+    position:sticky;top:8px;z-index:150;
+    max-width:280px;margin:0 auto 10px auto;
+    background:var(--cream);border:3px solid var(--yellow);
+    border-radius:50px;padding:8px 18px;text-align:center;
+    font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,.1);
+    transition:transform .2s;
+  }
+  .stars-bar.pulse{animation:pulseStar .5s ease;}
+  @keyframes pulseStar{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
+
+  header{text-align:center;margin:70px 0 20px 0;}
+  .emoji{font-size:clamp(50px,12vw,90px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  h1{
+    font-size:clamp(28px,6vw,52px);margin:10px 0;
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{font-size:clamp(15px,2.2vw,20px);color:var(--blue);font-weight:bold;}
+
+  /* quick section nav */
+  .quicknav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 30px 0;}
+  .quicknav a{
+    text-decoration:none;background:white;color:var(--purple);font-weight:bold;
+    font-size:13px;padding:8px 14px;border-radius:20px;border:2px solid var(--purple);
+    transition:.2s;
+  }
+  .quicknav a:hover{background:var(--purple);color:white;}
+
+  .card{
+    background:var(--cream);border-radius:20px;padding:20px 18px;margin-bottom:28px;
+    border:3px solid var(--purple);box-shadow:0 8px 0 rgba(0,0,0,.08);
+    scroll-margin-top:90px;
+  }
+  .card h2{font-size:clamp(20px,4vw,28px);color:var(--pink);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .card p{font-size:15px;line-height:1.6;margin-bottom:10px;}
+  .callout{
+    background:#fff;border-left:8px solid var(--teal);border-radius:10px;
+    padding:12px 16px;margin:14px 0;font-size:15px;font-weight:bold;color:var(--ink);
+  }
+  .callout.purple{border-left-color:var(--purple);}
+  .callout.orange{border-left-color:var(--orange);}
+
+  /* mascots */
+  .mascot-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:14px 0;}
+  .mascot{
+    font-size:56px;flex-shrink:0;
+    filter:drop-shadow(0 4px 4px rgba(0,0,0,.15));
+  }
+  .mascot.spin{animation:spin 3s linear infinite;}
+  @keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+  .mascot.morph{animation:morph 2.2s ease-in-out infinite;}
+  @keyframes morph{0%,100%{transform:scale(1) rotate(0deg);}25%{transform:scale(1.1) rotate(-8deg);}50%{transform:scale(0.95) rotate(6deg);}75%{transform:scale(1.08) rotate(-4deg);}}
+
+  /* constant chips */
+  .chip-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+  .chip{
+    background:white;border:3px solid var(--orange);border-radius:14px;
+    padding:14px 18px;cursor:pointer;font-weight:bold;font-size:16px;
+    text-align:center;min-width:120px;box-shadow:0 5px 0 #d97e2f;
+    transition:transform .15s;user-select:none;
+  }
+  .chip:hover{transform:translateY(-3px);}
+  .chip:active{transform:translateY(3px);box-shadow:0 2px 0 #d97e2f;}
+  .chip.flipped{background:var(--teal);color:white;box-shadow:0 5px 0 #04a37e;border-color:#04a37e;}
+  .chip.flipped.is-variable{background:var(--purple);box-shadow:0 5px 0 #7a3b97;border-color:#7a3b97;}
+  .chip small{display:block;font-weight:normal;font-size:12px;margin-top:6px;}
+
+  /* sliders */
+  .slider-box{
+    background:white;border-radius:16px;padding:16px;margin-top:12px;
+    border:2px dashed var(--blue);text-align:center;
+  }
+  input[type=range]{
+    width:100%;accent-color:var(--purple);height:28px;cursor:pointer;
+  }
+  .big-readout{
+    font-size:clamp(22px,5vw,34px);font-weight:bold;color:var(--purple);
+    margin:10px 0;
+  }
+  .big-readout span{color:var(--red);}
+  .emoji-row{font-size:22px;letter-spacing:2px;min-height:30px;margin-top:8px;}
+
+  /* spot the token game */
+  .expr-block{
+    background:white;border-radius:14px;padding:14px;margin-bottom:14px;
+    border:2px solid #ddd;
+  }
+  .expr-text{font-size:24px;font-weight:bold;margin-bottom:6px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .token-btn{
+    background:var(--yellow);border:none;border-radius:8px;padding:6px 14px;
+    font-size:22px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 #c99a1f;
+    transition:.15s;
+  }
+  .token-btn:hover{transform:translateY(-2px);}
+  .token-btn.op{background:none;box-shadow:none;cursor:default;font-size:24px;color:#999;padding:0 2px;}
+  .token-btn.correct{background:var(--teal);color:white;box-shadow:0 3px 0 #04a37e;}
+  .token-btn.wrong{animation:shake .4s;background:var(--red);color:white;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .expr-instruction{font-size:14px;font-weight:bold;color:var(--purple);}
+  .expr-done{color:var(--teal);font-weight:bold;font-size:14px;}
+
+  /* domain flip cards */
+  .domain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:14px;}
+  .flip-card{perspective:1200px;height:230px;cursor:pointer;}
+  .flip-card-inner{
+    position:relative;width:100%;height:100%;transition:transform .6s;
+    transform-style:preserve-3d;
+  }
+  .flip-card.flipped .flip-card-inner{transform:rotateY(180deg);}
+  .flip-front,.flip-back{
+    position:absolute;width:100%;height:100%;backface-visibility:hidden;
+    border-radius:16px;padding:14px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+  }
+  .flip-front{background:white;border:3px solid var(--teal);}
+  .flip-back{background:#fffbe8;border:3px solid var(--orange);transform:rotateY(180deg);
+    justify-content:flex-start;overflow-y:auto;font-size:13px;}
+  .flip-front .ficon{font-size:44px;margin-bottom:8px;}
+  .flip-front h3{color:var(--pink);font-size:16px;margin-bottom:6px;}
+  .flip-front span{font-size:12px;color:#888;}
+  .flip-back h4{color:var(--orange);font-size:14px;margin-bottom:4px;}
+  .flip-back .mini-readout{font-weight:bold;color:var(--purple);font-size:15px;margin:6px 0;}
+  .flip-back input[type=range]{height:20px;margin:6px 0;}
+
+  /* quiz */
+  .quiz-q{background:white;border-radius:14px;padding:14px;margin-bottom:16px;border:2px solid #ddd;}
+  .quiz-q h4{color:var(--purple);margin-bottom:10px;font-size:16px;}
+  .opt-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .opt-btn{
+    background:#f0f0f0;border:2px solid #ccc;border-radius:10px;padding:10px 16px;
+    font-size:14px;font-weight:bold;cursor:pointer;transition:.15s;
+  }
+  .opt-btn:hover{transform:translateY(-2px);}
+  .opt-btn.selected-correct{background:var(--teal);color:white;border-color:#04a37e;}
+  .opt-btn.selected-wrong{background:var(--red);color:white;border-color:#c1274b;}
+  .quiz-explain{font-size:12px;color:#777;margin-top:8px;display:none;}
+  .quiz-explain.show{display:block;}
+
+  .cta-btn{
+    display:block;margin:20px auto 0 auto;background:var(--pink);color:white;
+    border:none;border-radius:50px;padding:14px 34px;font-size:17px;font-weight:bold;
+    cursor:pointer;box-shadow:0 5px 0 #c93f96;transition:.15s;
+  }
+  .cta-btn:hover{transform:translateY(-2px);}
+  .cta-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c93f96;}
+  #scoreBanner{
+    display:none;text-align:center;margin-top:16px;padding:16px;border-radius:14px;
+    font-size:18px;font-weight:bold;color:white;background:var(--purple);
+  }
+  #answerAllMsg{display:none;text-align:center;color:var(--red);font-weight:bold;margin-top:10px;}
+
+  /* recap */
+  .recap-list{list-style:none;}
+  .recap-list li{
+    background:white;border-radius:10px;padding:10px 14px;margin-bottom:8px;
+    border-left:6px solid var(--blue);font-size:14px;
+  }
+
+  .coming-soon{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:14px;
+  }
+  .soon-card{
+    background:#eee;border-radius:14px;padding:14px;text-align:center;color:#999;
+    border:3px dashed #ccc;
+  }
+  .soon-card .se{font-size:30px;margin-bottom:6px;opacity:.6;}
+
+  /* confetti */
+  .confetti-piece{
+    position:fixed;top:-20px;width:10px;height:10px;z-index:999;pointer-events:none;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    to{transform:translateY(110vh) rotate(360deg);opacity:.8;}
+  }
+
+  footer.pagefoot{text-align:center;margin-top:20px;font-size:13px;color:#999;}
+
+  .explore-card{
+    background:white;border-radius:14px;padding:14px;text-align:center;
+    border:3px solid var(--teal);text-decoration:none;color:inherit;
+    transition:.2s;display:block;
+  }
+  .explore-card:hover{transform:translateY(-6px);box-shadow:0 8px 15px rgba(0,0,0,.15);}
+  .explore-card .se{font-size:30px;margin-bottom:6px;}
+</style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Algebra">⬅️</button>
+    </a>
+  </div>
+  <div class="nav-top nav-home">
+    <a href="../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+
+    <header>
+      <div class="emoji">🔡</div>
+      <h1>Constants &amp; Variables</h1>
+      <p class="subtitle">The two building blocks every algebra superhero needs! ✨</p>
+    </header>
+
+    <div class="stars-bar" id="starsBar">⭐ Stars collected: <span id="starsCount">0</span> / 6</div>
+
+    <div class="quicknav">
+      <a href="#sec-constant">🪨 Constant</a>
+      <a href="#sec-variable">🦎 Variable</a>
+      <a href="#sec-both">🤝 Why Both?</a>
+      <a href="#sec-spot">🎯 Spot It</a>
+      <a href="#sec-domains">🌍 Explore</a>
+      <a href="#sec-quiz">🏆 Quiz</a>
+    </div>
+
+    <!-- SECTION A: CONSTANT -->
+    <section class="card" id="sec-constant">
+      <h2>🪨 Meet Constant Carl</h2>
+      <div class="mascot-row">
+        <div class="mascot">🪨🤖</div>
+        <p>Carl the Rock-Robot always weighs <b>exactly 5 kg</b>. Rain or shine, Monday or Sunday — Carl <b>never changes</b>. That's exactly what a constant is!</p>
+      </div>
+      <div class="callout">
+        A <b>CONSTANT</b> is a value that always stays the same. It's fixed — like the number of days in a week, or your date of birth.
+      </div>
+      <p>Tap each card below. Ask yourself: "Does this ever change?" Careful — not all of these are actually constants!</p>
+      <div class="chip-row">
+        <div class="chip" data-chip="1" data-const="true" data-note="✅ Never changes! Always 7." onclick="flipChip(this)">7<small>tap me</small></div>
+        <div class="chip" data-chip="2" data-const="true" data-note="✅ Always 7 days, every single week!" onclick="flipChip(this)">Days in a week<small>tap me</small></div>
+        <div class="chip" data-chip="3" data-const="true" data-note="✅ Never changes! Always 100." onclick="flipChip(this)">100<small>tap me</small></div>
+        <div class="chip" data-chip="4" data-const="false" data-note="❌ Not a constant! Your age changes every birthday — that's a variable!" onclick="flipChip(this)">Your age<small>tap me</small></div>
+        <div class="chip" data-chip="5" data-const="false" data-note="❌ Not a constant! Temperature changes all day long — that's a variable!" onclick="flipChip(this)">Temp today<small>tap me</small></div>
+      </div>
+    </section>
+
+    <!-- SECTION B: VARIABLE -->
+    <section class="card" id="sec-variable">
+      <h2>🦎 Meet Variable Vee</h2>
+
+      <div class="callout">
+        🧩 <b>Here's a puzzle:</b> Your mom is always <b>30 years older</b> than you. How do we write a math rule for that — one that works this year, next year, and every year after?
+      </div>
+      <p>If your age were always fixed, say 8, we could just write <b>30 + 8 = 38</b> and be done. But your age keeps changing every single year! So one fixed number can't do the job — we need a symbol that can stand for <i>whatever your age happens to be</i>.</p>
+      <p>That's exactly what a variable is for. Let's say <b>x = your age</b>. Then:</p>
+      <div class="callout purple">Mom's age = 30 + x</div>
+      <p>As <b>x</b> (your age) changes, <b>30 + x</b> (mom's age) automatically changes right along with it — one rule works forever!</p>
+
+      <div class="mascot-row">
+        <div class="mascot morph">🦎</div>
+        <p>Vee the Shape-Shifting Chameleon can be <b>any color, any size</b> — it keeps changing! In algebra, a letter like <b>x</b>, <b>y</b>, or <b>a</b> works the same way: it stands for a number that can change, or one we don't know yet.</p>
+      </div>
+      <div class="callout purple">
+        A <b>VARIABLE</b> is a letter that stands for a number that can change or is unknown. Its value is <b>not fixed</b>.
+      </div>
+
+      <p>Try it yourself! Slide to change <b>your age (x)</b> and watch <b>mom's age (30 + x)</b> update instantly:</p>
+      <div class="slider-box">
+        <input type="range" id="varSlider" min="1" max="18" value="8" oninput="updateVarSlider(this.value)">
+        <div class="big-readout">Your age (x) = <span id="varValue">8</span></div>
+        <div class="big-readout">Mom's age (30 + x) = <span id="varPlus3">38</span></div>
+      </div>
+    </section>
+
+    <!-- SECTION C: WHY BOTH -->
+    <section class="card" id="sec-both">
+      <h2>🤝 Why Algebra Needs BOTH</h2>
+      <p>Imagine a pencil shop. Every pencil costs <b>₹5</b> — that price never changes, so it's a <b>constant</b>. But <i>how many</i> pencils you buy can be anything — that's your <b>variable</b>, let's call it <b>x</b>.</p>
+      <div class="callout orange">Total cost = 5 &times; x &nbsp; (constant &times; variable)</div>
+      <p>Slide to pick how many pencils you want to buy:</p>
+      <div class="slider-box">
+        <input type="range" id="pencilSlider" min="1" max="10" value="1" oninput="updatePencilSlider(this.value)">
+        <div class="big-readout">5 &times; <span id="pencilCount">1</span> = ₹<span id="pencilTotal">5</span></div>
+        <div class="emoji-row" id="pencilEmojis">✏️</div>
+      </div>
+    </section>
+
+    <!-- SECTION D: SPOT THE TOKEN GAME -->
+    <section class="card" id="sec-spot">
+      <h2>🎯 Spot It! Constant or Variable?</h2>
+      <p>Each expression below has constants and variables hiding in it — some are short and simple, some are longer and trickier! Tap the piece the instruction asks for. (Hint: a number stuck next to a letter, like 3x, is still a variable — it changes whenever x does!)</p>
+      <div id="exprGame"></div>
+    </section>
+
+    <!-- SECTION E: DOMAIN EXPLORER -->
+    <section class="card" id="sec-domains">
+      <h2>🌍 Where Do They Show Up?</h2>
+      <p>Constants and variables aren't just in math class — they hide everywhere! Tap a card to explore each one.</p>
+      <div class="domain-grid">
+
+        <div class="flip-card" id="domainCard1" onclick="flipDomain(this,1)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">➕</div>
+              <h3>Arithmetic</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back">
+              <h4>6 + 2 = 8</h4>
+              <p>6, 2 and 8 are all <b>constants</b> — fixed numbers we already know.</p>
+              <p style="margin-top:6px;">If we write this as a rule for <i>any</i> numbers: <b>a + b = c</b> — now a, b, c are <b>variables</b> standing for any whole number!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard2" onclick="flipDomain(this,2)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">📐</div>
+              <h3>Geometry</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>Perimeter of a Square: P = 4 &times; a</h4>
+              <p><b>4</b> is a constant (a square always has 4 equal sides). <b>a</b> is the variable — the side length changes shape to shape!</p>
+              <svg viewBox="0 0 120 120" style="width:90px;height:90px;margin:6px auto;">
+                <rect id="squareRect" x="10" y="10" width="40" height="40" fill="none" stroke="#a06cd5" stroke-width="4"/>
+              </svg>
+              <div class="mini-readout">a = <span id="sideLabel">3</span> cm</div>
+              <input type="range" id="sideSlider" min="3" max="8" value="3" oninput="updateSquare(this.value)">
+              <div class="mini-readout">P = 4 &times; <span id="sideLabel2">3</span> = <span id="perimeterLabel">12</span> cm</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard3" onclick="flipDomain(this,3)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">🔬</div>
+              <h3>Science</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>A chef takes 20 min per dish</h4>
+              <p><b>20</b> minutes is a constant (fixed cooking time). Number of dishes <b>y</b> is the variable.</p>
+              <div class="mini-readout">Dishes (y) = <span id="dishCount">1</span></div>
+              <input type="range" id="dishSlider" min="1" max="10" value="1" oninput="updateDishes(this.value)">
+              <div class="emoji-row" id="dishEmojis">🍽️</div>
+              <div class="mini-readout">Total time = <span id="totalMinutes">20</span> min</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard4" onclick="flipDomain(this,4)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">🏠</div>
+              <h3>Daily Life</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>₹50 pocket money every week</h4>
+              <p><b>50</b> is a constant (fixed weekly amount). Number of weeks <b>w</b> is the variable.</p>
+              <div class="mini-readout">Weeks (w) = <span id="weekCount">1</span></div>
+              <input type="range" id="weekSlider" min="1" max="12" value="1" oninput="updateWeeks(this.value)">
+              <div class="emoji-row" id="coinEmojis">🪙</div>
+              <div class="mini-readout">Total saved = ₹<span id="totalSavings">50</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUICK RECAP -->
+    <section class="card">
+      <h2>📝 Quick Recap</h2>
+      <ul class="recap-list">
+        <li>🪨 A <b>constant</b> is a value that always stays the same.</li>
+        <li>🦎 A <b>variable</b> is a letter that stands for a number that can change or is unknown.</li>
+        <li>🤝 Algebra combines both — constants keep things fixed, variables let us describe anything that changes.</li>
+        <li>🌍 They show up everywhere: arithmetic, geometry formulas, science, and everyday life!</li>
+      </ul>
+    </section>
+
+    <!-- SECTION F: QUIZ -->
+    <section class="card" id="sec-quiz">
+      <h2>🏆 Final Challenge</h2>
+      <p>Answer all 5 questions, then hit "Check My Score"!</p>
+      <div id="quizContainer"></div>
+      <div id="answerAllMsg">Oops! Please answer every question first 😊</div>
+      <button class="cta-btn" onclick="checkScore()">Check My Score 🎉</button>
+      <div id="scoreBanner"></div>
+    </section>
+
+    <section class="card">
+      <h2>🔗 Explore More Algebra Lessons</h2>
+      <p>Ready for the next adventure?</p>
+      <div class="coming-soon">
+        <a class="explore-card" href="../Patterns_and_Generalization/index.html"><div class="se">🔍</div>Patterns &amp; Generalization</a>
+        <a class="explore-card" href="../Algebraic_Expressions/index.html"><div class="se">🧮</div>Algebraic Expressions</a>
+        <a class="explore-card" href="../Equations/index.html"><div class="se">⚖️</div>Equations</a>
+        <a class="explore-card" href="../Operations_on_Expressions/index.html"><div class="se">➕</div>Operations on Expressions</a>
+      </div>
+    </section>
+
+    <footer class="pagefoot">Made with 💜 for curious young mathematicians</footer>
+  </div>
+
+<script>
+  /* ---------- STARS ---------- */
+  const earnedStars = new Set();
+  function awardStar(id){
+    if(earnedStars.has(id)) return;
+    earnedStars.add(id);
+    document.getElementById('starsCount').textContent = earnedStars.size;
+    const bar = document.getElementById('starsBar');
+    bar.classList.remove('pulse'); void bar.offsetWidth; bar.classList.add('pulse');
+    if(earnedStars.size === 6){
+      setTimeout(()=>confettiBurst(60),200);
+    }
+  }
+
+  /* ---------- SECTION A: CONSTANT CHIPS ---------- */
+  const flippedChips = new Set();
+  function flipChip(el){
+    el.classList.add('flipped');
+    if(el.dataset.const === 'false') el.classList.add('is-variable');
+    if(!el.querySelector('.flip-note')){
+      const note = document.createElement('div');
+      note.className = 'flip-note';
+      note.style.marginTop = '6px';
+      note.style.fontSize = '12px';
+      note.textContent = el.dataset.note;
+      el.appendChild(note);
+    }
+    flippedChips.add(el.dataset.chip);
+    if(flippedChips.size === 5) awardStar('constant');
+  }
+
+  /* ---------- SECTION B: VARIABLE SLIDER ---------- */
+  function updateVarSlider(v){
+    document.getElementById('varValue').textContent = v;
+    document.getElementById('varPlus3').textContent = Number(v)+30;
+    awardStar('variable');
+  }
+
+  /* ---------- SECTION C: PENCIL SLIDER ---------- */
+  function updatePencilSlider(v){
+    v = Number(v);
+    document.getElementById('pencilCount').textContent = v;
+    document.getElementById('pencilTotal').textContent = 5*v;
+    document.getElementById('pencilEmojis').textContent = '✏️'.repeat(v);
+    awardStar('both');
+  }
+
+  /* ---------- SECTION D: SPOT THE TOKEN GAME ---------- */
+  const expressions = [
+    {parts:[{t:'x',type:'variable'},{t:'+',type:'op'},{t:'1',type:'constant'}]},
+    {parts:[{t:'y',type:'variable'},{t:'−',type:'op'},{t:'4',type:'constant'}]},
+    {parts:[{t:'12',type:'constant'},{t:'+',type:'op'},{t:'z',type:'variable'}]},
+    {parts:[{t:'9',type:'constant'},{t:'−',type:'op'},{t:'m',type:'variable'}]},
+    {parts:[{t:'3x',type:'variable'},{t:'+',type:'op'},{t:'4',type:'constant'}]},
+    {parts:[{t:'8',type:'constant'},{t:'−',type:'op'},{t:'5p',type:'variable'}]},
+    {parts:[{t:'2a',type:'variable'},{t:'+',type:'op'},{t:'3b',type:'variable'},{t:'−',type:'op'},{t:'7',type:'constant'}]},
+    {parts:[{t:'10',type:'constant'},{t:'+',type:'op'},{t:'6y',type:'variable'},{t:'−',type:'op'},{t:'2',type:'constant'}]}
+  ];
+  let exprState = expressions.map(()=>({asking:'constant', doneConstant:false, doneVariable:false}));
+  let exprCompleted = 0;
+
+  function renderExpr(){
+    const container = document.getElementById('exprGame');
+    container.innerHTML = '';
+    expressions.forEach((ex, i)=>{
+      const state = exprState[i];
+      const block = document.createElement('div');
+      block.className = 'expr-block';
+
+      const textDiv = document.createElement('div');
+      textDiv.className = 'expr-text';
+      ex.parts.forEach((p, j)=>{
+        const btn = document.createElement('button');
+        btn.textContent = p.t;
+        btn.className = 'token-btn' + (p.type==='op' ? ' op' : '');
+        if(p.type !== 'op'){
+          btn.onclick = ()=>handleTokenClick(i, j, p.type, btn);
+        }
+        textDiv.appendChild(btn);
+      });
+      block.appendChild(textDiv);
+
+      const instr = document.createElement('div');
+      if(state.doneConstant && state.doneVariable){
+        instr.className = 'expr-done';
+        instr.textContent = '🎉 Nailed it! Both found.';
+      } else {
+        instr.className = 'expr-instruction';
+        instr.textContent = state.asking === 'constant'
+          ? '👉 Tap a CONSTANT'
+          : '👉 Now tap a VARIABLE';
+      }
+      block.appendChild(instr);
+      container.appendChild(block);
+    });
+  }
+
+  function handleTokenClick(exprIndex, partIndex, tokenType, btn){
+    const state = exprState[exprIndex];
+    if(state.doneConstant && state.doneVariable) return;
+    const wanted = state.asking;
+    if(tokenType === wanted){
+      btn.classList.add('correct');
+      btn.disabled = true;
+      if(wanted === 'constant'){ state.doneConstant = true; state.asking = 'variable'; }
+      else { state.doneVariable = true; }
+      if(state.doneConstant && state.doneVariable){
+        exprCompleted++;
+        if(exprCompleted === expressions.length) awardStar('spot');
+      }
+      renderExpr();
+    } else {
+      btn.classList.add('wrong');
+      setTimeout(()=>btn.classList.remove('wrong'), 400);
+    }
+  }
+  renderExpr();
+
+  /* ---------- SECTION E: DOMAIN EXPLORER ---------- */
+  const openedDomains = new Set();
+  function flipDomain(el, id){
+    el.classList.toggle('flipped');
+    openedDomains.add(id);
+    if(openedDomains.size === 4) awardStar('domains');
+  }
+  function updateSquare(v){
+    v = Number(v);
+    document.getElementById('sideLabel').textContent = v;
+    document.getElementById('sideLabel2').textContent = v;
+    document.getElementById('perimeterLabel').textContent = 4*v;
+    const size = 10 + v*10;
+    const rect = document.getElementById('squareRect');
+    rect.setAttribute('width', size);
+    rect.setAttribute('height', size);
+  }
+  function updateDishes(v){
+    v = Number(v);
+    document.getElementById('dishCount').textContent = v;
+    document.getElementById('dishEmojis').textContent = '🍽️'.repeat(v);
+    document.getElementById('totalMinutes').textContent = 20*v;
+  }
+  function updateWeeks(v){
+    v = Number(v);
+    document.getElementById('weekCount').textContent = v;
+    document.getElementById('coinEmojis').textContent = '🪙'.repeat(v);
+    document.getElementById('totalSavings').textContent = 50*v;
+  }
+
+  /* ---------- SECTION F: QUIZ ---------- */
+  const quiz = [
+    {q:'Which of these is a CONSTANT?', options:['n','20','p','k'], answer:1,
+     explain:'20 always stays 20 — a fixed number never changes.'},
+    {q:'In the expression 9a + 5, what is the VARIABLE?', options:['9','a','5','+'], answer:1,
+     explain:'a can stand for different numbers, so a is the variable.'},
+    {q:'True or False: A constant\'s value can change.', options:['True','False'], answer:1,
+     explain:'False! A constant always stays the same — that\'s the whole point.'},
+    {q:'The formula Speed = Distance ÷ Time belongs to which subject?', options:['Science','Music','Art','Language'], answer:0,
+     explain:'Speed, distance and time are measured in Science.'},
+    {q:'Which expression means "price of one notebook (₹10) times number of notebooks (n)"?', options:['10 + n','10n','10 − n','n ÷ 10'], answer:1,
+     explain:'Multiplying the fixed price by the changing quantity gives 10n.'}
+  ];
+  const quizAnswers = {};
+
+  function renderQuiz(){
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    quiz.forEach((item, qi)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = (qi+1) + '. ' + item.q;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      item.options.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>selectOption(qi, oi, qDiv);
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+      const explain = document.createElement('div');
+      explain.className = 'quiz-explain';
+      explain.id = 'explain-'+qi;
+      explain.textContent = item.explain;
+      qDiv.appendChild(explain);
+      container.appendChild(qDiv);
+    });
+  }
+
+  function selectOption(qi, oi, qDiv){
+    quizAnswers[qi] = oi;
+    const buttons = qDiv.querySelectorAll('.opt-btn');
+    buttons.forEach((b, idx)=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(idx === oi){
+        b.classList.add(idx === quiz[qi].answer ? 'selected-correct' : 'selected-wrong');
+      }
+    });
+    document.getElementById('explain-'+qi).classList.add('show');
+  }
+
+  function checkScore(){
+    if(Object.keys(quizAnswers).length < quiz.length){
+      document.getElementById('answerAllMsg').style.display = 'block';
+      return;
+    }
+    document.getElementById('answerAllMsg').style.display = 'none';
+    let score = 0;
+    quiz.forEach((item, qi)=>{ if(quizAnswers[qi] === item.answer) score++; });
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'block';
+    banner.textContent = 'You scored ' + score + ' / ' + quiz.length + '! ' +
+      (score >= 4 ? '🌟 Superstar!' : score >= 3 ? '👍 Nice work!' : '💪 Keep practicing!');
+    awardStar('quiz');
+    if(score >= 4) confettiBurst(40);
+  }
+  renderQuiz();
+
+  /* ---------- CONFETTI ---------- */
+  function confettiBurst(count){
+    const colors = ['#ff6ec7','#a06cd5','#4cc9f0','#06d6a0','#ffd166','#ff9e45','#ef476f'];
+    for(let i=0;i<count;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random()*100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animationDuration = (2 + Math.random()*2) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(piece);
+      setTimeout(()=>piece.remove(), 4500);
+    }
+  }
+</script>
+</body>
+</html>

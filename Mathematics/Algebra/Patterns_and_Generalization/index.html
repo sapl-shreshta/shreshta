@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Patterns &amp; Generalization 🔍</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:var(--ink);
+    padding:10px;
+    min-height:100vh;
+  }
+  .container{max-width:900px;margin:0 auto;padding-bottom:60px;}
+
+  /* nav */
+  .nav-top{position:fixed;top:14px;display:flex;gap:0;z-index:200;}
+  .nav-back{left:14px;} .nav-home{right:14px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;
+    width:48px;height:48px;font-size:22px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #7a3b97;}
+
+  /* stars tracker */
+  .stars-bar{
+    position:sticky;top:8px;z-index:150;
+    max-width:280px;margin:0 auto 10px auto;
+    background:var(--cream);border:3px solid var(--yellow);
+    border-radius:50px;padding:8px 18px;text-align:center;
+    font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,.1);
+    transition:transform .2s;
+  }
+  .stars-bar.pulse{animation:pulseStar .5s ease;}
+  @keyframes pulseStar{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
+
+  header{text-align:center;margin:70px 0 20px 0;}
+  .emoji{font-size:clamp(50px,12vw,90px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  h1{
+    font-size:clamp(26px,6vw,50px);margin:10px 0;
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{font-size:clamp(15px,2.2vw,20px);color:var(--blue);font-weight:bold;}
+
+  .quicknav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 30px 0;}
+  .quicknav a{
+    text-decoration:none;background:white;color:var(--purple);font-weight:bold;
+    font-size:13px;padding:8px 14px;border-radius:20px;border:2px solid var(--purple);
+    transition:.2s;
+  }
+  .quicknav a:hover{background:var(--purple);color:white;}
+
+  .card{
+    background:var(--cream);border-radius:20px;padding:20px 18px;margin-bottom:28px;
+    border:3px solid var(--purple);box-shadow:0 8px 0 rgba(0,0,0,.08);
+    scroll-margin-top:90px;
+  }
+  .card h2{font-size:clamp(20px,4vw,28px);color:var(--pink);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .card p{font-size:15px;line-height:1.6;margin-bottom:10px;}
+  .callout{
+    background:#fff;border-left:8px solid var(--teal);border-radius:10px;
+    padding:12px 16px;margin:14px 0;font-size:15px;font-weight:bold;color:var(--ink);
+  }
+  .callout.purple{border-left-color:var(--purple);}
+  .callout.orange{border-left-color:var(--orange);}
+
+  .mascot-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:14px 0;}
+  .mascot{font-size:56px;flex-shrink:0;filter:drop-shadow(0 4px 4px rgba(0,0,0,.15));}
+  .mascot.pulse2{animation:pulse2 1.6s ease-in-out infinite;}
+  @keyframes pulse2{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+
+  /* sliders */
+  .slider-box{
+    background:white;border-radius:16px;padding:16px;margin-top:12px;
+    border:2px dashed var(--blue);text-align:center;
+  }
+  input[type=range]{width:100%;accent-color:var(--purple);height:28px;cursor:pointer;}
+  .big-readout{font-size:clamp(20px,5vw,32px);font-weight:bold;color:var(--purple);margin:10px 0;}
+  .big-readout span{color:var(--red);}
+  .emoji-row{font-size:20px;letter-spacing:1px;min-height:30px;margin-top:8px;line-height:1.6;word-break:break-word;}
+
+  /* fullness bar */
+  .fullness-bar{background:#eee;border-radius:20px;height:24px;overflow:hidden;margin:12px 0;border:2px solid var(--blue);}
+  .fullness-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));width:0.4%;transition:width .3s;}
+
+  /* pattern rows */
+  .pattern-row{
+    background:white;border-radius:14px;padding:14px;margin-bottom:14px;
+    border:2px solid #ddd;display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  }
+  .pat-chip{background:var(--yellow);border-radius:8px;padding:6px 14px;font-weight:bold;font-size:18px;}
+  .pat-chip.q{background:#eee;color:#999;}
+  .pat-input{
+    width:70px;padding:8px;border-radius:8px;border:2px solid #ccc;
+    font-size:16px;text-align:center;font-weight:bold;
+  }
+  .pat-input.correct{border-color:var(--teal);background:#e8fff8;}
+  .pat-input.wrong{border-color:var(--red);background:#fff0f3;}
+  .mini-btn{
+    background:var(--purple);color:white;border:none;border-radius:8px;
+    padding:8px 16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 #7a3b97;
+  }
+  .mini-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #7a3b97;}
+  .pat-feedback{font-size:13px;font-weight:bold;}
+  .arrow-label{font-size:12px;color:var(--purple);font-weight:bold;}
+
+  /* worked example walkthrough */
+  .worked-seq{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0;}
+  .gap-btn{
+    background:#f5f5f5;border:2px dashed var(--purple);border-radius:8px;
+    padding:6px 12px;font-weight:bold;color:var(--purple);cursor:pointer;font-size:14px;
+    transition:.15s;
+  }
+  .gap-btn:hover{transform:translateY(-2px);}
+  .gap-btn.revealed{background:var(--teal);color:white;border-style:solid;border-color:#04a37e;cursor:default;}
+  .gap-note{display:none;}
+  .gap-note.show{display:block;}
+  .worked-step2{display:none;}
+  .worked-step2.show{display:block;margin-top:14px;}
+  .verify-item{font-size:14px;margin:6px 0;padding:8px 12px;background:#f5f5f5;border-radius:8px;}
+  .verify-item.ok{color:var(--teal);font-weight:bold;background:#e8fff8;}
+  .rule-mcq{display:none;margin-top:10px;}
+  .rule-mcq.show{display:block;}
+  .diff-feedback{font-size:13px;font-weight:bold;}
+
+  /* hexagon */
+  .hex-row{
+    background:white;border-radius:12px;padding:14px;margin-bottom:12px;
+    border:2px solid #ddd;
+  }
+  .rule-box{display:none;margin-top:10px;}
+  .rule-box.show{display:block;}
+  .hex-chain{margin:10px 0;}
+  .hex-chain svg{display:block;margin:0 auto;}
+
+  .hex-examples{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin:14px 0;}
+  .hex-example{
+    background:white;border-radius:12px;padding:10px 14px;border:2px solid #ddd;
+    text-align:center;
+  }
+  .hex-example svg{display:block;margin:0 auto 6px auto;}
+  .hex-example .hex-caption{font-weight:bold;color:var(--purple);font-size:13px;}
+
+  /* domain flip cards */
+  .domain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:14px;}
+  .flip-card{perspective:1200px;height:230px;cursor:pointer;}
+  .flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;}
+  .flip-card.flipped .flip-card-inner{transform:rotateY(180deg);}
+  .flip-front,.flip-back{
+    position:absolute;width:100%;height:100%;backface-visibility:hidden;
+    border-radius:16px;padding:14px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+  }
+  .flip-front{background:white;border:3px solid var(--teal);}
+  .flip-back{background:#fffbe8;border:3px solid var(--orange);transform:rotateY(180deg);
+    justify-content:flex-start;overflow-y:auto;font-size:13px;}
+  .flip-front .ficon{font-size:44px;margin-bottom:8px;}
+  .flip-front h3{color:var(--pink);font-size:16px;margin-bottom:6px;}
+  .flip-front span{font-size:12px;color:#888;}
+  .flip-back h4{color:var(--orange);font-size:14px;margin-bottom:4px;}
+  .flip-back .mini-readout{font-weight:bold;color:var(--purple);font-size:15px;margin:6px 0;}
+  .flip-back input[type=range]{height:20px;margin:6px 0;}
+
+  /* quiz (shared style) */
+  .quiz-q{background:white;border-radius:14px;padding:14px;margin-bottom:16px;border:2px solid #ddd;}
+  .quiz-q h4{color:var(--purple);margin-bottom:10px;font-size:16px;}
+  .opt-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .opt-btn{
+    background:#f0f0f0;border:2px solid #ccc;border-radius:10px;padding:10px 16px;
+    font-size:14px;font-weight:bold;cursor:pointer;transition:.15s;
+  }
+  .opt-btn:hover{transform:translateY(-2px);}
+  .opt-btn.selected-correct{background:var(--teal);color:white;border-color:#04a37e;}
+  .opt-btn.selected-wrong{background:var(--red);color:white;border-color:#c1274b;}
+  .quiz-explain{font-size:12px;color:#777;margin-top:8px;display:none;}
+  .quiz-explain.show{display:block;}
+
+  .cta-btn{
+    display:block;margin:20px auto 0 auto;background:var(--pink);color:white;
+    border:none;border-radius:50px;padding:14px 34px;font-size:17px;font-weight:bold;
+    cursor:pointer;box-shadow:0 5px 0 #c93f96;transition:.15s;
+  }
+  .cta-btn:hover{transform:translateY(-2px);}
+  .cta-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c93f96;}
+  #scoreBanner{
+    display:none;text-align:center;margin-top:16px;padding:16px;border-radius:14px;
+    font-size:18px;font-weight:bold;color:white;background:var(--purple);
+  }
+  #answerAllMsg{display:none;text-align:center;color:var(--red);font-weight:bold;margin-top:10px;}
+
+  .recap-list{list-style:none;}
+  .recap-list li{
+    background:white;border-radius:10px;padding:10px 14px;margin-bottom:8px;
+    border-left:6px solid var(--blue);font-size:14px;
+  }
+
+  .coming-soon{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:14px;}
+  .soon-card{
+    background:#eee;border-radius:14px;padding:14px;text-align:center;color:#999;
+    border:3px dashed #ccc;
+  }
+  .soon-card .se{font-size:30px;margin-bottom:6px;opacity:.6;}
+
+  .confetti-piece{
+    position:fixed;top:-20px;width:10px;height:10px;z-index:999;pointer-events:none;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{to{transform:translateY(110vh) rotate(360deg);opacity:.8;}}
+
+  footer.pagefoot{text-align:center;margin-top:20px;font-size:13px;color:#999;}
+
+  .explore-card{
+    background:white;border-radius:14px;padding:14px;text-align:center;
+    border:3px solid var(--teal);text-decoration:none;color:inherit;
+    transition:.2s;display:block;
+  }
+  .explore-card:hover{transform:translateY(-6px);box-shadow:0 8px 15px rgba(0,0,0,.15);}
+  .explore-card .se{font-size:30px;margin-bottom:6px;}
+</style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Algebra">⬅️</button>
+    </a>
+  </div>
+  <div class="nav-top nav-home">
+    <a href="../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+
+    <header>
+      <div class="emoji">🔍</div>
+      <h1>Patterns &amp; Generalization</h1>
+      <p class="subtitle">Spot the pattern, crack the code, write the rule! ✨</p>
+    </header>
+
+    <div class="stars-bar" id="starsBar">⭐ Stars collected: <span id="starsCount">0</span> / 6</div>
+
+    <div class="quicknav">
+      <a href="#sec-lotus">🌸 Lotus Pond</a>
+      <a href="#sec-spotnum">🔢 Spot It</a>
+      <a href="#sec-hexagon">⬡ Hexagons</a>
+      <a href="#sec-generalize">🧠 Generalize</a>
+      <a href="#sec-domains">🌍 Explore</a>
+      <a href="#sec-quiz">🏆 Quiz</a>
+    </div>
+
+    <!-- SECTION 1: LOTUS POND HOOK -->
+    <section class="card" id="sec-lotus">
+      <h2>🌸 The Magic Lotus Pond</h2>
+      <div class="mascot-row">
+        <div class="mascot pulse2">🪷</div>
+        <p>There was once a magical pond. On Day 1, there was <b>just 1 lotus flower</b>. But every single day, the number of flowers <b>doubled</b>! By Day 15, the whole pond was completely full.</p>
+      </div>
+      <div class="callout">🤔 Riddle: On which day was the pond exactly <b>HALF full</b>?</div>
+      <p>Slide through the days and watch the pond fill up:</p>
+      <div class="slider-box">
+        <input type="range" id="lotusDay" min="1" max="15" value="1" oninput="updateLotus(this.value)">
+        <div class="big-readout">Day <span id="lotusDayLabel">1</span>: <span id="lotusCount">1</span> lotus flower(s)</div>
+        <div class="fullness-bar"><div class="fullness-fill" id="fullnessFill"></div></div>
+        <div class="emoji-row" id="lotusEmojis">🌸</div>
+      </div>
+      <p style="margin-top:14px;">Now make your guess:</p>
+      <div class="pattern-row">
+        <span>The pond is HALF full on Day</span>
+        <input type="number" class="pat-input" id="lotusGuess" min="1" max="15">
+        <button class="mini-btn" onclick="checkLotusGuess()">Check my guess!</button>
+      </div>
+      <div class="pat-feedback" id="lotusFeedback"></div>
+    </section>
+
+    <!-- SECTION 2: SPOT THE PATTERN (NUMBERS) -->
+    <section class="card" id="sec-spotnum">
+      <h2>🔢 Spot the Pattern</h2>
+      <p>Every pattern has a secret rule. Look at how the numbers grow, then guess what comes next!</p>
+      <div id="numberPatterns"></div>
+    </section>
+
+    <!-- SECTION 3: WRITING THE RULE (nth TERM) -->
+    <section class="card" id="sec-hexagon">
+      <h2>⬡ Writing the Rule for the nth Term</h2>
+      <p>Let's build hexagons out of matchsticks, joined together in a chain. Here's what that actually looks like:</p>
+      <div class="hex-examples" id="hexExamples"></div>
+      <div class="callout">👀 Look closely at the picture: when two hexagons sit side by side, they <b>share one matchstick</b> — the middle side belongs to both! That's why each new hexagon only needs <b>5 new sticks</b>, not 6.</div>
+      <p>Here's the matchstick count for each chain:</p>
+      <div class="hex-row">
+        <span class="pat-chip">n=1 → 6</span>
+        <span class="arrow-label">+5</span>
+        <span class="pat-chip">n=2 → 11</span>
+        <span class="arrow-label">+5</span>
+        <span class="pat-chip">n=3 → 16</span>
+        <span class="arrow-label">+5</span>
+        <span class="pat-chip q">n=4 → ?</span>
+      </div>
+      <p>Every time we add <b>one more hexagon</b>, we add <b>5 more matchsticks</b> (the 6th side is already shared!). Can you figure out n=4?</p>
+      <div class="pattern-row">
+        <span>n=4 → </span>
+        <input type="number" class="pat-input" id="hexBlankInput">
+        <button class="mini-btn" onclick="checkHexBlank()">Check</button>
+        <span class="pat-feedback" id="hexBlankFeedback"></span>
+      </div>
+
+      <div class="rule-box" id="hexRuleBox">
+        <div class="callout purple">🎉 The Rule: matchsticks (m) = 5 &times; n + 1</div>
+        <p>Try any number of hexagons (n) and watch the chain grow:</p>
+        <div class="slider-box">
+          <input type="range" id="hexSlider" min="1" max="10" value="4" oninput="updateHex(this.value)">
+          <div class="big-readout">n = <span id="hexN">4</span> &nbsp;→&nbsp; m = 5 &times; <span id="hexN2">4</span> + 1 = <span id="hexFormula">21</span></div>
+          <div class="hex-chain" id="hexChain"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: FROM SPECIFIC TO GENERAL -->
+    <section class="card" id="sec-generalize">
+      <h2>🧠 From One Case to a General Rule</h2>
+      <p>Here's the secret trick mathematicians use to turn ONE example into a rule that works forever. There are 3 steps: <b>(1)</b> find how much the sequence grows by each time, <b>(2)</b> use the very first term to pin down the rest of the rule, <b>(3)</b> double-check it against the other terms.</p>
+
+      <div class="callout">📖 Let's crack this sequence together, step by step: <b>6, 8, 10, 12, ...</b></div>
+
+      <p><b>Step 1 — Find the growth step.</b> Tap each <span style="color:var(--purple);">?</span> gap below to reveal how much the sequence jumps by:</p>
+      <div class="worked-seq">
+        <span class="pat-chip">6</span>
+        <button class="gap-btn" id="gap1" onclick="revealGap(1)">?</button>
+        <span class="pat-chip">8</span>
+        <button class="gap-btn" id="gap2" onclick="revealGap(2)">?</button>
+        <span class="pat-chip">10</span>
+        <button class="gap-btn" id="gap3" onclick="revealGap(3)">?</button>
+        <span class="pat-chip">12</span>
+      </div>
+      <div class="callout purple gap-note" id="gapNote">🎯 Every gap is <b>+2</b>! That constant growth step becomes the number multiplying <b>n</b> in our rule — so the rule must look like <b>2 &times; n + ___</b>.</div>
+
+      <div class="worked-step2" id="workedStep2">
+        <p><b>Step 2 — Use the first term to find the missing piece.</b> When n = 1, the sequence value is <b>6</b>. So:</p>
+        <div class="callout orange">2 &times; 1 + ___ = 6</div>
+        <div class="pattern-row">
+          <span>The missing number is</span>
+          <input type="number" class="pat-input" id="workedBlank">
+          <button class="mini-btn" onclick="checkWorkedBlank()">Check</button>
+          <span class="pat-feedback" id="workedBlankFeedback"></span>
+        </div>
+      </div>
+
+      <div class="rule-box" id="workedVerifyBox">
+        <p><b>Step 3 — Check the rule against every other term.</b> Our rule so far: <b>2n + 4</b>. Let's verify:</p>
+        <div id="workedVerifyList"></div>
+        <div class="callout purple" style="margin-top:12px;">🎉 The Rule: <b>2n + 4</b> — and it works for EVERY term, not just the one we started with!</div>
+      </div>
+
+      <h3 style="color:var(--pink);margin-top:22px;margin-bottom:8px;">✏️ Now You Try!</h3>
+      <p>Use the same 3 steps on these sequences. For each one: find the growth step first, then pick the matching rule.</p>
+      <div id="generalizeGame"></div>
+    </section>
+
+    <!-- SECTION 5: REAL WORLD PATTERNS -->
+    <section class="card" id="sec-domains">
+      <h2>🌍 Patterns Are Everywhere!</h2>
+      <p>Tap a card to see a pattern hiding in the real world.</p>
+      <div class="domain-grid">
+
+        <div class="flip-card" id="domainCard1" onclick="flipDomain(this,1)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">🌸</div>
+              <h3>Nature</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back">
+              <h4>The Lotus Pond</h4>
+              <p>1, 2, 4, 8, 16 ... the flowers <b>double</b> every day. Doubling patterns show up all over nature — from cells splitting to rabbit populations growing!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard2" onclick="flipDomain(this,2)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">⬡</div>
+              <h3>Geometry</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back">
+              <h4>Matchstick Hexagons</h4>
+              <p>6, 11, 16, 21 ... each new hexagon needs 5 more matchsticks. The rule <b>m = 5n + 1</b> lets us find the answer for 100 hexagons without ever counting!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard3" onclick="flipDomain(this,3)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">💰</div>
+              <h3>Daily Life</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>Priya saves ₹20 in week 1, then ₹15 more each week</h4>
+              <p>Rule: savings = 15w + 5</p>
+              <div class="mini-readout">Week (w) = <span id="weekLabelMoney">1</span></div>
+              <input type="range" id="moneySlider" min="1" max="10" value="1" oninput="updateMoney(this.value)">
+              <div class="mini-readout">Savings that week = ₹<span id="moneyAmount">20</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard4" onclick="flipDomain(this,4)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">💺</div>
+              <h3>School</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>Row 1 has 8 seats, each row after has 4 more</h4>
+              <p>Rule: seats = 4r + 4</p>
+              <div class="mini-readout">Row (r) = <span id="rowLabelSeats">1</span></div>
+              <input type="range" id="seatSlider" min="1" max="10" value="1" oninput="updateSeats(this.value)">
+              <div class="mini-readout">Seats in that row = <span id="seatCount">8</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUICK RECAP -->
+    <section class="card">
+      <h2>📝 Quick Recap</h2>
+      <ul class="recap-list">
+        <li>🔢 A <b>pattern</b> is a sequence that follows a hidden rule.</li>
+        <li>⬡ We can write that rule using a variable, like <b>n</b>, to describe the <b>nth term</b>.</li>
+        <li>🧠 To find the rule: spot how much it grows by each time, then check it against the first case.</li>
+        <li>🌍 Patterns hide everywhere: nature, geometry, money, even seating in a classroom!</li>
+      </ul>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="card" id="sec-quiz">
+      <h2>🏆 Final Challenge</h2>
+      <p>Answer all 5 questions, then hit "Check My Score"!</p>
+      <div id="quizContainer"></div>
+      <div id="answerAllMsg">Oops! Please answer every question first 😊</div>
+      <button class="cta-btn" onclick="checkScore()">Check My Score 🎉</button>
+      <div id="scoreBanner"></div>
+    </section>
+
+    <section class="card">
+      <h2>🔗 Explore More Algebra Lessons</h2>
+      <p>Ready for the next adventure?</p>
+      <div class="coming-soon">
+        <a class="explore-card" href="../Constants_and_Variables/index.html"><div class="se">🔡</div>Constants &amp; Variables</a>
+        <a class="explore-card" href="../Algebraic_Expressions/index.html"><div class="se">🧮</div>Algebraic Expressions</a>
+        <a class="explore-card" href="../Equations/index.html"><div class="se">⚖️</div>Equations</a>
+        <a class="explore-card" href="../Operations_on_Expressions/index.html"><div class="se">➕</div>Operations on Expressions</a>
+      </div>
+    </section>
+
+    <footer class="pagefoot">Made with 💜 for curious young mathematicians</footer>
+  </div>
+
+<script>
+  /* ---------- STARS ---------- */
+  const earnedStars = new Set();
+  function awardStar(id){
+    if(earnedStars.has(id)) return;
+    earnedStars.add(id);
+    document.getElementById('starsCount').textContent = earnedStars.size;
+    const bar = document.getElementById('starsBar');
+    bar.classList.remove('pulse'); void bar.offsetWidth; bar.classList.add('pulse');
+    if(earnedStars.size === 6) setTimeout(()=>confettiBurst(60),200);
+  }
+
+  /* ---------- SECTION 1: LOTUS POND ---------- */
+  function updateLotus(v){
+    v = Number(v);
+    const count = Math.pow(2, v-1);
+    document.getElementById('lotusDayLabel').textContent = v;
+    document.getElementById('lotusCount').textContent = count;
+    const fullness = Math.min(100, (count/16384)*100);
+    document.getElementById('fullnessFill').style.width = Math.max(fullness,0.4) + '%';
+    const shown = Math.min(count, 40);
+    const extra = count - shown;
+    document.getElementById('lotusEmojis').textContent = '🌸'.repeat(shown) + (extra>0 ? ' …and '+extra+' more!' : '');
+  }
+  function checkLotusGuess(){
+    const raw = document.getElementById('lotusGuess').value;
+    const fb = document.getElementById('lotusFeedback');
+    if(raw === ''){ fb.textContent = 'Type a day number first!'; fb.style.color = 'var(--red)'; return; }
+    const val = Number(raw);
+    if(val === 14){
+      fb.textContent = '🎉 Yes! Day 14 — one day before it\'s full. Since it doubles every day, half of the final amount always happens the day before!';
+      fb.style.color = 'var(--teal)';
+    } else {
+      fb.textContent = '🤔 Not quite — slide to Day 14 and Day 15 above and compare the flower counts!';
+      fb.style.color = 'var(--red)';
+    }
+    awardStar('lotus');
+  }
+
+  /* ---------- SECTION 2: NUMBER PATTERNS ---------- */
+  const numberPatterns = [
+    {id:'p1', seq:[2,4,6,8], answer:10},
+    {id:'p2', seq:[5,10,15,20], answer:25},
+    {id:'p3', seq:[1,4,7,10], answer:13}
+  ];
+  const solvedPatterns = new Set();
+
+  function renderNumberPatterns(){
+    const container = document.getElementById('numberPatterns');
+    container.innerHTML = '';
+    numberPatterns.forEach(p=>{
+      const row = document.createElement('div');
+      row.className = 'pattern-row';
+      p.seq.forEach(n=>{
+        const chip = document.createElement('span');
+        chip.className = 'pat-chip';
+        chip.textContent = n;
+        row.appendChild(chip);
+      });
+      const qChip = document.createElement('span');
+      qChip.className = 'pat-chip q';
+      qChip.textContent = '?';
+      row.appendChild(qChip);
+
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.className = 'pat-input';
+      input.id = 'input-' + p.id;
+      row.appendChild(input);
+
+      const btn = document.createElement('button');
+      btn.className = 'mini-btn';
+      btn.textContent = 'Check';
+      btn.onclick = ()=>checkPattern(p.id, p.answer);
+      row.appendChild(btn);
+
+      const fb = document.createElement('span');
+      fb.className = 'pat-feedback';
+      fb.id = 'fb-' + p.id;
+      row.appendChild(fb);
+
+      container.appendChild(row);
+    });
+  }
+  function checkPattern(id, answer){
+    const input = document.getElementById('input-' + id);
+    const fb = document.getElementById('fb-' + id);
+    if(input.value === ''){ fb.textContent = 'Type a number!'; fb.style.color = 'var(--red)'; return; }
+    const val = Number(input.value);
+    if(val === answer){
+      input.classList.remove('wrong'); input.classList.add('correct');
+      fb.textContent = '✅ Correct!'; fb.style.color = 'var(--teal)';
+      solvedPatterns.add(id);
+      if(solvedPatterns.size === numberPatterns.length) awardStar('spotnum');
+    } else {
+      input.classList.remove('correct'); input.classList.add('wrong');
+      fb.textContent = 'Try again!'; fb.style.color = 'var(--red)';
+    }
+  }
+  renderNumberPatterns();
+
+  /* ---------- SECTION 3: HEXAGON nth TERM ---------- */
+  function hexPolygonPoints(offsetX){
+    // flat vertical left/right edges so neighbouring hexagons share a full side, not just a point
+    return [[offsetX,10],[offsetX+20,0],[offsetX+40,10],[offsetX+40,30],[offsetX+20,40],[offsetX,30]]
+      .map(p=>p.join(',')).join(' ');
+  }
+  function buildHexChainSVG(n, height){
+    height = height || 60;
+    let shapes = '';
+    for(let i=0;i<n;i++){
+      shapes += '<polygon points="' + hexPolygonPoints(i*40) + '" fill="#fff3cd" stroke="#a06cd5" stroke-width="3"/>';
+    }
+    const w = n*40;
+    return '<svg viewBox="0 0 '+w+' 40" style="width:'+Math.min(w*1.6,320)+'px;height:'+height+'px;">'+shapes+'</svg>';
+  }
+  function renderHexExamples(){
+    const container = document.getElementById('hexExamples');
+    const counts = {1:6, 2:11, 3:16};
+    container.innerHTML = [1,2,3].map(n=>
+      '<div class="hex-example">' + buildHexChainSVG(n,44) +
+      '<div class="hex-caption">n=' + n + ' → ' + counts[n] + ' matchsticks</div></div>'
+    ).join('');
+  }
+  renderHexExamples();
+
+  function checkHexBlank(){
+    const input = document.getElementById('hexBlankInput');
+    const fb = document.getElementById('hexBlankFeedback');
+    if(input.value === ''){ fb.textContent = 'Type your answer!'; fb.style.color = 'var(--red)'; return; }
+    const val = Number(input.value);
+    if(val === 21){
+      fb.textContent = '✅ Yes! 21 matchsticks.'; fb.style.color = 'var(--teal)';
+      document.getElementById('hexRuleBox').classList.add('show');
+      updateHex(4);
+      awardStar('hexagon');
+    } else {
+      fb.textContent = 'Hint: each hexagon adds 5 more. Try again!'; fb.style.color = 'var(--red)';
+    }
+  }
+  function updateHex(v){
+    v = Number(v);
+    document.getElementById('hexN').textContent = v;
+    document.getElementById('hexN2').textContent = v;
+    document.getElementById('hexFormula').textContent = 5*v + 1;
+    document.getElementById('hexChain').innerHTML = buildHexChainSVG(v, 60);
+  }
+
+  /* ---------- SECTION 4: WORKED EXAMPLE (6,8,10,12) ---------- */
+  const revealedGaps = new Set();
+  function revealGap(idx){
+    const btn = document.getElementById('gap' + idx);
+    btn.textContent = '+2';
+    btn.classList.add('revealed');
+    revealedGaps.add(idx);
+    if(revealedGaps.size === 3){
+      document.getElementById('gapNote').classList.add('show');
+      document.getElementById('workedStep2').classList.add('show');
+    }
+  }
+  function checkWorkedBlank(){
+    const input = document.getElementById('workedBlank');
+    const fb = document.getElementById('workedBlankFeedback');
+    if(input.value === ''){ fb.textContent = 'Type a number!'; fb.style.color = 'var(--red)'; return; }
+    const val = Number(input.value);
+    if(val === 4){
+      fb.textContent = '✅ Yes! 2 × 1 + 4 = 6.'; fb.style.color = 'var(--teal)';
+      const list = document.getElementById('workedVerifyList');
+      list.innerHTML =
+        '<div class="verify-item ok">n = 2 → 2 × 2 + 4 = 8 ✅ (matches!)</div>' +
+        '<div class="verify-item ok">n = 3 → 2 × 3 + 4 = 10 ✅ (matches!)</div>' +
+        '<div class="verify-item ok">n = 4 → 2 × 4 + 4 = 12 ✅ (matches!)</div>';
+      document.getElementById('workedVerifyBox').classList.add('show');
+    } else {
+      fb.textContent = 'Hint: 2 × 1 + ___ should equal 6. Try again!'; fb.style.color = 'var(--red)';
+    }
+  }
+
+  /* ---------- SECTION 4: NOW YOU TRY ---------- */
+  const genQuestions = [
+    {id:'g1', seq:[3,5,7,9], diff:2, options:['n + 2','2n + 1','2n + 2','n + 1'], answer:1},
+    {id:'g2', seq:[4,7,10,13], diff:3, options:['3n','3n + 1','n + 3','3n − 1'], answer:1},
+    {id:'g3', seq:[10,13,16,19], diff:3, options:['3n + 3','3n + 7','n + 9','3n − 3'], answer:1}
+  ];
+  const genState = {};
+  genQuestions.forEach(g=>{ genState[g.id] = {diffOk:false, ruleOk:false}; });
+
+  function renderGeneralize(){
+    const container = document.getElementById('generalizeGame');
+    container.innerHTML = '';
+    genQuestions.forEach(g=>{
+      const block = document.createElement('div');
+      block.className = 'hex-row';
+
+      const seqDiv = document.createElement('div');
+      seqDiv.style.display = 'flex';
+      seqDiv.style.gap = '8px';
+      seqDiv.style.alignItems = 'center';
+      seqDiv.style.flexWrap = 'wrap';
+      g.seq.forEach(n=>{
+        const chip = document.createElement('span');
+        chip.className = 'pat-chip';
+        chip.textContent = n;
+        seqDiv.appendChild(chip);
+      });
+      block.appendChild(seqDiv);
+
+      const stepLabel = document.createElement('div');
+      stepLabel.style.fontWeight = 'bold';
+      stepLabel.style.color = 'var(--purple)';
+      stepLabel.style.margin = '10px 0 4px 0';
+      stepLabel.textContent = 'Step 1 — What is the constant difference (the growth step)?';
+      block.appendChild(stepLabel);
+
+      const diffRow = document.createElement('div');
+      diffRow.className = 'pattern-row';
+      const diffInput = document.createElement('input');
+      diffInput.type = 'number';
+      diffInput.className = 'pat-input';
+      const diffBtn = document.createElement('button');
+      diffBtn.className = 'mini-btn';
+      diffBtn.textContent = 'Check';
+      const diffFb = document.createElement('span');
+      diffFb.className = 'diff-feedback';
+      diffRow.appendChild(diffInput);
+      diffRow.appendChild(diffBtn);
+      diffRow.appendChild(diffFb);
+      block.appendChild(diffRow);
+
+      const mcqBox = document.createElement('div');
+      mcqBox.className = 'rule-mcq';
+      const mcqLabel = document.createElement('div');
+      mcqLabel.style.fontWeight = 'bold';
+      mcqLabel.style.color = 'var(--purple)';
+      mcqLabel.style.margin = '8px 0 4px 0';
+      mcqLabel.textContent = 'Step 2 — Which rule fits this pattern?';
+      mcqBox.appendChild(mcqLabel);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      g.options.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>selectGenOption(g, oi, optRow);
+        optRow.appendChild(b);
+      });
+      mcqBox.appendChild(optRow);
+      block.appendChild(mcqBox);
+
+      diffBtn.onclick = ()=>checkGenDiff(g, diffInput, diffFb, mcqBox);
+
+      container.appendChild(block);
+    });
+  }
+  function checkGenDiff(g, input, fb, mcqBox){
+    if(input.value === ''){ fb.textContent = 'Type a number!'; fb.style.color = 'var(--red)'; return; }
+    const val = Number(input.value);
+    if(val === g.diff){
+      fb.textContent = '✅ Correct! +' + g.diff + ' every time.'; fb.style.color = 'var(--teal)';
+      genState[g.id].diffOk = true;
+      mcqBox.classList.add('show');
+      maybeAwardGeneralize();
+    } else {
+      fb.textContent = 'Not quite — look at how much each term grows by. Try again!'; fb.style.color = 'var(--red)';
+    }
+  }
+  function selectGenOption(g, oi, optRow){
+    const buttons = optRow.querySelectorAll('.opt-btn');
+    buttons.forEach((b, idx)=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(idx === oi) b.classList.add(idx === g.answer ? 'selected-correct' : 'selected-wrong');
+    });
+    if(oi === g.answer){
+      genState[g.id].ruleOk = true;
+      maybeAwardGeneralize();
+    }
+  }
+  function maybeAwardGeneralize(){
+    const allDone = genQuestions.every(g=> genState[g.id].diffOk && genState[g.id].ruleOk);
+    if(allDone) awardStar('generalize');
+  }
+  renderGeneralize();
+
+  /* ---------- SECTION 5: DOMAIN EXPLORER ---------- */
+  const openedDomains = new Set();
+  function flipDomain(el, id){
+    el.classList.toggle('flipped');
+    openedDomains.add(id);
+    if(openedDomains.size === 4) awardStar('domains');
+  }
+  function updateMoney(v){
+    v = Number(v);
+    document.getElementById('weekLabelMoney').textContent = v;
+    document.getElementById('moneyAmount').textContent = 15*v + 5;
+  }
+  function updateSeats(v){
+    v = Number(v);
+    document.getElementById('rowLabelSeats').textContent = v;
+    document.getElementById('seatCount').textContent = 4*v + 4;
+  }
+
+  /* ---------- QUIZ ---------- */
+  const quiz = [
+    {q:'What comes next? 7, 10, 13, 16, __', options:['18','19','20','22'], answer:1,
+     explain:'Each term adds 3, so 16 + 3 = 19.'},
+    {q:'Using the hexagon rule m = 5n + 1, how many matchsticks for n = 7 hexagons?', options:['35','36','40','31'], answer:1,
+     explain:'5 × 7 + 1 = 36.'},
+    {q:'In the sequence 9, 13, 17, 21, ... what number is added each time?', options:['3','4','5','9'], answer:1,
+     explain:'13 − 9 = 4, and 17 − 13 = 4 — always +4.'},
+    {q:'A bacteria colony doubles every hour. Starting from 1 bacterium, the dish is completely full on Hour 10. On which hour was it exactly HALF full?', options:['Hour 8','Hour 9','Hour 10','Hour 5'], answer:1,
+     explain:'Since it doubles every hour, the hour right before full is always half full — Hour 9.'},
+    {q:'What does "generalizing" mean in algebra?', options:['Guessing randomly','Turning one specific example into a rule that works for every case','Only using even numbers','Memorizing every answer'], answer:1,
+     explain:'Generalizing means finding one rule that works for ANY case, not just a single example.'}
+  ];
+  const quizAnswers = {};
+
+  function renderQuiz(){
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    quiz.forEach((item, qi)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = (qi+1) + '. ' + item.q;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      item.options.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>selectOption(qi, oi, qDiv);
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+      const explain = document.createElement('div');
+      explain.className = 'quiz-explain';
+      explain.id = 'explain-'+qi;
+      explain.textContent = item.explain;
+      qDiv.appendChild(explain);
+      container.appendChild(qDiv);
+    });
+  }
+  function selectOption(qi, oi, qDiv){
+    quizAnswers[qi] = oi;
+    const buttons = qDiv.querySelectorAll('.opt-btn');
+    buttons.forEach((b, idx)=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(idx === oi) b.classList.add(idx === quiz[qi].answer ? 'selected-correct' : 'selected-wrong');
+    });
+    document.getElementById('explain-'+qi).classList.add('show');
+  }
+  function checkScore(){
+    if(Object.keys(quizAnswers).length < quiz.length){
+      document.getElementById('answerAllMsg').style.display = 'block';
+      return;
+    }
+    document.getElementById('answerAllMsg').style.display = 'none';
+    let score = 0;
+    quiz.forEach((item, qi)=>{ if(quizAnswers[qi] === item.answer) score++; });
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'block';
+    banner.textContent = 'You scored ' + score + ' / ' + quiz.length + '! ' +
+      (score >= 4 ? '🌟 Superstar!' : score >= 3 ? '👍 Nice work!' : '💪 Keep practicing!');
+    awardStar('quiz');
+    if(score >= 4) confettiBurst(40);
+  }
+  renderQuiz();
+
+  /* ---------- CONFETTI ---------- */
+  function confettiBurst(count){
+    const colors = ['#ff6ec7','#a06cd5','#4cc9f0','#06d6a0','#ffd166','#ff9e45','#ef476f'];
+    for(let i=0;i<count;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random()*100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animationDuration = (2 + Math.random()*2) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(piece);
+      setTimeout(()=>piece.remove(), 4500);
+    }
+  }
+</script>
+</body>
+</html>

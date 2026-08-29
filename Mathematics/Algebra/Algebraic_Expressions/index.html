@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Algebraic Expressions 🧮</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:var(--ink);
+    padding:10px;
+    min-height:100vh;
+  }
+  .container{max-width:900px;margin:0 auto;padding-bottom:60px;}
+
+  /* nav */
+  .nav-top{position:fixed;top:14px;display:flex;gap:0;z-index:200;}
+  .nav-back{left:14px;} .nav-home{right:14px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;
+    width:48px;height:48px;font-size:22px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #7a3b97;}
+
+  /* stars tracker */
+  .stars-bar{
+    position:sticky;top:8px;z-index:150;
+    max-width:280px;margin:0 auto 10px auto;
+    background:var(--cream);border:3px solid var(--yellow);
+    border-radius:50px;padding:8px 18px;text-align:center;
+    font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,.1);
+    transition:transform .2s;
+  }
+  .stars-bar.pulse{animation:pulseStar .5s ease;}
+  @keyframes pulseStar{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
+
+  header{text-align:center;margin:70px 0 20px 0;}
+  .emoji{font-size:clamp(50px,12vw,90px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  h1{
+    font-size:clamp(26px,6vw,50px);margin:10px 0;
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{font-size:clamp(15px,2.2vw,20px);color:var(--blue);font-weight:bold;}
+
+  .quicknav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 30px 0;}
+  .quicknav a{
+    text-decoration:none;background:white;color:var(--purple);font-weight:bold;
+    font-size:13px;padding:8px 14px;border-radius:20px;border:2px solid var(--purple);
+    transition:.2s;
+  }
+  .quicknav a:hover{background:var(--purple);color:white;}
+
+  .card{
+    background:var(--cream);border-radius:20px;padding:20px 18px;margin-bottom:28px;
+    border:3px solid var(--purple);box-shadow:0 8px 0 rgba(0,0,0,.08);
+    scroll-margin-top:90px;
+  }
+  .card h2{font-size:clamp(20px,4vw,28px);color:var(--pink);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .card p{font-size:15px;line-height:1.6;margin-bottom:10px;}
+  .callout{
+    background:#fff;border-left:8px solid var(--teal);border-radius:10px;
+    padding:12px 16px;margin:14px 0;font-size:15px;font-weight:bold;color:var(--ink);
+  }
+  .callout.purple{border-left-color:var(--purple);}
+  .callout.orange{border-left-color:var(--orange);}
+
+  .mascot-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:14px 0;}
+  .mascot{font-size:56px;flex-shrink:0;filter:drop-shadow(0 4px 4px rgba(0,0,0,.15));}
+  .mascot.pulse2{animation:pulse2 1.6s ease-in-out infinite;}
+  @keyframes pulse2{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+
+  /* constant/variable/operator chips */
+  .chip-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;}
+  .chip{
+    background:white;border:3px solid var(--orange);border-radius:14px;
+    padding:12px 16px;cursor:pointer;font-weight:bold;font-size:18px;
+    text-align:center;min-width:56px;box-shadow:0 5px 0 #d97e2f;
+    transition:transform .15s;user-select:none;
+  }
+  .chip:hover{transform:translateY(-3px);}
+  .chip:active{transform:translateY(3px);box-shadow:0 2px 0 #d97e2f;}
+  .chip.flipped{background:var(--teal);color:white;box-shadow:0 5px 0 #04a37e;border-color:#04a37e;}
+  .chip.flipped.is-variable{background:var(--purple);box-shadow:0 5px 0 #7a3b97;border-color:#7a3b97;}
+  .chip small{display:block;font-weight:normal;font-size:12px;margin-top:6px;}
+  .picker-label{font-weight:bold;font-size:14px;margin-bottom:2px;}
+
+  /* sliders */
+  .slider-box{
+    background:white;border-radius:16px;padding:16px;margin-top:12px;
+    border:2px dashed var(--blue);text-align:center;
+  }
+  input[type=range]{width:100%;accent-color:var(--purple);height:28px;cursor:pointer;}
+  .big-readout{font-size:clamp(20px,5vw,32px);font-weight:bold;color:var(--purple);margin:10px 0;}
+  .big-readout span{color:var(--red);}
+  .emoji-row{font-size:20px;letter-spacing:1px;min-height:30px;margin-top:8px;line-height:1.6;word-break:break-word;}
+
+  /* pattern rows / fill-ins */
+  .pattern-row{
+    background:white;border-radius:14px;padding:14px;margin-bottom:14px;
+    border:2px solid #ddd;display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  }
+  .pat-chip{background:var(--yellow);border-radius:8px;padding:6px 14px;font-weight:bold;font-size:18px;}
+  .pat-chip.q{background:#eee;color:#999;}
+  .pat-input{
+    width:70px;padding:8px;border-radius:8px;border:2px solid #ccc;
+    font-size:16px;text-align:center;font-weight:bold;
+  }
+  .pat-input.correct{border-color:var(--teal);background:#e8fff8;}
+  .pat-input.wrong{border-color:var(--red);background:#fff0f3;}
+  .mini-btn{
+    background:var(--purple);color:white;border:none;border-radius:8px;
+    padding:8px 16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 #7a3b97;
+  }
+  .mini-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #7a3b97;}
+  .pat-feedback{font-size:13px;font-weight:bold;}
+
+  /* spot the token game */
+  .expr-block{
+    background:white;border-radius:14px;padding:14px;margin-bottom:14px;
+    border:2px solid #ddd;
+  }
+  .expr-text{font-size:24px;font-weight:bold;margin-bottom:6px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .token-btn{
+    background:var(--yellow);border:none;border-radius:8px;padding:6px 14px;
+    font-size:22px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 #c99a1f;
+    transition:.15s;
+  }
+  .token-btn:hover{transform:translateY(-2px);}
+  .token-btn.op{background:none;box-shadow:none;cursor:default;font-size:24px;color:#999;padding:0 2px;}
+  .token-btn.correct{background:var(--teal);color:white;box-shadow:0 3px 0 #04a37e;}
+  .token-btn.wrong{animation:shake .4s;background:var(--red);color:white;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  /* domain flip cards */
+  .domain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:14px;}
+  .flip-card{perspective:1200px;height:260px;cursor:pointer;}
+  .flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;}
+  .flip-card.flipped .flip-card-inner{transform:rotateY(180deg);}
+  .flip-front,.flip-back{
+    position:absolute;width:100%;height:100%;backface-visibility:hidden;
+    border-radius:16px;padding:14px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+  }
+  .flip-front{background:white;border:3px solid var(--teal);}
+  .flip-back{background:#fffbe8;border:3px solid var(--orange);transform:rotateY(180deg);
+    justify-content:flex-start;overflow-y:auto;font-size:13px;}
+  .flip-front .ficon{font-size:44px;margin-bottom:8px;}
+  .flip-front h3{color:var(--pink);font-size:16px;margin-bottom:6px;}
+  .flip-front span{font-size:12px;color:#888;}
+  .flip-back h4{color:var(--orange);font-size:14px;margin-bottom:4px;}
+  .flip-back .mini-readout{font-weight:bold;color:var(--purple);font-size:15px;margin:6px 0;}
+  .flip-back input[type=range]{height:20px;margin:6px 0;}
+
+  /* quiz (shared style) */
+  .quiz-q{background:white;border-radius:14px;padding:14px;margin-bottom:16px;border:2px solid #ddd;}
+  .quiz-q h4{color:var(--purple);margin-bottom:10px;font-size:16px;}
+  .opt-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .opt-btn{
+    background:#f0f0f0;border:2px solid #ccc;border-radius:10px;padding:10px 16px;
+    font-size:14px;font-weight:bold;cursor:pointer;transition:.15s;
+  }
+  .opt-btn:hover{transform:translateY(-2px);}
+  .opt-btn.selected-correct{background:var(--teal);color:white;border-color:#04a37e;}
+  .opt-btn.selected-wrong{background:var(--red);color:white;border-color:#c1274b;}
+  .quiz-explain{font-size:12px;color:#777;margin-top:8px;display:none;}
+  .quiz-explain.show{display:block;}
+
+  .cta-btn{
+    display:block;margin:20px auto 0 auto;background:var(--pink);color:white;
+    border:none;border-radius:50px;padding:14px 34px;font-size:17px;font-weight:bold;
+    cursor:pointer;box-shadow:0 5px 0 #c93f96;transition:.15s;
+  }
+  .cta-btn:hover{transform:translateY(-2px);}
+  .cta-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c93f96;}
+  #scoreBanner{
+    display:none;text-align:center;margin-top:16px;padding:16px;border-radius:14px;
+    font-size:18px;font-weight:bold;color:white;background:var(--purple);
+  }
+  #answerAllMsg{display:none;text-align:center;color:var(--red);font-weight:bold;margin-top:10px;}
+
+  .recap-list{list-style:none;}
+  .recap-list li{
+    background:white;border-radius:10px;padding:10px 14px;margin-bottom:8px;
+    border-left:6px solid var(--blue);font-size:14px;
+  }
+
+  .coming-soon{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:14px;}
+  .soon-card{
+    background:#eee;border-radius:14px;padding:14px;text-align:center;color:#999;
+    border:3px dashed #ccc;
+  }
+  .soon-card .se{font-size:30px;margin-bottom:6px;opacity:.6;}
+
+  .confetti-piece{
+    position:fixed;top:-20px;width:10px;height:10px;z-index:999;pointer-events:none;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{to{transform:translateY(110vh) rotate(360deg);opacity:.8;}}
+
+  footer.pagefoot{text-align:center;margin-top:20px;font-size:13px;color:#999;}
+
+  .explore-card{
+    background:white;border-radius:14px;padding:14px;text-align:center;
+    border:3px solid var(--teal);text-decoration:none;color:inherit;
+    transition:.2s;display:block;
+  }
+  .explore-card:hover{transform:translateY(-6px);box-shadow:0 8px 15px rgba(0,0,0,.15);}
+  .explore-card .se{font-size:30px;margin-bottom:6px;}
+</style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Algebra">⬅️</button>
+    </a>
+  </div>
+  <div class="nav-top nav-home">
+    <a href="../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+
+    <header>
+      <div class="emoji">🧮</div>
+      <h1>Algebraic Expressions</h1>
+      <p class="subtitle">Snapping constants, variables and operations together like building blocks! ✨</p>
+    </header>
+
+    <div class="stars-bar" id="starsBar">⭐ Stars collected: <span id="starsCount">0</span> / 6</div>
+
+    <div class="quicknav">
+      <a href="#sec-builder">🧱 Builder</a>
+      <a href="#sec-classify">🔎 Classify</a>
+      <a href="#sec-terms">🧩 Term Count</a>
+      <a href="#sec-translate">🔁 Translate</a>
+      <a href="#sec-evaluate">🧮 Evaluate</a>
+      <a href="#sec-domains">🌍 Explore</a>
+      <a href="#sec-quiz">🏆 Quiz</a>
+    </div>
+
+    <!-- SECTION 1: DEFINITION + EXPRESSION BUILDER -->
+    <section class="card" id="sec-builder">
+      <h2>🧱 Building With Algebra Blocks</h2>
+      <div class="mascot-row">
+        <div class="mascot pulse2">🧱</div>
+        <p>Think of algebra like LEGO! A <b>constant</b> is a fixed block that never changes shape — like a plain 5-stud brick. A <b>variable</b> is a block that can change — its value can be anything. An <b>operation</b> (+, −, ×, ÷) is the connector piece that snaps the blocks together.</p>
+      </div>
+      <div class="callout">
+        An <b>algebraic expression</b> is what you get when you combine <b>constants</b>, <b>variables</b>, and <b>operations</b> — for example, <b>5 + x</b>.
+      </div>
+      <p>Try the Expression Builder below! Pick one constant block, one connector, and one variable block, and watch your expression snap together.</p>
+
+      <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:14px;">
+        <div>
+          <div class="picker-label" style="color:var(--orange);">🔢 Constant</div>
+          <div class="chip-row" id="constChips">
+            <div class="chip" onclick="selectConst(this,'1')">1</div>
+            <div class="chip" onclick="selectConst(this,'5')">5</div>
+            <div class="chip" onclick="selectConst(this,'10')">10</div>
+          </div>
+        </div>
+        <div>
+          <div class="picker-label" style="color:var(--teal);">🔗 Operation</div>
+          <div class="chip-row" id="opChips">
+            <div class="chip" onclick="selectOp(this,'+')">+</div>
+            <div class="chip" onclick="selectOp(this,'−')">−</div>
+          </div>
+        </div>
+        <div>
+          <div class="picker-label" style="color:var(--purple);">🔤 Variable</div>
+          <div class="chip-row" id="varChips">
+            <div class="chip" onclick="selectVar(this,'x')">x</div>
+            <div class="chip" onclick="selectVar(this,'y')">y</div>
+            <div class="chip" onclick="selectVar(this,'a')">a</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-box">
+        <div class="big-readout" id="builderReadout">Pick a constant, operation, and variable!</div>
+        <p style="font-size:14px;line-height:1.8;">
+          <span style="color:var(--orange);font-weight:bold;">Constant: <span id="lblConst">—</span></span> &nbsp;&nbsp;
+          <span style="color:var(--teal);font-weight:bold;">Operation: <span id="lblOp">—</span></span> &nbsp;&nbsp;
+          <span style="color:var(--purple);font-weight:bold;">Variable: <span id="lblVar">—</span></span>
+        </p>
+      </div>
+      <div class="pat-feedback" id="builderFeedback" style="margin-top:8px;"></div>
+    </section>
+
+    <!-- SECTION 2: ARITHMETIC VS ALGEBRAIC -->
+    <section class="card" id="sec-classify">
+      <h2>🔎 Arithmetic or Algebraic?</h2>
+      <p>An <b>arithmetic expression</b> uses only constants (numbers) — like <b>12 + 8</b>. An <b>algebraic expression</b> contains at least one variable — like <b>3x + 7</b>.</p>
+      <div class="callout purple">Spot the variable and you've found an algebraic expression! No variable? It's just arithmetic.</div>
+      <p>Tap the correct label for each expression below:</p>
+      <div id="classifyGame"></div>
+    </section>
+
+    <!-- SECTION 3: TYPES BY TERM COUNT -->
+    <section class="card" id="sec-terms">
+      <h2>🧩 Monomial, Binomial, Trinomial...</h2>
+      <p>Expressions are named by how many <b>terms</b> (parts joined by + or −) they have:</p>
+      <div class="callout">
+        <b>Monomial</b> = 1 term &nbsp;|&nbsp; <b>Binomial</b> = 2 terms &nbsp;|&nbsp; <b>Trinomial</b> = 3 terms
+      </div>
+      <div class="callout orange">"<b>Polynomial</b>" is the general name for any expression with <b>2 or more terms</b> — so binomials and trinomials are both examples of polynomials!</div>
+      <p>Tap the correct term-count name for each expression:</p>
+      <div id="termsGame"></div>
+    </section>
+
+    <!-- SECTION 4: TRANSLATION SKILL -->
+    <section class="card" id="sec-translate">
+      <h2>🔁 Words &harr; Expressions</h2>
+      <p>Algebra is a translation skill — you can turn <b>words into expressions</b>, and turn <b>expressions back into words</b>. Try both directions below!</p>
+      <div id="translateGame"></div>
+    </section>
+
+    <!-- SECTION 5: EVALUATING AN EXPRESSION -->
+    <section class="card" id="sec-evaluate">
+      <h2>🧮 Evaluating an Expression</h2>
+      <p>To <b>evaluate</b> an expression means to substitute a specific number in for the variable, then compute the result.</p>
+      <div class="callout">Expression: <b>3x + 4</b>. Slide x and watch the value update live!</div>
+      <div class="slider-box">
+        <input type="range" id="evalSlider" min="1" max="10" value="1" oninput="updateEval(this.value)">
+        <div class="big-readout">3 &times; <span id="evalX">1</span> + 4 = <span id="evalResult">7</span></div>
+      </div>
+
+      <p style="margin-top:16px;">Now you try! Evaluate each expression and check your answer:</p>
+
+      <div class="pattern-row">
+        <span>Evaluate 3x + 4 when x = 5 &rarr;</span>
+        <input type="number" class="pat-input" id="ev1Input">
+        <button class="mini-btn" onclick="checkEval('ev1',19)">Check</button>
+        <span class="pat-feedback" id="ev1Feedback"></span>
+      </div>
+      <div class="pattern-row">
+        <span>Evaluate 7y &minus; 2 when y = 4 &rarr;</span>
+        <input type="number" class="pat-input" id="ev2Input">
+        <button class="mini-btn" onclick="checkEval('ev2',26)">Check</button>
+        <span class="pat-feedback" id="ev2Feedback"></span>
+      </div>
+      <div class="pattern-row">
+        <span>Evaluate 10 &minus; 2p when p = 3 &rarr;</span>
+        <input type="number" class="pat-input" id="ev3Input">
+        <button class="mini-btn" onclick="checkEval('ev3',4)">Check</button>
+        <span class="pat-feedback" id="ev3Feedback"></span>
+      </div>
+    </section>
+
+    <!-- SECTION 6: DOMAIN EXPLORER -->
+    <section class="card" id="sec-domains">
+      <h2>🌍 Expressions Are Everywhere!</h2>
+      <p>Tap a card to see how evaluating an expression solves a real problem.</p>
+      <div class="domain-grid">
+
+        <div class="flip-card" id="domainCard1" onclick="flipDomain(this,1)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">📐</div>
+              <h3>Geometry</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>Area of a rectangle = l &times; b</h4>
+              <svg viewBox="0 0 120 120" style="width:80px;height:80px;margin:4px auto;">
+                <rect id="rectShape" x="10" y="40" width="60" height="30" fill="#e0f7ff" stroke="#a06cd5" stroke-width="4"/>
+              </svg>
+              <div class="mini-readout">l = <span id="lLabel">2</span>, b = <span id="bLabel">2</span></div>
+              <input type="range" id="lSlider" min="2" max="10" value="2" oninput="updateRect()">
+              <input type="range" id="bSlider" min="2" max="10" value="2" oninput="updateRect()">
+              <div class="mini-readout">Area = <span id="areaLabel">4</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard2" onclick="flipDomain(this,2)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">🔬</div>
+              <h3>Science</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>Speed = Distance &divide; Time</h4>
+              <div class="mini-readout">Distance = <span id="distLabel">10</span> km</div>
+              <input type="range" id="distSlider" min="10" max="100" step="10" value="10" oninput="updateSpeed()">
+              <div class="mini-readout">Time = <span id="timeLabel">1</span> hr</div>
+              <input type="range" id="timeSlider" min="1" max="10" value="1" oninput="updateSpeed()">
+              <div class="mini-readout">Speed = <span id="speedLabel">10</span> km/h</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard3" onclick="flipDomain(this,3)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">📓</div>
+              <h3>Daily Life</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>One notebook costs ₹15. Total cost = 15 &times; n</h4>
+              <div class="mini-readout">Notebooks (n) = <span id="nLabel">1</span></div>
+              <input type="range" id="nSlider" min="1" max="10" value="1" oninput="updateCost()">
+              <div class="mini-readout">Total cost = ₹<span id="costLabel">15</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard4" onclick="flipDomain(this,4)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">🤝</div>
+              <h3>Daily Life</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>₹T shared equally among 4 friends → each gets T &divide; 4</h4>
+              <div class="mini-readout">Total (T) = ₹<span id="tLabel">4</span></div>
+              <input type="range" id="tSlider" min="4" max="40" step="4" value="4" oninput="updateShare()">
+              <div class="mini-readout">Each friend gets ₹<span id="shareLabel">1</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUICK RECAP -->
+    <section class="card">
+      <h2>📝 Quick Recap</h2>
+      <ul class="recap-list">
+        <li>🧱 An <b>algebraic expression</b> combines constants, variables, and operations (+, −, ×, ÷).</li>
+        <li>🔎 <b>Arithmetic</b> expressions use only numbers; <b>algebraic</b> expressions have at least one variable.</li>
+        <li>🧩 By term count: <b>monomial</b> (1 term), <b>binomial</b> (2 terms), <b>trinomial</b> (3 terms) — and <b>polynomial</b> is the general name for 2 or more terms.</li>
+        <li>🔁 We can translate words &harr; expressions in both directions.</li>
+        <li>🧮 To <b>evaluate</b> an expression, substitute a number for the variable and compute.</li>
+      </ul>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="card" id="sec-quiz">
+      <h2>🏆 Final Challenge</h2>
+      <p>Answer all 5 questions, then hit "Check My Score"!</p>
+      <div id="quizContainer"></div>
+      <div id="answerAllMsg">Oops! Please answer every question first 😊</div>
+      <button class="cta-btn" onclick="checkScore()">Check My Score 🎉</button>
+      <div id="scoreBanner"></div>
+    </section>
+
+    <section class="card">
+      <h2>🔗 Explore More Algebra Lessons</h2>
+      <p>Ready for the next adventure?</p>
+      <div class="coming-soon">
+        <a class="explore-card" href="../Constants_and_Variables/index.html"><div class="se">🔡</div>Constants &amp; Variables</a>
+        <a class="explore-card" href="../Patterns_and_Generalization/index.html"><div class="se">🔍</div>Patterns &amp; Generalization</a>
+        <a class="explore-card" href="../Equations/index.html"><div class="se">⚖️</div>Equations</a>
+        <a class="explore-card" href="../Operations_on_Expressions/index.html"><div class="se">➕</div>Operations on Expressions</a>
+      </div>
+    </section>
+
+    <footer class="pagefoot">Made with 💜 for curious young mathematicians</footer>
+  </div>
+
+<script>
+  /* ---------- STARS ---------- */
+  const earnedStars = new Set();
+  function awardStar(id){
+    if(earnedStars.has(id)) return;
+    earnedStars.add(id);
+    document.getElementById('starsCount').textContent = earnedStars.size;
+    const bar = document.getElementById('starsBar');
+    bar.classList.remove('pulse'); void bar.offsetWidth; bar.classList.add('pulse');
+    if(earnedStars.size === 6) setTimeout(()=>confettiBurst(60),200);
+  }
+
+  /* ---------- SECTION 1: EXPRESSION BUILDER ---------- */
+  const builderState = {c:null, o:null, v:null};
+  const builderCombos = new Set();
+  function selectChip(rowId, el){
+    document.getElementById(rowId).querySelectorAll('.chip').forEach(c=>c.classList.remove('flipped'));
+    el.classList.add('flipped');
+  }
+  function selectConst(el, v){
+    selectChip('constChips', el);
+    builderState.c = v;
+    document.getElementById('lblConst').textContent = v;
+    updateBuilder();
+  }
+  function selectOp(el, v){
+    selectChip('opChips', el);
+    builderState.o = v;
+    document.getElementById('lblOp').textContent = v;
+    updateBuilder();
+  }
+  function selectVar(el, v){
+    selectChip('varChips', el);
+    builderState.v = v;
+    document.getElementById('lblVar').textContent = v;
+    updateBuilder();
+  }
+  function updateBuilder(){
+    const {c,o,v} = builderState;
+    const readout = document.getElementById('builderReadout');
+    const fb = document.getElementById('builderFeedback');
+    if(c && o && v){
+      const expr = c + ' ' + o + ' ' + v;
+      readout.textContent = expr;
+      builderCombos.add(expr);
+      if(builderCombos.size >= 3){
+        fb.textContent = '🎉 Awesome! You built ' + builderCombos.size + ' different expressions!';
+        fb.style.color = 'var(--teal)';
+        awardStar('builder');
+      } else {
+        fb.textContent = 'Nice! Try mixing up the pieces to build ' + (3 - builderCombos.size) + ' more different expression(s).';
+        fb.style.color = 'var(--purple)';
+      }
+    } else {
+      readout.textContent = 'Pick a constant, operation, and variable!';
+    }
+  }
+
+  /* ---------- SECTION 2: ARITHMETIC VS ALGEBRAIC ---------- */
+  const classifyItems = [
+    {expr:'12 + 8', answer:'Arithmetic'},
+    {expr:'3x + 7', answer:'Algebraic'},
+    {expr:'100 − 25', answer:'Arithmetic'},
+    {expr:'9y − 4', answer:'Algebraic'},
+    {expr:'6 × 2 + 1', answer:'Arithmetic'},
+    {expr:'2a + 3b', answer:'Algebraic'}
+  ];
+  const classifySolved = new Set();
+  function renderClassify(){
+    const container = document.getElementById('classifyGame');
+    container.innerHTML = '';
+    classifyItems.forEach((item, i)=>{
+      const row = document.createElement('div');
+      row.className = 'pattern-row';
+
+      const chip = document.createElement('span');
+      chip.className = 'pat-chip';
+      chip.textContent = item.expr;
+      row.appendChild(chip);
+
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      ['Arithmetic','Algebraic'].forEach(choice=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = choice;
+        b.onclick = ()=>selectClassify(i, choice, optRow);
+        optRow.appendChild(b);
+      });
+      row.appendChild(optRow);
+
+      container.appendChild(row);
+    });
+  }
+  function selectClassify(i, choice, optRow){
+    const buttons = optRow.querySelectorAll('.opt-btn');
+    buttons.forEach(b=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(b.textContent === choice) b.classList.add(choice === classifyItems[i].answer ? 'selected-correct' : 'selected-wrong');
+    });
+    if(choice === classifyItems[i].answer){
+      classifySolved.add(i);
+      if(classifySolved.size === classifyItems.length) awardStar('classify');
+    }
+  }
+  renderClassify();
+
+  /* ---------- SECTION 3: TERM COUNT ---------- */
+  const termOptions = ['Monomial (1 term)','Binomial (2 terms)','Trinomial (3 terms)','Polynomial (4 terms)'];
+  const termsItems = [
+    {expr:'8', answer:0},
+    {expr:'5y + 2m', answer:1},
+    {expr:'9a', answer:0},
+    {expr:'2x + 3y + 7', answer:2},
+    {expr:'3x − 5y', answer:1},
+    {expr:'4p + 3q − r', answer:2}
+  ];
+  const termsSolved = new Set();
+  function renderTerms(){
+    const container = document.getElementById('termsGame');
+    container.innerHTML = '';
+    termsItems.forEach((item, i)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = item.expr;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      termOptions.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>selectTerms(i, oi, optRow);
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+      container.appendChild(qDiv);
+    });
+  }
+  function selectTerms(i, oi, optRow){
+    const buttons = optRow.querySelectorAll('.opt-btn');
+    buttons.forEach((b, idx)=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(idx === oi) b.classList.add(idx === termsItems[i].answer ? 'selected-correct' : 'selected-wrong');
+    });
+    if(oi === termsItems[i].answer){
+      termsSolved.add(i);
+      if(termsSolved.size === termsItems.length) awardStar('terms');
+    }
+  }
+  renderTerms();
+
+  /* ---------- SECTION 4: TRANSLATION ---------- */
+  const translateItems = [
+    {q:'"5 more than a number y"', options:['y + 5','5 − y','5y','y − 5'], answer:0},
+    {q:'"3 less than twice a number x"', options:['2x − 3','3 − 2x','2x + 3','x − 3'], answer:0},
+    {q:'"The sum of a number n and 12"', options:['n + 12','12 − n','12n','n − 12'], answer:0},
+    {q:'"4x + 7"', options:['7 more than 4 times a number x','4 more than 7 times a number x','7 less than 4 times a number x','4 times the sum of x and 7'], answer:0},
+    {q:'"p − 9"', options:['9 less than a number p','9 more than a number p','a number p divided by 9','9 times a number p'], answer:0}
+  ];
+  const translateSolved = new Set();
+  function renderTranslate(){
+    const container = document.getElementById('translateGame');
+    container.innerHTML = '';
+    translateItems.forEach((item, i)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = item.q;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      item.options.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>selectTranslate(i, oi, optRow);
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+      container.appendChild(qDiv);
+    });
+  }
+  function selectTranslate(i, oi, optRow){
+    const buttons = optRow.querySelectorAll('.opt-btn');
+    buttons.forEach((b, idx)=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(idx === oi) b.classList.add(idx === translateItems[i].answer ? 'selected-correct' : 'selected-wrong');
+    });
+    if(oi === translateItems[i].answer){
+      translateSolved.add(i);
+      if(translateSolved.size === translateItems.length) awardStar('translate');
+    }
+  }
+  renderTranslate();
+
+  /* ---------- SECTION 5: EVALUATE ---------- */
+  function updateEval(v){
+    v = Number(v);
+    document.getElementById('evalX').textContent = v;
+    document.getElementById('evalResult').textContent = 3*v + 4;
+  }
+  const evalSolved = new Set();
+  function checkEval(id, answer){
+    const input = document.getElementById(id+'Input');
+    const fb = document.getElementById(id+'Feedback');
+    if(input.value === ''){ fb.textContent = 'Type a number!'; fb.style.color = 'var(--red)'; return; }
+    const val = Number(input.value);
+    if(val === answer){
+      input.classList.remove('wrong'); input.classList.add('correct');
+      fb.textContent = '✅ Correct!'; fb.style.color = 'var(--teal)';
+      evalSolved.add(id);
+      if(evalSolved.size === 3) awardStar('evaluate');
+    } else {
+      input.classList.remove('correct'); input.classList.add('wrong');
+      fb.textContent = 'Try again!'; fb.style.color = 'var(--red)';
+    }
+  }
+
+  /* ---------- SECTION 6: DOMAIN EXPLORER ---------- */
+  const openedDomains = new Set();
+  function flipDomain(el, id){
+    el.classList.toggle('flipped');
+    openedDomains.add(id);
+    if(openedDomains.size === 4) awardStar('evaluate');
+  }
+  function updateRect(){
+    const l = Number(document.getElementById('lSlider').value);
+    const b = Number(document.getElementById('bSlider').value);
+    document.getElementById('lLabel').textContent = l;
+    document.getElementById('bLabel').textContent = b;
+    document.getElementById('areaLabel').textContent = l*b;
+    const rect = document.getElementById('rectShape');
+    rect.setAttribute('width', l*8);
+    rect.setAttribute('height', b*8);
+    rect.setAttribute('x', 60 - (l*8)/2);
+    rect.setAttribute('y', 60 - (b*8)/2);
+  }
+  function updateSpeed(){
+    const d = Number(document.getElementById('distSlider').value);
+    const t = Number(document.getElementById('timeSlider').value);
+    document.getElementById('distLabel').textContent = d;
+    document.getElementById('timeLabel').textContent = t;
+    let speed = d/t;
+    speed = Math.round(speed*10)/10;
+    document.getElementById('speedLabel').textContent = speed;
+  }
+  function updateCost(){
+    const n = Number(document.getElementById('nSlider').value);
+    document.getElementById('nLabel').textContent = n;
+    document.getElementById('costLabel').textContent = 15*n;
+  }
+  function updateShare(){
+    const t = Number(document.getElementById('tSlider').value);
+    document.getElementById('tLabel').textContent = t;
+    document.getElementById('shareLabel').textContent = t/4;
+  }
+  updateRect();
+
+  /* ---------- QUIZ ---------- */
+  const quiz = [
+    {q:'Which of these is an ALGEBRAIC expression?', options:['45 − 20','6m + 9','7 × 8','90 ÷ 3'], answer:1,
+     explain:'It has a variable, m.'},
+    {q:'How many terms does 5m + 2n − 8 have, and what is it called?', options:['1 term — Monomial','2 terms — Binomial','3 terms — Trinomial','4 terms — Polynomial'], answer:2,
+     explain:'5m, 2n and −8 — that\'s 3 terms, a trinomial.'},
+    {q:'Which expression matches "7 more than three times a number m"?', options:['3m + 7','7 − 3m','3m − 7','m + 21'], answer:0,
+     explain:'Three times m is 3m, and 7 more than that is 3m + 7.'},
+    {q:'Evaluate 6a − 3 when a = 4.', options:['21','18','24','15'], answer:0,
+     explain:'6×4−3 = 21.'},
+    {q:'If total cost = 12 × n (₹12 per ticket), what is the cost for 6 tickets?', options:['₹60','₹72','₹78','₹66'], answer:1,
+     explain:'12 × 6 = 72.'}
+  ];
+  const quizAnswers = {};
+
+  function renderQuiz(){
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    quiz.forEach((item, qi)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = (qi+1) + '. ' + item.q;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      item.options.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>selectOption(qi, oi, qDiv);
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+      const explain = document.createElement('div');
+      explain.className = 'quiz-explain';
+      explain.id = 'explain-'+qi;
+      explain.textContent = item.explain;
+      qDiv.appendChild(explain);
+      container.appendChild(qDiv);
+    });
+  }
+  function selectOption(qi, oi, qDiv){
+    quizAnswers[qi] = oi;
+    const buttons = qDiv.querySelectorAll('.opt-btn');
+    buttons.forEach((b, idx)=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(idx === oi) b.classList.add(idx === quiz[qi].answer ? 'selected-correct' : 'selected-wrong');
+    });
+    document.getElementById('explain-'+qi).classList.add('show');
+  }
+  function checkScore(){
+    if(Object.keys(quizAnswers).length < quiz.length){
+      document.getElementById('answerAllMsg').style.display = 'block';
+      return;
+    }
+    document.getElementById('answerAllMsg').style.display = 'none';
+    let score = 0;
+    quiz.forEach((item, qi)=>{ if(quizAnswers[qi] === item.answer) score++; });
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'block';
+    banner.textContent = 'You scored ' + score + ' / ' + quiz.length + '! ' +
+      (score >= 4 ? '🌟 Superstar!' : score >= 3 ? '👍 Nice work!' : '💪 Keep practicing!');
+    awardStar('quiz');
+    if(score >= 4) confettiBurst(40);
+  }
+  renderQuiz();
+
+  /* ---------- CONFETTI ---------- */
+  function confettiBurst(count){
+    const colors = ['#ff6ec7','#a06cd5','#4cc9f0','#06d6a0','#ffd166','#ff9e45','#ef476f'];
+    for(let i=0;i<count;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random()*100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animationDuration = (2 + Math.random()*2) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(piece);
+      setTimeout(()=>piece.remove(), 4500);
+    }
+  }
+</script>
+</body>
+</html>
