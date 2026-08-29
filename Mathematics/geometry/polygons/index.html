@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Polygons 🔷</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .mascot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:50%;}
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .tabbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .tab-btn{
+    background:white;border:3px solid var(--purple);color:var(--purple);font-weight:bold;font-size:14px;
+    padding:8px 16px;border-radius:14px;cursor:pointer;transition:all .2s;
+  }
+  .tab-btn:hover{transform:translateY(-2px);}
+  .tab-btn.active{background:var(--purple);color:white;}
+
+  .stage{background:white;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .caption{
+    text-align:center;font-size:clamp(14px,2vw,16px);font-weight:bold;
+    background:#f0e6ff;border-radius:12px;padding:10px 16px;min-height:24px;
+  }
+  .caption b{color:var(--pink);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+
+  .realworld{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .realworld .rw-frame{
+    position:relative;width:110px;height:110px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#e6f3ff,#f0e6ff);display:flex;align-items:center;justify-content:center;
+    font-size:56px;flex:0 0 auto;border:3px solid var(--blue);
+  }
+  .realworld .rw-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .realworld p{font-size:14px;max-width:420px;}
+
+  .msg-box{text-align:center;font-weight:bold;font-size:15px;padding:10px;border-radius:12px;background:#eee;min-height:20px;transition:background .2s,color .2s;}
+  .msg-box.good{background:#d4f7e8;color:#048848;}
+  .msg-box.bad{background:#ffe3ea;color:#c0245a;}
+  .msg-box.info{background:#e6f7ff;color:#0a6ca8;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px;}
+  .chip{border:3px solid #cbd5e1;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:bold;background:white;color:#94a3b8;transition:all .2s;cursor:pointer;}
+  .chip.on{border-color:var(--pink);background:var(--pink);color:white;transform:scale(1.08);}
+
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+
+  /* polygons-specific */
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;width:100%;}
+  .gallery-card{background:white;border:3px solid var(--blue);border-radius:16px;padding:10px;text-align:center;}
+  .gallery-card .name{font-weight:bold;font-size:14px;color:var(--purple);margin-top:4px;}
+  .gallery-card .count{font-size:12px;color:#64748b;}
+  .contrast-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;width:100%;}
+  .contrast-card{background:white;border:3px solid var(--purple);border-radius:16px;padding:10px;text-align:center;}
+  .contrast-card .name{font-weight:bold;font-size:14px;margin-top:6px;}
+  .contrast-card.good .name{color:#048848;}
+  .contrast-card.bad .name{color:#c0245a;}
+  .contrast-card .why{font-size:12px;color:#64748b;margin-top:4px;line-height:1.4;max-width:140px;}
+
+  .definition-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
+  .definition-box{flex:1 1 260px;border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.5;}
+  .definition-box.teal{background:#e6fff5;border-left:6px solid var(--teal);}
+  .definition-box.blue{background:#e6f7ff;border-left:6px solid var(--blue);}
+  .definition-box h3{font-size:15px;margin-bottom:6px;}
+  .stat-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%;margin-top:6px;}
+  .stat-tile{background:white;border:3px solid var(--teal);border-radius:14px;padding:10px 16px;text-align:center;min-width:130px;}
+  .stat-tile .stat-label{font-size:12px;color:#64748b;font-weight:bold;}
+  .stat-tile .stat-value{font-size:22px;font-weight:bold;color:var(--pink);}
+  .n-badge{background:var(--purple);color:white;font-weight:bold;font-size:16px;padding:6px 16px;border-radius:999px;min-width:70px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Geometry">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🔷 🔶 🔷</div>
+    <h1><span class="highlight">Polygons</span></h1>
+    <p class="subtitle">Flat shapes made of straight sides — from triangles to decagons!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">📐<img src="../shared/images/mascot.png" alt="" onerror="this.remove()"></div>
+    <p>Hi, Ray the Ruler here 👋 A <b>polygon</b> is any flat shape you can draw with a ruler without lifting it,
+      ending exactly where you started, and never crossing your own line. Let's explore what makes a shape a
+      polygon, and build some ourselves!</p>
+  </div>
+
+  <!-- 1. DEFINITION -->
+  <section class="section">
+    <h2>🔷 What Is a Polygon? <span class="try-badge">Click a corner!</span></h2>
+    <p class="lead">A <b>polygon</b> is a <b>simple closed curve</b> made only of <b>straight line segments</b>.
+      "Simple" means the sides never cross each other, and "closed" means it joins back up to where it started.
+      The corners are called <b>vertices</b> (one is a <b>vertex</b>), and the straight edges are called <b>sides</b>.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 300 260" width="300" id="def-svg">
+        <path id="def-poly" fill="#a06cd5" fill-opacity=".15" stroke="#a06cd5" stroke-width="4"/>
+        <g id="def-diagonals"></g>
+        <g id="def-dots"></g>
+        <g id="def-labels"></g>
+      </svg>
+      <p class="caption" id="def-caption">👆 Click any labelled corner to see which corners are its
+        <b>adjacent vertices</b> (right next door) and which ones need a <b>diagonal</b> to reach!</p>
+    </div>
+
+    <div class="info-box">🔍 <b>Key words:</b> Two vertices are <b>adjacent</b> if a single side joins them directly
+      (like next-door neighbours). Two sides are <b>adjacent</b> if they share a vertex. A <b>diagonal</b> is a line
+      segment that connects two <b>non-adjacent</b> vertices — it cuts across the inside of the polygon instead of
+      running along the edge.</div>
+
+    <div class="realworld">
+      <div class="rw-frame">🔷<img src="images/honeycomb.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> Honeycomb cells, stop signs, and soccer-ball panels are all polygons — hexagons and
+        octagons hiding in plain sight!</p>
+    </div>
+  </section>
+
+  <!-- 2. NAMING GALLERY -->
+  <section class="section">
+    <h2>📛 Naming Polygons by Their Sides</h2>
+    <p class="lead">Polygons are named after how many sides (and vertices!) they have. Here are the regular
+      versions — all sides and all angles equal — from 3 sides up to 10 sides.</p>
+    <div class="stage">
+      <div class="gallery-grid" id="gallery"></div>
+    </div>
+  </section>
+
+  <!-- 3. BUILDER: ANGLE SUMS & DIAGONALS -->
+  <section class="section">
+    <h2>🛠️ Regular Polygon Builder <span class="try-badge">Add a side!</span></h2>
+    <p class="lead">Use the buttons to change the number of sides, and watch the angle sums and diagonals update
+      live. Diagonals (dashed) join every pair of <b>non-adjacent</b> vertices.</p>
+
+    <div class="stage">
+      <div class="btnrow">
+        <button class="action secondary" id="build-minus">− Remove a side</button>
+        <span class="n-badge" id="build-n-badge">n = 5</span>
+        <button class="action" id="build-plus">+ Add a side</button>
+      </div>
+      <svg viewBox="0 0 320 320" width="320" id="build-svg">
+        <g id="build-diagonals"></g>
+        <path id="build-poly" fill="#4cc9f0" fill-opacity=".18" stroke="#4cc9f0" stroke-width="4"/>
+        <g id="build-dots"></g>
+      </svg>
+      <div class="stat-row">
+        <div class="stat-tile"><div class="stat-label">Sides / Vertices</div><div class="stat-value" id="stat-n">5</div></div>
+        <div class="stat-tile"><div class="stat-label">Interior Angle Sum</div><div class="stat-value" id="stat-intsum">540°</div></div>
+        <div class="stat-tile"><div class="stat-label">Each Interior Angle</div><div class="stat-value" id="stat-eachint">108°</div></div>
+        <div class="stat-tile"><div class="stat-label">Exterior Angle Sum</div><div class="stat-value" id="stat-extsum">360°</div></div>
+        <div class="stat-tile"><div class="stat-label">Diagonals</div><div class="stat-value" id="stat-diag">5</div></div>
+      </div>
+      <p class="caption" id="build-caption"></p>
+    </div>
+
+    <div class="info-box">🔍 <b>Formulas:</b> Interior angle sum = <b>(n − 2) × 180°</b>. For a <i>regular</i>
+      polygon (equal angles), each interior angle = the sum ÷ n. The exterior angle sum is <b>always 360°</b> — no
+      matter how many sides! Number of diagonals = <b>n(n − 3) ÷ 2</b> (each of the n vertices connects to n − 3
+      others by a diagonal, and we divide by 2 so we don't count each diagonal twice). A triangle (n = 3) gets
+      0 diagonals — every vertex is already joined to both others by a side!</div>
+  </section>
+
+  <!-- 4. REGULAR/IRREGULAR, CONVEX/CONCAVE -->
+  <section class="section">
+    <h2>🎭 Regular vs Irregular, Convex vs Concave</h2>
+    <p class="lead">These are two completely separate ways to describe a polygon — one is about its <b>measurements</b>,
+      the other is about its <b>shape</b>.</p>
+
+    <div class="definition-row">
+      <div class="definition-box teal">
+        <h3>📐 Regular vs Irregular (about measurements)</h3>
+        <p><b>Regular:</b> ALL sides are the same length AND all angles are the same size. Every corner and every
+          edge matches exactly.</p>
+        <p style="margin-top:8px;"><b>Irregular:</b> the sides and/or angles are different sizes — even one
+          mismatched side or angle is enough to make it irregular.</p>
+      </div>
+      <div class="definition-box blue">
+        <h3>🧭 Convex vs Concave (about shape)</h3>
+        <p><b>Convex:</b> every corner points <i>outward</i> — if you drew a straight line between any two points
+          inside the polygon, that line would always stay fully inside it.</p>
+        <p style="margin-top:8px;"><b>Concave:</b> at least one corner points <i>inward</i>, making a "dent" or
+          arrow-like notch — a straight line between two points inside it can poke outside the shape.</p>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="contrast-grid" id="contrast1"></div>
+    </div>
+  </section>
+
+  <!-- 5. SIMPLE VS SELF-INTERSECTING -->
+  <section class="section">
+    <h2>➰ Simple vs Self-Intersecting</h2>
+    <p class="lead">A true polygon must be <b>simple</b> — its sides never cross. If the sides cross over each
+      other (like a bowtie), it's <b>self-intersecting</b> and isn't considered a polygon at all!</p>
+    <div class="stage">
+      <div class="contrast-grid" id="contrast2"></div>
+    </div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Recap:</b> A polygon is a simple closed shape made of straight sides. It's
+    named by its number of sides (triangle = 3, up through decagon = 10). Interior angle sum = (n − 2) × 180°;
+    exterior angle sum is always 360°; diagonals = n(n − 3) ÷ 2. Regular means equal sides &amp; angles; convex
+    means no dents; simple means no crossing sides.</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 7</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- helpers (shared across geometry pages) ---------- */
+function svgPoint(svg, evt){
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+function makeDraggable(svg, handle, onMove){
+  let dragging = false;
+  handle.addEventListener('pointerdown', e=>{ dragging=true; handle.setPointerCapture(e.pointerId); handle.style.cursor='grabbing'; });
+  handle.addEventListener('pointermove', e=>{ if(dragging) onMove(svgPoint(svg,e)); });
+  ['pointerup','pointercancel'].forEach(ev=>handle.addEventListener(ev, ()=>{ dragging=false; handle.style.cursor='grab'; }));
+}
+function angleFromPoint(vertex, p){
+  const dx = p.x-vertex.x, dy = p.y-vertex.y;
+  return (Math.atan2(-dy,dx)*180/Math.PI + 360) % 360;
+}
+function pointOnCircle(vertex, radius, deg){
+  const rad = deg*Math.PI/180;
+  return { x: vertex.x + radius*Math.cos(rad), y: vertex.y - radius*Math.sin(rad) };
+}
+function arcPathBetween(vertex, radius, fromDeg, toDeg){
+  const start = pointOnCircle(vertex, radius, fromDeg);
+  const end = pointOnCircle(vertex, radius, toDeg);
+  const diff = ((toDeg-fromDeg)+360) % 360;
+  const largeArc = diff>180 ? 1:0;
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 0 ${end.x} ${end.y}`;
+}
+function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+
+/* ---------- shared: build a regular n-gon point list around a center ---------- */
+function regularPolygonPoints(center, radius, n, startDeg){
+  const pts = [];
+  for(let i=0;i<n;i++){
+    pts.push(pointOnCircle(center, radius, startDeg + i*360/n));
+  }
+  return pts;
+}
+function pointsToStr(pts){ return pts.map(p=>`${p.x},${p.y}`).join(' '); }
+
+/* ---------- 1. Definition: click-a-corner pentagon ---------- */
+(function(){
+  const svg = document.getElementById('def-svg');
+  const poly = document.getElementById('def-poly');
+  const diagonalsG = document.getElementById('def-diagonals');
+  const dotsG = document.getElementById('def-dots');
+  const labelsG = document.getElementById('def-labels');
+  const caption = document.getElementById('def-caption');
+  const CENTER = {x:150,y:140}, R = 90, N = 5;
+  const LETTERS = ['A','B','C','D','E'];
+  const verts = regularPolygonPoints(CENTER, R, N, 90);
+
+  poly.setAttribute('d', 'M '+verts.map(p=>`${p.x} ${p.y}`).join(' L ')+' Z');
+
+  const dots = [];
+  verts.forEach((v,i)=>{
+    const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx', v.x); dot.setAttribute('cy', v.y); dot.setAttribute('r', 11);
+    dot.setAttribute('fill', '#a06cd5'); dot.setAttribute('stroke', '#7a3b97'); dot.setAttribute('stroke-width', 2);
+    dot.style.cursor = 'pointer';
+    dot.addEventListener('click', ()=>selectVertex(i));
+    dotsG.appendChild(dot);
+    dots.push(dot);
+
+    const lp = pointOnCircle(CENTER, R+22, 90 + i*360/N);
+    const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('x', lp.x-6); label.setAttribute('y', lp.y+5);
+    label.setAttribute('font-size','16'); label.setAttribute('font-weight','bold');
+    label.textContent = LETTERS[i];
+    labelsG.appendChild(label);
+  });
+
+  function selectVertex(i){
+    diagonalsG.innerHTML = '';
+    dots.forEach((d,k)=> d.setAttribute('fill', k===i ? '#ff6ec7' : '#a06cd5'));
+    const adjacent = [], nonAdjacent = [];
+    for(let k=0;k<N;k++){
+      if(k===i) continue;
+      const diff = Math.min(Math.abs(k-i), N-Math.abs(k-i));
+      if(diff===1) adjacent.push(k); else nonAdjacent.push(k);
+    }
+    adjacent.forEach(k=> dots[k].setAttribute('fill', '#06d6a0'));
+    nonAdjacent.forEach(k=>{
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1', verts[i].x); line.setAttribute('y1', verts[i].y);
+      line.setAttribute('x2', verts[k].x); line.setAttribute('y2', verts[k].y);
+      line.setAttribute('stroke', '#ef476f'); line.setAttribute('stroke-width', 3);
+      line.setAttribute('stroke-dasharray', '7 5');
+      diagonalsG.appendChild(line);
+    });
+    const me = LETTERS[i];
+    const adjNames = adjacent.map(k=>LETTERS[k]).join(' and ');
+    const diagNames = nonAdjacent.map(k=>LETTERS[k]).join(', ');
+    caption.innerHTML = '<b>'+me+'</b> is adjacent to <b>'+adjNames+'</b> (joined by a side, shown in teal). '
+      + 'It needs <b>'+nonAdjacent.length+' diagonals</b> to reach '+diagNames+' (dashed pink lines)!';
+  }
+  selectVertex(0);
+})();
+
+/* ---------- 2. Naming gallery (3 through 10 sides) ---------- */
+(function(){
+  const names = [
+    {n:3, name:'Triangle'}, {n:4, name:'Quadrilateral'}, {n:5, name:'Pentagon'},
+    {n:6, name:'Hexagon'}, {n:7, name:'Heptagon'}, {n:8, name:'Octagon'},
+    {n:9, name:'Nonagon'}, {n:10, name:'Decagon'}
+  ];
+  const gallery = document.getElementById('gallery');
+  const CENTER = {x:60,y:60}, R = 42;
+  names.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS,'svg');
+    svg.setAttribute('viewBox','0 0 120 120'); svg.setAttribute('width','100');
+    const pts = regularPolygonPoints(CENTER, R, item.n, 90);
+    const polygon = document.createElementNS(svgNS,'polygon');
+    polygon.setAttribute('points', pointsToStr(pts));
+    polygon.setAttribute('fill', '#ffd166'); polygon.setAttribute('fill-opacity','.35');
+    polygon.setAttribute('stroke', '#ff9e45'); polygon.setAttribute('stroke-width','3');
+    svg.appendChild(polygon);
+    card.appendChild(svg);
+    const nameDiv = document.createElement('div'); nameDiv.className='name'; nameDiv.textContent = item.name;
+    const countDiv = document.createElement('div'); countDiv.className='count'; countDiv.textContent = item.n+' sides, '+item.n+' vertices';
+    card.appendChild(nameDiv); card.appendChild(countDiv);
+    gallery.appendChild(card);
+  });
+})();
+
+/* ---------- 3. Builder: angle sums + diagonals ---------- */
+(function(){
+  const svg = document.getElementById('build-svg');
+  const poly = document.getElementById('build-poly');
+  const diagonalsG = document.getElementById('build-diagonals');
+  const dotsG = document.getElementById('build-dots');
+  const minusBtn = document.getElementById('build-minus');
+  const plusBtn = document.getElementById('build-plus');
+  const nBadge = document.getElementById('build-n-badge');
+  const statN = document.getElementById('stat-n');
+  const statIntSum = document.getElementById('stat-intsum');
+  const statEachInt = document.getElementById('stat-eachint');
+  const statExtSum = document.getElementById('stat-extsum');
+  const statDiag = document.getElementById('stat-diag');
+  const caption = document.getElementById('build-caption');
+
+  const CENTER = {x:160,y:160}, R = 120;
+  const MIN_N = 3, MAX_N = 12;
+  let n = 5;
+
+  function render(){
+    const verts = regularPolygonPoints(CENTER, R, n, 90);
+    poly.setAttribute('d', 'M '+verts.map(p=>`${p.x} ${p.y}`).join(' L ')+' Z');
+
+    dotsG.innerHTML = '';
+    verts.forEach(v=>{
+      const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      dot.setAttribute('cx', v.x); dot.setAttribute('cy', v.y); dot.setAttribute('r', 7);
+      dot.setAttribute('fill', '#0a6ca8'); dot.setAttribute('stroke','white'); dot.setAttribute('stroke-width', 2);
+      dotsG.appendChild(dot);
+    });
+
+    diagonalsG.innerHTML = '';
+    let diagCount = 0;
+    for(let i=0;i<n;i++){
+      for(let j=i+1;j<n;j++){
+        const diff = j-i;
+        if(diff===1 || diff===n-1) continue; // adjacent vertices, that's a side not a diagonal
+        diagCount++;
+        const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+        line.setAttribute('x1', verts[i].x); line.setAttribute('y1', verts[i].y);
+        line.setAttribute('x2', verts[j].x); line.setAttribute('y2', verts[j].y);
+        line.setAttribute('stroke', '#ff6ec7'); line.setAttribute('stroke-width', 2);
+        line.setAttribute('stroke-dasharray', '6 5'); line.setAttribute('stroke-opacity', '.7');
+        diagonalsG.appendChild(line);
+      }
+    }
+
+    const intSum = (n-2)*180;
+    const eachInt = intSum/n;
+    const diagFormula = n*(n-3)/2;
+
+    nBadge.textContent = 'n = '+n;
+    statN.textContent = n;
+    statIntSum.textContent = intSum+'°';
+    statEachInt.textContent = (Math.round(eachInt*10)/10)+'°';
+    statExtSum.textContent = '360°';
+    statDiag.textContent = diagCount;
+
+    minusBtn.disabled = n<=MIN_N;
+    plusBtn.disabled = n>=MAX_N;
+
+    const shapeNames = {3:'triangle',4:'quadrilateral',5:'pentagon',6:'hexagon',7:'heptagon',8:'octagon',9:'nonagon',10:'decagon',11:'11-gon',12:'12-gon (dodecagon)'};
+    caption.innerHTML = 'A regular '+shapeNames[n]+' has '+n+' interior angles summing to <b>'+intSum+'°</b>, '
+      +'so each angle is <b>'+(Math.round(eachInt*10)/10)+'°</b>. It has <b>'+diagCount+'</b> diagonals, matching '
+      +'n(n − 3) ÷ 2 = '+n+'×'+(n-3)+' ÷ 2 = <b>'+diagFormula+'</b>.';
+  }
+
+  minusBtn.addEventListener('click', ()=>{ if(n>MIN_N){ n--; render(); } });
+  plusBtn.addEventListener('click', ()=>{ if(n<MAX_N){ n++; render(); } });
+  render();
+})();
+
+/* ---------- 4. Regular/Irregular, Convex/Concave contrast gallery ---------- */
+(function(){
+  const container = document.getElementById('contrast1');
+  const CENTER = {x:70,y:70};
+
+  function makeCard(name, why, pts, good, fillColor, strokeColor){
+    const card = document.createElement('div');
+    card.className = 'contrast-card ' + (good ? 'good' : 'bad');
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS,'svg');
+    svg.setAttribute('viewBox','0 0 140 140'); svg.setAttribute('width','130');
+    const polygon = document.createElementNS(svgNS,'polygon');
+    polygon.setAttribute('points', pointsToStr(pts));
+    polygon.setAttribute('fill', fillColor); polygon.setAttribute('fill-opacity','.3');
+    polygon.setAttribute('stroke', strokeColor); polygon.setAttribute('stroke-width','4');
+    svg.appendChild(polygon);
+    card.appendChild(svg);
+    const nameDiv = document.createElement('div'); nameDiv.className='name'; nameDiv.textContent = name;
+    card.appendChild(nameDiv);
+    const whyDiv = document.createElement('div'); whyDiv.className='why'; whyDiv.textContent = why;
+    card.appendChild(whyDiv);
+    return card;
+  }
+
+  // Regular pentagon (all sides & angles equal)
+  const regPentagon = regularPolygonPoints(CENTER, 46, 5, 90);
+  container.appendChild(makeCard('Regular Pentagon ✅', 'All 5 sides and all 5 angles are exactly equal.', regPentagon, true, '#06d6a0', '#048848'));
+
+  // Irregular pentagon (uneven radii -> uneven sides/angles, still simple & convex)
+  const irregRadii = [50, 32, 54, 30, 44];
+  const irregPentagon = irregRadii.map((r,i)=> pointOnCircle(CENTER, r, 90 + i*360/5));
+  container.appendChild(makeCard('Irregular Pentagon ❌', 'The sides and angles are all different sizes — still convex, just not regular.', irregPentagon, false, '#ffd166', '#cc7620'));
+
+  // Convex hexagon (regular)
+  const convexHex = regularPolygonPoints(CENTER, 46, 6, 90);
+  container.appendChild(makeCard('Convex Hexagon ✅', 'Every corner points outward — no dents anywhere.', convexHex, true, '#4cc9f0', '#0a6ca8'));
+
+  // Concave hexagon (one vertex pulled in toward the center -> a "dent")
+  const concaveRadii = [46, 46, 16, 46, 46, 46];
+  const concaveHex = concaveRadii.map((r,i)=> pointOnCircle(CENTER, r, 90 + i*360/6));
+  container.appendChild(makeCard('Concave Hexagon ❌', 'One corner is pulled INWARD, creating a dent — like an arrow tip.', concaveHex, false, '#ff6ec7', '#c0245a'));
+})();
+
+/* ---------- 5. Simple vs Self-intersecting contrast pair ---------- */
+(function(){
+  const container = document.getElementById('contrast2');
+  const CENTER = {x:70,y:70};
+
+  function makeCard(name, pts, good, fillColor, strokeColor){
+    const card = document.createElement('div');
+    card.className = 'contrast-card ' + (good ? 'good' : 'bad');
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS,'svg');
+    svg.setAttribute('viewBox','0 0 140 140'); svg.setAttribute('width','130');
+    const polygon = document.createElementNS(svgNS,'polygon');
+    polygon.setAttribute('points', pointsToStr(pts));
+    polygon.setAttribute('fill', fillColor); polygon.setAttribute('fill-opacity','.3');
+    polygon.setAttribute('stroke', strokeColor); polygon.setAttribute('stroke-width','4');
+    svg.appendChild(polygon);
+    card.appendChild(svg);
+    const nameDiv = document.createElement('div'); nameDiv.className='name'; nameDiv.textContent = name;
+    card.appendChild(nameDiv);
+    return card;
+  }
+
+  // Simple quadrilateral: regular square, sides never cross
+  const simpleQuad = regularPolygonPoints(CENTER, 46, 4, 90);
+  container.appendChild(makeCard('Simple Quadrilateral ✅', simpleQuad, true, '#06d6a0', '#048848'));
+
+  // Self-intersecting "bowtie": connecting corners out of order makes the sides cross
+  const bowtie = [
+    pointOnCircle(CENTER, 46, 90),   // top
+    pointOnCircle(CENTER, 46, 0),    // right
+    pointOnCircle(CENTER, 46, 270),  // bottom
+    pointOnCircle(CENTER, 46, 180)   // left
+  ];
+  // order top -> right -> bottom -> left -> top is simple; swap right/left to force a crossing bowtie
+  const bowtieCrossed = [bowtie[0], bowtie[2], bowtie[1], bowtie[3]];
+  container.appendChild(makeCard('Self-Intersecting ("Bowtie") ❌', bowtieCrossed, false, '#ef476f', '#c0245a'));
+})();
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"What is a polygon?", opts:["Any curved shape","A simple closed shape made of straight line segments","Any 3D shape","A shape with exactly 4 sides"], answer:1,
+   explain:"A polygon is a simple (non-crossing) closed shape made only of straight sides."},
+  {q:"What do we call two vertices that are joined directly by one side?", opts:["Diagonal","Opposite","Adjacent","Concave"], answer:2,
+   explain:"Adjacent vertices are directly connected by a single side, like next-door neighbours."},
+  {q:"A shape with 6 sides is called a...?", opts:["Pentagon","Hexagon","Heptagon","Octagon"], answer:1,
+   explain:"Hexa- means six, so a 6-sided polygon is a hexagon."},
+  {q:"How many diagonals does a quadrilateral (4 sides) have?", opts:["0","1","2","4"], answer:2,
+   explain:"Using n(n − 3) ÷ 2 with n = 4: 4×1 ÷ 2 = 2 diagonals."},
+  {q:"What is the interior angle sum of a pentagon (5 sides)?", opts:["360°","450°","540°","720°"], answer:2,
+   explain:"Interior angle sum = (n − 2) × 180°. For n = 5: (5 − 2) × 180° = 540°."},
+  {q:"The exterior angle sum of ANY polygon is always...?", opts:["180°","360°","(n − 2) × 180°","It depends on n"], answer:1,
+   explain:"No matter how many sides a polygon has, its exterior angles always add up to 360°."},
+  {q:"A hexagon with one corner caving inward, like an arrow, is called...?", opts:["Regular","Convex","Concave","Self-intersecting"], answer:2,
+   explain:"A concave polygon has at least one corner that dents inward, unlike a convex polygon where every corner points outward."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = quizData[qIndex];
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're a polygon pro! 🌟"
+          : score>=total*0.6 ? "Great job! You really know your polygons! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+}
+renderQuestion();
+</script>
+</body>
+</html>
