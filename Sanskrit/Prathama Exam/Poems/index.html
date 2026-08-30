@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poems 🕉️</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe0f0, #e0f7ff, #fff5d6);
+      color: var(--ink);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .nav-top {
+      position: fixed;
+      top: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 101;
+    }
+
+    .nav-back { left: 20px; }
+    .nav-home { right: 20px; }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover { transform: translateY(-2px); }
+
+    .header {
+      text-align: center;
+      margin: 60px 0 30px 0;
+    }
+
+    .big {
+      font-size: clamp(50px, 10vw, 90px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      background: linear-gradient(90deg, #c77dff, #a06cd5, #ff6ec7, #ffd166);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: clamp(16px, 2.2vw, 22px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* Accordion */
+    .accordion {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .accordion-item {
+      background: var(--cream);
+      border-radius: 16px;
+      border: 3px solid var(--purple);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .08);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(90deg, #f3e6ff, #fff0f8);
+      transition: background .2s ease;
+    }
+
+    .accordion-header:hover { background: linear-gradient(90deg, #ecd9ff, #ffe6f2); }
+
+    .accordion-badge {
+      flex-shrink: 0;
+      background: var(--purple);
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(14px, 2vw, 18px);
+    }
+
+    .accordion-title {
+      flex: 1;
+      font-size: clamp(15px, 2.3vw, 20px);
+      font-weight: bold;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .accordion-title .devanagari-preview {
+      display: block;
+      font-size: clamp(17px, 2.6vw, 22px);
+      color: var(--purple);
+    }
+
+    .accordion-title .preview-sub {
+      display: block;
+      font-size: clamp(12px, 1.6vw, 14px);
+      color: #888;
+      font-weight: normal;
+      margin-top: 2px;
+    }
+
+    .accordion-arrow {
+      flex-shrink: 0;
+      font-size: 22px;
+      color: var(--purple);
+      transition: transform .3s ease;
+    }
+
+    .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease;
+      background: white;
+    }
+
+    .accordion-item.open .accordion-body {
+      max-height: 4000px;
+    }
+
+    .accordion-body-inner {
+      padding: 22px 22px 26px 22px;
+    }
+
+    .text-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 700px) {
+      .text-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .verse-block {
+      background: #f5f0ff;
+      border-left: 5px solid var(--purple);
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-size: clamp(15px, 2.2vw, 20px);
+      line-height: 2;
+      color: var(--ink);
+      white-space: pre-line;
+      margin-bottom: 0;
+    }
+
+    .anvaya-block {
+      background: #e8f8f2;
+      border-left: 5px solid var(--teal);
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1.9;
+      color: #1d5a45;
+      white-space: pre-line;
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-weight: bold;
+      color: var(--purple);
+      font-size: clamp(14px, 2vw, 17px);
+      margin: 18px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .overall-meaning {
+      font-size: clamp(13px, 1.9vw, 16px);
+      line-height: 1.8;
+      color: #2d5016;
+      text-align: justify;
+      padding: 16px 18px;
+      background: #fff8e6;
+      border-left: 5px solid var(--yellow);
+      border-radius: 8px;
+      margin-top: 6px;
+    }
+
+    .extract-wrap {
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    .extract-wrap img {
+      max-width: 100%;
+      width: 100%;
+      max-width: 640px;
+      border-radius: 10px;
+      border: 3px solid var(--blue);
+      box-shadow: 0 6px 14px rgba(0,0,0,.12);
+    }
+
+    .extract-caption {
+      font-size: 13px;
+      color: #777;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 18px;
+      color: #a06cd5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Sanskrit">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">📜</div>
+      <h1>पद्यानि · Poems</h1>
+      <p class="subtitle">Prathama Exam Shlokas, with meaning &amp; original pages 🌸</p>
+    </div>
+
+    <div class="accordion">
+
+      <!-- Poem 1 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-badge">१</div>
+          <div class="accordion-title">
+            <span class="devanagari-preview">नास्ति विद्यासमो बन्धुः...</span>
+            <span class="preview-sub">Knowledge is the best companion 📚</span>
+          </div>
+          <div class="accordion-arrow">▼</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="section-title">📖 Shloka</div>
+            <div class="verse-block">नास्ति विद्यासमो बन्धुर्नास्ति सत्यसमं तपः ।
+नास्ति रागसमं दुःखं नास्ति त्यागसमं सुखम् ॥</div>
+
+            <div class="section-title">🧩 Anvaya (Prose Order)</div>
+            <div class="anvaya-block">विद्यासमः बन्धुः नास्ति । सत्यसमं तपः नास्ति ।
+रागसमं दुःखं नास्ति । त्यागसमं सुखं नास्ति ।</div>
+
+            <div class="section-title">💡 Meaning</div>
+            <div class="overall-meaning">
+              Knowledge is the best companion, truth is the greatest austerity, attachment brings the greatest
+              sorrow, and renunciation gives the highest happiness.
+            </div>
+
+            <div class="section-title">🖼️ Original Page</div>
+            <div class="extract-wrap">
+              <img src="poem1.jpeg" alt="Shloka 1 - handwritten/printed extract" loading="lazy" />
+              <div class="extract-caption">Extract from Prathama Exam notes</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Poem 2 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-badge">२</div>
+          <div class="accordion-title">
+            <span class="devanagari-preview">नमसो भूषणं चन्द्रः...</span>
+            <span class="preview-sub">Knowledge adorns everyone 🌙</span>
+          </div>
+          <div class="accordion-arrow">▼</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="section-title">📖 Shloka</div>
+            <div class="verse-block">नमसो भूषणं चन्द्रः नारीणां भूषणं पतिः ।
+पृथिव्या भूषणं राजा विद्या सर्वस्य भूषणम् ॥</div>
+
+            <div class="section-title">🧩 Anvaya (Prose Order)</div>
+            <div class="anvaya-block">नमसः भूषणं चन्द्रः । नारीणां भूषणं पतिः । पृथिव्याः भूषणं राजा । विद्या सर्वस्य भूषणम् ।</div>
+
+            <div class="section-title">💡 Meaning</div>
+            <div class="overall-meaning">
+              The moon beautifies the sky, a husband adorns a woman, a king adorns the earth, and knowledge adorns
+              everyone.
+            </div>
+
+            <div class="section-title">🖼️ Original Page</div>
+            <div class="extract-wrap">
+              <img src="poem2.jpeg" alt="Shloka 2 - handwritten/printed extract" loading="lazy" />
+              <div class="extract-caption">Extract from Prathama Exam notes</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more poems below by copying an .accordion-item block -->
+
+    </div>
+  </div>
+
+  <footer>Made with 💖 for Shreshta's learning adventure</footer>
+
+  <script>
+    function toggleAccordion(headerEl) {
+      const item = headerEl.parentElement;
+      item.classList.toggle('open');
+    }
+  </script>
+</body>
+
+</html>

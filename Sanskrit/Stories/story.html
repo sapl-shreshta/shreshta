@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanjay's Adventure 🕉️</title>
+  <style>
+    :root {
+      --pink: #ff6ec7;
+      --purple: #a06cd5;
+      --blue: #4cc9f0;
+      --teal: #06d6a0;
+      --yellow: #ffd166;
+      --cream: #fff8f0;
+      --ink: #1d2b53;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe0f0, #e0f7ff, #fff5d6);
+      color: var(--ink);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .nav-top {
+      position: fixed;
+      top: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 101;
+    }
+
+    .nav-back { left: 20px; }
+    .nav-home { right: 20px; }
+
+    .icon-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .icon-btn:hover { transform: translateY(-2px); }
+
+    .header {
+      text-align: center;
+      margin: 60px 0 24px 0;
+    }
+
+    .big {
+      font-size: clamp(50px, 10vw, 90px);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      background: linear-gradient(90deg, #c77dff, #a06cd5, #ff6ec7, #ffd166);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: clamp(15px, 2.2vw, 20px);
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .book {
+      margin-top: 20px;
+      background: var(--cream);
+      border-radius: 20px;
+      border: 4px solid var(--purple);
+      box-shadow: 0 8px 0 rgba(0,0,0,.08);
+      overflow: hidden;
+    }
+
+    .page {
+      display: none;
+      padding: 22px 22px 30px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple);
+      color: white;
+      font-weight: bold;
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .scene {
+      width: 100%;
+      border-radius: 14px;
+      border: 3px solid var(--purple);
+      overflow: hidden;
+      background: #fff;
+      margin-bottom: 18px;
+    }
+
+    .scene svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .story-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .story-line {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 14px;
+      background: #f5f0ff;
+      border-left: 5px solid var(--purple);
+      border-radius: 8px;
+      padding: 12px 16px;
+      align-items: center;
+    }
+
+    .story-line.dialogue {
+      border-left-color: var(--pink);
+      background: #fff0f8;
+    }
+
+    .story-line.sound {
+      border-left-color: var(--yellow);
+      background: #fffaf0;
+    }
+
+    @media (max-width: 700px) {
+      .story-line {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+
+    .story-line .dev {
+      font-size: clamp(16px, 2.4vw, 21px);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .story-line .iast {
+      font-size: clamp(12px, 1.7vw, 15px);
+      color: var(--purple);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .story-line .eng {
+      font-size: clamp(13px, 1.9vw, 16px);
+      color: #1d5a45;
+      font-style: italic;
+    }
+
+    .page-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 22px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 22px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #7a3b97;
+      transition: transform .15s;
+    }
+
+    .nav-btn:hover { transform: translateY(-2px); }
+    .nav-btn:disabled {
+      opacity: .35;
+      cursor: default;
+      box-shadow: 0 4px 0 rgba(0,0,0,.1);
+    }
+    .nav-btn:disabled:hover { transform: none; }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #e3d4fb;
+      cursor: pointer;
+      border: 2px solid var(--purple);
+      transition: background .2s;
+    }
+
+    .dot.active {
+      background: var(--purple);
+    }
+
+    .glossary {
+      margin-top: 30px;
+      background: var(--cream);
+      border-radius: 20px;
+      border: 4px solid var(--blue);
+      box-shadow: 0 8px 0 rgba(0,0,0,.08);
+      padding: 22px;
+    }
+
+    .glossary h2 {
+      color: var(--blue);
+      font-size: clamp(18px, 2.6vw, 24px);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .glossary .glossary-sub {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 14px;
+    }
+
+    .word-meaning-table {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 10px 16px;
+      background: #f0f8ff;
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      padding: 16px 18px;
+      font-size: clamp(13px, 1.8vw, 15px);
+    }
+
+    .word-meaning-table .dev {
+      color: var(--purple);
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .word-meaning-table .iast {
+      color: #1d5a45;
+      font-style: normal;
+      white-space: nowrap;
+    }
+
+    .word-meaning-table .mean {
+      color: #333;
+    }
+
+    @media (max-width: 640px) {
+      .word-meaning-table {
+        grid-template-columns: 1fr;
+        row-gap: 2px;
+      }
+    }
+
+    .animal-tracker {
+      margin-top: 30px;
+      background: var(--cream);
+      border-radius: 20px;
+      border: 4px solid var(--teal);
+      box-shadow: 0 8px 0 rgba(0,0,0,.08);
+      padding: 22px;
+      text-align: center;
+    }
+
+    .animal-tracker h2 {
+      color: var(--teal);
+      font-size: clamp(18px, 2.6vw, 24px);
+      margin-bottom: 16px;
+    }
+
+    .animal-groups {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .animal-group {
+      background: white;
+      border-radius: 14px;
+      padding: 14px 20px;
+      min-width: 220px;
+      border: 2px solid #ddd;
+    }
+
+    .animal-group h3 {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .animal-group .tag {
+      display: inline-block;
+      margin: 3px;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .tag.domestic { background: #ffe9b0; color: #7a5a00; }
+    .tag.wild { background: #c9f0d8; color: #1d5a45; }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 18px;
+      color: #a06cd5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-top nav-back">
+    <a href="index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Stories">⬅️</button>
+    </a>
+  </div>
+
+  <div class="nav-top nav-home">
+    <a href="../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Go to Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">🦚</div>
+      <h1>संजयस्य साहसम् · Sanjay's Adventure</h1>
+      <p class="subtitle">A little boy meets many animals on his way home 🐄🦚🐘</p>
+    </div>
+
+    <div class="book">
+
+      <!-- PAGE 1 -->
+      <div class="page active" data-page="1">
+        <div class="page-badge">📖 Page 1 · गृहे · At Home</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a9ddfb"/>
+                <stop offset="100%" stop-color="#e8f7ff"/>
+              </linearGradient>
+              <linearGradient id="grass1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#9bd18a"/>
+                <stop offset="100%" stop-color="#6fae74"/>
+              </linearGradient>
+            </defs>
+            <rect width="680" height="420" fill="url(#sky1)"/>
+            <circle cx="590" cy="70" r="42" fill="#ffe08a"/>
+            <circle cx="590" cy="70" r="42" fill="#fff3c9" opacity="0.5"/>
+            <ellipse cx="130" cy="90" rx="55" ry="22" fill="#ffffff" opacity="0.85"/>
+            <ellipse cx="175" cy="80" rx="40" ry="18" fill="#ffffff" opacity="0.85"/>
+            <rect x="0" y="300" width="680" height="120" fill="url(#grass1)"/>
+            <ellipse cx="230" cy="330" rx="130" ry="14" fill="#5c9860" opacity="0.5"/>
+            <rect x="120" y="180" width="220" height="140" rx="6" fill="#f4c98b" stroke="#7a4a1e" stroke-width="3"/>
+            <rect x="120" y="180" width="220" height="18" fill="#e3ad63"/>
+            <polygon points="100,190 230,95 360,190" fill="#c0553a" stroke="#7a2c1c" stroke-width="3"/>
+            <polygon points="100,190 230,110 230,95" fill="#d9704f"/>
+            <rect x="212" y="235" width="56" height="85" fill="#7a4a1e"/>
+            <circle cx="222" cy="278" r="4" fill="#f4c98b"/>
+            <rect x="145" y="205" width="48" height="48" fill="#bfe6ff" stroke="#7a4a1e" stroke-width="3"/>
+            <line x1="169" y1="205" x2="169" y2="253" stroke="#7a4a1e" stroke-width="2"/>
+            <line x1="145" y1="229" x2="193" y2="229" stroke="#7a4a1e" stroke-width="2"/>
+            <rect x="267" y="205" width="48" height="48" fill="#bfe6ff" stroke="#7a4a1e" stroke-width="3"/>
+            <line x1="291" y1="205" x2="291" y2="253" stroke="#7a4a1e" stroke-width="2"/>
+            <line x1="267" y1="229" x2="315" y2="229" stroke="#7a4a1e" stroke-width="2"/>
+            <ellipse cx="470" cy="335" rx="65" ry="28" fill="#5c9860"/>
+            <ellipse cx="545" cy="345" rx="55" ry="22" fill="#5c9860"/>
+            <ellipse cx="60" cy="340" rx="50" ry="20" fill="#5c9860"/>
+            <g transform="translate(250,300)">
+              <ellipse cx="4" cy="82" rx="30" ry="8" fill="#4a3a2a" opacity="0.25"/>
+              <path d="M -24 30 Q -20 60 -10 88 L 4 88 L 0 40 Z" fill="#372a70"/>
+              <path d="M 24 30 Q 26 60 16 88 L 30 88 L 22 40 Z" fill="#372a70"/>
+              <path d="M -24 -14 Q -30 20 -22 34 Q 0 42 22 34 Q 30 20 24 -14 Q 0 -22 -24 -14 Z" fill="#ff6ec7"/>
+              <path d="M -24 -14 Q 0 -6 24 -14" stroke="#e0559f" stroke-width="2" fill="none"/>
+              <circle cx="0" cy="-38" r="25" fill="#f2b98a"/>
+              <path d="M -25 -46 Q 0 -80 25 -46 Q 25 -34 20 -32 Q 0 -55 -20 -32 Q -25 -34 -25 -46 Z" fill="#2a1810"/>
+              <ellipse cx="-9" cy="-40" rx="3" ry="3.5" fill="#1d2b53"/>
+              <ellipse cx="9" cy="-40" rx="3" ry="3.5" fill="#1d2b53"/>
+              <path d="M -6 -20 Q 0 -14 6 -20" stroke="#1d2b53" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="-14" cy="-30" rx="5" ry="3" fill="#ffb0c9" opacity="0.6"/>
+              <ellipse cx="14" cy="-30" rx="5" ry="3" fill="#ffb0c9" opacity="0.6"/>
+              <path d="M -22 -4 Q -34 4 -30 20" stroke="#f2b98a" stroke-width="9" fill="none" stroke-linecap="round"/>
+              <path d="M 22 -4 Q 36 -14 44 -24" stroke="#f2b98a" stroke-width="9" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line"><div class="dev">अद्य संजयः गृहे अस्ति।</div><div class="iast">adya sañjayaḥ gṛhe asti.</div><div class="eng">Today Sanjay is at home.</div></div>
+          <div class="story-line"><div class="dev">संजयः बालः चञ्चलः।</div><div class="iast">sañjayaḥ bālaḥ cañcalaḥ.</div><div class="eng">Sanjay is a restless boy.</div></div>
+          <div class="story-line"><div class="dev">किं संजयः सुखी?</div><div class="iast">kiṃ sañjayaḥ sukhī?</div><div class="eng">Is Sanjay happy?</div></div>
+          <div class="story-line"><div class="dev">संजयः न सुखी।</div><div class="iast">sañjayaḥ na sukhī.</div><div class="eng">Sanjay is not happy.</div></div>
+          <div class="story-line"><div class="dev">संजयः बहिः गन्तुम् इच्छति।</div><div class="iast">sañjayaḥ bahiḥ gantum icchati.</div><div class="eng">Sanjay wants to go outside.</div></div>
+          <div class="story-line dialogue"><div class="dev">"अहं ग्रामं वनं च गच्छामि !"</div><div class="iast">"ahaṃ grāmaṃ vanaṃ ca gacchāmi!"</div><div class="eng">"I am going to the village and the forest!"</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 2 -->
+      <div class="page" data-page="2">
+        <div class="page-badge">📖 Page 2 · श्वानः · The Dog</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bfe6fb"/>
+                <stop offset="100%" stop-color="#eef8ff"/>
+              </linearGradient>
+            </defs>
+            <rect width="680" height="420" fill="url(#sky2)"/>
+            <circle cx="600" cy="70" r="36" fill="#ffe08a"/>
+            <rect x="0" y="290" width="680" height="130" fill="#d9c497"/>
+            <path d="M0 290 Q340 260 680 290 L680 300 Q340 275 0 300 Z" fill="#c7ad78"/>
+            <g opacity="0.5">
+              <line x1="60" y1="330" x2="55" y2="345" stroke="#6fae74" stroke-width="3"/>
+              <line x1="500" y1="350" x2="495" y2="368" stroke="#6fae74" stroke-width="3"/>
+              <line x1="620" y1="320" x2="614" y2="336" stroke="#6fae74" stroke-width="3"/>
+            </g>
+            <g transform="translate(230,300)">
+              <ellipse cx="4" cy="82" rx="30" ry="8" fill="#4a3a2a" opacity="0.2"/>
+              <path d="M -24 30 Q -20 60 -10 88 L 4 88 L 0 40 Z" fill="#4a3a8a"/>
+              <path d="M 24 30 Q 26 60 16 88 L 30 88 L 22 40 Z" fill="#4a3a8a"/>
+              <path d="M -24 -14 Q -30 20 -22 34 Q 0 42 22 34 Q 30 20 24 -14 Q 0 -22 -24 -14 Z" fill="#ff6ec7"/>
+              <circle cx="0" cy="-38" r="25" fill="#f2b98a"/>
+              <path d="M -25 -46 Q 0 -80 25 -46 Q 25 -34 20 -32 Q 0 -55 -20 -32 Q -25 -34 -25 -46 Z" fill="#2a1810"/>
+              <ellipse cx="-9" cy="-40" rx="3" ry="3.5" fill="#1d2b53"/>
+              <ellipse cx="9" cy="-40" rx="3" ry="3.5" fill="#1d2b53"/>
+              <path d="M -8 -18 Q 0 -10 8 -18" stroke="#1d2b53" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+              <path d="M -22 -4 Q -40 -10 -55 5" stroke="#f2b98a" stroke-width="9" fill="none" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(400,335)">
+              <ellipse cx="0" cy="40" rx="55" ry="10" fill="#8a6a3a" opacity="0.25"/>
+              <ellipse cx="0" cy="0" rx="52" ry="30" fill="#d9a05c"/>
+              <ellipse cx="-40" cy="10" rx="16" ry="28" fill="#d9a05c" transform="rotate(-10 -40 10)"/>
+              <ellipse cx="40" cy="10" rx="16" ry="28" fill="#d9a05c" transform="rotate(10 40 10)"/>
+              <circle cx="66" cy="-14" r="24" fill="#e2ac68"/>
+              <ellipse cx="80" cy="-20" rx="9" ry="14" fill="#c98c48" transform="rotate(20 80 -20)"/>
+              <path d="M 88 -10 Q 100 -6 96 4 Q 90 6 84 -2 Z" fill="#3a2416"/>
+              <circle cx="76" cy="-20" r="2.6" fill="#1d2b53"/>
+              <path d="M -20 26 L -20 40" stroke="#c98c48" stroke-width="8" stroke-linecap="round"/>
+              <path d="M 14 28 L 14 42" stroke="#c98c48" stroke-width="8" stroke-linecap="round"/>
+              <path d="M -50 -6 Q -66 -20 -58 -34" stroke="#d9a05c" stroke-width="7" fill="none" stroke-linecap="round"/>
+            </g>
+            <text x="330" y="90" font-size="30" font-family="Comic Sans MS">भौ भौ !</text>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line"><div class="dev">संजयः मार्गे गच्छति।</div><div class="iast">sañjayaḥ mārge gacchati.</div><div class="eng">Sanjay walks along the path.</div></div>
+          <div class="story-line sound"><div class="dev">"भौ ! भौ !"</div><div class="iast">"bhau! bhau!"</div><div class="eng">"Woof! Woof!"</div></div>
+          <div class="story-line"><div class="dev">एकः श्वानः गृहद्वारे तिष्ठति।</div><div class="iast">ekaḥ śvānaḥ gṛhadvāre tiṣṭhati.</div><div class="eng">A dog stands at a house-door.</div></div>
+          <div class="story-line"><div class="dev">श्वानः पालितः पशुः।</div><div class="iast">śvānaḥ pālitaḥ paśuḥ.</div><div class="eng">The dog is a pet (raised) animal.</div></div>
+          <div class="story-line dialogue"><div class="dev">"नमस्ते, श्वान !"</div><div class="iast">"namaste, śvāna!"</div><div class="eng">"Hello, dog!"</div></div>
+          <div class="story-line"><div class="dev">श्वानः पुच्छं चालयति।</div><div class="iast">śvānaḥ pucchaṃ cālayati.</div><div class="eng">The dog wags its tail.</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 3 -->
+      <div class="page" data-page="3">
+        <div class="page-badge">📖 Page 3 · गौः · The Cow</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bfe6fb"/>
+                <stop offset="100%" stop-color="#eef8ff"/>
+              </linearGradient>
+              <linearGradient id="grass3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a5d68f"/>
+                <stop offset="100%" stop-color="#7bbd7e"/>
+              </linearGradient>
+            </defs>
+            <rect width="680" height="420" fill="url(#sky3)"/>
+            <circle cx="70" cy="70" r="34" fill="#ffe08a"/>
+            <rect x="0" y="300" width="680" height="120" fill="url(#grass3)"/>
+            <g transform="translate(450,320)">
+              <ellipse cx="0" cy="65" rx="90" ry="12" fill="#4a3a2a" opacity="0.2"/>
+              <ellipse cx="0" cy="10" rx="85" ry="45" fill="#f4f1ea"/>
+              <ellipse cx="-40" cy="-10" rx="20" ry="16" fill="#3a3430"/>
+              <ellipse cx="30" cy="20" rx="24" ry="18" fill="#3a3430"/>
+              <ellipse cx="60" cy="-15" rx="14" ry="12" fill="#3a3430"/>
+              <path d="M -60 0 L -60 50" stroke="#f4f1ea" stroke-width="12" stroke-linecap="round"/>
+              <path d="M -20 10 L -20 55" stroke="#f4f1ea" stroke-width="12" stroke-linecap="round"/>
+              <path d="M 30 15 L 30 58" stroke="#f4f1ea" stroke-width="12" stroke-linecap="round"/>
+              <path d="M 65 5 L 65 52" stroke="#f4f1ea" stroke-width="12" stroke-linecap="round"/>
+              <circle cx="88" cy="-24" r="26" fill="#f4f1ea"/>
+              <ellipse cx="88" cy="-14" rx="14" ry="9" fill="#e8b4a8"/>
+              <circle cx="98" cy="-38" r="9" fill="#f4f1ea"/>
+              <circle cx="72" cy="-42" r="9" fill="#f4f1ea"/>
+              <path d="M 82 -50 Q 76 -62 66 -58" stroke="#d9c9a8" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M 98 -52 Q 106 -64 116 -58" stroke="#d9c9a8" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <circle cx="80" cy="-26" r="2.6" fill="#1d2b53"/>
+              <circle cx="96" cy="-26" r="2.6" fill="#1d2b53"/>
+              <path d="M -85 -5 Q -95 5 -92 25" stroke="#f4f1ea" stroke-width="8" fill="none" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(220,320)">
+              <ellipse cx="4" cy="82" rx="30" ry="8" fill="#4a3a2a" opacity="0.2"/>
+              <path d="M -24 30 Q -20 60 -10 88 L 4 88 L 0 40 Z" fill="#372a70"/>
+              <path d="M 24 30 Q 26 60 16 88 L 30 88 L 22 40 Z" fill="#372a70"/>
+              <path d="M -24 -14 Q -30 20 -22 34 Q 0 42 22 34 Q 30 20 24 -14 Q 0 -22 -24 -14 Z" fill="#ff6ec7"/>
+              <circle cx="0" cy="-38" r="25" fill="#f2b98a"/>
+              <path d="M -25 -46 Q 0 -80 25 -46 Q 25 -34 20 -32 Q 0 -55 -20 -32 Q -25 -34 -25 -46 Z" fill="#2a1810"/>
+              <ellipse cx="-9" cy="-40" rx="3" ry="3.5" fill="#1d2b53"/>
+              <ellipse cx="9" cy="-40" rx="3" ry="3.5" fill="#1d2b53"/>
+              <ellipse cx="0" cy="-20" rx="4" ry="5" fill="#1d2b53"/>
+              <path d="M -22 -4 Q -34 8 -28 24" stroke="#f2b98a" stroke-width="9" fill="none" stroke-linecap="round"/>
+              <path d="M 22 -4 Q 32 4 26 20" stroke="#f2b98a" stroke-width="9" fill="none" stroke-linecap="round"/>
+            </g>
+            <text x="90" y="240" font-size="26" font-family="Comic Sans MS">अम्भा !</text>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line sound"><div class="dev">"अम्भा !"</div><div class="iast">"ambhā!"</div><div class="eng">"Moo!"</div></div>
+          <div class="story-line"><div class="dev">संजयः क्षेत्रं पश्यति।</div><div class="iast">sañjayaḥ kṣetraṃ paśyati.</div><div class="eng">Sanjay looks at a field.</div></div>
+          <div class="story-line"><div class="dev">तत्र गौः तृणं खादति।</div><div class="iast">tatra gauḥ tṛṇaṃ khādati.</div><div class="eng">There a cow eats grass.</div></div>
+          <div class="story-line"><div class="dev">गौः अपि पालितः पशुः।</div><div class="iast">gauḥ api pālitaḥ paśuḥ.</div><div class="eng">The cow is also a pet/raised animal.</div></div>
+          <div class="story-line"><div class="dev">गौः दुग्धं ददाति।</div><div class="iast">gauḥ dugdhaṃ dadāti.</div><div class="eng">The cow gives milk.</div></div>
+          <div class="story-line dialogue"><div class="dev">"धन्यवादः, गो-माता !"</div><div class="iast">"dhanyavādaḥ, go-mātā!"</div><div class="eng">"Thank you, mother cow!"</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 4 -->
+      <div class="page" data-page="4">
+        <div class="page-badge">📖 Page 4 · अजा कुक्कुटी च · Goat and Hen</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="680" height="420" fill="#cdeecb"/>
+            <circle cx="80" cy="75" r="32" fill="#ffe08a"/>
+            <rect x="0" y="300" width="680" height="120" fill="#8bc98f"/>
+            <rect x="0" y="295" width="680" height="10" fill="#7ab77e"/>
+            <g transform="translate(160,320)">
+              <ellipse cx="0" cy="70" rx="55" ry="10" fill="#4a3a2a" opacity="0.2"/>
+              <ellipse cx="0" cy="10" rx="45" ry="34" fill="#f7f3e8"/>
+              <path d="M -20 10 L -20 62" stroke="#f7f3e8" stroke-width="14" stroke-linecap="round"/>
+              <path d="M 20 12 L 20 66" stroke="#f7f3e8" stroke-width="14" stroke-linecap="round"/>
+              <circle cx="52" cy="-16" r="20" fill="#f7f3e8"/>
+              <path d="M 46 -30 Q 40 -46 48 -50" stroke="#d9d0b8" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M 60 -32 Q 66 -48 60 -54" stroke="#d9d0b8" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <ellipse cx="60" cy="-10" rx="8" ry="5" fill="#3a2416"/>
+              <circle cx="48" cy="-18" r="2.4" fill="#1d2b53"/>
+              <path d="M 40 -6 Q 30 2 34 12" stroke="#f7f3e8" stroke-width="6" fill="none" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(300,350)">
+              <ellipse cx="0" cy="40" rx="35" ry="8" fill="#4a3a2a" opacity="0.2"/>
+              <ellipse cx="0" cy="8" rx="30" ry="22" fill="#c9432f"/>
+              <path d="M -18 0 Q -22 10 -18 20" stroke="#8a2e1e" stroke-width="4" fill="none"/>
+              <circle cx="28" cy="-6" r="14" fill="#c9432f"/>
+              <path d="M 20 -18 Q 16 -28 24 -30 Q 30 -22 26 -14 Z" fill="#e63946"/>
+              <path d="M 40 -6 L 50 -3 L 40 2 Z" fill="#f4c542"/>
+              <circle cx="32" cy="-8" r="2" fill="#1d2b53"/>
+              <path d="M -22 6 L -30 12" stroke="#f4c542" stroke-width="4" stroke-linecap="round"/>
+              <path d="M -14 22 L -18 34" stroke="#f4c542" stroke-width="5" stroke-linecap="round"/>
+              <path d="M 6 22 L 8 34" stroke="#f4c542" stroke-width="5" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(430,325)">
+              <ellipse cx="4" cy="65" rx="26" ry="7" fill="#4a3a2a" opacity="0.2"/>
+              <path d="M -18 20 Q -16 45 -8 66 L 4 66 L 0 30 Z" fill="#4a3a8a"/>
+              <path d="M 18 20 Q 20 45 12 66 L 24 66 L 18 30 Z" fill="#4a3a8a"/>
+              <path d="M -18 -10 Q -22 15 -16 26 Q 0 32 16 26 Q 22 15 18 -10 Q 0 -16 -18 -10 Z" fill="#ff6ec7"/>
+              <circle cx="0" cy="-28" r="19" fill="#f2b98a"/>
+              <path d="M -19 -34 Q 0 -60 19 -34 Q 19 -25 15 -24 Q 0 -42 -15 -24 Q -19 -25 -19 -34 Z" fill="#2a1810"/>
+              <ellipse cx="-7" cy="-30" rx="2.3" ry="2.8" fill="#1d2b53"/>
+              <ellipse cx="7" cy="-30" rx="2.3" ry="2.8" fill="#1d2b53"/>
+              <path d="M -5 -16 Q 0 -12 5 -16" stroke="#1d2b53" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line"><div class="dev">पथि अजा अपि अस्ति।</div><div class="iast">pathi ajā api asti.</div><div class="eng">There is a goat on the path too.</div></div>
+          <div class="story-line sound"><div class="dev">"में में !"</div><div class="iast">"mem mem!"</div><div class="eng">"Baa baa!"</div></div>
+          <div class="story-line"><div class="dev">तत्र कुक्कुटी अपि चरति।</div><div class="iast">tatra kukkuṭī api carati.</div><div class="eng">A hen also wanders there.</div></div>
+          <div class="story-line sound"><div class="dev">"ककक ककक !"</div><div class="iast">"kakaka kakaka!"</div><div class="eng">"Cluck cluck!"</div></div>
+          <div class="story-line"><div class="dev">श्वानः, गौः, अजा, कुक्कुटी — सर्वे पालिताः पशवः।</div><div class="iast">śvānaḥ, gauḥ, ajā, kukkuṭī — sarve pālitāḥ paśavaḥ.</div><div class="eng">Dog, cow, goat, hen — all are pet/domestic animals.</div></div>
+          <div class="story-line"><div class="dev">इदानीं संजयः वनं प्रति गच्छति।</div><div class="iast">idānīṃ sañjayaḥ vanaṃ prati gacchati.</div><div class="eng">Now Sanjay goes towards the forest.</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 5 -->
+      <div class="page" data-page="5">
+        <div class="page-badge">📖 Page 5 · मयूरः · The Peacock</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky5" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cdeafd"/>
+                <stop offset="100%" stop-color="#e8f7ff"/>
+              </linearGradient>
+            </defs>
+            <rect width="680" height="420" fill="url(#sky5)"/>
+            <rect x="0" y="330" width="680" height="90" fill="#7fbf82"/>
+            <rect x="40" y="200" width="26" height="140" fill="#7a4a1e"/>
+            <circle cx="53" cy="180" r="58" fill="#4c9a5a"/>
+            <rect x="600" y="180" width="26" height="150" fill="#7a4a1e"/>
+            <circle cx="613" cy="160" r="65" fill="#3f8a4e"/>
+            <g transform="translate(430,270)">
+              <ellipse cx="0" cy="90" rx="80" ry="14" fill="#2f6a3a" opacity="0.3"/>
+              <g transform="rotate(-8)">
+                <ellipse cx="-10" cy="30" rx="16" ry="55" fill="#1f8a6a"/>
+                <ellipse cx="20" cy="35" rx="16" ry="55" fill="#0fae8a" transform="rotate(15 20 35)"/>
+                <ellipse cx="-40" cy="20" rx="15" ry="50" fill="#26a377" transform="rotate(-18 -40 20)"/>
+                <circle cx="-10" cy="70" r="10" fill="#1a5c47"/>
+                <circle cx="20" cy="80" r="10" fill="#1a5c47"/>
+                <circle cx="-40" cy="60" r="10" fill="#1a5c47"/>
+                <circle cx="-10" cy="70" r="5" fill="#4cc9f0"/>
+                <circle cx="20" cy="80" r="5" fill="#4cc9f0"/>
+                <circle cx="-40" cy="60" r="5" fill="#4cc9f0"/>
+              </g>
+              <ellipse cx="0" cy="10" rx="24" ry="32" fill="#2e5fb0"/>
+              <circle cx="0" cy="-26" r="18" fill="#2e5fb0"/>
+              <path d="M -12 -42 L -5 -58 L 2 -42 Z" fill="#f4c542"/>
+              <circle cx="0" cy="-56" r="4" fill="#f4c542"/>
+              <circle cx="-6" cy="-30" r="2.6" fill="white"/>
+              <circle cx="-6" cy="-30" r="1.2" fill="black"/>
+              <path d="M -18 -12 Q -30 -18 -34 -8" stroke="#2e5fb0" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <path d="M 12 30 L 10 46" stroke="#e2ac68" stroke-width="6" stroke-linecap="round"/>
+              <path d="M -6 30 L -8 46" stroke="#e2ac68" stroke-width="6" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(220,310)">
+              <ellipse cx="4" cy="72" rx="27" ry="8" fill="#4a3a2a" opacity="0.2"/>
+              <path d="M -22 26 Q -18 52 -9 78 L 4 78 L 0 34 Z" fill="#372a70"/>
+              <path d="M 22 26 Q 24 52 14 78 L 27 78 L 20 34 Z" fill="#372a70"/>
+              <path d="M -22 -12 Q -28 18 -20 30 Q 0 37 20 30 Q 28 18 22 -12 Q 0 -19 -22 -12 Z" fill="#ff6ec7"/>
+              <circle cx="0" cy="-34" r="22" fill="#f2b98a"/>
+              <path d="M -22 -41 Q 0 -72 22 -41 Q 22 -30 18 -28 Q 0 -49 -18 -28 Q -22 -30 -22 -41 Z" fill="#2a1810"/>
+              <ellipse cx="-8" cy="-36" rx="2.7" ry="3.2" fill="#1d2b53"/>
+              <ellipse cx="8" cy="-36" rx="2.7" ry="3.2" fill="#1d2b53"/>
+              <path d="M -7 -18 Q 0 -10 7 -18" stroke="#1d2b53" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M -20 -2 Q -32 6 -36 20" stroke="#f2b98a" stroke-width="8" fill="none" stroke-linecap="round"/>
+            </g>
+            <text x="330" y="150" font-size="26" font-family="Comic Sans MS">केका !</text>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line sound"><div class="dev">"केका ! केका !"</div><div class="iast">"kekā! kekā!"</div><div class="eng">"Kay-ka! Kay-ka!" (peacock's call)</div></div>
+          <div class="story-line"><div class="dev">संजयः वनं प्रविशति।</div><div class="iast">sañjayaḥ vanaṃ praviśati.</div><div class="eng">Sanjay enters the forest.</div></div>
+          <div class="story-line"><div class="dev">तत्र सुन्दरः मयूरः नृत्यति।</div><div class="iast">tatra sundaraḥ mayūraḥ nṛtyati.</div><div class="eng">There a beautiful peacock is dancing.</div></div>
+          <div class="story-line"><div class="dev">मयूरः वन्यः पशुः।</div><div class="iast">mayūraḥ vanyaḥ paśuḥ.</div><div class="eng">The peacock is a wild animal.</div></div>
+          <div class="story-line dialogue"><div class="dev">"अहो ! कीदृशाः पिच्छाः !"</div><div class="iast">"aho! kīdṛśāḥ picchāḥ!"</div><div class="eng">"Oh! What wonderful feathers!"</div></div>
+          <div class="story-line"><div class="dev">संजयः हसति, आनन्दं लभते।</div><div class="iast">sañjayaḥ hasati, ānandaṃ labhate.</div><div class="eng">Sanjay laughs, and feels joy.</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 6 -->
+      <div class="page" data-page="6">
+        <div class="page-badge">📖 Page 6 · वानरः · The Monkey</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="680" height="420" fill="#a9dbc0"/>
+            <rect x="0" y="330" width="680" height="90" fill="#6fae74"/>
+            <rect x="330" y="60" width="28" height="280" fill="#6b431d"/>
+            <circle cx="344" cy="70" r="95" fill="#3f8a4e"/>
+            <circle cx="270" cy="130" r="50" fill="#4c9a5a"/>
+            <circle cx="420" cy="120" r="55" fill="#357d43"/>
+            <g transform="translate(300,150)">
+              <ellipse cx="-70" cy="30" rx="14" ry="45" fill="#a8703c" transform="rotate(-20 -70 30)"/>
+              <ellipse cx="0" cy="10" rx="32" ry="28" fill="#a8703c"/>
+              <circle cx="0" cy="-26" r="24" fill="#c48a55"/>
+              <ellipse cx="0" cy="-16" rx="16" ry="12" fill="#e8c9a0"/>
+              <circle cx="-9" cy="-28" r="3.2" fill="#1d2b53"/>
+              <circle cx="9" cy="-28" r="3.2" fill="#1d2b53"/>
+              <ellipse cx="0" cy="-14" rx="6" ry="4" fill="#8a5a30"/>
+              <path d="M -6 -6 Q 0 2 6 -6" stroke="#3a2416" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+              <circle cx="-16" cy="-38" r="9" fill="#c48a55"/>
+              <circle cx="16" cy="-38" r="9" fill="#c48a55"/>
+              <path d="M 32 10 Q 60 42 42 75" stroke="#a8703c" stroke-width="11" fill="none" stroke-linecap="round"/>
+              <path d="M 0 34 Q 25 65 5 95 Q -10 105 -22 96" stroke="#a8703c" stroke-width="10" fill="none" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(230,320)">
+              <ellipse cx="4" cy="72" rx="27" ry="8" fill="#4a3a2a" opacity="0.2"/>
+              <path d="M -22 26 Q -18 52 -9 78 L 4 78 L 0 34 Z" fill="#372a70"/>
+              <path d="M 22 26 Q 24 52 14 78 L 27 78 L 20 34 Z" fill="#372a70"/>
+              <path d="M -22 -12 Q -28 18 -20 30 Q 0 37 20 30 Q 28 18 22 -12 Q 0 -19 -22 -12 Z" fill="#ff6ec7"/>
+              <circle cx="0" cy="-34" r="22" fill="#f2b98a"/>
+              <path d="M -22 -41 Q 0 -72 22 -41 Q 22 -30 18 -28 Q 0 -49 -18 -28 Q -22 -30 -22 -41 Z" fill="#2a1810"/>
+              <ellipse cx="-8" cy="-36" rx="2.7" ry="3.2" fill="#1d2b53"/>
+              <ellipse cx="8" cy="-36" rx="2.7" ry="3.2" fill="#1d2b53"/>
+              <path d="M -7 -20 Q 0 -12 7 -20" stroke="#1d2b53" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M 18 -2 Q 30 4 36 18" stroke="#f2b98a" stroke-width="8" fill="none" stroke-linecap="round"/>
+            </g>
+            <text x="380" y="120" font-size="26" font-family="Comic Sans MS">हा हा !</text>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line sound"><div class="dev">"हा ! हा ! हा !"</div><div class="iast">"hā! hā! hā!"</div><div class="eng">"Ha! Ha! Ha!" — laughter from above.</div></div>
+          <div class="story-line"><div class="dev">एकः वानरः शाखायां क्रीडति।</div><div class="iast">ekaḥ vānaraḥ śākhāyāṃ krīḍati.</div><div class="eng">A monkey plays on a branch.</div></div>
+          <div class="story-line"><div class="dev">वानरः अपि वन्यः पशुः।</div><div class="iast">vānaraḥ api vanyaḥ paśuḥ.</div><div class="eng">The monkey too is a wild animal.</div></div>
+          <div class="story-line dialogue"><div class="dev">"मया सह क्रीड !"</div><div class="iast">"mayā saha krīḍa!"</div><div class="eng">"Play with me!" (says the monkey)</div></div>
+          <div class="story-line"><div class="dev">संजयः वानरेण सह क्रीडति।</div><div class="iast">sañjayaḥ vānareṇa saha krīḍati.</div><div class="eng">Sanjay plays with the monkey.</div></div>
+          <div class="story-line"><div class="dev">द्वौ अपि फलानि क्षिपतः।</div><div class="iast">dvau api phalāni kṣipataḥ.</div><div class="eng">Both of them toss fruits.</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 7 -->
+      <div class="page" data-page="7">
+        <div class="page-badge">📖 Page 7 · गजः · The Elephant</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="680" height="420" fill="#b8dfc4"/>
+            <rect x="0" y="340" width="680" height="80" fill="#6fae74"/>
+            <rect x="70" y="220" width="22" height="120" fill="#6b431d"/>
+            <circle cx="81" cy="200" r="48" fill="#3f8a4e"/>
+            <rect x="590" y="230" width="20" height="110" fill="#6b431d"/>
+            <circle cx="600" cy="210" r="42" fill="#357d43"/>
+            <g transform="translate(400,300)">
+              <ellipse cx="10" cy="95" rx="110" ry="16" fill="#3a3430" opacity="0.2"/>
+              <ellipse cx="0" cy="30" rx="100" ry="62" fill="#9a9a9a"/>
+              <ellipse cx="-70" cy="10" rx="45" ry="55" fill="#9a9a9a"/>
+              <path d="M -100 -10 Q -130 40 -100 75 Q -90 80 -85 70 Q -105 40 -85 5 Z" fill="#8a8a8a"/>
+              <ellipse cx="-95" cy="-30" rx="38" ry="42" fill="#a5a5a5"/>
+              <path d="M -125 -45 Q -140 -35 -132 -15 Q -120 -10 -112 -25 Z" fill="#8a8a8a"/>
+              <circle cx="-108" cy="-38" r="3" fill="#1d2b53"/>
+              <path d="M -80 -50 Q -76 -62 -66 -60" stroke="#7a7a7a" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M -100 -55 Q -96 -68 -86 -66" stroke="#7a7a7a" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M -50 40 L -55 85" stroke="#8a8a8a" stroke-width="22" stroke-linecap="round"/>
+              <path d="M 10 55 L 8 90" stroke="#8a8a8a" stroke-width="22" stroke-linecap="round"/>
+              <path d="M 60 40 L 66 85" stroke="#8a8a8a" stroke-width="22" stroke-linecap="round"/>
+              <path d="M -110 20 Q -160 40 -150 70" stroke="#9a9a9a" stroke-width="16" fill="none" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(210,320)">
+              <ellipse cx="4" cy="72" rx="27" ry="8" fill="#4a3a2a" opacity="0.2"/>
+              <path d="M -22 26 Q -18 52 -9 78 L 4 78 L 0 34 Z" fill="#372a70"/>
+              <path d="M 22 26 Q 24 52 14 78 L 27 78 L 20 34 Z" fill="#372a70"/>
+              <path d="M -22 -12 Q -28 18 -20 30 Q 0 37 20 30 Q 28 18 22 -12 Q 0 -19 -22 -12 Z" fill="#ff6ec7"/>
+              <circle cx="0" cy="-34" r="22" fill="#f2b98a"/>
+              <path d="M -22 -41 Q 0 -72 22 -41 Q 22 -30 18 -28 Q 0 -49 -18 -28 Q -22 -30 -22 -41 Z" fill="#2a1810"/>
+              <ellipse cx="-8" cy="-36" rx="3.2" ry="3.6" fill="#1d2b53"/>
+              <ellipse cx="8" cy="-36" rx="3.2" ry="3.6" fill="#1d2b53"/>
+              <ellipse cx="0" cy="-18" rx="4" ry="5" fill="#1d2b53"/>
+              <path d="M -20 -2 Q -32 8 -30 24" stroke="#f2b98a" stroke-width="8" fill="none" stroke-linecap="round"/>
+            </g>
+            <text x="260" y="200" font-size="24" font-family="Comic Sans MS">बृं ! बृं !</text>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line sound"><div class="dev">"बृं ! बृं !"</div><div class="iast">"bṛṃ! bṛṃ!"</div><div class="eng">"Brrm! Brrm!" — a trumpeting sound.</div></div>
+          <div class="story-line"><div class="dev">महान् गजः वृक्षान् चालयति।</div><div class="iast">mahān gajaḥ vṛkṣān cālayati.</div><div class="eng">A big elephant shakes the trees.</div></div>
+          <div class="story-line"><div class="dev">गजः अतीव बृहत् पशुः।</div><div class="iast">gajaḥ atīva bṛhat paśuḥ.</div><div class="eng">The elephant is a very huge animal.</div></div>
+          <div class="story-line"><div class="dev">गजः अपि वन्यः पशुः।</div><div class="iast">gajaḥ api vanyaḥ paśuḥ.</div><div class="eng">The elephant is also a wild animal.</div></div>
+          <div class="story-line"><div class="dev">संजयः किञ्चित् भीतः, किञ्चित् विस्मितः।</div><div class="iast">sañjayaḥ kiñcit bhītaḥ, kiñcit vismitaḥ.</div><div class="eng">Sanjay is a little afraid, a little amazed.</div></div>
+          <div class="story-line dialogue"><div class="dev">"त्वं शान्तः असि, गज !"</div><div class="iast">"tvaṃ śāntaḥ asi, gaja!"</div><div class="eng">"You are calm, elephant!"</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 8 -->
+      <div class="page" data-page="8">
+        <div class="page-badge">📖 Page 8 · हरिणः शुकः च · Deer and Parrot</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="680" height="420" fill="#c3e3c9"/>
+            <rect x="0" y="340" width="680" height="80" fill="#7fbf82"/>
+            <rect x="500" y="60" width="24" height="280" fill="#6b431d"/>
+            <circle cx="512" cy="80" r="60" fill="#3f8a4e"/>
+            <g transform="translate(190,310)">
+              <ellipse cx="6" cy="80" rx="42" ry="10" fill="#4a3a2a" opacity="0.2"/>
+              <ellipse cx="0" cy="30" rx="42" ry="26" fill="#c98c48"/>
+              <ellipse cx="20" cy="20" rx="35" ry="22" fill="#dba468" opacity="0.5"/>
+              <path d="M 30 5 L 20 50" stroke="#c98c48" stroke-width="9" stroke-linecap="round"/>
+              <path d="M -10 8 L -14 55" stroke="#c98c48" stroke-width="9" stroke-linecap="round"/>
+              <path d="M -30 10 L -34 52" stroke="#c98c48" stroke-width="9" stroke-linecap="round"/>
+              <circle cx="46" cy="-14" r="19" fill="#d19a5c"/>
+              <ellipse cx="56" cy="-6" rx="7" ry="5" fill="#8a5a30"/>
+              <circle cx="40" cy="-18" r="2.4" fill="#1d2b53"/>
+              <path d="M 34 -30 Q 26 -50 12 -48" stroke="#8a5a30" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M 40 -32 Q 40 -55 54 -56" stroke="#8a5a30" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M 12 -48 Q 6 -54 10 -60" stroke="#8a5a30" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M 54 -56 Q 60 -62 56 -68" stroke="#8a5a30" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <ellipse cx="0" cy="55" rx="30" ry="8" fill="#e8dcc0"/>
+            </g>
+            <g transform="translate(470,150)">
+              <ellipse cx="0" cy="0" rx="20" ry="26" fill="#2fae4f"/>
+              <circle cx="0" cy="-28" r="16" fill="#2fae4f"/>
+              <path d="M -14 -26 Q -26 -24 -24 -14" fill="#f4c542"/>
+              <circle cx="-6" cy="-30" r="2.2" fill="#1d2b53"/>
+              <path d="M -8 12 Q -20 30 -12 48" stroke="#e8c542" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M 10 15 L 6 44" stroke="#e05a3a" stroke-width="6" stroke-linecap="round"/>
+              <path d="M 6 44 L 2 40 M 6 44 L 10 40" stroke="#e05a3a" stroke-width="3" fill="none"/>
+            </g>
+            <g transform="translate(280,320)">
+              <ellipse cx="4" cy="72" rx="27" ry="8" fill="#4a3a2a" opacity="0.2"/>
+              <path d="M -22 26 Q -18 52 -9 78 L 4 78 L 0 34 Z" fill="#372a70"/>
+              <path d="M 22 26 Q 24 52 14 78 L 27 78 L 20 34 Z" fill="#372a70"/>
+              <path d="M -22 -12 Q -28 18 -20 30 Q 0 37 20 30 Q 28 18 22 -12 Q 0 -19 -22 -12 Z" fill="#ff6ec7"/>
+              <circle cx="0" cy="-34" r="22" fill="#f2b98a"/>
+              <path d="M -22 -41 Q 0 -72 22 -41 Q 22 -30 18 -28 Q 0 -49 -18 -28 Q -22 -30 -22 -41 Z" fill="#2a1810"/>
+              <ellipse cx="-8" cy="-36" rx="3" ry="3.4" fill="#1d2b53"/>
+              <ellipse cx="8" cy="-36" rx="3" ry="3.4" fill="#1d2b53"/>
+              <ellipse cx="0" cy="-18" rx="4" ry="5" fill="#1d2b53"/>
+              <path d="M 18 -4 Q 30 2 32 16" stroke="#f2b98a" stroke-width="8" fill="none" stroke-linecap="round"/>
+            </g>
+            <text x="330" y="270" font-size="20" font-family="Comic Sans MS">राम राम !</text>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line"><div class="dev">एकः सुन्दरः हरिणः तृणं खादति।</div><div class="iast">ekaḥ sundaraḥ hariṇaḥ tṛṇaṃ khādati.</div><div class="eng">A beautiful deer eats grass.</div></div>
+          <div class="story-line"><div class="dev">हरिणः शीघ्रं धावति।</div><div class="iast">hariṇaḥ śīghraṃ dhāvati.</div><div class="eng">The deer runs swiftly.</div></div>
+          <div class="story-line sound"><div class="dev">"राम ! राम !"</div><div class="iast">"rāma! rāma!"</div><div class="eng">"Rama! Rama!" (the parrot's call)</div></div>
+          <div class="story-line"><div class="dev">वृक्षे शुकः शब्दं करोति।</div><div class="iast">vṛkṣe śukaḥ śabdaṃ karoti.</div><div class="eng">A parrot on the tree makes a sound.</div></div>
+          <div class="story-line"><div class="dev">हरिणः शुकः च — उभौ वन्यौ पशू।</div><div class="iast">hariṇaḥ śukaḥ ca — ubhau vanyau paśū.</div><div class="eng">The deer and the parrot — both are wild animals.</div></div>
+          <div class="story-line"><div class="dev">आकाशः किञ्चित् रक्तवर्णः भवति।</div><div class="iast">ākāśaḥ kiñcit raktavarṇaḥ bhavati.</div><div class="eng">The sky begins to turn a little red.</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 9 -->
+      <div class="page" data-page="9">
+        <div class="page-badge">📖 Page 9 · सायंकाले · Lost at Evening</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky9" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#5b4a8a"/>
+                <stop offset="100%" stop-color="#7a5a9a"/>
+              </linearGradient>
+            </defs>
+            <rect width="680" height="420" fill="url(#sky9)"/>
+            <circle cx="560" cy="90" r="34" fill="#ffe08a"/>
+            <rect x="0" y="330" width="680" height="90" fill="#3c3266"/>
+            <rect x="60" y="120" width="20" height="220" fill="#2b2350"/>
+            <circle cx="70" cy="110" r="55" fill="#2f2a5a"/>
+            <rect x="580" y="150" width="18" height="190" fill="#2b2350"/>
+            <circle cx="589" cy="140" r="45" fill="#2f2a5a"/>
+            <g transform="translate(330,300)">
+              <ellipse cx="4" cy="76" rx="27" ry="8" fill="#1a1638" opacity="0.4"/>
+              <path d="M -22 26 Q -18 52 -9 80 L 4 80 L 0 34 Z" fill="#372a70"/>
+              <path d="M 22 26 Q 24 52 14 80 L 27 80 L 20 34 Z" fill="#372a70"/>
+              <path d="M -22 -12 Q -28 18 -20 30 Q 0 37 20 30 Q 28 18 22 -12 Q 0 -19 -22 -12 Z" fill="#e05aab"/>
+              <circle cx="0" cy="-34" r="22" fill="#e8ab7c"/>
+              <path d="M -22 -41 Q 0 -72 22 -41 Q 22 -30 18 -28 Q 0 -49 -18 -28 Q -22 -30 -22 -41 Z" fill="#2a1810"/>
+              <ellipse cx="-8" cy="-36" rx="3" ry="3.6" fill="#1d2b53"/>
+              <ellipse cx="8" cy="-36" rx="3" ry="3.6" fill="#1d2b53"/>
+              <ellipse cx="0" cy="-16" rx="5" ry="7" fill="#1d2b53"/>
+              <path d="M -20 -4 Q -30 6 -26 20" stroke="#e8ab7c" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M 20 -4 Q 30 6 26 20" stroke="#e8ab7c" stroke-width="8" fill="none" stroke-linecap="round"/>
+            </g>
+            <text x="200" y="140" font-size="20" fill="#ffe08a" font-family="Comic Sans MS">✦</text>
+            <text x="480" y="200" font-size="16" fill="#ffe08a" font-family="Comic Sans MS">✦</text>
+            <text x="420" y="90" font-size="18" fill="#ffe08a" font-family="Comic Sans MS">✦</text>
+            <text x="150" y="240" font-size="14" fill="#ffe08a" font-family="Comic Sans MS">✦</text>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line"><div class="dev">सूर्यः अस्तं गच्छति। आकाशः रक्तवर्णः।</div><div class="iast">sūryaḥ astaṃ gacchati. ākāśaḥ raktavarṇaḥ.</div><div class="eng">The sun is setting. The sky is red.</div></div>
+          <div class="story-line"><div class="dev">संजयः चतुर्दिशं पश्यति।</div><div class="iast">sañjayaḥ caturdiśaṃ paśyati.</div><div class="eng">Sanjay looks in every direction.</div></div>
+          <div class="story-line"><div class="dev">गजः, हरिणः, शुकः — के अपि न सन्ति।</div><div class="iast">gajaḥ, hariṇaḥ, śukaḥ — ke api na santi.</div><div class="eng">The elephant, deer, parrot — none of them are there.</div></div>
+          <div class="story-line"><div class="dev">गृहं कुत्र अस्ति?</div><div class="iast">gṛhaṃ kutra asti?</div><div class="eng">Where is home?</div></div>
+          <div class="story-line dialogue"><div class="dev">"अहं मार्गं न जानामि..."</div><div class="iast">"ahaṃ mārgaṃ na jānāmi..."</div><div class="eng">"I don't know the way..."</div></div>
+          <div class="story-line"><div class="dev">संजयः किञ्चित् भीतः भवति।</div><div class="iast">sañjayaḥ kiñcit bhītaḥ bhavati.</div><div class="eng">Sanjay becomes a little afraid.</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE 10 -->
+      <div class="page" data-page="10">
+        <div class="page-badge">📖 Page 10 · माता आगच्छति · Home Again</div>
+        <div class="scene">
+          <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="680" height="420" fill="#2d2456"/>
+            <circle cx="120" cy="80" r="36" fill="#f4f1e8"/>
+            <circle cx="108" cy="72" r="30" fill="#2d2456"/>
+            <rect x="0" y="330" width="680" height="90" fill="#241d47"/>
+            <rect x="440" y="170" width="220" height="150" rx="6" fill="#f4c98b" stroke="#7a4a1e" stroke-width="3"/>
+            <polygon points="420,180 550,90 680,180" fill="#c0553a" stroke="#7a2c1c" stroke-width="3"/>
+            <rect x="530" y="230" width="60" height="90" fill="#7a4a1e"/>
+            <rect x="465" y="205" width="45" height="45" fill="#ffe08a" stroke="#7a4a1e" stroke-width="3"/>
+            <rect x="590" y="205" width="45" height="45" fill="#ffe08a" stroke="#7a4a1e" stroke-width="3"/>
+            <g transform="translate(300,300)">
+              <ellipse cx="4" cy="76" rx="24" ry="7" fill="#1a1638" opacity="0.4"/>
+              <path d="M -20 24 Q -16 48 -8 76 L 4 76 L 0 32 Z" fill="#372a70"/>
+              <path d="M 20 24 Q 22 48 12 76 L 24 76 L 18 32 Z" fill="#372a70"/>
+              <path d="M -20 -12 Q -26 16 -18 28 Q 0 34 18 28 Q 26 16 20 -12 Q 0 -18 -20 -12 Z" fill="#ff6ec7"/>
+              <circle cx="0" cy="-32" r="21" fill="#e8ab7c"/>
+              <path d="M -21 -39 Q 0 -68 21 -39 Q 21 -28 17 -27 Q 0 -46 -17 -27 Q -21 -28 -21 -39 Z" fill="#2a1810"/>
+              <ellipse cx="-7" cy="-34" rx="2.8" ry="3.3" fill="#1d2b53"/>
+              <ellipse cx="7" cy="-34" rx="2.8" ry="3.3" fill="#1d2b53"/>
+              <path d="M -6 -16 Q 0 -10 6 -16" stroke="#1d2b53" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M 16 8 L 36 -2" stroke="#e8ab7c" stroke-width="8" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(365,290)">
+              <ellipse cx="0" cy="82" rx="30" ry="8" fill="#1a1638" opacity="0.4"/>
+              <ellipse cx="0" cy="55" rx="34" ry="55" fill="#ffb703"/>
+              <circle cx="0" cy="-14" r="26" fill="#e8ab7c"/>
+              <path d="M -26 -22 Q 0 -60 26 -22 Q 26 10 0 4 Q -26 10 -26 -22 Z" fill="#3a2416"/>
+              <circle cx="-9" cy="-16" r="3" fill="#1d2b53"/>
+              <circle cx="9" cy="-16" r="3" fill="#1d2b53"/>
+              <path d="M -8 -4 Q 0 4 8 -4" stroke="#1d2b53" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M -30 25 L -50 15" stroke="#e8ab7c" stroke-width="8" stroke-linecap="round"/>
+              <ellipse cx="-18" cy="-46" rx="8" ry="14" fill="#e05aab" transform="rotate(-20 -18 -46)"/>
+            </g>
+            <text x="200" y="150" font-size="22" fill="#ffe08a" font-family="Comic Sans MS">✦</text>
+            <text x="260" y="100" font-size="16" fill="#ffe08a" font-family="Comic Sans MS">✦</text>
+          </svg>
+        </div>
+        <div class="story-lines">
+          <div class="story-line dialogue"><div class="dev">"संजय ! संजय !"</div><div class="iast">"sañjaya! sañjaya!"</div><div class="eng">"Sanjay! Sanjay!" — a voice calls from afar.</div></div>
+          <div class="story-line"><div class="dev">नलिनी, संजयस्य माता, दीपं धारयति।</div><div class="iast">nalinī, sañjayasya mātā, dīpaṃ dhārayati.</div><div class="eng">Nalini, Sanjay's mother, holds a lamp.</div></div>
+          <div class="story-line dialogue"><div class="dev">"मातः ! अहम् अत्र !"</div><div class="iast">"mātaḥ! aham atra!"</div><div class="eng">"Mother! I am here!"</div></div>
+          <div class="story-line"><div class="dev">नलिनी संजयं पश्यति। सुखिनी भवति।</div><div class="iast">nalinī sañjayaṃ paśyati. sukhinī bhavati.</div><div class="eng">Nalini sees Sanjay and becomes happy.</div></div>
+          <div class="story-line dialogue"><div class="dev">"अहं श्वानं, गां, अजां, कुक्कुटीं, मयूरं, वानरं, गजं, हरिणं, शुकं च अपश्यम् !"</div><div class="iast">"ahaṃ śvānaṃ, gāṃ, ajāṃ, kukkuṭīṃ, mayūraṃ, vānaraṃ, gajaṃ, hariṇaṃ, śukaṃ ca apaśyam!"</div><div class="eng">"I saw a dog, cow, goat, hen, peacock, monkey, elephant, deer, and parrot!"</div></div>
+          <div class="story-line dialogue"><div class="dev">"शोभनम्, पुत्र ! अधुना गृहं गच्छावः।"</div><div class="iast">"śobhanam, putra! adhunā gṛhaṃ gacchāvaḥ."</div><div class="eng">"Wonderful, son! Now let's go home."</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" id="prevBtn" onclick="changePage(-1)">⬅️ Back</button>
+      <div class="dots" id="dots"></div>
+      <button class="nav-btn" id="nextBtn" onclick="changePage(1)">Next ➡️</button>
+    </div>
+
+    <div class="glossary">
+      <h2 id="glossaryTitle">🧩 New Words on This Page</h2>
+      <div class="glossary-sub" id="glossarySub">Page 1</div>
+      <div class="word-meaning-table" id="glossaryTable"></div>
+    </div>
+
+    <div class="animal-tracker">
+      <h2>🐾 Animals in the Story</h2>
+      <div class="animal-groups">
+        <div class="animal-group">
+          <h3>🏠 पालिताः पशवः · Domestic Animals</h3>
+          <span class="tag domestic">श्वानः · dog</span>
+          <span class="tag domestic">गौः · cow</span>
+          <span class="tag domestic">अजा · goat</span>
+          <span class="tag domestic">कुक्कुटी · hen</span>
+        </div>
+        <div class="animal-group">
+          <h3>🌳 वन्याः पशवः · Wild Animals</h3>
+          <span class="tag wild">मयूरः · peacock</span>
+          <span class="tag wild">वानरः · monkey</span>
+          <span class="tag wild">गजः · elephant</span>
+          <span class="tag wild">हरिणः · deer</span>
+          <span class="tag wild">शुकः · parrot</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Made with 💖 for Shreshta's learning adventure</footer>
+
+  <script>
+    const glossaryByPage = {
+      1: [
+        ["अद्य", "adya", "today"],
+        ["चञ्चलः", "cañcalaḥ", "restless"],
+        ["गृहम्", "gṛham", "home / house"],
+        ["बहिः", "bahiḥ", "outside"],
+        ["गन्तुम्", "gantum", "to go"],
+        ["ग्रामः", "grāmaḥ", "village"],
+        ["वनम्", "vanam", "forest"],
+        ["गच्छामि", "gacchāmi", "I go"]
+      ],
+      2: [
+        ["मार्गः", "mārgaḥ", "path / road"],
+        ["श्वानः", "śvānaḥ", "dog"],
+        ["गृहद्वारम्", "gṛhadvāram", "house-door"],
+        ["तिष्ठति", "tiṣṭhati", "stands"],
+        ["पालितः", "pālitaḥ", "pet / raised (domestic)"],
+        ["पशुः", "paśuḥ", "animal"],
+        ["नमस्ते", "namaste", "hello"],
+        ["पुच्छम्", "puccham", "tail"],
+        ["चालयति", "cālayati", "wags / moves"]
+      ],
+      3: [
+        ["क्षेत्रम्", "kṣetram", "field"],
+        ["गौः", "gauḥ", "cow"],
+        ["तृणम्", "tṛṇam", "grass"],
+        ["खादति", "khādati", "eats"],
+        ["दुग्धम्", "dugdham", "milk"],
+        ["ददाति", "dadāti", "gives"],
+        ["धन्यवादः", "dhanyavādaḥ", "thank you"]
+      ],
+      4: [
+        ["पथि", "pathi", "on the path"],
+        ["अजा", "ajā", "goat"],
+        ["कुक्कुटी", "kukkuṭī", "hen"],
+        ["चरति", "carati", "wanders / grazes"],
+        ["सर्वे", "sarve", "all"],
+        ["इदानीम्", "idānīm", "now"],
+        ["प्रति", "prati", "towards"]
+      ],
+      5: [
+        ["प्रविशति", "praviśati", "enters"],
+        ["सुन्दरः", "sundaraḥ", "beautiful"],
+        ["मयूरः", "mayūraḥ", "peacock"],
+        ["नृत्यति", "nṛtyati", "dances"],
+        ["वन्यः", "vanyaḥ", "wild"],
+        ["पिच्छाः", "picchāḥ", "feathers"],
+        ["आनन्दः", "ānandaḥ", "joy"],
+        ["लभते", "labhate", "gets / obtains"]
+      ],
+      6: [
+        ["वानरः", "vānaraḥ", "monkey"],
+        ["शाखा", "śākhā", "branch"],
+        ["क्रीडति", "krīḍati", "plays"],
+        ["सह", "saha", "together with"],
+        ["द्वौ", "dvau", "both (two)"],
+        ["फलानि", "phalāni", "fruits"],
+        ["क्षिपतः", "kṣipataḥ", "the two throw"]
+      ],
+      7: [
+        ["गजः", "gajaḥ", "elephant"],
+        ["महान्", "mahān", "big / great"],
+        ["वृक्षाः", "vṛkṣāḥ", "trees"],
+        ["अतीव", "atīva", "very much"],
+        ["बृहत्", "bṛhat", "huge"],
+        ["विस्मितः", "vismitaḥ", "amazed"],
+        ["शान्तः", "śāntaḥ", "calm"],
+        ["असि", "asi", "you are"]
+      ],
+      8: [
+        ["हरिणः", "hariṇaḥ", "deer"],
+        ["शीघ्रम्", "śīghram", "swiftly"],
+        ["धावति", "dhāvati", "runs"],
+        ["शुकः", "śukaḥ", "parrot"],
+        ["शब्दः", "śabdaḥ", "sound"],
+        ["करोति", "karoti", "makes / does"],
+        ["उभौ", "ubhau", "both"],
+        ["आकाशः", "ākāśaḥ", "sky"],
+        ["रक्तवर्णः", "raktavarṇaḥ", "red-colored"]
+      ],
+      9: [
+        ["सूर्यः", "sūryaḥ", "sun"],
+        ["अस्तम्", "astam", "setting (of sun)"],
+        ["चतुर्दिशम्", "caturdiśam", "in all four directions"],
+        ["के अपि न", "ke api na", "none at all"],
+        ["कुत्र", "kutra", "where?"],
+        ["जानामि", "jānāmi", "I know"],
+        ["किञ्चित्", "kiñcit", "a little"],
+        ["भीतः", "bhītaḥ", "afraid"]
+      ],
+      10: [
+        ["नलिनी", "nalinī", "Nalini (mother's name)"],
+        ["दीपः", "dīpaḥ", "lamp"],
+        ["धारयति", "dhārayati", "holds"],
+        ["अत्र", "atra", "here"],
+        ["अपश्यम्", "apaśyam", "I saw"],
+        ["शोभनम्", "śobhanam", "wonderful / excellent"],
+        ["पुत्र", "putra", "son (address)"],
+        ["अधुना", "adhunā", "now"],
+        ["गच्छावः", "gacchāvaḥ", "let us (two) go"]
+      ]
+    };
+
+    let current = 1;
+    const total = 10;
+    const dotsEl = document.getElementById('dots');
+    for (let i = 1; i <= total; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 1 ? ' active' : '');
+      d.onclick = () => goToPage(i);
+      dotsEl.appendChild(d);
+    }
+
+    function renderGlossary() {
+      const table = document.getElementById('glossaryTable');
+      const words = glossaryByPage[current] || [];
+      table.innerHTML = '';
+      words.forEach(([dev, iast, mean]) => {
+        const devEl = document.createElement('div');
+        devEl.className = 'dev';
+        devEl.textContent = dev;
+        const iastEl = document.createElement('div');
+        iastEl.className = 'iast';
+        iastEl.textContent = iast;
+        const meanEl = document.createElement('div');
+        meanEl.className = 'mean';
+        meanEl.textContent = mean;
+        table.appendChild(devEl);
+        table.appendChild(iastEl);
+        table.appendChild(meanEl);
+      });
+      document.getElementById('glossarySub').textContent = 'Page ' + current + ' of ' + total;
+    }
+
+    function render() {
+      document.querySelectorAll('.page').forEach(p => {
+        p.classList.toggle('active', parseInt(p.dataset.page) === current);
+      });
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i + 1 === current);
+      });
+      document.getElementById('prevBtn').disabled = current === 1;
+      document.getElementById('nextBtn').disabled = current === total;
+      renderGlossary();
+      window.scrollTo({ top: document.querySelector('.book').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function changePage(delta) {
+      current = Math.min(total, Math.max(1, current + delta));
+      render();
+    }
+
+    function goToPage(n) {
+      current = n;
+      render();
+    }
+
+    render();
+  </script>
+</body>
+
+</html>
