@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Circles ⭕</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .mascot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:50%;}
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .tabbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .tab-btn{
+    background:white;border:3px solid var(--purple);color:var(--purple);font-weight:bold;font-size:14px;
+    padding:8px 16px;border-radius:14px;cursor:pointer;transition:all .2s;
+  }
+  .tab-btn:hover{transform:translateY(-2px);}
+  .tab-btn.active{background:var(--purple);color:white;}
+
+  .stage{background:white;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .caption{
+    text-align:center;font-size:clamp(14px,2vw,16px);font-weight:bold;
+    background:#f0e6ff;border-radius:12px;padding:10px 16px;min-height:24px;
+  }
+  .caption b{color:var(--pink);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+
+  .realworld{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .realworld .rw-frame{
+    position:relative;width:110px;height:110px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#e6f3ff,#f0e6ff);display:flex;align-items:center;justify-content:center;
+    font-size:56px;flex:0 0 auto;border:3px solid var(--blue);
+  }
+  .realworld .rw-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .realworld p{font-size:14px;max-width:420px;}
+
+  .msg-box{text-align:center;font-weight:bold;font-size:15px;padding:10px;border-radius:12px;background:#eee;min-height:20px;transition:background .2s,color .2s;}
+  .msg-box.good{background:#d4f7e8;color:#048848;}
+  .msg-box.bad{background:#ffe3ea;color:#c0245a;}
+  .msg-box.info{background:#e6f7ff;color:#0a6ca8;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px;}
+  .chip{border:3px solid #cbd5e1;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:bold;background:white;color:#94a3b8;transition:all .2s;}
+  .chip.on{border-color:var(--pink);background:var(--pink);color:white;transform:scale(1.08);}
+
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Geometry">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">⭕ 🔵 🎯</div>
+    <h1><span class="highlight">Circles</span></h1>
+    <p class="subtitle">Round, perfectly balanced, and everywhere you look!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">📐<img src="../shared/images/mascot.png" alt="" onerror="this.remove()"></div>
+    <p>Hi, Ray the Ruler here 👋 A circle looks simple, but it hides a beautiful rule: every single point on it is
+      exactly the same distance from one special centre point. Let's drag things around and see it for ourselves!</p>
+  </div>
+
+  <!-- 1. DEFINITION -->
+  <section class="section">
+    <h2>🎯 Meet a Circle <span class="try-badge">Drag the pink point!</span></h2>
+    <p class="lead">A <b>circle</b> is the set of <b>all points</b> that are exactly the same distance from one
+      fixed <b>centre point</b> (we call it <b>O</b>). That fixed distance is called the <b>radius</b>.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 320" width="320" id="def-svg">
+        <circle cx="160" cy="160" r="100" fill="#4cc9f0" fill-opacity=".08" stroke="#4cc9f0" stroke-width="3" stroke-dasharray="5 5"/>
+        <circle cx="160" cy="160" r="5" fill="#1d2b53"/>
+        <text x="168" y="156" font-size="14" font-weight="bold">O</text>
+        <line id="def-line" x1="160" y1="160" x2="160" y2="60" stroke="#a06cd5" stroke-width="3"/>
+        <text id="def-dist" font-size="13" font-weight="bold" fill="#7a3b97"></text>
+        <g id="def-handle" style="cursor:grab;"><circle r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+      </svg>
+      <p class="caption" id="def-caption">Drag the pink point anywhere — watch it snap right back onto the circle,
+        always the <b>same distance</b> from O!</p>
+    </div>
+
+    <div class="realworld">
+      <div class="rw-frame">🕐<img src="images/clock.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> A clock face, a coin, a wheel, and a pizza are all circles — every point on their edge
+        is the same distance from the middle!</p>
+    </div>
+  </section>
+
+  <!-- 2. INTERIOR / EXTERIOR -->
+  <section class="section">
+    <h2>🕵️ Interior, Exterior &amp; On the Circle <span class="try-badge">Click anywhere!</span></h2>
+    <p class="lead">Every point in the picture is either <b>inside</b> the circle, <b>outside</b> it, or sitting
+      exactly <b>on</b> the circle itself. Click anywhere and find out which!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 320" width="320" id="regions-svg" style="cursor:crosshair;">
+        <circle id="regions-circle" cx="160" cy="160" r="100" fill="#06d6a0" fill-opacity=".18" stroke="#06d6a0" stroke-width="4"/>
+        <circle cx="160" cy="160" r="5" fill="#1d2b53"/>
+        <text x="168" y="156" font-size="14" font-weight="bold">O</text>
+        <g id="regions-marker" style="display:none;"><circle r="7" fill="#ef476f" stroke="white" stroke-width="2"/></g>
+      </svg>
+      <div class="msg-box" id="regions-msg">👆 Click anywhere in the box above!</div>
+      <div class="btnrow"><button class="action secondary" id="regions-reset">🔄 Reset</button></div>
+    </div>
+  </section>
+
+  <!-- 3. RADIUS / DIAMETER / CHORD -->
+  <section class="section">
+    <h2>📏 Radius, Diameter &amp; Chord <span class="try-badge">Drag both dots!</span></h2>
+    <p class="lead">A <b>chord</b> is a straight line segment joining any two points on a circle. Drag the two dots
+      around the circle below — when the chord happens to pass exactly through the centre, it becomes the longest
+      possible chord: a <b>diameter</b>! A diameter is always exactly <b>2 × radius</b> long.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 320" width="320" id="chord-svg">
+        <circle cx="160" cy="160" r="100" fill="none" stroke="#cbd5e1" stroke-width="3"/>
+        <circle cx="160" cy="160" r="5" fill="#1d2b53"/>
+        <text x="168" y="156" font-size="14" font-weight="bold">O</text>
+        <line id="chord-line" stroke="#06d6a0" stroke-width="5"/>
+        <text id="chord-len" font-size="13" font-weight="bold" fill="#7a3b97"></text>
+        <g id="chord-h1" style="cursor:grab;"><circle r="11" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        <g id="chord-h2" style="cursor:grab;"><circle r="11" fill="#4cc9f0" stroke="#0a6ca8" stroke-width="2"/></g>
+      </svg>
+      <p class="caption" id="chord-caption"></p>
+    </div>
+
+    <div class="info-box">🔍 <b>Remember:</b> radius (O to the edge) is <b>half</b> a diameter. A diameter is a
+      chord too — just a very special one that goes straight through the centre.</div>
+  </section>
+
+  <!-- 4. ARC / SECTOR / SEGMENT -->
+  <section class="section">
+    <h2>🍕 Arc, Sector &amp; Segment <span class="try-badge">Drag both dots!</span></h2>
+    <p class="lead">Two radii split a circle into a <b>major</b> (bigger) and <b>minor</b> (smaller) <b>sector</b>
+      — like slices of a pizza. A single chord instead splits it into a major and minor <b>segment</b>. Either way,
+      the curved edge itself gets split into a major and minor <b>arc</b>. Switch tabs and drag the dots to see all
+      three!</p>
+
+    <div class="tabbar" id="sas-tabs">
+      <button class="tab-btn active" data-tab="sector">🍕 Sectors (2 radii)</button>
+      <button class="tab-btn" data-tab="segment">🍰 Segments (1 chord)</button>
+    </div>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 320" width="320" id="sas-svg">
+        <path id="sas-fill-major" fill="#ff9e45" fill-opacity=".35"/>
+        <path id="sas-fill-minor" fill="#ff6ec7" fill-opacity=".35"/>
+        <circle cx="160" cy="160" r="100" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+        <path id="sas-arc-major" fill="none" stroke="#ff9e45" stroke-width="6" stroke-linecap="round"/>
+        <path id="sas-arc-minor" fill="none" stroke="#ff6ec7" stroke-width="6" stroke-linecap="round"/>
+        <line id="sas-radius1" x1="160" y1="160" stroke="#a06cd5" stroke-width="3"/>
+        <line id="sas-radius2" x1="160" y1="160" stroke="#a06cd5" stroke-width="3"/>
+        <line id="sas-chord" stroke="#a06cd5" stroke-width="3" style="display:none;"/>
+        <circle cx="160" cy="160" r="5" fill="#1d2b53"/>
+        <text x="168" y="156" font-size="14" font-weight="bold">O</text>
+        <text id="sas-label-major" font-size="13" font-weight="bold" fill="#cc7620"></text>
+        <text id="sas-label-minor" font-size="13" font-weight="bold" fill="#c0245a"></text>
+        <g id="sas-h1" style="cursor:grab;"><circle r="11" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        <g id="sas-h2" style="cursor:grab;"><circle r="11" fill="#4cc9f0" stroke="#0a6ca8" stroke-width="2"/></g>
+      </svg>
+      <p class="caption" id="sas-caption"></p>
+    </div>
+
+    <div class="realworld">
+      <div class="rw-frame">🍕<img src="images/pizza.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> A slice of pizza is a sector, and the crust along its curved edge is an arc!</p>
+    </div>
+  </section>
+
+  <!-- 5. SEMICIRCLE & CONCENTRIC -->
+  <section class="section">
+    <h2>🌗 Semicircles &amp; Concentric Circles</h2>
+    <p class="lead">A <b>semicircle</b> is exactly half a circle, cut by a diameter. <b>Concentric</b> circles all
+      share the <b>same centre</b> but have different radii — like ripples in a pond.</p>
+
+    <div style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;">
+      <div class="stage" style="flex:1 1 260px;max-width:300px;">
+        <svg viewBox="0 0 260 220" width="260" id="semi-svg">
+          <circle cx="130" cy="110" r="80" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+          <path id="semi-fill" fill="#a06cd5" fill-opacity=".3"/>
+          <line id="semi-diameter" stroke="#a06cd5" stroke-width="3"/>
+          <circle cx="130" cy="110" r="4" fill="#1d2b53"/>
+          <text id="semi-label" font-size="13" font-weight="bold" fill="#7a3b97"></text>
+          <g id="semi-handle" style="cursor:grab;"><circle r="10" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        </svg>
+        <p class="caption" style="font-size:13px;">However you rotate the diameter, it always cuts the circle into
+          two equal <b>semicircles</b>!</p>
+      </div>
+
+      <div class="stage" style="flex:1 1 260px;max-width:300px;">
+        <svg viewBox="0 0 260 260" width="260" id="conc-svg">
+          <g id="conc-rings"></g>
+          <circle cx="130" cy="130" r="4" fill="#1d2b53"/>
+          <text x="138" y="126" font-size="13" font-weight="bold">O</text>
+        </svg>
+        <p class="caption" id="conc-caption">Just 1 circle so far.</p>
+        <div class="btnrow">
+          <button class="action" id="conc-add">➕ Add a Ring</button>
+          <button class="action secondary" id="conc-reset">🔄 Reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TANGENT & SECANT -->
+  <section class="section">
+    <h2>📏 Tangent &amp; Secant Lines <span class="try-badge">Drag up/down!</span></h2>
+    <p class="lead">A straight line can meet a circle in three different ways. Drag the blue line up and down and
+      watch what happens!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 300 280" width="300" id="tansec-svg">
+        <circle cx="150" cy="140" r="90" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+        <circle cx="150" cy="140" r="4" fill="#1d2b53"/>
+        <line id="tansec-line" x1="10" x2="290" y1="140" y2="140" stroke="#4cc9f0" stroke-width="4"/>
+        <line id="tansec-radius" x1="150" y1="140" x2="150" y2="140" stroke="#a06cd5" stroke-width="2" stroke-dasharray="5 4" style="display:none;"/>
+        <g id="tansec-p1" style="display:none;"><circle r="6" fill="#ef476f"/></g>
+        <g id="tansec-p2" style="display:none;"><circle r="6" fill="#ef476f"/></g>
+        <g id="tansec-handle" style="cursor:grab;"><circle r="11" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+      </svg>
+      <p class="caption" id="tansec-caption"></p>
+    </div>
+
+    <div class="info-box">📌 <b>Fun fact:</b> right at the point a tangent touches a circle, the radius drawn to that
+      point is always <b>perpendicular</b> (90°) to the tangent line!</div>
+  </section>
+
+  <!-- 7. CIRCUMFERENCE & AREA -->
+  <section class="section">
+    <h2>🥧 Circumference &amp; Area <span class="try-badge">Drag the edge!</span></h2>
+    <p class="lead">Every circle has a distance all the way around (its <b>circumference</b>) and an amount of space
+      inside it (its <b>area</b>) — both connected to the radius by a special number: <b>π (pi) ≈ 3.14</b>.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 300 280" width="300" id="area-svg">
+        <circle id="area-circle" cx="150" cy="140" r="60" fill="#4cc9f0" fill-opacity=".2" stroke="#4cc9f0" stroke-width="4"/>
+        <line id="area-radiusline" x1="150" y1="140" x2="210" y2="140" stroke="#a06cd5" stroke-width="3"/>
+        <circle cx="150" cy="140" r="4" fill="#1d2b53"/>
+        <text id="area-rlabel" font-size="13" font-weight="bold" fill="#7a3b97"></text>
+        <g id="area-handle" style="cursor:grab;"><circle r="11" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+      </svg>
+      <p class="caption" id="area-caption"></p>
+    </div>
+
+    <div class="info-box orange">🔮 <b>Fun fact:</b> π (pi) is the SAME number for every circle in the universe, big
+      or small — about 3.14159... and its digits never end or repeat!</div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 11</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- helpers (shared) ---------- */
+function svgPoint(svg, evt){
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+function makeDraggable(svg, handle, onMove){
+  let dragging = false;
+  handle.addEventListener('pointerdown', e=>{ dragging=true; handle.setPointerCapture(e.pointerId); handle.style.cursor='grabbing'; });
+  handle.addEventListener('pointermove', e=>{ if(dragging) onMove(svgPoint(svg,e)); });
+  ['pointerup','pointercancel'].forEach(ev=>handle.addEventListener(ev, ()=>{ dragging=false; handle.style.cursor='grab'; }));
+}
+function angleFromPoint(vertex, p){
+  const dx = p.x-vertex.x, dy = p.y-vertex.y;
+  return (Math.atan2(-dy,dx)*180/Math.PI + 360) % 360;
+}
+function pointOnCircle(vertex, radius, deg){
+  const rad = deg*Math.PI/180;
+  return { x: vertex.x + radius*Math.cos(rad), y: vertex.y - radius*Math.sin(rad) };
+}
+function arcPathBetween(vertex, radius, fromDeg, toDeg){
+  const start = pointOnCircle(vertex, radius, fromDeg);
+  const end = pointOnCircle(vertex, radius, toDeg);
+  const diff = ((toDeg-fromDeg)+360) % 360;
+  const largeArc = diff>180 ? 1:0;
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 0 ${end.x} ${end.y}`;
+}
+function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+function dist(a,b){ return Math.hypot(a.x-b.x, a.y-b.y); }
+function distToSegment(p, a, b){
+  const l2 = (b.x-a.x)**2 + (b.y-a.y)**2;
+  if(l2===0) return Math.hypot(p.x-a.x, p.y-a.y);
+  let t = ((p.x-a.x)*(b.x-a.x) + (p.y-a.y)*(b.y-a.y)) / l2;
+  t = clamp(t,0,1);
+  return Math.hypot(p.x-(a.x+t*(b.x-a.x)), p.y-(a.y+t*(b.y-a.y)));
+}
+
+/* ---------- circle-specific helpers ---------- */
+// pie-slice region from fromDeg sweeping CCW to toDeg (through vertex O)
+function sectorPath(O, R, fromDeg, toDeg){
+  const start = pointOnCircle(O,R,fromDeg), end = pointOnCircle(O,R,toDeg);
+  const diff = ((toDeg-fromDeg)+360) % 360;
+  const largeArc = diff>180 ? 1:0;
+  return `M ${O.x} ${O.y} L ${start.x} ${start.y} A ${R} ${R} 0 ${largeArc} 0 ${end.x} ${end.y} Z`;
+}
+// chord-bounded region from fromDeg sweeping CCW to toDeg (arc + straight chord back to start)
+function segmentPath(O, R, fromDeg, toDeg){
+  const start = pointOnCircle(O,R,fromDeg), end = pointOnCircle(O,R,toDeg);
+  const diff = ((toDeg-fromDeg)+360) % 360;
+  const largeArc = diff>180 ? 1:0;
+  return `M ${start.x} ${start.y} A ${R} ${R} 0 ${largeArc} 0 ${end.x} ${end.y} Z`;
+}
+function midDeg(fromDeg, sweepDeg){ return (fromDeg + sweepDeg/2) % 360; }
+// keep two angles from colliding into the same point while dragging
+function clampAwayFrom(newDeg, otherDeg, minGap){
+  let diff = ((newDeg - otherDeg + 540) % 360) - 180; // range -180..180
+  if(Math.abs(diff) < minGap){
+    diff = diff<0 ? -minGap : minGap;
+    newDeg = (otherDeg + diff + 360) % 360;
+  }
+  return newDeg;
+}
+
+/* ---------- 1. Definition widget ---------- */
+(function(){
+  const svg = document.getElementById('def-svg');
+  const line = document.getElementById('def-line');
+  const distLabel = document.getElementById('def-dist');
+  const handle = document.getElementById('def-handle');
+  const caption = document.getElementById('def-caption');
+  const O = {x:160,y:160}, R = 100;
+  const DEFAULT_CAPTION = 'Drag the pink point anywhere — watch it snap right back onto the circle, always the <b>same distance</b> from O!';
+
+  function render(deg){
+    const p = pointOnCircle(O,R,deg);
+    line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
+    handle.setAttribute('transform', `translate(${p.x},${p.y})`);
+    const mid = {x:(O.x+p.x)/2, y:(O.y+p.y)/2};
+    distLabel.setAttribute('x', mid.x+10); distLabel.setAttribute('y', mid.y-8);
+    distLabel.textContent = Math.round(dist(O,p)) + ' units';
+  }
+  render(90);
+  makeDraggable(svg, handle, p=>{
+    const deg = angleFromPoint(O,p);
+    render(deg);
+    caption.innerHTML = '✅ Still exactly <b>100 units</b> from O — that never changes on a circle!';
+  });
+})();
+
+/* ---------- 2. Regions detective ---------- */
+(function(){
+  const svg = document.getElementById('regions-svg');
+  const marker = document.getElementById('regions-marker');
+  const msg = document.getElementById('regions-msg');
+  const resetBtn = document.getElementById('regions-reset');
+  const DEFAULT_MSG = "👆 Click anywhere in the box above!";
+  const O = {x:160,y:160}, R = 100;
+
+  svg.addEventListener('click', e=>{
+    const p = svgPoint(svg, e);
+    marker.style.display = 'block';
+    marker.setAttribute('transform', `translate(${p.x},${p.y})`);
+    const d = dist(p,O);
+    if(Math.abs(d-R) < 6){
+      msg.textContent = "📍 That's ON the circle — exactly " + R + " units from O!";
+      msg.className = "msg-box info";
+    } else if(d < R){
+      msg.textContent = "✅ That's the Interior — inside the circle!";
+      msg.className = "msg-box good";
+    } else {
+      msg.textContent = "🌍 That's the Exterior — outside the circle!";
+      msg.className = "msg-box bad";
+    }
+  });
+  resetBtn.addEventListener('click', ()=>{
+    marker.style.display = 'none'; msg.textContent = DEFAULT_MSG; msg.className = "msg-box";
+  });
+})();
+
+/* ---------- 3. Chord & Diameter ---------- */
+(function(){
+  const svg = document.getElementById('chord-svg');
+  const line = document.getElementById('chord-line');
+  const lenLabel = document.getElementById('chord-len');
+  const h1 = document.getElementById('chord-h1'), h2 = document.getElementById('chord-h2');
+  const caption = document.getElementById('chord-caption');
+  const O = {x:160,y:160}, R = 100;
+  let a = 200, b = 330;
+
+  function render(){
+    const p1 = pointOnCircle(O,R,a), p2 = pointOnCircle(O,R,b);
+    h1.setAttribute('transform', `translate(${p1.x},${p1.y})`);
+    h2.setAttribute('transform', `translate(${p2.x},${p2.y})`);
+    line.setAttribute('x1',p1.x); line.setAttribute('y1',p1.y);
+    line.setAttribute('x2',p2.x); line.setAttribute('y2',p2.y);
+    const mid = {x:(p1.x+p2.x)/2, y:(p1.y+p2.y)/2};
+    const len = dist(p1,p2);
+    lenLabel.setAttribute('x', mid.x+10); lenLabel.setAttribute('y', mid.y-10);
+    lenLabel.textContent = Math.round(len) + ' units';
+
+    const diff = ((b-a)+360) % 360;
+    const gap = Math.min(diff, 360-diff);
+    const isDiameter = Math.abs(gap-180) < 3;
+    if(isDiameter){
+      line.setAttribute('stroke', '#ef476f');
+      line.setAttribute('stroke-width', 6);
+      caption.innerHTML = "📏 That's the longest possible chord — a <b>DIAMETER</b>! It passes right through O and equals 2 &times; radius (200 units).";
+    } else {
+      line.setAttribute('stroke', '#06d6a0');
+      line.setAttribute('stroke-width', 5);
+      caption.innerHTML = 'This is a <b>chord</b> — length ' + Math.round(len) + ' units. Drag a dot until the line passes through O to make a diameter!';
+    }
+  }
+  render();
+  makeDraggable(svg, h1, p=>{ a = clampAwayFrom(angleFromPoint(O,p), b, 8); render(); });
+  makeDraggable(svg, h2, p=>{ b = clampAwayFrom(angleFromPoint(O,p), a, 8); render(); });
+})();
+
+/* ---------- 4. Sector / Segment / Arc ---------- */
+(function(){
+  const svg = document.getElementById('sas-svg');
+  const fillMajor = document.getElementById('sas-fill-major'), fillMinor = document.getElementById('sas-fill-minor');
+  const arcMajor = document.getElementById('sas-arc-major'), arcMinor = document.getElementById('sas-arc-minor');
+  const radius1 = document.getElementById('sas-radius1'), radius2 = document.getElementById('sas-radius2');
+  const chordLine = document.getElementById('sas-chord');
+  const labelMajor = document.getElementById('sas-label-major'), labelMinor = document.getElementById('sas-label-minor');
+  const h1 = document.getElementById('sas-h1'), h2 = document.getElementById('sas-h2');
+  const caption = document.getElementById('sas-caption');
+  const O = {x:160,y:160}, R = 100;
+  let a = 100, b = 260;
+  let tab = 'sector';
+
+  function render(){
+    const p1 = pointOnCircle(O,R,a), p2 = pointOnCircle(O,R,b);
+    h1.setAttribute('transform', `translate(${p1.x},${p1.y})`);
+    h2.setAttribute('transform', `translate(${p2.x},${p2.y})`);
+    radius1.setAttribute('x2',p1.x); radius1.setAttribute('y2',p1.y);
+    radius2.setAttribute('x2',p2.x); radius2.setAttribute('y2',p2.y);
+    chordLine.setAttribute('x1',p1.x); chordLine.setAttribute('y1',p1.y);
+    chordLine.setAttribute('x2',p2.x); chordLine.setAttribute('y2',p2.y);
+
+    const diffAB = ((b-a)+360) % 360; // sweep a -> b (CCW)
+    const diffBA = 360 - diffAB;      // sweep b -> a (CCW)
+    const equalHalves = Math.abs(diffAB-180) < 2;
+    // whichever sweep is smaller is the "minor" side
+    const abIsMinor = diffAB < diffBA;
+    const minorFrom = abIsMinor ? a : b, minorSweepFrom = abIsMinor ? a : b, minorTo = abIsMinor ? b : a;
+    const minorDeg = abIsMinor ? diffAB : diffBA;
+    const majorFrom = abIsMinor ? b : a, majorTo = abIsMinor ? a : b;
+    const majorDeg = abIsMinor ? diffBA : diffAB;
+
+    arcMinor.setAttribute('d', arcPathBetween(O,R,minorFrom,minorTo));
+    arcMajor.setAttribute('d', arcPathBetween(O,R,majorFrom,majorTo));
+
+    const minorMidDeg = midDeg(minorFrom, minorDeg);
+    const majorMidDeg = midDeg(majorFrom, majorDeg);
+
+    if(tab === 'sector'){
+      fillMinor.setAttribute('d', sectorPath(O,R,minorFrom,minorTo));
+      fillMajor.setAttribute('d', sectorPath(O,R,majorFrom,majorTo));
+      radius1.style.display = 'block'; radius2.style.display = 'block';
+      chordLine.style.display = 'none';
+      const lpMinor = pointOnCircle(O, R*0.55, minorMidDeg);
+      const lpMajor = pointOnCircle(O, R*0.55, majorMidDeg);
+      labelMinor.setAttribute('x', lpMinor.x-14); labelMinor.setAttribute('y', lpMinor.y);
+      labelMajor.setAttribute('x', lpMajor.x-14); labelMajor.setAttribute('y', lpMajor.y);
+      labelMinor.textContent = Math.round(minorDeg) + '°';
+      labelMajor.textContent = Math.round(majorDeg) + '°';
+      if(equalHalves){
+        caption.innerHTML = 'Two radii, 180° apart — that splits the circle into two <b>equal sectors</b> (each a semicircle)!';
+      } else {
+        caption.innerHTML = 'The <b>MINOR sector</b> (' + Math.round(minorDeg) + '°, pink) is smaller. The <b>MAJOR sector</b> (' +
+          Math.round(majorDeg) + '°, orange) is bigger. Together: ' + Math.round(minorDeg) + '° + ' + Math.round(majorDeg) + '° = <b>360°</b>!';
+      }
+    } else {
+      fillMinor.setAttribute('d', segmentPath(O,R,minorFrom,minorTo));
+      fillMajor.setAttribute('d', segmentPath(O,R,majorFrom,majorTo));
+      radius1.style.display = 'none'; radius2.style.display = 'none';
+      chordLine.style.display = 'block';
+      const lpMinor = pointOnCircle(O, R+18, minorMidDeg);
+      const lpMajor = pointOnCircle(O, R+18, majorMidDeg);
+      labelMinor.setAttribute('x', lpMinor.x-14); labelMinor.setAttribute('y', lpMinor.y);
+      labelMajor.setAttribute('x', lpMajor.x-14); labelMajor.setAttribute('y', lpMajor.y);
+      labelMinor.textContent = Math.round(minorDeg) + '°';
+      labelMajor.textContent = Math.round(majorDeg) + '°';
+      if(equalHalves){
+        caption.innerHTML = 'This chord passes through O — it splits the circle into two <b>equal semicircle segments</b>!';
+      } else {
+        caption.innerHTML = 'The chord splits the circle into a smaller <b>MINOR segment</b> (pink) and a bigger <b>MAJOR segment</b> (orange). ' +
+          'The curved edge is split the same way into a minor arc (' + Math.round(minorDeg) + '°) and major arc (' + Math.round(majorDeg) + '°).';
+      }
+    }
+  }
+  render();
+  makeDraggable(svg, h1, p=>{ a = clampAwayFrom(angleFromPoint(O,p), b, 12); render(); });
+  makeDraggable(svg, h2, p=>{ b = clampAwayFrom(angleFromPoint(O,p), a, 12); render(); });
+
+  document.getElementById('sas-tabs').addEventListener('click', e=>{
+    const btn = e.target.closest('.tab-btn'); if(!btn) return;
+    tab = btn.dataset.tab;
+    document.querySelectorAll('#sas-tabs .tab-btn').forEach(b=>b.classList.toggle('active', b===btn));
+    render();
+  });
+})();
+
+/* ---------- 5a. Semicircle ---------- */
+(function(){
+  const svg = document.getElementById('semi-svg');
+  const fill = document.getElementById('semi-fill');
+  const diameterLine = document.getElementById('semi-diameter');
+  const label = document.getElementById('semi-label');
+  const handle = document.getElementById('semi-handle');
+  const O = {x:130,y:110}, R = 80;
+
+  function render(deg){
+    const p1 = pointOnCircle(O,R,deg), p2 = pointOnCircle(O,R,deg+180);
+    handle.setAttribute('transform', `translate(${p1.x},${p1.y})`);
+    diameterLine.setAttribute('x1',p1.x); diameterLine.setAttribute('y1',p1.y);
+    diameterLine.setAttribute('x2',p2.x); diameterLine.setAttribute('y2',p2.y);
+    fill.setAttribute('d', sectorPath(O,R,deg,deg+180));
+    const lp = pointOnCircle(O, R*0.55, deg+90);
+    label.setAttribute('x', lp.x-30); label.setAttribute('y', lp.y);
+    label.textContent = 'semicircle';
+  }
+  render(20);
+  makeDraggable(svg, handle, p=>{ render(angleFromPoint(O,p)); });
+})();
+
+/* ---------- 5b. Concentric circles ---------- */
+(function(){
+  const ringsG = document.getElementById('conc-rings');
+  const caption = document.getElementById('conc-caption');
+  const addBtn = document.getElementById('conc-add');
+  const resetBtn = document.getElementById('conc-reset');
+  const O = {x:130,y:130};
+  const baseR = 30, step = 20, maxExtra = 4;
+  const colors = ['#4cc9f0','#06d6a0','#ffd166','#ff6ec7'];
+  let extra = 0;
+
+  function render(){
+    ringsG.innerHTML = '';
+    for(let i=0; i<=extra; i++){
+      const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx',O.x); c.setAttribute('cy',O.y);
+      c.setAttribute('r', baseR + i*step);
+      c.setAttribute('fill','none');
+      c.setAttribute('stroke', i===0 ? '#a06cd5' : colors[(i-1)%colors.length]);
+      c.setAttribute('stroke-width', 3);
+      ringsG.appendChild(c);
+    }
+    const n = extra+1;
+    caption.textContent = n===1 ? 'Just 1 circle so far.' :
+      'Now there are ' + n + ' circles, all sharing the same centre O — that’s what CONCENTRIC means!';
+    addBtn.disabled = extra >= maxExtra;
+  }
+  addBtn.addEventListener('click', ()=>{ if(extra<maxExtra){ extra++; render(); } });
+  resetBtn.addEventListener('click', ()=>{ extra=0; render(); });
+  render();
+})();
+
+/* ---------- 6. Tangent & Secant ---------- */
+(function(){
+  const svg = document.getElementById('tansec-svg');
+  const line = document.getElementById('tansec-line');
+  const radiusLine = document.getElementById('tansec-radius');
+  const p1 = document.getElementById('tansec-p1'), p2 = document.getElementById('tansec-p2');
+  const handle = document.getElementById('tansec-handle');
+  const caption = document.getElementById('tansec-caption');
+  const O = {x:150,y:140}, R = 90, TOL = 3;
+
+  function render(h){
+    line.setAttribute('y1', h); line.setAttribute('y2', h);
+    handle.setAttribute('transform', `translate(${O.x},${h})`);
+    const d = Math.abs(h - O.y);
+
+    if(d > R + TOL){
+      p1.style.display = 'none'; p2.style.display = 'none'; radiusLine.style.display = 'none';
+      caption.innerHTML = 'Just a line — it doesn’t touch the circle at all! (<b>0 points</b>)';
+    } else if(Math.abs(d - R) <= TOL){
+      p1.style.display = 'block'; p2.style.display = 'none'; radiusLine.style.display = 'block';
+      p1.setAttribute('transform', `translate(${O.x},${h})`);
+      radiusLine.setAttribute('x2', O.x); radiusLine.setAttribute('y2', h);
+      caption.innerHTML = '🎯 <b>TANGENT!</b> It touches the circle at exactly <b>ONE point</b>.';
+    } else {
+      const off = Math.sqrt(Math.max(0, R*R - d*d));
+      p1.style.display = 'block'; p2.style.display = 'block'; radiusLine.style.display = 'none';
+      p1.setAttribute('transform', `translate(${O.x-off},${h})`);
+      p2.setAttribute('transform', `translate(${O.x+off},${h})`);
+      caption.innerHTML = '✂️ <b>SECANT!</b> It crosses the circle at exactly <b>TWO points</b> — the piece between them is a chord you already know!';
+    }
+  }
+  render(80);
+  makeDraggable(svg, handle, p=>render(clamp(p.y, 10, 270)));
+})();
+
+/* ---------- 7. Circumference & Area ---------- */
+(function(){
+  const svg = document.getElementById('area-svg');
+  const circle = document.getElementById('area-circle');
+  const radiusLine = document.getElementById('area-radiusline');
+  const rLabel = document.getElementById('area-rlabel');
+  const handle = document.getElementById('area-handle');
+  const caption = document.getElementById('area-caption');
+  const O = {x:150,y:140}, UNIT = 15;
+
+  function render(pxR){
+    circle.setAttribute('r', pxR);
+    radiusLine.setAttribute('x2', O.x+pxR); radiusLine.setAttribute('y2', O.y);
+    handle.setAttribute('transform', `translate(${O.x+pxR},${O.y})`);
+    rLabel.setAttribute('x', O.x+pxR/2-8); rLabel.setAttribute('y', O.y-8);
+
+    const units = pxR/UNIT;
+    rLabel.textContent = units.toFixed(1);
+    const circumference = 2*Math.PI*units;
+    const area = Math.PI*units*units;
+    caption.innerHTML = 'Radius = <b>'+units.toFixed(1)+'</b> units &nbsp;→&nbsp; Circumference = 2×π×'+units.toFixed(1)+' ≈ <b>'+circumference.toFixed(1)+' units</b>'
+      + '<br>Area = π×'+units.toFixed(1)+'² ≈ <b>'+area.toFixed(1)+' sq units</b>';
+  }
+  render(60);
+  makeDraggable(svg, handle, p=>render(clamp(p.x-O.x, 30, 110)));
+})();
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"What do we call the fixed point that every point on a circle is the same distance from?", opts:["The radius","The centre","The diameter","The chord"], answer:1,
+   explain:"That fixed point is the centre (often labelled O) — every point on the circle is exactly one radius-length away from it."},
+  {q:"A circle has a radius of 7 cm. What is its diameter?", opts:["3.5 cm","7 cm","14 cm","49 cm"], answer:2,
+   explain:"Diameter is always 2 × radius, so 7 cm × 2 = 14 cm."},
+  {q:"What is the longest possible chord you can draw in a circle?", opts:["Any chord is the same length","The radius","The diameter","The arc"], answer:2,
+   explain:"A diameter is a chord that passes through the centre — no other chord can be longer."},
+  {q:"A straight line segment joining any two points on a circle is called a...?", opts:["Radius","Diameter","Chord","Tangent"], answer:2,
+   explain:"That's the definition of a chord. A diameter is just a special chord that passes through the centre."},
+  {q:"A point that is closer to the centre than the radius length lies in the...?", opts:["Exterior","Interior","On the circle","None of these"], answer:1,
+   explain:"If its distance from the centre is less than the radius, the point is inside the circle — in the interior."},
+  {q:"Two radii split a circle into two regions called...?", opts:["Arcs","Segments","Sectors","Chords"], answer:2,
+   explain:"Two radii create two pizza-slice-shaped regions called sectors — a bigger major sector and a smaller minor sector."},
+  {q:"What do we call circles that share the same centre but have different radii?", opts:["Semicircles","Concentric circles","Chords","Tangents"], answer:1,
+   explain:"Concentric circles all share one centre, like ripples spreading out in a pond."},
+  {q:"A line that touches a circle at exactly ONE point is called a...?", opts:["Secant","Chord","Tangent","Diameter"], answer:2,
+   explain:"A tangent just grazes the circle at a single point without crossing into it."},
+  {q:"A line that crosses a circle at exactly TWO points is called a...?", opts:["Tangent","Secant","Radius","Arc"], answer:1,
+   explain:"A secant cuts right through the circle, meeting it at two points — the chord is the segment between those two points."},
+  {q:"What is the formula for the circumference of a circle?", opts:["πr²","2πr","πd²","r²"], answer:1,
+   explain:"Circumference = 2 × π × radius (the same as π × diameter)."},
+  {q:"What is the formula for the area of a circle?", opts:["2πr","πr²","2πr²","πd"], answer:1,
+   explain:"Area = π × radius² — it measures the space INSIDE the circle, so it's squared."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = quizData[qIndex];
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're a circle expert! 🌟"
+          : score>=total*0.6 ? "Great job! You really know your circles! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+}
+renderQuestion();
+</script>
+</body>
+</html>

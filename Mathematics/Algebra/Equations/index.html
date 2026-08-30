@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Equations ⚖️</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:var(--ink);
+    padding:10px;
+    min-height:100vh;
+  }
+  .container{max-width:900px;margin:0 auto;padding-bottom:60px;}
+
+  /* nav */
+  .nav-top{position:fixed;top:14px;display:flex;gap:0;z-index:200;}
+  .nav-back{left:14px;} .nav-home{right:14px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;
+    width:48px;height:48px;font-size:22px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #7a3b97;}
+
+  /* stars tracker */
+  .stars-bar{
+    position:sticky;top:8px;z-index:150;
+    max-width:280px;margin:0 auto 10px auto;
+    background:var(--cream);border:3px solid var(--yellow);
+    border-radius:50px;padding:8px 18px;text-align:center;
+    font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,.1);
+    transition:transform .2s;
+  }
+  .stars-bar.pulse{animation:pulseStar .5s ease;}
+  @keyframes pulseStar{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
+
+  header{text-align:center;margin:70px 0 20px 0;}
+  .emoji{font-size:clamp(50px,12vw,90px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  h1{
+    font-size:clamp(26px,6vw,50px);margin:10px 0;
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{font-size:clamp(15px,2.2vw,20px);color:var(--blue);font-weight:bold;}
+
+  .quicknav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 30px 0;}
+  .quicknav a{
+    text-decoration:none;background:white;color:var(--purple);font-weight:bold;
+    font-size:13px;padding:8px 14px;border-radius:20px;border:2px solid var(--purple);
+    transition:.2s;
+  }
+  .quicknav a:hover{background:var(--purple);color:white;}
+
+  .card{
+    background:var(--cream);border-radius:20px;padding:20px 18px;margin-bottom:28px;
+    border:3px solid var(--purple);box-shadow:0 8px 0 rgba(0,0,0,.08);
+    scroll-margin-top:90px;
+  }
+  .card h2{font-size:clamp(20px,4vw,28px);color:var(--pink);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .card p{font-size:15px;line-height:1.6;margin-bottom:10px;}
+  .callout{
+    background:#fff;border-left:8px solid var(--teal);border-radius:10px;
+    padding:12px 16px;margin:14px 0;font-size:15px;font-weight:bold;color:var(--ink);
+  }
+  .callout.purple{border-left-color:var(--purple);}
+  .callout.orange{border-left-color:var(--orange);}
+
+  .mascot-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:14px 0;}
+  .mascot{font-size:56px;flex-shrink:0;filter:drop-shadow(0 4px 4px rgba(0,0,0,.15));}
+  .mascot.wobble{animation:wobble 2.4s ease-in-out infinite;}
+  @keyframes wobble{0%,100%{transform:rotate(0deg);}25%{transform:rotate(-8deg);}75%{transform:rotate(8deg);}}
+
+  /* chips (design-system component, kept for visual consistency) */
+  .chip-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+  .chip{
+    background:white;border:3px solid var(--orange);border-radius:14px;
+    padding:14px 18px;cursor:pointer;font-weight:bold;font-size:16px;
+    text-align:center;min-width:120px;box-shadow:0 5px 0 #d97e2f;
+    transition:transform .15s;user-select:none;
+  }
+  .chip:hover{transform:translateY(-3px);}
+  .chip:active{transform:translateY(3px);box-shadow:0 2px 0 #d97e2f;}
+  .chip.flipped{background:var(--teal);color:white;box-shadow:0 5px 0 #04a37e;border-color:#04a37e;}
+  .chip small{display:block;font-weight:normal;font-size:12px;margin-top:6px;}
+
+  /* sliders */
+  .slider-box{
+    background:white;border-radius:16px;padding:16px;margin-top:12px;
+    border:2px dashed var(--blue);text-align:center;
+  }
+  input[type=range]{width:100%;accent-color:var(--purple);height:28px;cursor:pointer;}
+  .big-readout{font-size:clamp(18px,4.4vw,28px);font-weight:bold;color:var(--purple);margin:10px 0;}
+  .big-readout span{color:var(--red);}
+  .emoji-row{font-size:20px;letter-spacing:1px;min-height:30px;margin-top:8px;line-height:1.6;word-break:break-word;}
+
+  /* pattern rows / classify rows */
+  .pattern-row{
+    background:white;border-radius:14px;padding:14px;margin-bottom:14px;
+    border:2px solid #ddd;display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  }
+  .pat-chip{background:var(--yellow);border-radius:8px;padding:6px 14px;font-weight:bold;font-size:18px;}
+  .pat-chip.q{background:#eee;color:#999;}
+  .item-text{font-weight:bold;font-size:16px;flex:1 1 auto;min-width:140px;}
+  .pat-input{
+    width:70px;padding:8px;border-radius:8px;border:2px solid #ccc;
+    font-size:16px;text-align:center;font-weight:bold;
+  }
+  .pat-input.correct{border-color:var(--teal);background:#e8fff8;}
+  .pat-input.wrong{border-color:var(--red);background:#fff0f3;}
+  .mini-btn{
+    background:var(--purple);color:white;border:none;border-radius:8px;
+    padding:8px 16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 #7a3b97;
+  }
+  .mini-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #7a3b97;}
+  .pat-feedback{font-size:13px;font-weight:bold;}
+
+  /* token / spot-it game */
+  .expr-block{
+    background:white;border-radius:14px;padding:14px;margin-bottom:14px;
+    border:2px solid #ddd;
+  }
+  .expr-text{font-size:26px;font-weight:bold;margin-bottom:6px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .token-btn{
+    background:var(--yellow);border:none;border-radius:8px;padding:6px 14px;
+    font-size:22px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 #c99a1f;
+    transition:.15s;
+  }
+  .token-btn:hover{transform:translateY(-2px);}
+  .token-btn.op{background:none;box-shadow:none;cursor:default;font-size:24px;color:#999;padding:0 2px;}
+  .token-btn.correct{background:var(--teal);color:white;box-shadow:0 3px 0 #04a37e;}
+  .token-btn:disabled{cursor:default;}
+  .token-btn.wrong{animation:shake .4s;background:var(--red);color:white;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .expr-instruction{font-size:14px;font-weight:bold;color:var(--purple);}
+  .expr-done{color:var(--teal);font-weight:bold;font-size:14px;}
+
+  /* balance scale */
+  .scale-wrap{text-align:center;}
+  .scale-wrap svg{max-width:280px;width:100%;height:auto;}
+  #beamGroup{transition:transform .6s ease;}
+  .match-highlight{
+    font-size:clamp(18px,4vw,26px);font-weight:bold;color:var(--teal);
+    display:none;margin-top:10px;animation:pulseStar .6s ease;
+  }
+  .match-highlight.show{display:block;}
+
+  /* domain flip cards */
+  .domain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:14px;}
+  .flip-card{perspective:1200px;height:250px;cursor:pointer;}
+  .flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;}
+  .flip-card.flipped .flip-card-inner{transform:rotateY(180deg);}
+  .flip-front,.flip-back{
+    position:absolute;width:100%;height:100%;backface-visibility:hidden;
+    border-radius:16px;padding:14px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+  }
+  .flip-front{background:white;border:3px solid var(--teal);}
+  .flip-back{background:#fffbe8;border:3px solid var(--orange);transform:rotateY(180deg);
+    justify-content:flex-start;overflow-y:auto;font-size:13px;}
+  .flip-front .ficon{font-size:44px;margin-bottom:8px;}
+  .flip-front h3{color:var(--pink);font-size:16px;margin-bottom:6px;}
+  .flip-front span{font-size:12px;color:#888;}
+  .flip-back h4{color:var(--orange);font-size:14px;margin-bottom:4px;}
+  .flip-back .mini-readout{font-weight:bold;color:var(--purple);font-size:14px;margin:5px 0;}
+  .flip-back input[type=range]{height:20px;margin:6px 0;}
+  .flip-back .mini-match{font-weight:bold;color:var(--teal);font-size:13px;display:none;}
+  .flip-back .mini-match.show{display:block;}
+
+  /* quiz (shared style) */
+  .quiz-q{background:white;border-radius:14px;padding:14px;margin-bottom:16px;border:2px solid #ddd;}
+  .quiz-q h4{color:var(--purple);margin-bottom:10px;font-size:16px;}
+  .opt-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .opt-btn{
+    background:#f0f0f0;border:2px solid #ccc;border-radius:10px;padding:10px 16px;
+    font-size:14px;font-weight:bold;cursor:pointer;transition:.15s;
+  }
+  .opt-btn:hover{transform:translateY(-2px);}
+  .opt-btn.selected-correct{background:var(--teal);color:white;border-color:#04a37e;}
+  .opt-btn.selected-wrong{background:var(--red);color:white;border-color:#c1274b;}
+  .quiz-explain{font-size:12px;color:#777;margin-top:8px;display:none;}
+  .quiz-explain.show{display:block;}
+  .solve-box{display:none;margin-top:10px;background:#f5f5f5;border-radius:10px;padding:10px;}
+  .solve-box.show{display:block;}
+
+  .cta-btn{
+    display:block;margin:20px auto 0 auto;background:var(--pink);color:white;
+    border:none;border-radius:50px;padding:14px 34px;font-size:17px;font-weight:bold;
+    cursor:pointer;box-shadow:0 5px 0 #c93f96;transition:.15s;
+  }
+  .cta-btn:hover{transform:translateY(-2px);}
+  .cta-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c93f96;}
+  #scoreBanner{
+    display:none;text-align:center;margin-top:16px;padding:16px;border-radius:14px;
+    font-size:18px;font-weight:bold;color:white;background:var(--purple);
+  }
+  #answerAllMsg{display:none;text-align:center;color:var(--red);font-weight:bold;margin-top:10px;}
+
+  .recap-list{list-style:none;}
+  .recap-list li{
+    background:white;border-radius:10px;padding:10px 14px;margin-bottom:8px;
+    border-left:6px solid var(--blue);font-size:14px;
+  }
+
+  .coming-soon{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:14px;}
+  .soon-card{
+    background:#eee;border-radius:14px;padding:14px;text-align:center;color:#999;
+    border:3px dashed #ccc;
+  }
+  .soon-card .se{font-size:30px;margin-bottom:6px;opacity:.6;}
+
+  .confetti-piece{
+    position:fixed;top:-20px;width:10px;height:10px;z-index:999;pointer-events:none;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{to{transform:translateY(110vh) rotate(360deg);opacity:.8;}}
+
+  footer.pagefoot{text-align:center;margin-top:20px;font-size:13px;color:#999;}
+
+  .explore-card{
+    background:white;border-radius:14px;padding:14px;text-align:center;
+    border:3px solid var(--teal);text-decoration:none;color:inherit;
+    transition:.2s;display:block;
+  }
+  .explore-card:hover{transform:translateY(-6px);box-shadow:0 8px 15px rgba(0,0,0,.15);}
+  .explore-card .se{font-size:30px;margin-bottom:6px;}
+</style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Algebra">⬅️</button>
+    </a>
+  </div>
+  <div class="nav-top nav-home">
+    <a href="../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+
+    <header>
+      <div class="emoji">⚖️</div>
+      <h1>Equations</h1>
+      <p class="subtitle">Balance the two sides and hunt for the mystery number! ✨</p>
+    </header>
+
+    <div class="stars-bar" id="starsBar">⭐ Stars collected: <span id="starsCount">0</span> / 6</div>
+
+    <div class="quicknav">
+      <a href="#sec-balance">⚖️ Balance</a>
+      <a href="#sec-classify">🔢 Classify</a>
+      <a href="#sec-parts">🧩 Parts</a>
+      <a href="#sec-notequation">🚫 Not Equal</a>
+      <a href="#sec-solution">🔍 Solve It</a>
+      <a href="#sec-domains">🌍 Explore</a>
+      <a href="#sec-quiz">🏆 Quiz</a>
+    </div>
+
+    <!-- SECTION 1: BALANCE SCALE -->
+    <section class="card" id="sec-balance">
+      <h2>⚖️ Is It Balanced?</h2>
+      <div class="mascot-row">
+        <div class="mascot wobble">⚖️</div>
+        <p>An <b>equation</b> is a statement that says two expressions are <b>EQUAL</b> — joined by an "=" sign. The expression on the left is called the <b>L.H.S.</b> (Left Hand Side), and the one on the right is the <b>R.H.S.</b> (Right Hand Side).</p>
+      </div>
+      <div class="callout">
+        If the L.H.S. and the R.H.S. are NOT actually equal in value, then it is <b>NOT an equation</b>!
+      </div>
+      <p>Think of a balance scale. If both sides weigh the same, the scale stays level — that's an equation! If one side is heavier, the scale tips — that's NOT an equation.</p>
+
+      <div class="scale-wrap">
+        <svg viewBox="0 0 300 170">
+          <polygon points="140,150 160,150 150,95" fill="#a06cd5"/>
+          <rect x="144" y="148" width="12" height="10" fill="#7a3b97"/>
+          <g id="beamGroup" style="transform-origin:150px 95px;">
+            <rect x="40" y="90" width="220" height="10" rx="4" fill="#ff9e45"/>
+            <line x1="60" y1="100" x2="60" y2="135" stroke="#1d2b53" stroke-width="3"/>
+            <path d="M30,135 Q60,168 90,135 Z" fill="#4cc9f0" stroke="#1d2b53" stroke-width="2"/>
+            <line x1="240" y1="100" x2="240" y2="135" stroke="#1d2b53" stroke-width="3"/>
+            <path d="M210,135 Q240,168 270,135 Z" fill="#06d6a0" stroke="#1d2b53" stroke-width="2"/>
+            <text x="60" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#1d2b53">L</text>
+            <text x="240" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#1d2b53">R</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="slider-box">
+        <div class="big-readout">L.H.S.: <span id="balLhsText">4 + 2</span> &nbsp;vs&nbsp; R.H.S.: <span id="balRhsText">7 − 1</span></div>
+        <div class="big-readout" id="balResultLine" style="display:none;"></div>
+        <button class="mini-btn" id="balCheckBtn" onclick="checkBalance()">⚖️ Check the Scale!</button>
+        <button class="mini-btn" id="balNextBtn" style="display:none;" onclick="nextBalance()">Next Example ▶</button>
+        <div id="balDoneMsg" class="expr-done" style="display:none;margin-top:10px;">🎉 You've checked every scale! Great job spotting equations.</div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: NUMERICAL VS ALGEBRAIC -->
+    <section class="card" id="sec-classify">
+      <h2>🔢 Numerical vs Algebraic Equation</h2>
+      <p>A <b>numerical equation</b> contains only numbers — like <b>25 × 5 + 6 = 155</b>. An <b>algebraic equation</b> contains one or more variables (letters) — like <b>3x = 12</b>.</p>
+      <p>Tap the correct label for each equation below:</p>
+      <div id="classifyGame"></div>
+    </section>
+
+    <!-- SECTION 3: PARTS OF AN EQUATION -->
+    <section class="card" id="sec-parts">
+      <h2>🧩 Parts of an Equation</h2>
+      <p>Here's a brand-new word: the <b>coefficient</b> — the number that multiplies a variable. In <b>5x − 2 = 8</b>, the coefficient is <b>5</b>, because it multiplies the variable <b>x</b>.</p>
+      <div class="callout purple">5x − 2 = 8 &nbsp;→&nbsp; coefficient = 5, variable = x, operator = −, constants = 2 and 8</div>
+      <p>Tap the pieces in order — first the <b>COEFFICIENT</b>, then the <b>VARIABLE</b>, then the <b>OPERATOR</b>, then a <b>CONSTANT</b>:</p>
+      <div id="partsGame"></div>
+    </section>
+
+    <!-- SECTION 4: NOT AN EQUATION -->
+    <section class="card" id="sec-notequation">
+      <h2>🚫 What is NOT an Equation</h2>
+      <p>Statements that use <b>&gt;, &lt;, ≥, ≤</b> instead of "=" are called <b>inequalities</b>, not equations. For example, <b>2x − 3 &gt; 4</b> is NOT an equation, but <b>2x − 3 = 1</b> IS an equation.</p>
+      <p>Tap the correct label for each statement below:</p>
+      <div id="notEqGame"></div>
+    </section>
+
+    <!-- SECTION 5: SOLUTION + TRANSLATION -->
+    <section class="card" id="sec-solution">
+      <h2>🔍 The Solution — Trial and Error</h2>
+      <p>The <b>solution</b> of an equation is the value of the variable that makes the L.H.S. equal the R.H.S. We say that value <b>satisfies</b> the equation.</p>
+      <div class="callout">Equation: <b>2x + 4 = 10</b>. Slide x and watch the L.H.S. change — find the value that matches the R.H.S.!</div>
+      <div class="slider-box">
+        <input type="range" id="solveSlider" min="1" max="5" value="1" oninput="updateSolveSlider(this.value)">
+        <div class="big-readout">x = <span id="solveXVal">1</span></div>
+        <div class="big-readout">L.H.S. = 2 × <span id="solveXVal2">1</span> + 4 = <span id="solveLhsVal">6</span></div>
+        <div class="big-readout">R.H.S. = 10</div>
+        <div class="match-highlight" id="solveMatch">✅ MATCH! x = 3 satisfies the equation!</div>
+      </div>
+
+      <div class="callout orange">📌 Coming next: a faster way called <i>transposition</i> — no more guessing!</div>
+
+      <h3 style="color:var(--pink);margin:18px 0 8px 0;">✅ Verify the Solution</h3>
+      <p>Is the given value really the solution? Tap Yes or No.</p>
+      <div id="verifyGame"></div>
+
+      <h3 style="color:var(--pink);margin:18px 0 8px 0;">✏️ Turning Words into Equations</h3>
+      <p>Pick the equation that matches each statement — then solve it by trial and error!</p>
+      <div id="translateGame"></div>
+    </section>
+
+    <!-- SECTION 6: DOMAIN EXPLORER -->
+    <section class="card" id="sec-domains">
+      <h2>🌍 Equations Are Everywhere!</h2>
+      <p>Tap a card to explore an equation hiding in the real world. Slide to search for the value that makes it work!</p>
+      <div class="domain-grid">
+
+        <div class="flip-card" id="domainCard1" onclick="flipDomain(this,1)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">🏠</div>
+              <h3>Daily Life</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>Tom &amp; Jack shared ₹1800. Tom got ₹400 more than Jack.</h4>
+              <p>If Jack got ₹r, Tom got ₹(r + 400).</p>
+              <div class="mini-readout">Jack (r) = <span id="moneyR">500</span></div>
+              <input type="range" id="moneySlider" min="500" max="900" value="500" oninput="updateMoneySplit(this.value)">
+              <div class="mini-readout">Tom = r + 400 = <span id="moneyTom">900</span></div>
+              <div class="mini-readout">Total = 2r + 400 = <span id="moneyTotal">1400</span></div>
+              <div class="mini-match" id="moneyMatch">✅ Total = 1800! r = 700 is the solution!</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard2" onclick="flipDomain(this,2)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">🎂</div>
+              <h3>Daily Life: Ages</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>Jasmine is 10, Rose is 12.</h4>
+              <p>After n years: Jasmine = 10 + n, Rose = 12 + n.</p>
+              <div class="mini-readout">Years from now (n) = <span id="ageN">0</span></div>
+              <input type="range" id="ageSlider" min="0" max="10" value="0" oninput="updateAges(this.value)">
+              <div class="mini-readout">Jasmine = <span id="ageJasmine">10</span>, Rose = <span id="ageRose">12</span></div>
+              <div class="mini-readout">Total age = 22 + 2n = <span id="ageTotal">22</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard3" onclick="flipDomain(this,3)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">📐</div>
+              <h3>Geometry</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>Perimeter of a square is (8a + 10) cm.</h4>
+              <p>Find a so the perimeter equals 50 cm.</p>
+              <div class="mini-readout">a = <span id="squareA">1</span></div>
+              <input type="range" id="squareSlider" min="1" max="10" value="1" oninput="updateSquarePerimeter(this.value)">
+              <div class="mini-readout">8a + 10 = <span id="squarePerimeter">18</span> cm</div>
+              <div class="mini-match" id="squareMatch">✅ Perimeter = 50! a = 5 is the solution!</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" id="domainCard4" onclick="flipDomain(this,4)">
+          <div class="flip-card-inner">
+            <div class="flip-front">
+              <div class="ficon">🔬</div>
+              <h3>Science</h3>
+              <span>tap to reveal</span>
+            </div>
+            <div class="flip-back" onclick="event.stopPropagation()">
+              <h4>A chef needs 20 min per dish, 180 min available.</h4>
+              <p>Find y (number of dishes) so 20y = 180.</p>
+              <div class="mini-readout">Dishes (y) = <span id="chefY">1</span></div>
+              <input type="range" id="chefSlider" min="1" max="12" value="1" oninput="updateChefDishes(this.value)">
+              <div class="mini-readout">20 × y = <span id="chefTotal">20</span> min</div>
+              <div class="mini-match" id="chefMatch">✅ Total = 180! y = 9 is the solution!</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUICK RECAP -->
+    <section class="card">
+      <h2>📝 Quick Recap</h2>
+      <ul class="recap-list">
+        <li>⚖️ An <b>equation</b> says the L.H.S. equals the R.H.S. — if the sides aren't equal, it's NOT an equation.</li>
+        <li>🔢 Equations can be <b>numerical</b> (only numbers) or <b>algebraic</b> (with a variable).</li>
+        <li>🧩 Parts of an equation: <b>coefficient</b>, <b>variable</b>, <b>operator</b>, and <b>constant</b>.</li>
+        <li>🚫 Statements with &gt;, &lt;, ≥, ≤ are <b>inequalities</b> — NOT equations.</li>
+        <li>🔍 The <b>solution</b> is the value that satisfies the equation (makes both sides equal).</li>
+        <li>🚀 Trial and error works, but <b>transposition</b> (coming soon) finds solutions much faster!</li>
+      </ul>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="card" id="sec-quiz">
+      <h2>🏆 Final Challenge</h2>
+      <p>Answer all 5 questions, then hit "Check My Score"!</p>
+      <div id="quizContainer"></div>
+      <div id="answerAllMsg">Oops! Please answer every question first 😊</div>
+      <button class="cta-btn" onclick="checkScore()">Check My Score 🎉</button>
+      <div id="scoreBanner"></div>
+    </section>
+
+    <section class="card">
+      <h2>🔗 Explore More Algebra Lessons</h2>
+      <p>Ready for the next adventure?</p>
+      <div class="coming-soon">
+        <a class="explore-card" href="../Constants_and_Variables/index.html"><div class="se">🔡</div>Constants &amp; Variables</a>
+        <a class="explore-card" href="../Patterns_and_Generalization/index.html"><div class="se">🔍</div>Patterns &amp; Generalization</a>
+        <a class="explore-card" href="../Algebraic_Expressions/index.html"><div class="se">🧮</div>Algebraic Expressions</a>
+        <a class="explore-card" href="../Operations_on_Expressions/index.html"><div class="se">➕</div>Operations on Expressions</a>
+      </div>
+    </section>
+
+    <footer class="pagefoot">Made with 💜 for curious young mathematicians</footer>
+  </div>
+
+<script>
+  /* ---------- STARS ---------- */
+  const earnedStars = new Set();
+  function awardStar(id){
+    if(earnedStars.has(id)) return;
+    earnedStars.add(id);
+    document.getElementById('starsCount').textContent = earnedStars.size;
+    const bar = document.getElementById('starsBar');
+    bar.classList.remove('pulse'); void bar.offsetWidth; bar.classList.add('pulse');
+    if(earnedStars.size === 6) setTimeout(()=>confettiBurst(60),200);
+  }
+
+  /* ---------- SECTION 1: BALANCE SCALE ---------- */
+  const balanceExamples = [
+    {lhs:'4 + 2', rhs:'7 − 1', lv:6, rv:6},
+    {lhs:'3 × 5', rhs:'20 − 1', lv:15, rv:19},
+    {lhs:'10 − 4', rhs:'2 × 3', lv:6, rv:6},
+    {lhs:'9 + 1', rhs:'3 × 3', lv:10, rv:9}
+  ];
+  let balIndex = 0;
+  function renderBalance(){
+    const ex = balanceExamples[balIndex];
+    document.getElementById('balLhsText').textContent = ex.lhs;
+    document.getElementById('balRhsText').textContent = ex.rhs;
+    document.getElementById('beamGroup').style.transform = 'rotate(0deg)';
+    document.getElementById('balResultLine').style.display = 'none';
+    document.getElementById('balCheckBtn').style.display = 'inline-block';
+    document.getElementById('balNextBtn').style.display = 'none';
+  }
+  function checkBalance(){
+    const ex = balanceExamples[balIndex];
+    const diff = ex.lv - ex.rv;
+    const beam = document.getElementById('beamGroup');
+    const line = document.getElementById('balResultLine');
+    if(diff === 0){
+      beam.style.transform = 'rotate(0deg)';
+      line.textContent = '✅ ' + ex.lv + ' = ' + ex.rv + ' — This IS an equation!';
+    } else if(diff > 0){
+      beam.style.transform = 'rotate(-10deg)';
+      line.textContent = '❌ ' + ex.lv + ' ≠ ' + ex.rv + ' — NOT an equation, sides aren\'t equal!';
+    } else {
+      beam.style.transform = 'rotate(10deg)';
+      line.textContent = '❌ ' + ex.lv + ' ≠ ' + ex.rv + ' — NOT an equation, sides aren\'t equal!';
+    }
+    line.style.display = 'block';
+    document.getElementById('balCheckBtn').style.display = 'none';
+    const nextBtn = document.getElementById('balNextBtn');
+    nextBtn.style.display = 'inline-block';
+    nextBtn.textContent = (balIndex === balanceExamples.length - 1) ? 'Finish ✔' : 'Next Example ▶';
+  }
+  function nextBalance(){
+    balIndex++;
+    if(balIndex >= balanceExamples.length){
+      document.getElementById('balNextBtn').style.display = 'none';
+      document.getElementById('balDoneMsg').style.display = 'block';
+      awardStar('balance');
+    } else {
+      renderBalance();
+    }
+  }
+  renderBalance();
+
+  /* ---------- GENERIC TAP-TO-CLASSIFY GAME BUILDER ---------- */
+  function buildClassifyGame(containerId, items, buttonDefs, starId){
+    const solved = new Set();
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    items.forEach((item, idx)=>{
+      const row = document.createElement('div');
+      row.className = 'pattern-row';
+      const text = document.createElement('span');
+      text.className = 'item-text';
+      text.textContent = item.t;
+      row.appendChild(text);
+      buttonDefs.forEach(def=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = def.label;
+        b.onclick = ()=>{
+          const correct = def.value === item.type;
+          row.querySelectorAll('.opt-btn').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));
+          b.classList.add(correct ? 'selected-correct' : 'selected-wrong');
+          if(correct){
+            solved.add(idx);
+            if(solved.size === items.length) awardStar(starId);
+          }
+        };
+        row.appendChild(b);
+      });
+      container.appendChild(row);
+    });
+  }
+
+  /* ---------- SECTION 2: NUMERICAL VS ALGEBRAIC ---------- */
+  const classifyItems = [
+    {t:'8 + 2 = 10', type:'numerical'},
+    {t:'3x = 12', type:'algebraic'},
+    {t:'15 − 5 = 10', type:'numerical'},
+    {t:'y + 7 = 20', type:'algebraic'},
+    {t:'4 × 3 = 12', type:'numerical'},
+    {t:'2a − 1 = 9', type:'algebraic'}
+  ];
+  buildClassifyGame('classifyGame', classifyItems,
+    [{label:'Numerical', value:'numerical'}, {label:'Algebraic', value:'algebraic'}], 'classify');
+
+  /* ---------- SECTION 3: PARTS OF AN EQUATION ---------- */
+  const partsTokens = [
+    {t:'5', type:'coefficient'},
+    {t:'x', type:'variable'},
+    {t:'−', type:'operator'},
+    {t:'2', type:'constant'},
+    {t:'=', type:'equals'},
+    {t:'8', type:'constant'}
+  ];
+  const partsRoles = ['coefficient','variable','operator','constant'];
+  let partsAskIdx = 0;
+  let partsDone = false;
+  function renderParts(){
+    const container = document.getElementById('partsGame');
+    container.innerHTML = '';
+    const block = document.createElement('div');
+    block.className = 'expr-block';
+    const textDiv = document.createElement('div');
+    textDiv.className = 'expr-text';
+    partsTokens.forEach(p=>{
+      const btn = document.createElement('button');
+      btn.textContent = p.t;
+      btn.className = 'token-btn' + (p.type === 'equals' ? ' op' : '');
+      if(p.type !== 'equals'){
+        btn.onclick = ()=>handlePartsClick(p.type, btn);
+      }
+      textDiv.appendChild(btn);
+    });
+    block.appendChild(textDiv);
+    const instr = document.createElement('div');
+    if(partsDone){
+      instr.className = 'expr-done';
+      instr.textContent = '🎉 Awesome! You found every part.';
+    } else {
+      instr.className = 'expr-instruction';
+      instr.textContent = '👉 Tap the ' + partsRoles[partsAskIdx].toUpperCase();
+    }
+    block.appendChild(instr);
+    container.appendChild(block);
+  }
+  function handlePartsClick(type, btn){
+    if(partsDone) return;
+    const wanted = partsRoles[partsAskIdx];
+    if(type === wanted){
+      btn.classList.add('correct');
+      btn.disabled = true;
+      partsAskIdx++;
+      if(partsAskIdx >= partsRoles.length){
+        partsDone = true;
+        awardStar('parts');
+      }
+      renderParts();
+    } else {
+      btn.classList.add('wrong');
+      setTimeout(()=>btn.classList.remove('wrong'), 400);
+    }
+  }
+  renderParts();
+
+  /* ---------- SECTION 4: NOT AN EQUATION ---------- */
+  const notEqItems = [
+    {t:'2x − 3 = 1', type:'equation'},
+    {t:'2x − 3 > 4', type:'inequality'},
+    {t:'y + 5 = 12', type:'equation'},
+    {t:'3a < 20', type:'inequality'},
+    {t:'7 = 7', type:'equation'},
+    {t:'n − 2 ≥ 8', type:'inequality'}
+  ];
+  buildClassifyGame('notEqGame', notEqItems,
+    [{label:'Equation', value:'equation'}, {label:'Not an equation (inequality)', value:'inequality'}], 'notequation');
+
+  /* ---------- SECTION 5: SOLUTION (merged star for solve/verify/translate/domains) ---------- */
+  function updateSolveSlider(v){
+    v = Number(v);
+    document.getElementById('solveXVal').textContent = v;
+    document.getElementById('solveXVal2').textContent = v;
+    const lhs = 2*v + 4;
+    document.getElementById('solveLhsVal').textContent = lhs;
+    const match = document.getElementById('solveMatch');
+    if(lhs === 10){ match.classList.add('show'); } else { match.classList.remove('show'); }
+  }
+  updateSolveSlider(1);
+
+  const verifyItems = [
+    {q:'Is x = 7 the solution of 3x − 5 = 16?', answer:true, explain:'3×7−5 = 16 ✓'},
+    {q:'Is y = 5 the solution of 4y + 2 = 18?', answer:false, explain:'4×5+2 = 22 ≠ 18'},
+    {q:'Is a = 10 the solution of 2a − 3 = 17?', answer:true, explain:'2×10−3 = 17 ✓'}
+  ];
+  const verifySolved = new Set();
+  function renderVerify(){
+    const container = document.getElementById('verifyGame');
+    container.innerHTML = '';
+    verifyItems.forEach((item, idx)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = item.q;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      ['Yes','No'].forEach(label=>{
+        const guess = label === 'Yes';
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = label;
+        b.onclick = ()=>{
+          const correct = guess === item.answer;
+          optRow.querySelectorAll('.opt-btn').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));
+          b.classList.add(correct ? 'selected-correct' : 'selected-wrong');
+          document.getElementById('verify-explain-'+idx).classList.add('show');
+          if(correct){
+            verifySolved.add(idx);
+            checkAllSolutionStar();
+          }
+        };
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+      const explain = document.createElement('div');
+      explain.className = 'quiz-explain';
+      explain.id = 'verify-explain-'+idx;
+      explain.textContent = item.explain;
+      qDiv.appendChild(explain);
+      container.appendChild(qDiv);
+    });
+  }
+  renderVerify();
+
+  const translateItems = [
+    {statement:'5 more than a number x equals 12.', options:['x + 5 = 12','5x = 12','x − 5 = 12','5 − x = 12'], answer:0, solVar:'x', solution:7},
+    {statement:'3 times a number y is 21.', options:['3y = 21','y + 3 = 21','y − 3 = 21','3 + y = 21'], answer:0, solVar:'y', solution:7}
+  ];
+  const translateCompleted = new Set();
+  function renderTranslate(){
+    const container = document.getElementById('translateGame');
+    container.innerHTML = '';
+    translateItems.forEach((item, idx)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = item.statement;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      item.options.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>{
+          optRow.querySelectorAll('.opt-btn').forEach((x,i)=>{
+            x.classList.remove('selected-correct','selected-wrong');
+            if(i === oi) x.classList.add(i === item.answer ? 'selected-correct' : 'selected-wrong');
+          });
+          if(oi === item.answer){
+            document.getElementById('translate-solve-'+idx).classList.add('show');
+          }
+        };
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+
+      const solveBox = document.createElement('div');
+      solveBox.className = 'solve-box';
+      solveBox.id = 'translate-solve-'+idx;
+      solveBox.innerHTML =
+        '<div class="pat-feedback" style="color:var(--purple);margin-bottom:6px;">Solve by trial and error: ' + item.solVar + ' = ' +
+        '<input type="number" class="pat-input" id="translate-input-'+idx+'"> ' +
+        '<button class="mini-btn" onclick="checkTranslateSolution('+idx+')">Check</button> ' +
+        '<span class="pat-feedback" id="translate-fb-'+idx+'"></span></div>';
+      qDiv.appendChild(solveBox);
+
+      container.appendChild(qDiv);
+    });
+  }
+  function checkTranslateSolution(idx){
+    const item = translateItems[idx];
+    const input = document.getElementById('translate-input-'+idx);
+    const fb = document.getElementById('translate-fb-'+idx);
+    if(input.value === ''){ fb.textContent = 'Type a number!'; fb.style.color = 'var(--red)'; return; }
+    const val = Number(input.value);
+    if(val === item.solution){
+      fb.textContent = '✅ Correct! ' + item.solVar + ' = ' + item.solution;
+      fb.style.color = 'var(--teal)';
+      translateCompleted.add(idx);
+      checkAllSolutionStar();
+    } else {
+      fb.textContent = 'Try again — trial and error!';
+      fb.style.color = 'var(--red)';
+    }
+  }
+  renderTranslate();
+
+  function checkAllSolutionStar(){
+    if(verifySolved.size === verifyItems.length &&
+       translateCompleted.size === translateItems.length &&
+       openedDomains.size === 4){
+      awardStar('solution');
+    }
+  }
+
+  /* ---------- SECTION 6: DOMAIN EXPLORER ---------- */
+  const openedDomains = new Set();
+  function flipDomain(el, id){
+    el.classList.toggle('flipped');
+    openedDomains.add(id);
+    checkAllSolutionStar();
+  }
+  function updateMoneySplit(v){
+    v = Number(v);
+    document.getElementById('moneyR').textContent = v;
+    const tom = v + 400;
+    document.getElementById('moneyTom').textContent = tom;
+    const total = 2*v + 400;
+    document.getElementById('moneyTotal').textContent = total;
+    document.getElementById('moneyMatch').classList.toggle('show', total === 1800);
+  }
+  updateMoneySplit(500);
+  function updateAges(v){
+    v = Number(v);
+    document.getElementById('ageN').textContent = v;
+    document.getElementById('ageJasmine').textContent = 10 + v;
+    document.getElementById('ageRose').textContent = 12 + v;
+    document.getElementById('ageTotal').textContent = 22 + 2*v;
+  }
+  updateAges(0);
+  function updateSquarePerimeter(v){
+    v = Number(v);
+    document.getElementById('squareA').textContent = v;
+    const p = 8*v + 10;
+    document.getElementById('squarePerimeter').textContent = p;
+    document.getElementById('squareMatch').classList.toggle('show', p === 50);
+  }
+  updateSquarePerimeter(1);
+  function updateChefDishes(v){
+    v = Number(v);
+    document.getElementById('chefY').textContent = v;
+    const total = 20*v;
+    document.getElementById('chefTotal').textContent = total;
+    document.getElementById('chefMatch').classList.toggle('show', total === 180);
+  }
+  updateChefDishes(1);
+
+  /* ---------- QUIZ ---------- */
+  const quiz = [
+    {q:'Which of these IS an equation?', options:['5y + 3 > 10','5y + 3 = 18','y − 2 < 6','2y ≥ 14'], answer:1,
+     explain:'5y + 3 = 18 uses "=" — that makes it an equation. The others use inequality signs.'},
+    {q:'In "9m + 3 = 21", what is the COEFFICIENT?', options:['9','m','3','21'], answer:0,
+     explain:'9 is the number multiplying the variable m — that\'s the coefficient.'},
+    {q:'Is x = 4 the solution of 3x + 2 = 14?', options:['Yes','No'], answer:0,
+     explain:'3×4+2 = 14 ✓'},
+    {q:'Which equation matches "9 less than a number p equals 15"?', options:['p − 9 = 15','9 − p = 15','p + 9 = 15','9p = 15'], answer:0,
+     explain:'"9 less than p" means p − 9, and that equals 15.'},
+    {q:'"18 − 6 = 12" is what type of equation?', options:['Algebraic equation','Numerical equation','Not an equation','Inequality'], answer:1,
+     explain:'It only contains numbers, so it\'s a numerical equation.'}
+  ];
+  const quizAnswers = {};
+
+  function renderQuiz(){
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    quiz.forEach((item, qi)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = (qi+1) + '. ' + item.q;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      item.options.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>selectOption(qi, oi, qDiv);
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+      const explain = document.createElement('div');
+      explain.className = 'quiz-explain';
+      explain.id = 'explain-'+qi;
+      explain.textContent = item.explain;
+      qDiv.appendChild(explain);
+      container.appendChild(qDiv);
+    });
+  }
+  function selectOption(qi, oi, qDiv){
+    quizAnswers[qi] = oi;
+    const buttons = qDiv.querySelectorAll('.opt-btn');
+    buttons.forEach((b, idx)=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(idx === oi) b.classList.add(idx === quiz[qi].answer ? 'selected-correct' : 'selected-wrong');
+    });
+    document.getElementById('explain-'+qi).classList.add('show');
+  }
+  function checkScore(){
+    if(Object.keys(quizAnswers).length < quiz.length){
+      document.getElementById('answerAllMsg').style.display = 'block';
+      return;
+    }
+    document.getElementById('answerAllMsg').style.display = 'none';
+    let score = 0;
+    quiz.forEach((item, qi)=>{ if(quizAnswers[qi] === item.answer) score++; });
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'block';
+    banner.textContent = 'You scored ' + score + ' / ' + quiz.length + '! ' +
+      (score >= 4 ? '🌟 Superstar!' : score >= 3 ? '👍 Nice work!' : '💪 Keep practicing!');
+    awardStar('quiz');
+    if(score >= 4) confettiBurst(40);
+  }
+  renderQuiz();
+
+  /* ---------- CONFETTI ---------- */
+  function confettiBurst(count){
+    const colors = ['#ff6ec7','#a06cd5','#4cc9f0','#06d6a0','#ffd166','#ff9e45','#ef476f'];
+    for(let i=0;i<count;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random()*100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animationDuration = (2 + Math.random()*2) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(piece);
+      setTimeout(()=>piece.remove(), 4500);
+    }
+  }
+</script>
+</body>
+</html>

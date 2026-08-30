@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>All About Angles 📐</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .mascot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:50%;}
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .tabbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .tab-btn{
+    background:white;border:3px solid var(--purple);color:var(--purple);font-weight:bold;font-size:14px;
+    padding:8px 16px;border-radius:14px;cursor:pointer;transition:all .2s;
+  }
+  .tab-btn:hover{transform:translateY(-2px);}
+  .tab-btn.active{background:var(--purple);color:white;}
+
+  .stage{background:white;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .caption{
+    text-align:center;font-size:clamp(14px,2vw,16px);font-weight:bold;
+    background:#f0e6ff;border-radius:12px;padding:10px 16px;min-height:24px;
+  }
+  .caption b{color:var(--pink);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+
+  .realworld{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .realworld .rw-frame{
+    position:relative;width:110px;height:110px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#e6f3ff,#f0e6ff);display:flex;align-items:center;justify-content:center;
+    font-size:56px;flex:0 0 auto;border:3px solid var(--blue);
+  }
+  .realworld .rw-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .realworld p{font-size:14px;max-width:420px;}
+
+  .msg-box{text-align:center;font-weight:bold;font-size:15px;padding:10px;border-radius:12px;background:#eee;min-height:20px;transition:background .2s,color .2s;}
+  .msg-box.good{background:#d4f7e8;color:#048848;}
+  .msg-box.bad{background:#ffe3ea;color:#c0245a;}
+  .msg-box.info{background:#e6f7ff;color:#0a6ca8;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action.purple{background:var(--purple);box-shadow:0 4px 0 #7a3b97;}
+  button.action:disabled{opacity:.5;cursor:not-allowed;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  /* classification chips */
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px;}
+  .chip{
+    border:3px solid #cbd5e1;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:bold;
+    background:white;color:#94a3b8;transition:all .2s;
+  }
+  .chip.on{border-color:var(--pink);background:var(--pink);color:white;transform:scale(1.08);}
+
+  /* compass */
+  .compass-arrow{transform-origin:150px 150px;transition:transform .7s cubic-bezier(.3,1.4,.5,1);}
+
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Geometry">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📐 🔄 🧭</div>
+    <h1><span class="highlight">All About Angles</span></h1>
+    <p class="subtitle">Arms, vertices, turns, and the humble protractor!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">📐<img src="../shared/images/mascot.png" alt="" onerror="this.remove()"></div>
+    <p>Hi again! I'm Ray the Ruler 👋 Every time two rays meet at a point, an angle is born! Drag the arms below,
+      click around, and let's measure some angles together.</p>
+  </div>
+
+  <!-- 1. DEFINITION -->
+  <section class="section">
+    <h2>🔸 Meet an Angle <span class="try-badge">Drag B!</span></h2>
+    <p class="lead">An <b>angle</b> is formed when two rays start from the very same point. Drag the pink ray below
+      and watch the angle change.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 220" width="320" id="anatomy-svg">
+        <line x1="60" y1="190" x2="200" y2="190" stroke="#06d6a0" stroke-width="5"/>
+        <circle cx="200" cy="190" r="6" fill="#06d6a0"/>
+        <text x="205" y="210" font-size="14" font-weight="bold">A</text>
+
+        <path id="anatomy-arc" fill="none" stroke="#ffd166" stroke-width="3"/>
+        <text id="anatomy-deg" font-size="14" font-weight="bold" fill="#1d2b53"></text>
+
+        <line id="anatomy-armB" x1="60" y1="190" x2="180" y2="90" stroke="#ff6ec7" stroke-width="5"/>
+        <g id="anatomy-handle" style="cursor:grab;">
+          <circle cx="180" cy="90" r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/>
+        </g>
+        <text id="anatomy-labelB" font-size="14" font-weight="bold"></text>
+
+        <circle cx="60" cy="190" r="7" fill="#1d2b53"/>
+        <text x="38" y="210" font-size="14" font-weight="bold">O</text>
+      </svg>
+      <p class="caption" id="anatomy-caption"></p>
+    </div>
+
+    <div class="info-box">📌 <b>Naming rule:</b> when we write the name of an angle, the <b>vertex always goes in
+      the middle</b> — so this is ∠AOB (or ∠BOA), never ∠OAB!</div>
+  </section>
+
+  <!-- 2. REGIONS -->
+  <section class="section">
+    <h2>🕵️ Interior, Exterior &amp; Boundary <span class="try-badge">Click anywhere!</span></h2>
+    <p class="lead">Every angle splits the page into three regions. Click anywhere on the picture below and I'll tell
+      you which region you landed in!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 260" width="320" id="regions-svg" style="cursor:crosshair;">
+        <path id="regions-sector" fill="#06d6a0" opacity=".25"/>
+        <line x1="60" y1="220" x2="240" y2="220" stroke="#4cc9f0" stroke-width="5"/>
+        <line id="regions-armB" x1="60" y1="220" stroke="#4cc9f0" stroke-width="5"/>
+        <circle cx="60" cy="220" r="7" fill="#1d2b53"/>
+        <text x="38" y="240" font-size="14" font-weight="bold">O</text>
+        <g id="regions-click-marker" style="display:none;">
+          <circle r="7" fill="#ef476f" stroke="white" stroke-width="2"/>
+        </g>
+      </svg>
+      <div class="msg-box" id="regions-msg">👆 Click anywhere in the box above!</div>
+      <div class="btnrow"><button class="action secondary" id="regions-reset-btn">🔄 Reset</button></div>
+    </div>
+  </section>
+
+  <!-- 3. CLASSIFICATION -->
+  <section class="section">
+    <h2>🏷️ Classifying Angles by Measure <span class="try-badge">Drag me!</span></h2>
+    <p class="lead">Drag the pink ray all the way around O — watch the angle's name change as its measure grows!</p>
+
+    <div class="tabbar" id="classify-chip-row">
+      <!-- chips injected by JS -->
+    </div>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 260" width="320" id="classify-svg">
+        <line x1="160" y1="140" x2="270" y2="140" stroke="#06d6a0" stroke-width="5"/>
+        <path id="classify-arc" fill="none" stroke="#a06cd5" stroke-width="3"/>
+        <line id="classify-armB" x1="160" y1="140" x2="270" y2="140" stroke="#ff6ec7" stroke-width="5"/>
+        <g id="classify-handle" style="cursor:grab;"><circle r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        <circle cx="160" cy="140" r="7" fill="#1d2b53"/>
+      </svg>
+      <p class="caption" id="classify-caption"></p>
+      <div class="btnrow"><button class="action purple" id="complete-btn">🔄 Show me a Complete Angle (360°)</button></div>
+    </div>
+
+    <div class="realworld">
+      <div class="rw-frame">🕒<img src="images/clock.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> At 3 o'clock, a clock's hands make a perfect <b>right angle</b>! At 6 o'clock, they make a
+        <b>straight angle</b>.</p>
+    </div>
+  </section>
+
+  <!-- 4. MEASURING -->
+  <section class="section">
+    <h2>📐 Measuring with a Protractor <span class="try-badge">Drag me!</span></h2>
+    <p class="lead">A protractor's curved edge is split into <b>180 equal parts</b>, each worth <b>1 degree (1°)</b>.
+      Drag the arm below along the protractor to measure!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 340 220" width="340" id="protractor-svg">
+        <path d="M 20 190 A 150 150 0 0 1 320 190" fill="#e6f3ff" stroke="#4cc9f0" stroke-width="2"/>
+        <g id="protractor-ticks"></g>
+        <line x1="20" y1="190" x2="320" y2="190" stroke="#1d2b53" stroke-width="3"/>
+        <path id="protractor-arc" fill="none" stroke="#ffd166" stroke-width="3"/>
+        <line id="protractor-armB" x1="170" y1="190" x2="310" y2="190" stroke="#ff6ec7" stroke-width="5"/>
+        <g id="protractor-handle" style="cursor:grab;"><circle r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        <circle cx="170" cy="190" r="7" fill="#1d2b53"/>
+      </svg>
+      <p class="caption" id="protractor-caption">∠AOB = 0°</p>
+      <div class="btnrow"><button class="action secondary" id="spin-btn">🌀 Spin all the way around! (360°)</button></div>
+      <p class="msg-box info" id="spin-msg" style="display:none;"></p>
+    </div>
+
+    <div class="realworld">
+      <div class="rw-frame">📐<img src="images/protractor.png" alt="" onerror="this.remove()"></div>
+      <p><b>One full turn = 360°.</b> If you spin all the way around back to where you started, you've turned
+        through 360 degrees — a <b>complete angle</b>!</p>
+    </div>
+  </section>
+
+  <!-- 5. ROTATION -->
+  <section class="section">
+    <h2>🧭 Turning, Turning! (Rotation &amp; Compass Directions) <span class="try-badge">Try me!</span></h2>
+    <p class="lead">Turning is just another way to think about angles! Click a button and watch the arrow turn —
+      it always starts facing <b>North</b>.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 300 300" width="280">
+        <circle cx="150" cy="150" r="120" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+        <text x="150" y="30" text-anchor="middle" font-size="16" font-weight="bold">N</text>
+        <text x="150" y="282" text-anchor="middle" font-size="16" font-weight="bold">S</text>
+        <text x="20" y="156" text-anchor="middle" font-size="16" font-weight="bold">W</text>
+        <text x="280" y="156" text-anchor="middle" font-size="16" font-weight="bold">E</text>
+        <text x="245" y="65" text-anchor="middle" font-size="13" fill="#94a3b8">NE</text>
+        <text x="245" y="245" text-anchor="middle" font-size="13" fill="#94a3b8">SE</text>
+        <text x="55" y="245" text-anchor="middle" font-size="13" fill="#94a3b8">SW</text>
+        <text x="55" y="65" text-anchor="middle" font-size="13" fill="#94a3b8">NW</text>
+        <line x1="150" y1="150" x2="150" y2="35" stroke="#e2e8f0" stroke-width="1"/>
+        <line x1="150" y1="150" x2="150" y2="265" stroke="#e2e8f0" stroke-width="1"/>
+        <line x1="150" y1="150" x2="35" y2="150" stroke="#e2e8f0" stroke-width="1"/>
+        <line x1="150" y1="150" x2="265" y2="150" stroke="#e2e8f0" stroke-width="1"/>
+        <g id="compass-arrow" class="compass-arrow">
+          <line x1="150" y1="150" x2="150" y2="55" stroke="#ff6ec7" stroke-width="6" marker-end="url(#carrow)"/>
+        </g>
+        <circle cx="150" cy="150" r="8" fill="#1d2b53"/>
+        <defs>
+          <marker id="carrow" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto-start-reverse">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#ff6ec7"/>
+          </marker>
+        </defs>
+      </svg>
+      <p class="caption" id="compass-caption">Facing <b>North</b> — total turned: <b>0°</b></p>
+      <div class="btnrow">
+        <button class="action" data-turn="-90">↩️ 1/4 turn anticlockwise</button>
+        <button class="action" data-turn="90">↪️ 1/4 turn clockwise</button>
+        <button class="action secondary" data-turn="180">↪️ 1/2 turn clockwise</button>
+        <button class="action purple" data-turn="360">↪️ Full turn clockwise</button>
+        <button class="action" id="compass-reset" style="background:#94a3b8;box-shadow:0 4px 0 #64748b;">🔄 Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Coming soon:</b> once you know these angle types, the next page will explore
+    <b>complementary angles</b>, <b>supplementary angles</b>, angles on a straight line and around a point, and
+    <b>vertically opposite angles</b> — angles that team up in special pairs!</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 5</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+function svgPoint(svg, evt){
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+function makeDraggable(svg, handle, onMove){
+  let dragging = false;
+  handle.addEventListener('pointerdown', e=>{ dragging=true; handle.setPointerCapture(e.pointerId); handle.style.cursor='grabbing'; });
+  handle.addEventListener('pointermove', e=>{ if(dragging) onMove(svgPoint(svg,e)); });
+  ['pointerup','pointercancel'].forEach(ev=>handle.addEventListener(ev, ()=>{ dragging=false; handle.style.cursor='grab'; }));
+}
+function angleFromPoint(vertex, p){
+  const dx = p.x-vertex.x, dy = p.y-vertex.y;
+  return (Math.atan2(-dy,dx)*180/Math.PI + 360) % 360;
+}
+function pointOnCircle(vertex, radius, deg){
+  const rad = deg*Math.PI/180;
+  return { x: vertex.x + radius*Math.cos(rad), y: vertex.y - radius*Math.sin(rad) };
+}
+function arcPath(vertex, radius, deg){
+  const start = pointOnCircle(vertex, radius, 0);
+  const end = pointOnCircle(vertex, radius, deg);
+  const largeArc = deg>180 ? 1:0;
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 0 ${end.x} ${end.y}`;
+}
+function distToSegment(p, a, b){
+  const l2 = (b.x-a.x)**2 + (b.y-a.y)**2;
+  if(l2===0) return Math.hypot(p.x-a.x, p.y-a.y);
+  let t = ((p.x-a.x)*(b.x-a.x) + (p.y-a.y)*(b.y-a.y)) / l2;
+  t = Math.max(0, Math.min(1, t));
+  const proj = { x: a.x + t*(b.x-a.x), y: a.y + t*(b.y-a.y) };
+  return Math.hypot(p.x-proj.x, p.y-proj.y);
+}
+function classify(deg){
+  if(deg < 0.5 || deg > 359.5) return {key:'zero', label:'Zero Angle'};
+  if(deg < 89.5) return {key:'acute', label:'Acute Angle'};
+  if(deg < 90.5) return {key:'right', label:'Right Angle'};
+  if(deg < 179.5) return {key:'obtuse', label:'Obtuse Angle'};
+  if(deg < 180.5) return {key:'straight', label:'Straight Angle'};
+  return {key:'reflex', label:'Reflex Angle'};
+}
+function snapAngle(deg){
+  const snaps = [0,90,180,270,360];
+  for(const s of snaps) if(Math.abs(deg-s) < 3) return s % 360;
+  return deg;
+}
+
+/* ---------- 1. Anatomy widget ---------- */
+(function(){
+  const svg = document.getElementById('anatomy-svg');
+  const handle = document.getElementById('anatomy-handle');
+  const armB = document.getElementById('anatomy-armB');
+  const arc = document.getElementById('anatomy-arc');
+  const degText = document.getElementById('anatomy-deg');
+  const labelB = document.getElementById('anatomy-labelB');
+  const caption = document.getElementById('anatomy-caption');
+  const O = {x:60,y:190}, R = 140;
+
+  function render(deg){
+    deg = snapAngle(deg);
+    const b = pointOnCircle(O, R, deg);
+    armB.setAttribute('x2', b.x); armB.setAttribute('y2', b.y);
+    handle.querySelector('circle').setAttribute('cx', b.x);
+    handle.querySelector('circle').setAttribute('cy', b.y);
+    const labelPos = pointOnCircle(O, R+18, deg);
+    labelB.setAttribute('x', labelPos.x); labelB.setAttribute('y', labelPos.y);
+    labelB.textContent = 'B';
+    arc.setAttribute('d', arcPath(O, 40, deg===0?0.001:deg));
+    const degPos = pointOnCircle(O, 58, deg/2);
+    degText.setAttribute('x', degPos.x-14); degText.setAttribute('y', degPos.y);
+    degText.textContent = Math.round(deg)+'°';
+    caption.innerHTML = 'Arms: ray OA and ray OB &nbsp;|&nbsp; Vertex: O &nbsp;|&nbsp; This is <b>∠AOB = '+Math.round(deg)+'°</b> (the vertex always sits in the middle of the name!)';
+  }
+  render(55);
+  makeDraggable(svg, handle, p=>render(angleFromPoint(O,p)));
+})();
+
+/* ---------- 2. Regions detective ---------- */
+(function(){
+  const svg = document.getElementById('regions-svg');
+  const sector = document.getElementById('regions-sector');
+  const armB = document.getElementById('regions-armB');
+  const marker = document.getElementById('regions-click-marker');
+  const msg = document.getElementById('regions-msg');
+  const resetBtn = document.getElementById('regions-reset-btn');
+  const DEFAULT_MSG = "👆 Click anywhere in the box above!";
+  const O = {x:60,y:220}, MEASURE = 65, ARM_LEN = 180;
+  const A = pointOnCircle(O, ARM_LEN, 0);
+  const B = pointOnCircle(O, ARM_LEN, MEASURE);
+  armB.setAttribute('x2', B.x); armB.setAttribute('y2', B.y);
+  sector.setAttribute('d', `M ${O.x} ${O.y} L ${A.x} ${A.y} A ${ARM_LEN} ${ARM_LEN} 0 0 0 ${B.x} ${B.y} Z`);
+
+  svg.addEventListener('click', e=>{
+    const p = svgPoint(svg, e);
+    marker.style.display = 'block';
+    marker.setAttribute('transform', `translate(${p.x},${p.y})`);
+    const distArmA = distToSegment(p, O, pointOnCircle(O,220,0));
+    const distArmB = distToSegment(p, O, pointOnCircle(O,220,MEASURE));
+    const distVertex = Math.hypot(p.x-O.x, p.y-O.y);
+    if(distVertex < 12 || distArmA < 10 || distArmB < 10){
+      msg.textContent = "📍 That's the Boundary — you're right on one of the arms (or the vertex)!";
+      msg.className = "msg-box info";
+      return;
+    }
+    const ang = angleFromPoint(O, p);
+    const inside = ang > 0 && ang < MEASURE && distVertex < 210;
+    if(inside){
+      msg.textContent = "✅ That's the Interior — inside the angle's opening!";
+      msg.className = "msg-box good";
+    } else {
+      msg.textContent = "🌍 That's the Exterior — outside the angle's opening!";
+      msg.className = "msg-box bad";
+    }
+  });
+
+  resetBtn.addEventListener('click', ()=>{
+    marker.style.display = 'none';
+    msg.textContent = DEFAULT_MSG;
+    msg.className = "msg-box";
+  });
+})();
+
+/* ---------- 3. Classification widget ---------- */
+(function(){
+  const svg = document.getElementById('classify-svg');
+  const handle = document.getElementById('classify-handle');
+  const armB = document.getElementById('classify-armB');
+  const arc = document.getElementById('classify-arc');
+  const caption = document.getElementById('classify-caption');
+  const chipRow = document.getElementById('classify-chip-row');
+  const completeBtn = document.getElementById('complete-btn');
+  const O = {x:160,y:140}, R = 110;
+
+  const chipDefs = [
+    {key:'zero', label:'Zero (0°)'},
+    {key:'acute', label:'Acute (<90°)'},
+    {key:'right', label:'Right (=90°)'},
+    {key:'obtuse', label:'Obtuse (90°-180°)'},
+    {key:'straight', label:'Straight (=180°)'},
+    {key:'reflex', label:'Reflex (180°-360°)'},
+    {key:'complete', label:'Complete (360°)'}
+  ];
+  chipDefs.forEach(c=>{
+    const b = document.createElement('span'); b.className='chip'; b.id='chip-'+c.key; b.textContent=c.label;
+    chipRow.appendChild(b);
+  });
+
+  let spinning = false;
+  function setChip(key){
+    chipDefs.forEach(c=>document.getElementById('chip-'+c.key).classList.remove('on'));
+    document.getElementById('chip-'+key).classList.add('on');
+  }
+  function render(deg, overrideLabel){
+    const b = pointOnCircle(O, R, deg);
+    armB.setAttribute('x2', b.x); armB.setAttribute('y2', b.y);
+    handle.setAttribute('transform', `translate(${b.x},${b.y})`);
+    arc.setAttribute('d', arcPath(O, 34, deg<=0.001?0.001:deg));
+    if(overrideLabel){
+      setChip('complete');
+      caption.innerHTML = '<b>360°</b> — a <b>Complete Angle</b>! One whole spin, back to the start.';
+    } else {
+      const c = classify(deg);
+      setChip(c.key);
+      caption.innerHTML = 'This angle measures <b>'+Math.round(deg)+'°</b> — a <b>'+c.label+'</b>!';
+    }
+  }
+  render(50);
+  makeDraggable(svg, handle, p=>{ if(!spinning) render(snapAngle(angleFromPoint(O,p))); });
+
+  completeBtn.addEventListener('click', ()=>{
+    if(spinning) return;
+    spinning = true; completeBtn.disabled = true;
+    const duration = 1800, start = performance.now();
+    function step(t){
+      const p = Math.min(1, (t-start)/duration);
+      const deg = p*360;
+      render(deg % 360 === 0 && p>0 ? 359.99 : deg%360);
+      if(p<1) requestAnimationFrame(step);
+      else { render(360, true); spinning=false; completeBtn.disabled=false; }
+    }
+    requestAnimationFrame(step);
+  });
+})();
+
+/* ---------- 4. Protractor widget ---------- */
+(function(){
+  const svg = document.getElementById('protractor-svg');
+  const handle = document.getElementById('protractor-handle');
+  const armB = document.getElementById('protractor-armB');
+  const arc = document.getElementById('protractor-arc');
+  const caption = document.getElementById('protractor-caption');
+  const ticksG = document.getElementById('protractor-ticks');
+  const spinBtn = document.getElementById('spin-btn');
+  const spinMsg = document.getElementById('spin-msg');
+  const O = {x:170,y:190}, R = 150;
+
+  for(let d=0; d<=180; d+=10){
+    const inner = pointOnCircle(O, d%30===0?135:142, d);
+    const outer = pointOnCircle(O, 150, d);
+    const tick = document.createElementNS('http://www.w3.org/2000/svg','line');
+    tick.setAttribute('x1',inner.x); tick.setAttribute('y1',inner.y);
+    tick.setAttribute('x2',outer.x); tick.setAttribute('y2',outer.y);
+    tick.setAttribute('stroke','#4cc9f0'); tick.setAttribute('stroke-width', d%30===0?2:1);
+    ticksG.appendChild(tick);
+    if(d%30===0){
+      const lp = pointOnCircle(O, 122, d);
+      const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',lp.x); t.setAttribute('y',lp.y+4); t.setAttribute('font-size','11');
+      t.setAttribute('text-anchor','middle'); t.textContent = d;
+      ticksG.appendChild(t);
+    }
+  }
+  let spinning = false;
+  function render(deg){
+    const b = pointOnCircle(O, R-30, deg);
+    armB.setAttribute('x2', b.x); armB.setAttribute('y2', b.y);
+    handle.setAttribute('transform', `translate(${b.x},${b.y})`);
+    arc.setAttribute('d', arcPath(O, 40, deg<=0.001?0.001:deg));
+    caption.innerHTML = '∠AOB = <b>'+Math.round(deg)+'°</b>';
+  }
+  render(40);
+  makeDraggable(svg, handle, p=>{
+    if(spinning) return;
+    const raw = angleFromPoint(O,p);
+    const clamped = Math.max(0, Math.min(180, raw>180 ? (raw>270?0:180) : raw));
+    render(snapAngle(clamped));
+  });
+
+  spinBtn.addEventListener('click', ()=>{
+    if(spinning) return;
+    spinning = true; spinBtn.disabled = true; spinMsg.style.display='block';
+    render(0);
+    const duration = 2600, start = performance.now();
+    function step(t){
+      const p = Math.min(1, (t-start)/duration);
+      const deg = p*360;
+      const shown = (deg % 360 === 0 && p>0) ? 359.99 : deg % 360;
+      const b = pointOnCircle(O, R-30, shown);
+      armB.setAttribute('x2', b.x); armB.setAttribute('y2', b.y);
+      handle.setAttribute('transform', `translate(${b.x},${b.y})`);
+      arc.setAttribute('d', arcPath(O, 40, shown<=0.001?0.001:shown));
+      spinMsg.textContent = 'Spinning... '+Math.round(deg)+'° so far!';
+      if(p<1) requestAnimationFrame(step);
+      else {
+        render(0);
+        spinMsg.textContent = '🎉 Back to the start! You turned a full 360° — one complete revolution!';
+        spinning = false; spinBtn.disabled = false;
+      }
+    }
+    requestAnimationFrame(step);
+  });
+})();
+
+/* ---------- 5. Compass rotator ---------- */
+(function(){
+  const arrow = document.getElementById('compass-arrow');
+  const caption = document.getElementById('compass-caption');
+  let total = 0;
+  const dirNames = ['North','Northeast','East','Southeast','South','Southwest','West','Northwest'];
+  function updateCaption(){
+    const norm = ((total % 360) + 360) % 360;
+    const idx = Math.round(norm/45) % 8;
+    caption.innerHTML = 'Facing <b>'+dirNames[idx]+'</b> — total turned: <b>'+total+'°</b>';
+  }
+  document.querySelectorAll('[data-turn]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      total += Number(btn.dataset.turn);
+      arrow.style.transform = 'rotate('+total+'deg)';
+      updateCaption();
+    });
+  });
+  document.getElementById('compass-reset').addEventListener('click', ()=>{
+    total = 0; arrow.style.transform = 'rotate(0deg)'; updateCaption();
+  });
+})();
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"What do we call the two rays that form an angle?", opts:["Vertices","Arms","Diagonals","Chords"], answer:1,
+   explain:"The two rays that meet to form an angle are called its arms."},
+  {q:"In naming an angle, where does the vertex letter always go?", opts:["First","Last","In the middle","Anywhere"], answer:2,
+   explain:"The vertex is always written in the middle, e.g. ∠AOB has vertex O in the middle."},
+  {q:"An angle that measures exactly 90° is called a...?", opts:["Straight angle","Acute angle","Right angle","Reflex angle"], answer:2,
+   explain:"Exactly 90° is a right angle — like the corner of a square."},
+  {q:"How many degrees are in one full revolution (a complete angle)?", opts:["90°","180°","270°","360°"], answer:3,
+   explain:"One full spin all the way around back to the start is always 360°."},
+  {q:"If you face North and turn a quarter turn clockwise, which way do you face?", opts:["West","South","East","North"], answer:2,
+   explain:"A quarter turn (90°) clockwise from North lands you facing East."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = quizData[qIndex];
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're an angle expert! 🌟"
+          : score>=total*0.6 ? "Great job! You really know your angles! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+}
+renderQuestion();
+</script>
+</body>
+</html>

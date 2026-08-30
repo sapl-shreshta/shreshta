@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Angle Pairs 🤝</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .mascot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:50%;}
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .stage{background:white;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .dial-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;}
+  .caption{
+    text-align:center;font-size:clamp(14px,2vw,16px);font-weight:bold;
+    background:#f0e6ff;border-radius:12px;padding:10px 16px;min-height:24px;
+  }
+  .caption b{color:var(--pink);}
+  .caption.good{background:#d4f7e8;color:#048848;}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+
+  .proof-box{background:#eef2ff;border:2px dashed var(--purple);border-radius:14px;padding:14px 16px;margin-top:14px;}
+  .proof-step{font-size:14px;line-height:1.6;margin-bottom:8px;}
+  .proof-step:last-child{margin-bottom:0;}
+  .swatch{display:inline-block;width:12px;height:12px;border-radius:3px;margin:0 3px -1px;}
+
+  .realworld{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .realworld .rw-frame{
+    position:relative;width:110px;height:110px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#e6f3ff,#f0e6ff);display:flex;align-items:center;justify-content:center;
+    font-size:56px;flex:0 0 auto;border:3px solid var(--blue);
+  }
+  .realworld .rw-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .realworld p{font-size:14px;max-width:420px;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action:disabled{opacity:.5;cursor:not-allowed;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .contrast-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:16px;}
+  .contrast-card{background:white;border-radius:16px;padding:12px;text-align:center;flex:0 0 auto;}
+  .contrast-card p{font-size:13px;font-weight:bold;margin-top:8px;}
+  .contrast-card.yes p{color:#048848;}
+  .contrast-card.no p{color:#c0245a;}
+
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Geometry">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🤝 📐 ✂️</div>
+    <h1><span class="highlight">Angle Pairs</span></h1>
+    <p class="subtitle">When angles team up — complementary, supplementary, adjacent &amp; vertically opposite!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">📐<img src="../shared/images/mascot.png" alt="" onerror="this.remove()"></div>
+    <p>Hi, it's Ray the Ruler again 👋 Now that you know your angle types, let's see how angles behave when there's
+      TWO of them together. Some team up to make special totals — let's find out!</p>
+  </div>
+
+  <!-- 1. COMPLEMENTARY -->
+  <section class="section">
+    <h2>🧩 Complementary Angles <span class="try-badge">Drag both!</span></h2>
+    <p class="lead">Two angles are <b>complementary</b> if they add up to exactly <b>90°</b> — they don't even need to
+      be touching! Drag each pink arm below and try to make them complementary.</p>
+
+    <div class="stage">
+      <div class="dial-row" id="comp-dials"></div>
+      <p class="caption" id="comp-caption"></p>
+    </div>
+
+    <div class="info-box">📌 Complementary angles don't have to be next to each other — as long as the two measures
+      add up to 90°, they're complementary!</div>
+  </section>
+
+  <!-- 2. SUPPLEMENTARY -->
+  <section class="section">
+    <h2>🧩 Supplementary Angles <span class="try-badge">Drag both!</span></h2>
+    <p class="lead">Two angles are <b>supplementary</b> if they add up to exactly <b>180°</b>. Same idea as
+      complementary, just a bigger target!</p>
+
+    <div class="stage">
+      <div class="dial-row" id="supp-dials"></div>
+      <p class="caption" id="supp-caption"></p>
+    </div>
+  </section>
+
+  <!-- 3. LINEAR PAIR -->
+  <section class="section">
+    <h2>📏 Angles on a Straight Line (Linear Pair) <span class="try-badge">Drag C!</span></h2>
+    <p class="lead">When one ray splits a straight line into two angles, those two angles are called a
+      <b>linear pair</b> — and they ALWAYS add up to 180°, no matter where you drag the divider!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 340 200" width="320" id="linear-svg">
+        <line x1="20" y1="170" x2="320" y2="170" stroke="#06d6a0" stroke-width="5"/>
+        <text x="20" y="190" font-size="13" font-weight="bold">A</text>
+        <text x="320" y="190" text-anchor="end" font-size="13" font-weight="bold">B</text>
+        <path id="linear-arc1" fill="none" stroke="#ffd166" stroke-width="3"/>
+        <path id="linear-arc2" fill="none" stroke="#4cc9f0" stroke-width="3"/>
+        <text id="linear-label1" font-size="14" font-weight="bold" fill="#c98a00"></text>
+        <text id="linear-label2" font-size="14" font-weight="bold" fill="#0a6ca8"></text>
+        <line id="linear-armC" x1="170" y1="170" x2="240" y2="100" stroke="#ff6ec7" stroke-width="5"/>
+        <g id="linear-handle" style="cursor:grab;"><circle r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        <text x="248" y="90" font-size="13" font-weight="bold">C</text>
+        <circle cx="170" cy="170" r="7" fill="#1d2b53"/>
+        <text x="170" y="190" text-anchor="middle" font-size="13" font-weight="bold">O</text>
+      </svg>
+      <p class="caption" id="linear-caption"></p>
+    </div>
+
+    <div class="info-box">📌 A linear pair is always <b>supplementary</b> AND <b>adjacent</b> at the same time —
+      it's the most common example of supplementary angles you'll see!</div>
+  </section>
+
+  <!-- 4. AROUND A POINT -->
+  <section class="section">
+    <h2>🔄 Angles Around a Point <span class="try-badge">Try me!</span></h2>
+    <p class="lead">However you slice up the full circle around a point, all the pieces always add up to
+      <b>360°</b>. Click below to add divider rays and see it happen!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 320" width="300" id="around-svg">
+        <circle cx="160" cy="160" r="120" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+        <circle cx="160" cy="160" r="6" fill="#1d2b53"/>
+        <g id="around-rays"></g>
+        <g id="around-labels"></g>
+      </svg>
+      <p class="caption" id="around-caption">Click "Add a Divider Ray" at least twice to start splitting the circle!</p>
+      <div class="btnrow">
+        <button class="action" id="around-add">➕ Add a Divider Ray</button>
+        <button class="action secondary" id="around-reset">🔄 Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ADJACENT -->
+  <section class="section">
+    <h2>🔗 Adjacent Angles <span class="try-badge">Drag C!</span></h2>
+    <p class="lead">Two angles are <b>adjacent</b> if they share the same vertex AND a common arm, with their other
+      arms pointing away from each other (no overlap). Drag the purple common arm OC below.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 220" width="320" id="adjacent-svg">
+        <line x1="130" y1="190" x2="270" y2="190" stroke="#06d6a0" stroke-width="5"/>
+        <text x="278" y="195" font-size="13" font-weight="bold">A</text>
+        <line id="adj-armB" x1="130" y1="190" stroke="#06d6a0" stroke-width="5"/>
+        <text id="adj-labelB" font-size="13" font-weight="bold">B</text>
+        <path id="adj-arc1" fill="none" stroke="#ffd166" stroke-width="3"/>
+        <path id="adj-arc2" fill="none" stroke="#4cc9f0" stroke-width="3"/>
+        <text id="adj-t1" font-size="14" font-weight="bold" fill="#c98a00"></text>
+        <text id="adj-t2" font-size="14" font-weight="bold" fill="#0a6ca8"></text>
+        <line id="adj-armC" x1="130" y1="190" stroke="#a06cd5" stroke-width="6"/>
+        <g id="adj-handle" style="cursor:grab;"><circle r="12" fill="#a06cd5" stroke="#7a3b97" stroke-width="2"/></g>
+        <text id="adj-labelC" font-size="13" font-weight="bold" fill="#7a3b97">C</text>
+        <circle cx="130" cy="190" r="7" fill="#1d2b53"/>
+        <text x="108" y="210" font-size="13" font-weight="bold">O</text>
+      </svg>
+      <p class="caption" id="adj-caption"></p>
+    </div>
+
+    <div class="contrast-row">
+      <div class="contrast-card yes">
+        <div id="contrast-yes"></div>
+        <p>✅ Adjacent: ∠AOC and ∠COB sit side-by-side, sharing only arm OC — no overlap!</p>
+      </div>
+      <div class="contrast-card no">
+        <div id="contrast-no"></div>
+        <p>❌ Not adjacent: ∠COD is entirely INSIDE ∠COA — they overlap, sharing more than just one arm's worth of space.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. VERTICALLY OPPOSITE -->
+  <section class="section">
+    <h2>✂️ Vertically Opposite Angles <span class="try-badge">Drag the pink line!</span></h2>
+    <p class="lead">When two straight lines cross, they make 4 angles. The two angles directly across from each other
+      (like the top and bottom slice of an X) are called <b>vertically opposite angles</b> — and they're always equal!</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 320 320" width="300" id="vertical-svg">
+        <line x1="20" y1="160" x2="300" y2="160" stroke="#06d6a0" stroke-width="5"/>
+        <line id="vert-line2" x1="60" y1="260" x2="260" y2="60" stroke="#ff6ec7" stroke-width="5"/>
+        <g id="vert-handle" style="cursor:grab;"><circle r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        <circle cx="160" cy="160" r="7" fill="#1d2b53"/>
+        <text id="vert-t1" font-size="14" font-weight="bold" fill="#048848"></text>
+        <text id="vert-t2" font-size="14" font-weight="bold" fill="#7a3b97"></text>
+        <text id="vert-t3" font-size="14" font-weight="bold" fill="#048848"></text>
+        <text id="vert-t4" font-size="14" font-weight="bold" fill="#7a3b97"></text>
+      </svg>
+      <p class="caption" id="vertical-caption"></p>
+    </div>
+
+    <div class="proof-box" id="vertical-proof"></div>
+
+    <div class="realworld">
+      <div class="rw-frame">✂️<img src="images/scissors.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> Open scissors, an hourglass shape, and two crossing roads all show vertically opposite
+        angles in action!</p>
+    </div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Recap:</b> Complementary = sum to 90°. Supplementary = sum to 180°. A Linear Pair
+    is a supplementary pair that's also adjacent, sitting on a straight line. Angles around a point sum to 360°.
+    Adjacent = share a vertex + arm, no overlap. Vertically opposite = equal angles made by two crossing lines!</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 6</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+function svgPoint(svg, evt){
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+function makeDraggable(svg, handle, onMove){
+  let dragging = false;
+  handle.addEventListener('pointerdown', e=>{ dragging=true; handle.setPointerCapture(e.pointerId); handle.style.cursor='grabbing'; });
+  handle.addEventListener('pointermove', e=>{ if(dragging) onMove(svgPoint(svg,e)); });
+  ['pointerup','pointercancel'].forEach(ev=>handle.addEventListener(ev, ()=>{ dragging=false; handle.style.cursor='grab'; }));
+}
+function angleFromPoint(vertex, p){
+  const dx = p.x-vertex.x, dy = p.y-vertex.y;
+  return (Math.atan2(-dy,dx)*180/Math.PI + 360) % 360;
+}
+function pointOnCircle(vertex, radius, deg){
+  const rad = deg*Math.PI/180;
+  return { x: vertex.x + radius*Math.cos(rad), y: vertex.y - radius*Math.sin(rad) };
+}
+function arcPathBetween(vertex, radius, fromDeg, toDeg){
+  const start = pointOnCircle(vertex, radius, fromDeg);
+  const end = pointOnCircle(vertex, radius, toDeg);
+  const diff = ((toDeg-fromDeg)+360) % 360;
+  const largeArc = diff>180 ? 1:0;
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 0 ${end.x} ${end.y}`;
+}
+function arcPath(vertex, radius, deg){ return arcPathBetween(vertex, radius, 0, deg<=0.001?0.001:deg); }
+function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+
+/* ---------- reusable single-arm dial (for complementary / supplementary) ---------- */
+function dialMarkup(id, vx, vy, radius, maxDeg){
+  // Size the viewBox from the actual reachable drag range (0..maxDeg), not just the rest position,
+  // so angles that swing past 90 (into negative-x territory) don't get clipped off the left edge.
+  const margin = 30;
+  const rad = maxDeg*Math.PI/180;
+  const farX = vx + radius*Math.cos(rad);
+  const minX = Math.min(vx, farX) - margin;
+  const maxX = vx + radius + margin;
+  const minY = (maxDeg>=90 ? vy-radius : vy-radius*Math.sin(rad)) - margin;
+  const maxY = vy + margin;
+  const w = maxX-minX, h = maxY-minY;
+  return `<svg viewBox="${minX} ${minY} ${w} ${h}" width="${w}" id="${id}-svg">
+    <line x1="${vx}" y1="${vy}" x2="${vx+radius}" y2="${vy}" stroke="#06d6a0" stroke-width="5"/>
+    <path id="${id}-arc" fill="none" stroke="#a06cd5" stroke-width="3"/>
+    <line id="${id}-arm" x1="${vx}" y1="${vy}" x2="${vx+radius}" y2="${vy}" stroke="#ff6ec7" stroke-width="5"/>
+    <g id="${id}-handle" style="cursor:grab;"><circle r="11" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+    <circle cx="${vx}" cy="${vy}" r="6" fill="#1d2b53"/>
+    <text id="${id}-deg" font-size="15" font-weight="bold" fill="#1d2b53"></text>
+  </svg>`;
+}
+function setupDial(id, vertex, radius, maxDeg, initialDeg, onChange){
+  const svg = document.getElementById(id+'-svg');
+  const arm = document.getElementById(id+'-arm');
+  const handle = document.getElementById(id+'-handle');
+  const arc = document.getElementById(id+'-arc');
+  const degText = document.getElementById(id+'-deg');
+  function render(deg){
+    deg = clamp(deg, 0, maxDeg);
+    const b = pointOnCircle(vertex, radius, deg);
+    arm.setAttribute('x2', b.x); arm.setAttribute('y2', b.y);
+    handle.setAttribute('transform', `translate(${b.x},${b.y})`);
+    arc.setAttribute('d', arcPath(vertex, 32, deg));
+    const lp = pointOnCircle(vertex, 50, deg/2);
+    degText.setAttribute('x', lp.x-10); degText.setAttribute('y', lp.y);
+    degText.textContent = Math.round(deg)+'°';
+    onChange(deg);
+  }
+  render(initialDeg);
+  makeDraggable(svg, handle, p=>render(angleFromPoint(vertex,p)));
+}
+
+/* ---------- 1. Complementary ---------- */
+(function(){
+  document.getElementById('comp-dials').innerHTML = dialMarkup('compA',20,110,90,90) + dialMarkup('compB',20,110,90,90);
+  let a=35, b=40;
+  const caption = document.getElementById('comp-caption');
+  function update(){
+    const sum = a+b;
+    if(Math.abs(sum-90) < 1.5){
+      caption.innerHTML = Math.round(a)+'° + '+Math.round(b)+'° = <b>90°</b> — 🎉 Complementary!';
+      caption.classList.add('good');
+    } else {
+      caption.innerHTML = Math.round(a)+'° + '+Math.round(b)+'° = '+Math.round(sum)+'° — not 90° yet, keep dragging!';
+      caption.classList.remove('good');
+    }
+  }
+  setupDial('compA', {x:20,y:110}, 90, 90, a, d=>{a=d; update();});
+  setupDial('compB', {x:20,y:110}, 90, 90, b, d=>{b=d; update();});
+  update();
+})();
+
+/* ---------- 2. Supplementary ---------- */
+(function(){
+  document.getElementById('supp-dials').innerHTML = dialMarkup('suppA',20,110,110,180) + dialMarkup('suppB',20,110,110,180);
+  let a=60, b=70;
+  const caption = document.getElementById('supp-caption');
+  function update(){
+    const sum = a+b;
+    if(Math.abs(sum-180) < 1.5){
+      caption.innerHTML = Math.round(a)+'° + '+Math.round(b)+'° = <b>180°</b> — 🎉 Supplementary!';
+      caption.classList.add('good');
+    } else {
+      caption.innerHTML = Math.round(a)+'° + '+Math.round(b)+'° = '+Math.round(sum)+'° — not 180° yet, keep dragging!';
+      caption.classList.remove('good');
+    }
+  }
+  setupDial('suppA', {x:20,y:110}, 110, 180, a, d=>{a=d; update();});
+  setupDial('suppB', {x:20,y:110}, 110, 180, b, d=>{b=d; update();});
+  update();
+})();
+
+/* ---------- 3. Linear pair ---------- */
+(function(){
+  const svg = document.getElementById('linear-svg');
+  const handle = document.getElementById('linear-handle');
+  const armC = document.getElementById('linear-armC');
+  const arc1 = document.getElementById('linear-arc1');
+  const arc2 = document.getElementById('linear-arc2');
+  const label1 = document.getElementById('linear-label1');
+  const label2 = document.getElementById('linear-label2');
+  const caption = document.getElementById('linear-caption');
+  const O = {x:170,y:170}, R = 90;
+
+  function render(deg){
+    deg = clamp(deg, 0.5, 179.5);
+    const c = pointOnCircle(O, R, deg);
+    armC.setAttribute('x2', c.x); armC.setAttribute('y2', c.y);
+    handle.setAttribute('transform', `translate(${c.x},${c.y})`);
+    arc1.setAttribute('d', arcPathBetween(O, 35, 0, deg));
+    arc2.setAttribute('d', arcPathBetween(O, 35, deg, 180));
+    const lp1 = pointOnCircle(O, 55, deg/2);
+    label1.setAttribute('x', lp1.x-10); label1.setAttribute('y', lp1.y);
+    label1.textContent = Math.round(deg)+'°';
+    const lp2 = pointOnCircle(O, 55, (deg+180)/2);
+    label2.setAttribute('x', lp2.x-10); label2.setAttribute('y', lp2.y);
+    label2.textContent = Math.round(180-deg)+'°';
+    caption.innerHTML = '∠AOC = <b>'+Math.round(deg)+'°</b> &nbsp;+&nbsp; ∠COB = <b>'+Math.round(180-deg)+'°</b> &nbsp;=&nbsp; <b>180°</b> — always!';
+  }
+  render(55);
+  makeDraggable(svg, handle, p=>{
+    let raw = angleFromPoint(O,p);
+    if(raw > 180) raw = raw > 270 ? 0.5 : 179.5;
+    render(raw);
+  });
+})();
+
+/* ---------- 4. Angles around a point ---------- */
+(function(){
+  const raysG = document.getElementById('around-rays');
+  const labelsG = document.getElementById('around-labels');
+  const caption = document.getElementById('around-caption');
+  const addBtn = document.getElementById('around-add');
+  const resetBtn = document.getElementById('around-reset');
+  const O = {x:160,y:160}, R = 120;
+  let rays = [];
+
+  function render(){
+    raysG.innerHTML = ''; labelsG.innerHTML = '';
+    rays.forEach(deg=>{
+      const p = pointOnCircle(O, R, deg);
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',O.x); line.setAttribute('y1',O.y);
+      line.setAttribute('x2',p.x); line.setAttribute('y2',p.y);
+      line.setAttribute('stroke','#ff6ec7'); line.setAttribute('stroke-width',4);
+      raysG.appendChild(line);
+    });
+    if(rays.length < 2){
+      caption.textContent = 'Click "Add a Divider Ray" at least twice to start splitting the circle!';
+      return;
+    }
+    const sorted = [...rays].sort((a,b)=>a-b);
+    const n = sorted.length;
+    const gaps = sorted.map((r,i)=> ((sorted[(i+1)%n]-r+360)%360));
+    gaps.forEach((gap,i)=>{
+      const mid = (sorted[i] + gap/2) % 360;
+      const lp = pointOnCircle(O, R+22, mid);
+      const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',lp.x); t.setAttribute('y',lp.y); t.setAttribute('text-anchor','middle');
+      t.setAttribute('font-size','13'); t.setAttribute('font-weight','bold');
+      t.textContent = Math.round(gap)+'°';
+      labelsG.appendChild(t);
+    });
+    const total = gaps.reduce((s,g)=>s+g, 0);
+    caption.innerHTML = gaps.map(g=>Math.round(g)+'°').join(' + ') + ' = <b>'+Math.round(total)+'°</b> — always 360° all the way around!';
+  }
+  addBtn.addEventListener('click', ()=>{
+    if(rays.length >= 4){ addBtn.disabled = true; return; }
+    rays.push((rays.length*70 + 40) % 360);
+    render();
+    if(rays.length >= 4) addBtn.disabled = true;
+  });
+  resetBtn.addEventListener('click', ()=>{
+    rays = []; addBtn.disabled = false; render();
+  });
+  render();
+})();
+
+/* ---------- 5. Adjacent angles ---------- */
+(function(){
+  const svg = document.getElementById('adjacent-svg');
+  const handle = document.getElementById('adj-handle');
+  const armB = document.getElementById('adj-armB');
+  const armC = document.getElementById('adj-armC');
+  const labelB = document.getElementById('adj-labelB');
+  const labelC = document.getElementById('adj-labelC');
+  const arc1 = document.getElementById('adj-arc1');
+  const arc2 = document.getElementById('adj-arc2');
+  const t1 = document.getElementById('adj-t1');
+  const t2 = document.getElementById('adj-t2');
+  const caption = document.getElementById('adj-caption');
+  const O = {x:130,y:190}, R = 140, TOTAL = 130;
+  const bPoint = pointOnCircle(O, R, TOTAL);
+  armB.setAttribute('x2', bPoint.x); armB.setAttribute('y2', bPoint.y);
+  const bLabel = pointOnCircle(O, R+18, TOTAL);
+  labelB.setAttribute('x', bLabel.x); labelB.setAttribute('y', bLabel.y);
+
+  function render(deg){
+    deg = clamp(deg, 2, TOTAL-2);
+    const c = pointOnCircle(O, R, deg);
+    armC.setAttribute('x2', c.x); armC.setAttribute('y2', c.y);
+    handle.setAttribute('transform', `translate(${c.x},${c.y})`);
+    const cLabel = pointOnCircle(O, R+18, deg);
+    labelC.setAttribute('x', cLabel.x); labelC.setAttribute('y', cLabel.y);
+    arc1.setAttribute('d', arcPathBetween(O, 40, 0, deg));
+    arc2.setAttribute('d', arcPathBetween(O, 40, deg, TOTAL));
+    const lp1 = pointOnCircle(O, 60, deg/2);
+    t1.setAttribute('x', lp1.x-10); t1.setAttribute('y', lp1.y);
+    t1.textContent = Math.round(deg)+'°';
+    const lp2 = pointOnCircle(O, 60, (deg+TOTAL)/2);
+    t2.setAttribute('x', lp2.x-10); t2.setAttribute('y', lp2.y);
+    t2.textContent = Math.round(TOTAL-deg)+'°';
+    caption.innerHTML = '∠AOC ('+Math.round(deg)+'°) and ∠COB ('+Math.round(TOTAL-deg)+'°) share vertex <b>O</b> and common arm <b>OC</b> — they’re Adjacent Angles!';
+  }
+  render(65);
+  makeDraggable(svg, handle, p=>render(angleFromPoint(O,p)));
+})();
+
+/* ---------- 5b. Adjacent vs Not-Adjacent contrast diagrams ---------- */
+(function(){
+  const O = {x:26,y:95}, R = 95;
+  function wedge(from, to, radius){
+    const s = pointOnCircle(O, radius, from), e = pointOnCircle(O, radius, to);
+    const diff = ((to-from)+360) % 360;
+    const large = diff>180 ? 1:0;
+    return `M ${O.x} ${O.y} L ${s.x} ${s.y} A ${radius} ${radius} 0 ${large} 0 ${e.x} ${e.y} Z`;
+  }
+  function ray(deg, color, width){
+    const p = pointOnCircle(O, R, deg);
+    return `<line x1="${O.x}" y1="${O.y}" x2="${p.x}" y2="${p.y}" stroke="${color}" stroke-width="${width}"/>`;
+  }
+  function label(deg, text, dx, dy){
+    const p = pointOnCircle(O, R+16, deg);
+    return `<text x="${p.x+dx}" y="${p.y+dy}" font-size="13" font-weight="bold" text-anchor="middle">${text}</text>`;
+  }
+  const yesSVG = `<svg viewBox="-18 -30 170 140" width="170">
+    <path d="${wedge(0,50,R)}" fill="#ffd166" opacity=".55"/>
+    <path d="${wedge(50,105,R)}" fill="#4cc9f0" opacity=".45"/>
+    ${ray(0,'#1d2b53',3)}${ray(105,'#1d2b53',3)}${ray(50,'#7a3b97',6)}
+    <circle cx="${O.x}" cy="${O.y}" r="5" fill="#1d2b53"/>
+    ${label(0,'A',10,4)}${label(50,'C',0,-6)}${label(105,'B',-6,-2)}
+  </svg>`;
+  const noSVG = `<svg viewBox="-18 -30 170 140" width="170">
+    <path d="${wedge(0,80,R)}" fill="#ffd166" opacity=".55"/>
+    <path d="${wedge(0,32,R)}" fill="#4cc9f0" opacity=".65"/>
+    ${ray(80,'#1d2b53',3)}${ray(32,'#1d2b53',3)}${ray(0,'#7a3b97',6)}
+    <circle cx="${O.x}" cy="${O.y}" r="5" fill="#1d2b53"/>
+    ${label(0,'C',10,4)}${label(32,'D',6,-4)}${label(80,'A',-4,-8)}
+  </svg>`;
+  document.getElementById('contrast-yes').innerHTML = yesSVG;
+  document.getElementById('contrast-no').innerHTML = noSVG;
+})();
+
+/* ---------- 6. Vertically opposite ---------- */
+(function(){
+  const svg = document.getElementById('vertical-svg');
+  const handle = document.getElementById('vert-handle');
+  const line2 = document.getElementById('vert-line2');
+  const t1 = document.getElementById('vert-t1');
+  const t2 = document.getElementById('vert-t2');
+  const t3 = document.getElementById('vert-t3');
+  const t4 = document.getElementById('vert-t4');
+  const caption = document.getElementById('vertical-caption');
+  const proof = document.getElementById('vertical-proof');
+  const O = {x:160,y:160}, R = 140;
+
+  function render(theta){
+    theta = clamp(theta, 3, 177);
+    const p1 = pointOnCircle(O, R, theta);
+    const p2 = pointOnCircle(O, R, theta+180);
+    line2.setAttribute('x1', p2.x); line2.setAttribute('y1', p2.y);
+    line2.setAttribute('x2', p1.x); line2.setAttribute('y2', p1.y);
+    handle.setAttribute('transform', `translate(${p1.x},${p1.y})`);
+
+    const other = 180 - theta;
+    const positions = [
+      {el:t1, mid: theta/2, val: theta},
+      {el:t2, mid: theta + other/2, val: other},
+      {el:t3, mid: 180 + theta/2, val: theta},
+      {el:t4, mid: theta/2 + 270, val: other}
+    ];
+    positions.forEach(pos=>{
+      const lp = pointOnCircle(O, 55, pos.mid);
+      pos.el.setAttribute('x', lp.x-10); pos.el.setAttribute('y', lp.y);
+      pos.el.textContent = Math.round(pos.val)+'°';
+    });
+    caption.innerHTML = '∠1 = ∠3 = <b>'+Math.round(theta)+'°</b> (vertically opposite!) &nbsp;&nbsp; ∠2 = ∠4 = <b>'+Math.round(other)+'°</b> &nbsp;&nbsp; and '+Math.round(theta)+'+'+Math.round(other)+' = 180° (a linear pair too!)';
+
+    const d = Math.round(theta), o = Math.round(other);
+    proof.innerHTML =
+      '<p class="proof-step">1️⃣ <b>∠1</b> and <b>∠2</b> sit side-by-side along the straight <span class="swatch" style="background:#06d6a0"></span>teal line — together they form a <b>Linear Pair</b>: <b>'+d+'° + '+o+'° = 180°</b></p>'
+      + '<p class="proof-step">2️⃣ <b>∠2</b> and <b>∠3</b> sit side-by-side along the straight <span class="swatch" style="background:#ff6ec7"></span>pink line — that’s a Linear Pair too: <b>'+o+'° + '+d+'° = 180°</b></p>'
+      + '<p class="proof-step">3️⃣ Both add up to the exact same 180°, and both include ∠2 — so if we take ∠2 away from each side, what’s left <b>must</b> be equal: <b>∠1 = ∠3 = '+d+'°</b>. That’s true no matter how you tilt the pink line — which is why vertically opposite angles are ALWAYS equal!</p>';
+  }
+  render(60);
+  makeDraggable(svg, handle, p=>{
+    let raw = angleFromPoint(O,p);
+    if(raw >= 180) raw -= 180;
+    render(raw);
+  });
+})();
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"Two angles that add up to 90° are called...?", opts:["Supplementary","Complementary","Adjacent","Vertically opposite"], answer:1,
+   explain:"Complementary angles always add up to 90° — think 'C for Corner (90°)'."},
+  {q:"Two angles that add up to 180° are called...?", opts:["Complementary","Adjacent","Supplementary","Reflex"], answer:2,
+   explain:"Supplementary angles always add up to 180° — a straight line's worth!"},
+  {q:"What do we call two adjacent angles that together form a straight line?", opts:["A linear pair","A vertex pair","A right pair","A reflex pair"], answer:0,
+   explain:"A linear pair sits on a straight line, so it always adds up to 180°."},
+  {q:"All the angles formed all the way around a single point always add up to...?", opts:["90°","180°","270°","360°"], answer:3,
+   explain:"A full circle around a point is always 360°, no matter how many slices you cut it into."},
+  {q:"For two angles to be 'adjacent', what do they need?", opts:["Equal measures","A common vertex and a common arm, with no overlap","To add up to 90°","To be formed by crossing lines"], answer:1,
+   explain:"Adjacent angles share a vertex AND an arm, and their other arms don't overlap."},
+  {q:"When two straight lines cross, the angles directly opposite each other are...?", opts:["Always different","Always equal (vertically opposite)","Always 90°","Always complementary"], answer:1,
+   explain:"Vertically opposite angles are always equal, no matter what angle the lines cross at."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = quizData[qIndex];
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're an angle-pairs pro! 🌟"
+          : score>=total*0.6 ? "Great job! You really know how angles team up! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+}
+renderQuestion();
+</script>
+</body>
+</html>

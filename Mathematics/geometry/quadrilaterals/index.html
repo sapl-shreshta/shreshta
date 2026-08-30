@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Quadrilaterals ◻️</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .mascot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:50%;}
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .tabbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .tab-btn{
+    background:white;border:3px solid var(--purple);color:var(--purple);font-weight:bold;font-size:14px;
+    padding:8px 16px;border-radius:14px;cursor:pointer;transition:all .2s;
+  }
+  .tab-btn:hover{transform:translateY(-2px);}
+  .tab-btn.active{background:var(--purple);color:white;}
+
+  .stage{background:white;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .caption{
+    text-align:center;font-size:clamp(14px,2vw,16px);font-weight:bold;
+    background:#f0e6ff;border-radius:12px;padding:10px 16px;min-height:24px;
+  }
+  .caption b{color:var(--pink);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+
+  .realworld{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .realworld .rw-frame{
+    position:relative;width:110px;height:110px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#e6f3ff,#f0e6ff);display:flex;align-items:center;justify-content:center;
+    font-size:56px;flex:0 0 auto;border:3px solid var(--blue);
+  }
+  .realworld .rw-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .realworld p{font-size:14px;max-width:420px;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px;}
+  .chip{border:3px solid #cbd5e1;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:bold;background:white;color:#94a3b8;cursor:pointer;transition:all .2s;}
+  .chip.on{border-color:var(--pink);background:var(--pink);color:white;transform:scale(1.08);}
+
+  .types-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:8px;}
+  .type-card{background:white;border-radius:16px;padding:12px;text-align:center;border:3px solid #e2e8f0;}
+  .type-card h3{font-size:15px;color:var(--purple);margin-bottom:6px;}
+  .type-card p{font-size:12px;line-height:1.4;color:var(--ink);}
+
+  .table-wrap{overflow-x:auto;margin-top:16px;border-radius:14px;border:3px solid var(--teal);}
+  table.prop-table{border-collapse:collapse;width:100%;min-width:720px;background:white;font-size:13px;}
+  table.prop-table th, table.prop-table td{padding:9px 10px;text-align:center;border-bottom:1px solid #e2e8f0;}
+  table.prop-table th{background:var(--purple);color:white;font-size:12.5px;}
+  table.prop-table td:first-child, table.prop-table th:first-child{text-align:left;font-weight:bold;background:#f0e6ff;}
+  table.prop-table tr:nth-child(even) td:not(:first-child){background:#f8fafc;}
+  .yes{color:#048848;font-weight:bold;}
+  .no{color:#c0245a;font-weight:bold;}
+  .partial{color:#c98a00;font-weight:bold;}
+
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Geometry">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">◻️ 📐 🪁</div>
+    <h1><span class="highlight">Quadrilaterals</span></h1>
+    <p class="subtitle">Four sides, four corners, a whole family of shapes!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">📐<img src="../shared/images/mascot.png" alt="" onerror="this.remove()"></div>
+    <p>Hi, Ray the Ruler here again 👋 A quadrilateral is any closed shape with exactly 4 straight sides. Let's drag
+      some corners around and discover the rules every quadrilateral follows — and meet the whole family of special
+      quadrilateral shapes!</p>
+  </div>
+
+  <!-- 1. DEFINITION -->
+  <section class="section">
+    <h2>◻️ Meet a Quadrilateral <span class="try-badge">Drag C and D!</span></h2>
+    <p class="lead">A <b>quadrilateral</b> is a polygon with <b>4 sides</b>, <b>4 vertices</b> and <b>4 angles</b>.
+      Drag points <b>C</b> and <b>D</b> below and watch the sides and diagonals relabel themselves live.</p>
+
+    <div class="stage">
+      <svg viewBox="0 0 400 260" width="380" id="def-svg">
+        <path id="def-diagAC" fill="none" stroke="#ef476f" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <path id="def-diagBD" fill="none" stroke="#4cc9f0" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <path id="def-quad" fill="#a06cd5" fill-opacity=".15" stroke="#a06cd5" stroke-width="4"/>
+        <text id="def-lblAB" font-size="12" font-weight="bold" fill="#7a3b97"></text>
+        <text id="def-lblBC" font-size="12" font-weight="bold" fill="#7a3b97"></text>
+        <text id="def-lblCD" font-size="12" font-weight="bold" fill="#7a3b97"></text>
+        <text id="def-lblDA" font-size="12" font-weight="bold" fill="#7a3b97"></text>
+        <text id="def-lblA" font-size="15" font-weight="bold"></text>
+        <text id="def-lblB" font-size="15" font-weight="bold"></text>
+        <text id="def-lblC" font-size="15" font-weight="bold"></text>
+        <text id="def-lblD" font-size="15" font-weight="bold"></text>
+        <g id="def-handleC" style="cursor:grab;"><circle r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        <g id="def-handleD" style="cursor:grab;"><circle r="12" fill="#06d6a0" stroke="#04946e" stroke-width="2"/></g>
+      </svg>
+      <p class="caption">However you drag C and D, this shape always keeps <b>4 sides</b>, <b>4 vertices</b>, <b>4
+        angles</b> and exactly <b>2 diagonals</b> (the dashed lines AC and BD)!</p>
+      <div class="btnrow"><button class="action" id="def-diag-btn">➕ Show Diagonals</button></div>
+    </div>
+
+    <div class="info-box">🔍 <b>Diagonal:</b> a line joining two vertices that are <i>not</i> already joined by a
+      side. A quadrilateral has exactly 2 of them: <b>AC</b> and <b>BD</b>.</div>
+
+    <div class="realworld">
+      <div class="rw-frame">🪟<img src="images/window.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> A window pane, a book cover, and a tablet screen are all everyday quadrilaterals!</p>
+    </div>
+  </section>
+
+  <!-- 2. EXPLORE -->
+  <section class="section">
+    <h2>🔍 Explore a Quadrilateral <span class="try-badge">Drag C and D!</span></h2>
+    <p class="lead">Drag points C and D around and switch tabs to explore two big ideas about quadrilaterals.</p>
+
+    <div class="tabbar" id="exp-tabs">
+      <button class="tab-btn active" data-tab="adjopp">🔗 Adjacent vs Opposite</button>
+      <button class="tab-btn" data-tab="anglesum">➕ Angle Sum (360°)</button>
+    </div>
+
+    <div class="stage">
+      <svg viewBox="0 0 400 260" width="380" id="exp-svg">
+        <path id="exp-quad" fill="#a06cd5" fill-opacity=".10" stroke="#a06cd5" stroke-width="3"/>
+
+        <line id="exp-sideHiA" stroke-width="6" stroke-linecap="round" style="display:none;"/>
+        <line id="exp-sideHiB" stroke-width="6" stroke-linecap="round" style="display:none;"/>
+
+        <path id="exp-angHiA" fill="none" stroke-width="4" style="display:none;"/>
+        <path id="exp-angHiB" fill="none" stroke-width="4" style="display:none;"/>
+        <text id="exp-angHiA-deg" font-size="13" font-weight="bold" style="display:none;"></text>
+        <text id="exp-angHiB-deg" font-size="13" font-weight="bold" style="display:none;"></text>
+
+        <path id="exp-arcA" fill="none" stroke="#06d6a0" stroke-width="3" style="display:none;"/>
+        <path id="exp-arcB" fill="none" stroke="#4cc9f0" stroke-width="3" style="display:none;"/>
+        <path id="exp-arcC" fill="none" stroke="#ff6ec7" stroke-width="3" style="display:none;"/>
+        <path id="exp-arcD" fill="none" stroke="#ffb703" stroke-width="3" style="display:none;"/>
+        <text id="exp-degA" font-size="13" font-weight="bold" fill="#048848" style="display:none;"></text>
+        <text id="exp-degB" font-size="13" font-weight="bold" fill="#0a6ca8" style="display:none;"></text>
+        <text id="exp-degC" font-size="13" font-weight="bold" fill="#c0245a" style="display:none;"></text>
+        <text id="exp-degD" font-size="13" font-weight="bold" fill="#c98a00" style="display:none;"></text>
+
+        <text id="exp-lblA" font-size="15" font-weight="bold"></text>
+        <text id="exp-lblB" font-size="15" font-weight="bold"></text>
+        <text id="exp-lblC" font-size="15" font-weight="bold"></text>
+        <text id="exp-lblD" font-size="15" font-weight="bold"></text>
+
+        <g id="exp-handleC" style="cursor:grab;"><circle r="12" fill="#ff6ec7" stroke="#c0245a" stroke-width="2"/></g>
+        <g id="exp-handleD" style="cursor:grab;"><circle r="12" fill="#06d6a0" stroke="#04946e" stroke-width="2"/></g>
+      </svg>
+
+      <div class="chip-row" id="exp-chips">
+        <span class="chip on" data-mode="adjsides">Adjacent Sides</span>
+        <span class="chip" data-mode="oppsides">Opposite Sides</span>
+        <span class="chip" data-mode="adjangles">Adjacent Angles</span>
+        <span class="chip" data-mode="oppangles">Opposite Angles</span>
+      </div>
+
+      <p class="caption" id="exp-caption"></p>
+    </div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Recap:</b> Adjacent sides/angles share a vertex (or a side); opposite ones do
+    not. The 4 interior angles of ANY quadrilateral always add up to <b>360°</b> — try dragging to the wildest shape
+    you can and check!</div>
+
+  <!-- 3. TYPES GALLERY -->
+  <section class="section">
+    <h2>🏷️ The Quadrilateral Family</h2>
+    <p class="lead">Not all quadrilaterals are the same! Little marks tell us their special properties: matching
+      <b>arrows</b> mean two sides are parallel, matching <b>tick marks</b> mean two sides are equal length, and a
+      small <b>square corner</b> means a right angle (90°).</p>
+
+    <div class="types-grid" id="types-grid"></div>
+
+    <div class="info-box">📊 <b>Compare them all</b> in the table below — scroll sideways on a small screen!</div>
+    <div class="table-wrap">
+      <table class="prop-table" id="prop-table"></table>
+    </div>
+
+    <div class="realworld">
+      <div class="rw-frame">🪁<img src="images/kite.png" alt="" onerror="this.remove()"></div>
+      <p><b>Real life:</b> A kite toy, a diamond-shaped road sign, and a slice of a sandwich cut corner-to-corner are
+        all quadrilaterals from this family!</p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 7</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- shared helpers (copied verbatim from triangles/index.html) ---------- */
+function svgPoint(svg, evt){
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+function makeDraggable(svg, handle, onMove){
+  let dragging = false;
+  handle.addEventListener('pointerdown', e=>{ dragging=true; handle.setPointerCapture(e.pointerId); handle.style.cursor='grabbing'; });
+  handle.addEventListener('pointermove', e=>{ if(dragging) onMove(svgPoint(svg,e)); });
+  ['pointerup','pointercancel'].forEach(ev=>handle.addEventListener(ev, ()=>{ dragging=false; handle.style.cursor='grab'; }));
+}
+function angleFromPoint(vertex, p){
+  const dx = p.x-vertex.x, dy = p.y-vertex.y;
+  return (Math.atan2(-dy,dx)*180/Math.PI + 360) % 360;
+}
+function pointOnCircle(vertex, radius, deg){
+  const rad = deg*Math.PI/180;
+  return { x: vertex.x + radius*Math.cos(rad), y: vertex.y - radius*Math.sin(rad) };
+}
+function arcPathBetween(vertex, radius, fromDeg, toDeg){
+  const start = pointOnCircle(vertex, radius, fromDeg);
+  const end = pointOnCircle(vertex, radius, toDeg);
+  const diff = ((toDeg-fromDeg)+360) % 360;
+  const largeArc = diff>180 ? 1:0;
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 0 ${end.x} ${end.y}`;
+}
+function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+function dist(a,b){ return Math.hypot(a.x-b.x, a.y-b.y); }
+function angleAt(vertex, p1, p2){
+  const v1 = {x:p1.x-vertex.x, y:p1.y-vertex.y}, v2 = {x:p2.x-vertex.x, y:p2.y-vertex.y};
+  const mag1 = Math.hypot(v1.x,v1.y), mag2 = Math.hypot(v2.x,v2.y);
+  let cos = (v1.x*v2.x+v1.y*v2.y)/(mag1*mag2);
+  cos = clamp(cos,-1,1);
+  return Math.acos(cos)*180/Math.PI;
+}
+function distToSegment(p, a, b){
+  const l2 = (b.x-a.x)**2 + (b.y-a.y)**2;
+  if(l2===0) return Math.hypot(p.x-a.x, p.y-a.y);
+  let t = ((p.x-a.x)*(b.x-a.x) + (p.y-a.y)*(b.y-a.y)) / l2;
+  t = clamp(t,0,1);
+  return Math.hypot(p.x-(a.x+t*(b.x-a.x)), p.y-(a.y+t*(b.y-a.y)));
+}
+// interior-angle wedge helper: always sweeps the SHORT way (<=180) between the two direction rays.
+function wedgeArc(vertex, dirP1, dirP2, r){
+  const d1 = angleFromPoint(vertex,dirP1), d2 = angleFromPoint(vertex,dirP2);
+  const diff = ((d2-d1)+360)%360;
+  return diff<=180 ? arcPathBetween(vertex,r,d1,d2) : arcPathBetween(vertex,r,d2,d1);
+}
+function wedgeMidDeg(vertex, dirP1, dirP2){
+  const d1 = angleFromPoint(vertex,dirP1), d2 = angleFromPoint(vertex,dirP2);
+  const diff = ((d2-d1)+360)%360;
+  return diff<=180 ? (d1+diff/2)%360 : (d2+(360-diff)/2)%360;
+}
+function mid(p,q){ return {x:(p.x+q.x)/2, y:(p.y+q.y)/2}; }
+function setText(el,x,y,text){ el.setAttribute('x',x); el.setAttribute('y',y); el.textContent=text; }
+
+/* ---------- shared quadrilateral geometry (used by widgets 1 and 2) ----------
+   A and B are fixed at the bottom. C is dragged in a box on the right, D in a
+   box on the left, with a guaranteed horizontal gap between the two boxes
+   (D.x stays <= 190, C.x stays >= 210). Because of that gap, side DA (which
+   only ever reaches x<=190) and side BC (which only ever reaches x>=210) can
+   never share an x-range, so they can never cross; and side CD (always above
+   y=195) can never reach down to side AB (fixed at y=220), so those two can
+   never cross either. That rules out every possible self-intersection
+   ("bowtie") for any C/D position inside the clamp boxes. */
+const Q_A = {x:80,y:220}, Q_B = {x:320,y:220};
+function clampC(p){ return {x:clamp(p.x,210,370), y:clamp(p.y,40,195)}; }
+function clampD(p){ return {x:clamp(p.x,30,190), y:clamp(p.y,40,195)}; }
+function quadPathD(A,B,C,D){ return `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} L ${D.x} ${D.y} Z`; }
+// Reflex-aware interior angles for a simple polygon (handles concave shapes correctly
+// so the four interior angles always genuinely sum to 360 degrees, not just when convex).
+function quadInteriorAngles(A,B,C,D){
+  const pts = [A,B,C,D];
+  let area2 = 0;
+  for(let i=0;i<4;i++){ const p=pts[i], q=pts[(i+1)%4]; area2 += p.x*q.y - q.x*p.y; }
+  const orient = Math.sign(area2) || 1;
+  return pts.map((v,i)=>{
+    const prev = pts[(i+3)%4], next = pts[(i+1)%4];
+    const inV = {x:v.x-prev.x, y:v.y-prev.y}, outV = {x:next.x-v.x, y:next.y-v.y};
+    const cross = inV.x*outV.y - inV.y*outV.x;
+    let ang = angleAt(v, prev, next);
+    if(Math.sign(cross) !== 0 && Math.sign(cross) !== orient) ang = 360-ang;
+    return ang;
+  });
+}
+
+/* ---------- 1. Definition widget ---------- */
+(function(){
+  const svg = document.getElementById('def-svg');
+  const quad = document.getElementById('def-quad');
+  const diagAC = document.getElementById('def-diagAC');
+  const diagBD = document.getElementById('def-diagBD');
+  const handleC = document.getElementById('def-handleC');
+  const handleD = document.getElementById('def-handleD');
+  const lblA = document.getElementById('def-lblA'), lblB = document.getElementById('def-lblB');
+  const lblC = document.getElementById('def-lblC'), lblD = document.getElementById('def-lblD');
+  const lblAB = document.getElementById('def-lblAB'), lblBC = document.getElementById('def-lblBC');
+  const lblCD = document.getElementById('def-lblCD'), lblDA = document.getElementById('def-lblDA');
+  const diagBtn = document.getElementById('def-diag-btn');
+
+  let C = {x:300,y:90}, D = {x:110,y:90};
+  let showDiag = false;
+
+  function render(){
+    quad.setAttribute('d', quadPathD(Q_A,Q_B,C,D));
+    handleC.setAttribute('transform', `translate(${C.x},${C.y})`);
+    handleD.setAttribute('transform', `translate(${D.x},${D.y})`);
+
+    setText(lblA, Q_A.x-10, Q_A.y+24, 'A');
+    setText(lblB, Q_B.x+4, Q_B.y+24, 'B');
+    setText(lblC, C.x+10, C.y-8, 'C');
+    setText(lblD, D.x-22, D.y-8, 'D');
+
+    const mAB = mid(Q_A,Q_B), mBC = mid(Q_B,C), mCD = mid(C,D), mDA = mid(D,Q_A);
+    setText(lblAB, mAB.x-12, mAB.y+20, 'AB');
+    setText(lblBC, mBC.x+8, mBC.y, 'BC');
+    setText(lblCD, mCD.x-10, mCD.y-10, 'CD');
+    setText(lblDA, mDA.x-30, mDA.y, 'DA');
+
+    diagAC.setAttribute('d', showDiag ? `M ${Q_A.x} ${Q_A.y} L ${C.x} ${C.y}` : '');
+    diagBD.setAttribute('d', showDiag ? `M ${Q_B.x} ${Q_B.y} L ${D.x} ${D.y}` : '');
+  }
+  render();
+  makeDraggable(svg, handleC, p=>{ C = clampC(p); render(); });
+  makeDraggable(svg, handleD, p=>{ D = clampD(p); render(); });
+  diagBtn.addEventListener('click', ()=>{
+    showDiag = !showDiag;
+    diagBtn.textContent = showDiag ? '➖ Hide Diagonals' : '➕ Show Diagonals';
+    render();
+  });
+})();
+
+/* ---------- 2. Explore: Adjacent vs Opposite / Angle Sum ---------- */
+(function(){
+  const svg = document.getElementById('exp-svg');
+  const quad = document.getElementById('exp-quad');
+  const handleC = document.getElementById('exp-handleC');
+  const handleD = document.getElementById('exp-handleD');
+  const lblA = document.getElementById('exp-lblA'), lblB = document.getElementById('exp-lblB');
+  const lblC = document.getElementById('exp-lblC'), lblD = document.getElementById('exp-lblD');
+
+  const sideHiA = document.getElementById('exp-sideHiA'), sideHiB = document.getElementById('exp-sideHiB');
+  const angHiA = document.getElementById('exp-angHiA'), angHiB = document.getElementById('exp-angHiB');
+  const angHiADeg = document.getElementById('exp-angHiA-deg'), angHiBDeg = document.getElementById('exp-angHiB-deg');
+
+  const arcA = document.getElementById('exp-arcA'), arcB = document.getElementById('exp-arcB');
+  const arcC = document.getElementById('exp-arcC'), arcD = document.getElementById('exp-arcD');
+  const degA = document.getElementById('exp-degA'), degB = document.getElementById('exp-degB');
+  const degC = document.getElementById('exp-degC'), degD = document.getElementById('exp-degD');
+
+  const caption = document.getElementById('exp-caption');
+  const chips = document.querySelectorAll('#exp-chips .chip');
+
+  let C = {x:300,y:90}, D = {x:110,y:90};
+  let currentTab = 'adjopp';
+  let mode = 'adjsides';
+
+  const neighbors = {
+    A: ()=>({prev:D, next:Q_B}),
+    B: ()=>({prev:Q_A, next:C}),
+    C: ()=>({prev:Q_B, next:D}),
+    D: ()=>({prev:C, next:Q_A})
+  };
+  const vertexOf = {A:()=>Q_A, B:()=>Q_B, C:()=>C, D:()=>D};
+
+  function showSide(el, p, q, color){
+    el.style.display = 'block';
+    el.setAttribute('x1',p.x); el.setAttribute('y1',p.y);
+    el.setAttribute('x2',q.x); el.setAttribute('y2',q.y);
+    el.setAttribute('stroke', color);
+  }
+  function hideSide(el){ el.style.display = 'none'; }
+
+  function showAngle(pathEl, degEl, vName, color, radius){
+    const v = vertexOf[vName]();
+    const nb = neighbors[vName]();
+    pathEl.style.display = 'block'; degEl.style.display = 'block';
+    pathEl.setAttribute('d', wedgeArc(v, nb.prev, nb.next, radius));
+    pathEl.setAttribute('stroke', color);
+    const lp = pointOnCircle(v, radius+16, wedgeMidDeg(v, nb.prev, nb.next));
+    setText(degEl, lp.x-8, lp.y, Math.round(angleAt(v, nb.prev, nb.next))+'°');
+    degEl.setAttribute('fill', color);
+  }
+  function hideAngle(pathEl, degEl){ pathEl.style.display='none'; degEl.style.display='none'; }
+
+  function renderAdjOpp(){
+    hideSide(sideHiA); hideSide(sideHiB);
+    hideAngle(angHiA, angHiADeg); hideAngle(angHiB, angHiBDeg);
+    let text = '';
+    if(mode === 'adjsides'){
+      showSide(sideHiA, Q_A, Q_B, '#ff6ec7');
+      showSide(sideHiB, Q_B, C, '#ff6ec7');
+      text = 'Sides <b>AB</b> and <b>BC</b> share vertex <b>B</b> — they are <b>Adjacent Sides</b>!';
+    } else if(mode === 'oppsides'){
+      showSide(sideHiA, Q_A, Q_B, '#4cc9f0');
+      showSide(sideHiB, C, D, '#4cc9f0');
+      text = 'Sides <b>AB</b> and <b>CD</b> share no vertex at all — they are <b>Opposite Sides</b>!';
+    } else if(mode === 'adjangles'){
+      showAngle(angHiA, angHiADeg, 'A', '#ff6ec7', 30);
+      showAngle(angHiB, angHiBDeg, 'B', '#ff6ec7', 30);
+      text = 'Angles at <b>A</b> and <b>B</b> share side <b>AB</b> — they are <b>Adjacent Angles</b>!';
+    } else if(mode === 'oppangles'){
+      showAngle(angHiA, angHiADeg, 'A', '#4cc9f0', 30);
+      showAngle(angHiB, angHiBDeg, 'C', '#4cc9f0', 30);
+      text = 'Angles at <b>A</b> and <b>C</b> are directly across from each other — they are <b>Opposite Angles</b>!';
+    }
+    caption.innerHTML = text;
+  }
+
+  function renderAngleSum(){
+    const angles = quadInteriorAngles(Q_A, Q_B, C, D);
+    const specs = [
+      {v:'A', path:arcA, deg:degA, r:26},
+      {v:'B', path:arcB, deg:degB, r:26},
+      {v:'C', path:arcC, deg:degC, r:26},
+      {v:'D', path:arcD, deg:degD, r:26}
+    ];
+    specs.forEach((s,i)=>{
+      const v = vertexOf[s.v]();
+      const nb = neighbors[s.v]();
+      s.path.style.display = 'block'; s.deg.style.display = 'block';
+      s.path.setAttribute('d', wedgeArc(v, nb.prev, nb.next, s.r));
+      const lp = pointOnCircle(v, s.r+18, wedgeMidDeg(v, nb.prev, nb.next));
+      setText(s.deg, lp.x-8, lp.y, Math.round(angles[i])+'°');
+    });
+    const [a,b,c,d] = angles.map(Math.round);
+    caption.innerHTML = '∠A + ∠B + ∠C + ∠D = '+a+'° + '+b+'° + '+c+'° + '+d+'° = <b>360°</b> — always, however you drag it!';
+  }
+
+  function hideAllAdjOpp(){
+    hideSide(sideHiA); hideSide(sideHiB);
+    hideAngle(angHiA, angHiADeg); hideAngle(angHiB, angHiBDeg);
+  }
+  function hideAllAngleSum(){
+    [ [arcA,degA],[arcB,degB],[arcC,degC],[arcD,degD] ].forEach(([p,t])=> hideAngle(p,t));
+  }
+
+  function render(){
+    quad.setAttribute('d', quadPathD(Q_A,Q_B,C,D));
+    handleC.setAttribute('transform', `translate(${C.x},${C.y})`);
+    handleD.setAttribute('transform', `translate(${D.x},${D.y})`);
+    setText(lblA, Q_A.x-10, Q_A.y+24, 'A');
+    setText(lblB, Q_B.x+4, Q_B.y+24, 'B');
+    setText(lblC, C.x+10, C.y-8, 'C');
+    setText(lblD, D.x-22, D.y-8, 'D');
+
+    if(currentTab === 'adjopp'){
+      hideAllAngleSum();
+      renderAdjOpp();
+    } else {
+      hideAllAdjOpp();
+      renderAngleSum();
+    }
+  }
+
+  document.getElementById('exp-tabs').addEventListener('click', e=>{
+    const btn = e.target.closest('.tab-btn'); if(!btn) return;
+    currentTab = btn.dataset.tab;
+    document.querySelectorAll('#exp-tabs .tab-btn').forEach(b=>b.classList.toggle('active', b===btn));
+    document.getElementById('exp-chips').style.display = currentTab==='adjopp' ? 'flex' : 'none';
+    render();
+  });
+  chips.forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      mode = chip.dataset.mode;
+      chips.forEach(c=>c.classList.toggle('on', c===chip));
+      render();
+    });
+  });
+
+  makeDraggable(svg, handleC, p=>{ C = clampC(p); render(); });
+  makeDraggable(svg, handleD, p=>{ D = clampD(p); render(); });
+  render();
+})();
+
+/* ---------- 3. Types gallery diagrams (generic mark-drawing helpers) ---------- */
+function vsub(a,b){ return {x:a.x-b.x, y:a.y-b.y}; }
+function vadd(a,b){ return {x:a.x+b.x, y:a.y+b.y}; }
+function vscale(v,s){ return {x:v.x*s, y:v.y*s}; }
+function vnorm(v){ const m = Math.hypot(v.x,v.y) || 1; return {x:v.x/m, y:v.y/m}; }
+
+function tickMarkSVG(a,b,count,color){
+  const dir = vnorm(vsub(b,a)), perp = {x:-dir.y, y:dir.x};
+  const m = mid(a,b);
+  const spacing = 8;
+  const start = -(count-1)*spacing/2;
+  let out = '';
+  for(let k=0;k<count;k++){
+    const c = vadd(m, vscale(dir, start+k*spacing));
+    const p1 = vadd(c, vscale(perp,6)), p2 = vadd(c, vscale(perp,-6));
+    out += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" stroke="${color}" stroke-width="2.5"/>`;
+  }
+  return out;
+}
+function arrowMarkSVG(a,b,count,color){
+  const dir = vnorm(vsub(b,a)), perp = {x:-dir.y, y:dir.x};
+  const m = mid(a,b);
+  const spacing = 11;
+  const start = -(count-1)*spacing/2;
+  let out = '';
+  for(let k=0;k<count;k++){
+    const c = vadd(m, vscale(dir, start+k*spacing));
+    const tip = vadd(c, vscale(dir,6));
+    const backL = vadd(vadd(c, vscale(dir,-5)), vscale(perp,5));
+    const backR = vadd(vadd(c, vscale(dir,-5)), vscale(perp,-5));
+    out += `<path d="M ${backL.x} ${backL.y} L ${tip.x} ${tip.y} L ${backR.x} ${backR.y}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  return out;
+}
+function rightAngleSVG(vertex, prev, next, size, color){
+  const u1 = vnorm(vsub(prev,vertex)), u2 = vnorm(vsub(next,vertex));
+  const p1 = vadd(vertex, vscale(u1,size));
+  const p2 = vadd(vertex, vscale(u2,size));
+  const p3 = vadd(vadd(vertex, vscale(u1,size)), vscale(u2,size));
+  return `<path d="M ${p1.x} ${p1.y} L ${p3.x} ${p3.y} L ${p2.x} ${p2.y}" fill="none" stroke="${color}" stroke-width="2"/>`;
+}
+function lineIntersect(a,b,c,d){
+  const a1=b.y-a.y, b1=a.x-b.x, c1=a1*a.x+b1*a.y;
+  const a2=d.y-c.y, b2=c.x-d.x, c2=a2*c.x+b2*c.y;
+  const det=a1*b2-a2*b1;
+  if(Math.abs(det)<1e-9) return mid(a,c);
+  return {x:(b2*c1-b1*c2)/det, y:(a1*c2-a2*c1)/det};
+}
+function vertexLabelsSVG(pts, names, offsets){
+  return pts.map((p,i)=>{
+    const o = offsets[i];
+    return `<text x="${p.x+o.x}" y="${p.y+o.y}" font-size="13" font-weight="bold">${names[i]}</text>`;
+  }).join('');
+}
+
+function typeDiagram(pts, opts){
+  const [A,B,C,D] = pts;
+  const sides = [[A,B],[B,C],[C,D],[D,A]];
+  let marks = '';
+  (opts.arrows||[]).forEach(a=> marks += arrowMarkSVG(sides[a.side][0], sides[a.side][1], a.count, a.color));
+  (opts.ticks||[]).forEach(t=> marks += tickMarkSVG(sides[t.side][0], sides[t.side][1], t.count, t.color));
+  (opts.rightAngles||[]).forEach(vi=>{
+    const v = pts[vi], prev = pts[(vi+3)%4], next = pts[(vi+1)%4];
+    marks += rightAngleSVG(v, prev, next, 14, '#1d2b53');
+  });
+  let diag = '';
+  if(opts.diagonals){
+    diag += `<line x1="${A.x}" y1="${A.y}" x2="${C.x}" y2="${C.y}" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>`;
+    diag += `<line x1="${B.x}" y1="${B.y}" x2="${D.x}" y2="${D.y}" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>`;
+    if(opts.diagPerp){
+      const ip = lineIntersect(A,C,B,D);
+      diag += rightAngleSVG(ip, vadd(ip,vscale(vnorm(vsub(A,ip)),1)), vadd(ip,vscale(vnorm(vsub(B,ip)),1)), 9, '#94a3b8');
+    }
+  }
+  const labels = vertexLabelsSVG(pts, ['A','B','C','D'], opts.labelOffsets);
+  const path = `<path d="${quadPathD(A,B,C,D)}" fill="${opts.fill}" fill-opacity=".25" stroke="${opts.fill}" stroke-width="3"/>`;
+  return `<svg viewBox="0 0 190 175" width="180">${diag}${path}${marks}${labels}</svg>`;
+}
+
+const typeDefs = [
+  { name:'Parallelogram', color:'#a06cd5',
+    pts:[{x:40,y:150},{x:150,y:150},{x:130,y:60},{x:20,y:60}],
+    arrows:[{side:0,count:1,color:'#a06cd5'},{side:2,count:1,color:'#a06cd5'},{side:1,count:2,color:'#ff9e45'},{side:3,count:2,color:'#ff9e45'}],
+    rightAngles:[], diagonals:true, diagPerp:false,
+    labelOffsets:[{x:-10,y:18},{x:6,y:18},{x:6,y:-8},{x:-16,y:-8}],
+    desc:'Opposite sides are parallel and equal in length.' },
+
+  { name:'Rectangle', color:'#4cc9f0',
+    pts:[{x:30,y:150},{x:160,y:150},{x:160,y:60},{x:30,y:60}],
+    arrows:[{side:0,count:1,color:'#4cc9f0'},{side:2,count:1,color:'#4cc9f0'},{side:1,count:2,color:'#ff9e45'},{side:3,count:2,color:'#ff9e45'}],
+    rightAngles:[0,1,2,3], diagonals:true, diagPerp:false,
+    labelOffsets:[{x:-10,y:18},{x:6,y:18},{x:6,y:-8},{x:-16,y:-8}],
+    desc:'A parallelogram where every angle is a right angle (90°). Diagonals are equal.' },
+
+  { name:'Square', color:'#06d6a0',
+    pts:[{x:40,y:150},{x:150,y:150},{x:150,y:40},{x:40,y:40}],
+    arrows:[{side:0,count:1,color:'#06d6a0'},{side:2,count:1,color:'#06d6a0'},{side:1,count:2,color:'#ff9e45'},{side:3,count:2,color:'#ff9e45'}],
+    ticks:[{side:0,count:1,color:'#c0245a'},{side:1,count:1,color:'#c0245a'},{side:2,count:1,color:'#c0245a'},{side:3,count:1,color:'#c0245a'}],
+    rightAngles:[0,1,2,3], diagonals:true, diagPerp:true,
+    labelOffsets:[{x:-10,y:18},{x:6,y:18},{x:6,y:-8},{x:-16,y:-8}],
+    desc:'A rectangle where all 4 sides are equal — every rule of both rectangle and rhombus applies!' },
+
+  { name:'Rhombus', color:'#ff6ec7',
+    pts:[{x:20,y:80},{x:90,y:35},{x:160,y:80},{x:90,y:125}],
+    arrows:[{side:0,count:1,color:'#ff6ec7'},{side:2,count:1,color:'#ff6ec7'},{side:1,count:2,color:'#ff9e45'},{side:3,count:2,color:'#ff9e45'}],
+    ticks:[{side:0,count:1,color:'#c0245a'},{side:1,count:1,color:'#c0245a'},{side:2,count:1,color:'#c0245a'},{side:3,count:1,color:'#c0245a'}],
+    rightAngles:[], diagonals:true, diagPerp:true,
+    labelOffsets:[{x:-16,y:4},{x:-4,y:-10},{x:8,y:4},{x:-4,y:20}],
+    desc:'A parallelogram where all 4 sides are equal. Diagonals cross at a right angle.' },
+
+  { name:'Trapezium', color:'#ffd166',
+    pts:[{x:30,y:150},{x:160,y:150},{x:120,y:60},{x:50,y:60}],
+    arrows:[{side:0,count:1,color:'#ffb703'},{side:2,count:1,color:'#ffb703'}],
+    rightAngles:[], diagonals:true, diagPerp:false,
+    labelOffsets:[{x:-10,y:18},{x:6,y:18},{x:6,y:-8},{x:-16,y:-8}],
+    desc:'Exactly ONE pair of sides is parallel (here, AB and CD). The other pair is not equal.' },
+
+  { name:'Isosceles Trapezium', color:'#ef476f',
+    pts:[{x:30,y:150},{x:160,y:150},{x:130,y:60},{x:60,y:60}],
+    arrows:[{side:0,count:1,color:'#ef476f'},{side:2,count:1,color:'#ef476f'}],
+    ticks:[{side:1,count:1,color:'#7a3b97'},{side:3,count:1,color:'#7a3b97'}],
+    rightAngles:[], diagonals:true, diagPerp:false,
+    labelOffsets:[{x:-10,y:18},{x:6,y:18},{x:6,y:-8},{x:-16,y:-8}],
+    desc:'A trapezium whose two non-parallel legs are equal in length. Diagonals are equal too!' },
+
+  { name:'Kite', color:'#a06cd5',
+    pts:[{x:90,y:20},{x:145,y:75},{x:90,y:150},{x:35,y:75}],
+    ticks:[{side:0,count:1,color:'#048848'},{side:3,count:1,color:'#048848'},{side:1,count:2,color:'#0a6ca8'},{side:2,count:2,color:'#0a6ca8'}],
+    rightAngles:[], diagonals:true, diagPerp:true,
+    labelOffsets:[{x:-4,y:-8},{x:10,y:4},{x:-4,y:20},{x:-18,y:4}],
+    desc:'Two pairs of ADJACENT sides are equal. Diagonals cross at a right angle (only one bisects the other).' }
+];
+
+(function(){
+  const grid = document.getElementById('types-grid');
+  grid.innerHTML = typeDefs.map(t=>`
+    <div class="type-card">
+      <h3>${t.name}</h3>
+      ${typeDiagram(t.pts, t)}
+      <p>${t.desc}</p>
+    </div>`).join('');
+})();
+
+/* ---------- 4. Properties comparison table ---------- */
+(function(){
+  const rows = [
+    {name:'Parallelogram', oppParallel:'✓', oppEqual:'✓', allEqual:'✗', oppAngles:'✓', allRight:'✗', diagEqual:'✗', diagPerp:'✗', diagBisect:'✓'},
+    {name:'Rectangle',     oppParallel:'✓', oppEqual:'✓', allEqual:'✗', oppAngles:'✓', allRight:'✓', diagEqual:'✓', diagPerp:'✗', diagBisect:'✓'},
+    {name:'Square',        oppParallel:'✓', oppEqual:'✓', allEqual:'✓', oppAngles:'✓', allRight:'✓', diagEqual:'✓', diagPerp:'✓', diagBisect:'✓'},
+    {name:'Rhombus',       oppParallel:'✓', oppEqual:'✓', allEqual:'✓', oppAngles:'✓', allRight:'✗', diagEqual:'✗', diagPerp:'✓', diagBisect:'✓'},
+    {name:'Trapezium',     oppParallel:'1 pair', oppEqual:'✗', allEqual:'✗', oppAngles:'✗', allRight:'✗', diagEqual:'✗', diagPerp:'✗', diagBisect:'✗'},
+    {name:'Isosceles Trapezium', oppParallel:'1 pair', oppEqual:'legs only', allEqual:'✗', oppAngles:'✗', allRight:'✗', diagEqual:'✓', diagPerp:'✗', diagBisect:'✗'},
+    {name:'Kite',          oppParallel:'✗', oppEqual:'adjacent only', allEqual:'✗', oppAngles:'1 pair', allRight:'✗', diagEqual:'✗', diagPerp:'✓', diagBisect:'1 diagonal'}
+  ];
+  function cell(v){
+    if(v==='✓') return '<td class="yes">✓</td>';
+    if(v==='✗') return '<td class="no">✗</td>';
+    return `<td class="partial">${v}</td>`;
+  }
+  const head = `<tr>
+    <th>Type</th><th>Opp. sides<br>parallel?</th><th>Opp. sides<br>equal?</th><th>All sides<br>equal?</th>
+    <th>Opp. angles<br>equal?</th><th>All angles<br>90°?</th><th>Diagonals<br>equal?</th>
+    <th>Diagonals<br>perpendicular?</th><th>Diagonals<br>bisect each other?</th></tr>`;
+  const body = rows.map(r=>`<tr><td>${r.name}</td>${cell(r.oppParallel)}${cell(r.oppEqual)}${cell(r.allEqual)}${cell(r.oppAngles)}${cell(r.allRight)}${cell(r.diagEqual)}${cell(r.diagPerp)}${cell(r.diagBisect)}</tr>`).join('');
+  document.getElementById('prop-table').innerHTML = head + body;
+})();
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"How many sides does a quadrilateral have?", opts:["3","4","5","6"], answer:1,
+   explain:"Quad- means four — a quadrilateral always has exactly 4 sides, 4 vertices and 4 angles."},
+  {q:"How many diagonals does a quadrilateral have?", opts:["0","1","2","4"], answer:2,
+   explain:"A quadrilateral has exactly 2 diagonals: AC and BD, each joining a pair of vertices that are not already joined by a side."},
+  {q:"The four interior angles of ANY quadrilateral always add up to...?", opts:["180°","270°","360°","400°"], answer:2,
+   explain:"No matter how you drag its corners, the four interior angles of a quadrilateral always sum to 360°."},
+  {q:"Two sides of a quadrilateral that share a vertex are called...?", opts:["Opposite sides","Adjacent sides","Parallel sides","Diagonal sides"], answer:1,
+   explain:"Adjacent sides meet at (share) a vertex. Sides that share no vertex are called opposite sides."},
+  {q:"Which shape has all four sides equal AND all four angles equal to 90°?", opts:["Rhombus","Rectangle","Square","Kite"], answer:2,
+   explain:"A square is a rectangle with all sides equal — it combines the properties of both the rectangle and the rhombus."},
+  {q:"A trapezium has how many pairs of parallel sides?", opts:["0","1","2","4"], answer:1,
+   explain:"A trapezium has exactly one pair of parallel sides. If it had two pairs, it would be a parallelogram instead."},
+  {q:"In a kite, the two diagonals are always...?", opts:["Equal in length","Parallel to each other","Perpendicular to each other","Unrelated to each other"], answer:2,
+   explain:"A kite's diagonals always cross at a right angle (90°), even though only one of them gets cut exactly in half."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = quizData[qIndex];
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're a quadrilateral expert! 🌟"
+          : score>=total*0.6 ? "Great job! You really know your quadrilaterals! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+}
+renderQuestion();
+</script>
+</body>
+</html>

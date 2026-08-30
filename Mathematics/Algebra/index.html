@@ -23,10 +23,7 @@
     padding:20px;
     min-height:100vh;
   }
-  .container{
-    max-width:1200px;
-    margin:0 auto;
-  }
+  .container{max-width:1200px;margin:0 auto;}
   .back{
     position:fixed;top:30px;left:30px;
     background:var(--purple);color:white;text-decoration:none;
@@ -35,10 +32,7 @@
     z-index:100;
   }
   .back:hover{transform:translateY(-2px);}
-  header{
-    text-align:center;
-    margin:60px 0 40px 0;
-  }
+  header{text-align:center;margin:60px 0 40px 0;}
   .emoji{font-size:clamp(60px,12vw,120px);animation:bounce 2s ease-in-out infinite;}
   @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
   h1{
@@ -46,39 +40,35 @@
     background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  .subtitle{
-    font-size:clamp(18px,2.5vw,24px);
-    color:var(--blue);
-    font-weight:bold;
-    margin-top:10px;
-  }
+  .subtitle{font-size:clamp(18px,2.5vw,24px);color:var(--blue);font-weight:bold;margin-top:10px;}
   .topics-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:16px;
     margin:40px 0;
   }
   .topic-card{
-    background:var(--cream);
-    border-radius:16px;
-    padding:16px 12px;
-    border:3px solid var(--yellow);
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-    text-decoration:none;
-    color:inherit;
+    background:var(--cream);border-radius:16px;padding:20px 16px;
+    border:3px solid var(--yellow);box-shadow:0 4px 12px rgba(0,0,0,.08);
+    text-decoration:none;color:inherit;
     transition:all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor:pointer;
   }
   .topic-card:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 12px 24px rgba(0,0,0,.15);}
-  .topic-emoji{font-size:36px;margin-bottom:6px;
+  .topic-emoji{font-size:40px;margin-bottom:8px;}
+  .topic-card h2{font-size:clamp(15px,2.5vw,19px);color:var(--pink);margin-bottom:8px;}
+  .topic-card p{font-size:clamp(12px,1.5vw,14px);color:var(--ink);line-height:1.5;}
+
+  .topic-card.soon{
+    background:#eee;border:3px dashed #ccc;color:#999;cursor:default;
   }
-  .topic-card h2{font-size:clamp(14px,2.5vw,18px);
-    color:var(--pink);
-    margin-bottom:10px;
-  }
-  .topic-card p{font-size:clamp(12px,1.5vw,14px);
-    color:var(--ink);
-    line-height:1.5;
+  .topic-card.soon:hover{transform:none;box-shadow:0 4px 12px rgba(0,0,0,.08);}
+  .topic-card.soon .topic-emoji{opacity:.5;}
+  .topic-card.soon h2{color:#999;}
+  .topic-card.soon p{color:#aaa;}
+  .badge{
+    display:inline-block;font-size:11px;font-weight:bold;color:white;
+    background:var(--teal);padding:3px 10px;border-radius:20px;margin-top:8px;
   }
 </style>
 </head>
@@ -88,30 +78,40 @@
     <header>
       <div class="emoji">📊</div>
       <h1>Algebra</h1>
-      <p class="subtitle">Explore equations, variables, and algebraic expressions! ✨</p>
+      <p class="subtitle">Explore constants, patterns, expressions, and equations — all 5 lessons ready! ✨</p>
     </header>
 
     <div class="topics-grid">
-      <div class="topic-card">
-        <div class="topic-emoji">🔤</div>
-        <h2>Variables</h2>
-        <p>Understand what variables are and how to use them in math!</p>
-      </div>
-      <div class="topic-card">
+      <a href="Constants_and_Variables/index.html" class="topic-card">
+        <div class="topic-emoji">🔡</div>
+        <h2>Constants &amp; Variables</h2>
+        <p>Meet the values that never change — and the letters that love to change!</p>
+        <span class="badge">Start here ✓</span>
+      </a>
+      <a href="Patterns_and_Generalization/index.html" class="topic-card">
+        <div class="topic-emoji">🔍</div>
+        <h2>Patterns &amp; Generalization</h2>
+        <p>Spot a pattern, crack its code, and write a rule that works every time!</p>
+        <span class="badge">Ready ✓</span>
+      </a>
+      <a href="Algebraic_Expressions/index.html" class="topic-card">
+        <div class="topic-emoji">🧮</div>
+        <h2>Algebraic Expressions</h2>
+        <p>Build, classify, translate, and evaluate expressions like a pro!</p>
+        <span class="badge">Ready ✓</span>
+      </a>
+      <a href="Equations/index.html" class="topic-card">
         <div class="topic-emoji">⚖️</div>
         <h2>Equations</h2>
-        <p>Learn to solve linear and algebraic equations step by step!</p>
-      </div>
-      <div class="topic-card">
-        <div class="topic-emoji">📈</div>
-        <h2>Functions</h2>
-        <p>Explore functions, graphs, and how they relate to real-world scenarios!</p>
-      </div>
-      <div class="topic-card">
-        <div class="topic-emoji">🧮</div>
-        <h2>Expressions</h2>
-        <p>Master algebraic expressions and simplify them like a pro!</p>
-      </div>
+        <p>Balance both sides and hunt down the mystery number!</p>
+        <span class="badge">Ready ✓</span>
+      </a>
+      <a href="Operations_on_Expressions/index.html" class="topic-card">
+        <div class="topic-emoji">➕</div>
+        <h2>Operations on Expressions</h2>
+        <p>Group like terms and simplify expressions with confidence!</p>
+        <span class="badge">Ready ✓</span>
+      </a>
     </div>
   </div>
 </body>

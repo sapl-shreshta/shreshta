@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Operations on Expressions ➕</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:var(--ink);
+    padding:10px;
+    min-height:100vh;
+  }
+  .container{max-width:900px;margin:0 auto;padding-bottom:60px;}
+
+  /* nav */
+  .nav-top{position:fixed;top:14px;display:flex;gap:0;z-index:200;}
+  .nav-back{left:14px;} .nav-home{right:14px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;
+    width:48px;height:48px;font-size:22px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #7a3b97;}
+
+  /* stars tracker */
+  .stars-bar{
+    position:sticky;top:8px;z-index:150;
+    max-width:280px;margin:0 auto 10px auto;
+    background:var(--cream);border:3px solid var(--yellow);
+    border-radius:50px;padding:8px 18px;text-align:center;
+    font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,.1);
+    transition:transform .2s;
+  }
+  .stars-bar.pulse{animation:pulseStar .5s ease;}
+  @keyframes pulseStar{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
+
+  header{text-align:center;margin:70px 0 20px 0;}
+  .emoji{font-size:clamp(50px,12vw,90px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  h1{
+    font-size:clamp(26px,6vw,50px);margin:10px 0;
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{font-size:clamp(15px,2.2vw,20px);color:var(--blue);font-weight:bold;}
+
+  .quicknav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 30px 0;}
+  .quicknav a{
+    text-decoration:none;background:white;color:var(--purple);font-weight:bold;
+    font-size:13px;padding:8px 14px;border-radius:20px;border:2px solid var(--purple);
+    transition:.2s;
+  }
+  .quicknav a:hover{background:var(--purple);color:white;}
+
+  .card{
+    background:var(--cream);border-radius:20px;padding:20px 18px;margin-bottom:28px;
+    border:3px solid var(--purple);box-shadow:0 8px 0 rgba(0,0,0,.08);
+    scroll-margin-top:90px;
+  }
+  .card h2{font-size:clamp(20px,4vw,28px);color:var(--pink);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .card h3{font-size:clamp(17px,3vw,22px);color:var(--pink);margin:18px 0 8px 0;}
+  .card p{font-size:15px;line-height:1.6;margin-bottom:10px;}
+  .callout{
+    background:#fff;border-left:8px solid var(--teal);border-radius:10px;
+    padding:12px 16px;margin:14px 0;font-size:15px;font-weight:bold;color:var(--ink);
+  }
+  .callout.purple{border-left-color:var(--purple);}
+  .callout.orange{border-left-color:var(--orange);}
+
+  .mascot-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:14px 0;}
+  .mascot{font-size:56px;flex-shrink:0;filter:drop-shadow(0 4px 4px rgba(0,0,0,.15));}
+  .mascot.pulse2{animation:pulse2 1.6s ease-in-out infinite;}
+  @keyframes pulse2{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+
+  /* pattern rows / inputs */
+  .pattern-row{
+    background:white;border-radius:14px;padding:14px;margin-bottom:14px;
+    border:2px solid #ddd;display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  }
+  .pat-chip{background:var(--yellow);border-radius:8px;padding:6px 14px;font-weight:bold;font-size:18px;}
+  .pat-input{
+    width:70px;padding:8px;border-radius:8px;border:2px solid #ccc;
+    font-size:16px;text-align:center;font-weight:bold;
+  }
+  .pat-input.correct{border-color:var(--teal);background:#e8fff8;}
+  .pat-input.wrong{border-color:var(--red);background:#fff0f3;}
+  .mini-btn{
+    background:var(--purple);color:white;border:none;border-radius:8px;
+    padding:8px 16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 #7a3b97;
+  }
+  .mini-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #7a3b97;}
+  .pat-feedback{font-size:13px;font-weight:bold;}
+
+  /* classify game (like / unlike) */
+  .classify-row{
+    background:white;border-radius:14px;padding:14px;margin-bottom:12px;
+    border:2px solid #ddd;display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;
+  }
+  .classify-text{font-size:18px;font-weight:bold;flex:1 1 180px;}
+  .classify-btns{display:flex;gap:8px;flex-wrap:wrap;}
+  .classify-btn{
+    background:#f0f0f0;border:2px solid #ccc;border-radius:10px;padding:8px 16px;
+    font-size:14px;font-weight:bold;cursor:pointer;transition:.15s;
+  }
+  .classify-btn:hover{transform:translateY(-2px);}
+  .classify-btn.selected-correct{background:var(--teal);color:white;border-color:#04a37e;}
+  .classify-btn.selected-wrong{background:var(--red);color:white;border-color:#c1274b;animation:shake .4s;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  /* worked example step by step */
+  .worked-chip-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+  .term-chip{
+    background:#f5f5f5;border:3px solid #ccc;border-radius:12px;padding:10px 18px;
+    font-size:20px;font-weight:bold;cursor:pointer;transition:.15s;
+  }
+  .term-chip:hover{transform:translateY(-2px);}
+  .term-chip.group-x{background:var(--teal);color:white;border-color:#04a37e;cursor:default;}
+  .term-chip.group-y{background:var(--purple);color:white;border-color:#7a3b97;cursor:default;}
+  .worked-step{display:none;}
+  .worked-step.show{display:block;margin-top:16px;}
+  .final-callout{
+    background:var(--teal);color:white;border-radius:14px;padding:18px;text-align:center;
+    font-size:clamp(20px,4vw,28px);font-weight:bold;margin-top:14px;
+  }
+
+  /* quiz (shared style) */
+  .quiz-q{background:white;border-radius:14px;padding:14px;margin-bottom:16px;border:2px solid #ddd;}
+  .quiz-q h4{color:var(--purple);margin-bottom:10px;font-size:16px;}
+  .opt-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .opt-btn{
+    background:#f0f0f0;border:2px solid #ccc;border-radius:10px;padding:10px 16px;
+    font-size:14px;font-weight:bold;cursor:pointer;transition:.15s;
+  }
+  .opt-btn:hover{transform:translateY(-2px);}
+  .opt-btn.selected-correct{background:var(--teal);color:white;border-color:#04a37e;}
+  .opt-btn.selected-wrong{background:var(--red);color:white;border-color:#c1274b;}
+  .quiz-explain{font-size:12px;color:#777;margin-top:8px;display:none;}
+  .quiz-explain.show{display:block;}
+
+  .cta-btn{
+    display:block;margin:20px auto 0 auto;background:var(--pink);color:white;
+    border:none;border-radius:50px;padding:14px 34px;font-size:17px;font-weight:bold;
+    cursor:pointer;box-shadow:0 5px 0 #c93f96;transition:.15s;
+  }
+  .cta-btn:hover{transform:translateY(-2px);}
+  .cta-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c93f96;}
+  #scoreBanner{
+    display:none;text-align:center;margin-top:16px;padding:16px;border-radius:14px;
+    font-size:18px;font-weight:bold;color:white;background:var(--purple);
+  }
+  #answerAllMsg{display:none;text-align:center;color:var(--red);font-weight:bold;margin-top:10px;}
+
+  .recap-list{list-style:none;}
+  .recap-list li{
+    background:white;border-radius:10px;padding:10px 14px;margin-bottom:8px;
+    border-left:6px solid var(--blue);font-size:14px;
+  }
+
+  .coming-soon{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:14px;}
+  .soon-card{
+    background:#eee;border-radius:14px;padding:14px;text-align:center;color:#999;
+    border:3px dashed #ccc;
+  }
+  .soon-card .se{font-size:30px;margin-bottom:6px;opacity:.6;}
+
+  .confetti-piece{
+    position:fixed;top:-20px;width:10px;height:10px;z-index:999;pointer-events:none;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{to{transform:translateY(110vh) rotate(360deg);opacity:.8;}}
+
+  footer.pagefoot{text-align:center;margin-top:20px;font-size:13px;color:#999;}
+
+  .explore-card{
+    background:white;border-radius:14px;padding:14px;text-align:center;
+    border:3px solid var(--teal);text-decoration:none;color:inherit;
+    transition:.2s;display:block;
+  }
+  .explore-card:hover{transform:translateY(-6px);box-shadow:0 8px 15px rgba(0,0,0,.15);}
+  .explore-card .se{font-size:30px;margin-bottom:6px;}
+  .explore-card.here{border-color:var(--pink);background:#fff0f8;cursor:default;}
+  .explore-card.here:hover{transform:none;box-shadow:none;}
+</style>
+</head>
+<body>
+  <div class="nav-top nav-back">
+    <a href="../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Back to Algebra">⬅️</button>
+    </a>
+  </div>
+  <div class="nav-top nav-home">
+    <a href="../../../index.html" style="text-decoration:none;">
+      <button class="icon-btn" title="Home">🏠</button>
+    </a>
+  </div>
+
+  <div class="container">
+
+    <header>
+      <div class="emoji">➕</div>
+      <h1>Operations on Expressions</h1>
+      <p class="subtitle">Combining the terms that belong together! ✨</p>
+    </header>
+
+    <div class="stars-bar" id="starsBar">⭐ Stars collected: <span id="starsCount">0</span> / 4</div>
+
+    <div class="quicknav">
+      <a href="#sec-liketerms">🍎 Like Terms</a>
+      <a href="#sec-worked">🧩 Worked Example</a>
+      <a href="#sec-practice">✏️ Now You Try</a>
+      <a href="#sec-quiz">🏆 Quiz</a>
+    </div>
+
+    <!-- SECTION 1: LIKE TERMS VS UNLIKE TERMS -->
+    <section class="card" id="sec-liketerms">
+      <h2>🍎 Like Terms vs Unlike Terms</h2>
+      <div class="mascot-row">
+        <div class="mascot pulse2">🍎🍊</div>
+        <p><b>3 apples + 2 apples = 5 apples.</b> Easy! They're both apples, so we can just add them together.</p>
+      </div>
+      <p>But what about <b>3 apples + 2 oranges</b>? You can't combine those into one thing — they stay separate: <b>3 apples and 2 oranges</b>. Apples and oranges just aren't the same kind of thing!</p>
+      <div class="callout">Algebra works exactly the same way. <b>3x and 7x</b> are <b>LIKE TERMS</b> — they have the exact same letter (x), only the coefficient (the number in front) is different. We can combine them!</div>
+      <div class="callout orange"><b>3x and 3y</b> are <b>UNLIKE TERMS</b> — different letters. Just like apples and oranges, they have to stay separate.</div>
+      <p>Now it's your turn! Tap <b>Like</b> or <b>Unlike</b> for each pair below.</p>
+      <div id="classifyGame"></div>
+    </section>
+
+    <!-- SECTION 2: WORKED EXAMPLE -->
+    <section class="card" id="sec-worked">
+      <h2>🧩 Worked Example — Simplifying Step by Step</h2>
+      <div class="callout">📖 Let's simplify together: <b>3x + 5y + 2x + y</b></div>
+
+      <p><b>Step 1 — Find the like terms.</b> Tap the two terms with the <b>same letter</b> to group them. First find the x-terms, then the y-terms.</p>
+      <div class="worked-chip-row" id="termChipRow"></div>
+      <p id="groupHint" style="font-size:13px;color:var(--purple);font-weight:bold;"></p>
+
+      <div class="worked-step" id="workedStep2">
+        <h3>Step 2 — Add the like terms together.</h3>
+        <div class="pattern-row">
+          <span class="pat-chip">3x + 2x =</span>
+          <input type="number" class="pat-input" id="step2InputX">
+          <span>x</span>
+          <button class="mini-btn" onclick="checkStep2()">Check</button>
+        </div>
+        <div class="pattern-row">
+          <span class="pat-chip">5y + y =</span>
+          <input type="number" class="pat-input" id="step2InputY">
+          <span>y</span>
+        </div>
+        <span class="pat-feedback" id="step2Feedback"></span>
+      </div>
+
+      <div class="worked-step" id="workedStep3">
+        <h3>Step 3 — The simplified expression!</h3>
+        <div class="final-callout">🎉 3x + 5y + 2x + y &nbsp;=&nbsp; 5x + 6y</div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: NOW YOU TRY + REAL LIFE EXAMPLES -->
+    <section class="card" id="sec-practice">
+      <h2>✏️ Now You Try!</h2>
+      <p>Simplify each expression by grouping the like terms and adding their coefficients. Fill in the two blanks.</p>
+      <div id="practiceGame"></div>
+
+      <h3>🛍️ Two Quick Real-Life Examples</h3>
+      <div class="callout">🛒 3 notebooks at ₹15 each + 2 more notebooks at ₹15 each = <b>5 notebooks</b> at ₹15 each = <b>₹75 total</b>. The notebooks are "like terms" — we just add how many there are!</div>
+      <div class="callout purple">⏱️ 20 minutes cooking today + 20 minutes cooking tomorrow = <b>40 minutes</b> total cooking. Same kind of thing (cooking minutes), so they combine!</div>
+    </section>
+
+    <!-- QUICK RECAP -->
+    <section class="card">
+      <h2>📝 Quick Recap</h2>
+      <ul class="recap-list">
+        <li>🍎 <b>Like terms</b> have the exact same letter — only their coefficients can be added or subtracted.</li>
+        <li>🍊 <b>Unlike terms</b> have different letters — they cannot be combined and stay separate.</li>
+        <li>🧩 To simplify an expression: <b>group</b> the like terms, then <b>add or subtract</b> their coefficients.</li>
+      </ul>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="card" id="sec-quiz">
+      <h2>🏆 Final Challenge</h2>
+      <p>Answer all 5 questions, then hit "Check My Score"!</p>
+      <div id="quizContainer"></div>
+      <div id="answerAllMsg">Oops! Please answer every question first 😊</div>
+      <button class="cta-btn" onclick="checkScore()">Check My Score 🎉</button>
+      <div id="scoreBanner"></div>
+    </section>
+
+    <section class="card">
+      <h2>🎉 Chapter Complete!</h2>
+      <p>You've now covered every lesson in Chapter 11 — Algebra! Great work, mathematician:</p>
+      <div class="coming-soon">
+        <a class="explore-card" href="../Constants_and_Variables/index.html"><div class="se">🔡</div>Constants &amp; Variables</a>
+        <a class="explore-card" href="../Patterns_and_Generalization/index.html"><div class="se">🔍</div>Patterns &amp; Generalization</a>
+        <a class="explore-card" href="../Algebraic_Expressions/index.html"><div class="se">🧮</div>Algebraic Expressions</a>
+        <a class="explore-card" href="../Equations/index.html"><div class="se">⚖️</div>Equations</a>
+        <div class="explore-card here"><div class="se">➕</div>Operations on Expressions<br><small>(you are here 🎉)</small></div>
+      </div>
+    </section>
+
+    <footer class="pagefoot">Made with 💜 for curious young mathematicians</footer>
+  </div>
+
+<script>
+  /* ---------- STARS ---------- */
+  const earnedStars = new Set();
+  function awardStar(id){
+    if(earnedStars.has(id)) return;
+    earnedStars.add(id);
+    document.getElementById('starsCount').textContent = earnedStars.size;
+    const bar = document.getElementById('starsBar');
+    bar.classList.remove('pulse'); void bar.offsetWidth; bar.classList.add('pulse');
+    if(earnedStars.size === 4) setTimeout(()=>confettiBurst(60),200);
+  }
+
+  /* ---------- SECTION 1: CLASSIFY LIKE/UNLIKE ---------- */
+  const classifyPairs = [
+    {text:'3x and 7x', answer:'like'},
+    {text:'5y and 5x', answer:'unlike'},
+    {text:'4a and 4b', answer:'unlike'},
+    {text:'8p and 3p', answer:'like'},
+    {text:'2x and 2y', answer:'unlike'},
+    {text:'6m and 9m', answer:'like'}
+  ];
+  const classifySolved = new Set();
+
+  function renderClassify(){
+    const container = document.getElementById('classifyGame');
+    container.innerHTML = '';
+    classifyPairs.forEach((p, pi)=>{
+      const row = document.createElement('div');
+      row.className = 'classify-row';
+
+      const text = document.createElement('div');
+      text.className = 'classify-text';
+      text.textContent = p.text;
+      row.appendChild(text);
+
+      const btns = document.createElement('div');
+      btns.className = 'classify-btns';
+      ['like','unlike'].forEach(choice=>{
+        const b = document.createElement('button');
+        b.className = 'classify-btn';
+        b.textContent = choice === 'like' ? 'Like' : 'Unlike';
+        b.onclick = ()=>handleClassifyClick(pi, choice, btns);
+        btns.appendChild(b);
+      });
+      row.appendChild(btns);
+
+      container.appendChild(row);
+    });
+  }
+  function handleClassifyClick(pi, choice, btns){
+    const p = classifyPairs[pi];
+    const buttons = btns.querySelectorAll('.classify-btn');
+    if(choice === p.answer){
+      buttons.forEach(b=>{
+        b.classList.remove('selected-correct','selected-wrong');
+        if((b.textContent==='Like')===(choice==='like')) b.classList.add('selected-correct');
+      });
+      buttons.forEach(b=> b.disabled = true);
+      classifySolved.add(pi);
+      if(classifySolved.size === classifyPairs.length) awardStar('liketerms');
+    } else {
+      buttons.forEach(b=>{
+        if((b.textContent==='Like')===(choice==='like')) {
+          b.classList.add('selected-wrong');
+          setTimeout(()=>b.classList.remove('selected-wrong'), 400);
+        }
+      });
+    }
+  }
+  renderClassify();
+
+  /* ---------- SECTION 2: WORKED EXAMPLE ---------- */
+  const termChips = [
+    {term:'3x', letter:'x'},
+    {term:'5y', letter:'y'},
+    {term:'2x', letter:'x'},
+    {term:'y', letter:'y'}
+  ];
+  const tappedTerms = new Set();
+  function renderTermChips(){
+    const container = document.getElementById('termChipRow');
+    container.innerHTML = '';
+    termChips.forEach((c, ci)=>{
+      const chip = document.createElement('div');
+      chip.className = 'term-chip';
+      chip.textContent = c.term;
+      chip.onclick = ()=>tapTermChip(ci, chip);
+      container.appendChild(chip);
+    });
+  }
+  function tapTermChip(ci, chip){
+    if(tappedTerms.has(ci)) return;
+    const c = termChips[ci];
+    chip.classList.add(c.letter === 'x' ? 'group-x' : 'group-y');
+    tappedTerms.add(ci);
+    const hint = document.getElementById('groupHint');
+    if(tappedTerms.size < 4){
+      hint.textContent = '👍 Keep going — find all the matching pairs!';
+    } else {
+      hint.textContent = '🎉 Great! The x-terms (green) and y-terms (purple) are grouped.';
+      document.getElementById('workedStep2').classList.add('show');
+    }
+  }
+  renderTermChips();
+
+  function checkStep2(){
+    const xInput = document.getElementById('step2InputX');
+    const yInput = document.getElementById('step2InputY');
+    const fb = document.getElementById('step2Feedback');
+    if(xInput.value === '' || yInput.value === ''){
+      fb.textContent = 'Fill in both blanks!'; fb.style.color = 'var(--red)'; return;
+    }
+    const xVal = Number(xInput.value);
+    const yVal = Number(yInput.value);
+    if(xVal === 5 && yVal === 6){
+      fb.textContent = '✅ Correct! 3x + 2x = 5x and 5y + y = 6y.'; fb.style.color = 'var(--teal)';
+      xInput.classList.add('correct'); yInput.classList.add('correct');
+      document.getElementById('workedStep3').classList.add('show');
+      awardStar('worked');
+    } else {
+      fb.textContent = 'Not quite — try again!'; fb.style.color = 'var(--red)';
+      xInput.classList.add('wrong'); yInput.classList.add('wrong');
+    }
+  }
+
+  /* ---------- SECTION 3: NOW YOU TRY ---------- */
+  const practiceProblems = [
+    {id:'pr1', text:'Simplify: 4a + 3b + 2a', l1:'a', l2:'b', a1:6, a2:3},
+    {id:'pr2', text:'Simplify: 7x + 2y − 3x', l1:'x', l2:'y', a1:4, a2:2},
+    {id:'pr3', text:'Simplify: 5m + 4n − 2m − n', l1:'m', l2:'n', a1:3, a2:3}
+  ];
+  const practiceSolved = new Set();
+
+  function renderPractice(){
+    const container = document.getElementById('practiceGame');
+    container.innerHTML = '';
+    practiceProblems.forEach(p=>{
+      const row = document.createElement('div');
+      row.className = 'pattern-row';
+
+      const label = document.createElement('span');
+      label.className = 'pat-chip';
+      label.textContent = p.text;
+      row.appendChild(label);
+
+      const input1 = document.createElement('input');
+      input1.type = 'number';
+      input1.className = 'pat-input';
+      input1.id = 'input-' + p.id + '-1';
+      row.appendChild(input1);
+
+      const letter1 = document.createElement('span');
+      letter1.textContent = p.l1 + ' +';
+      row.appendChild(letter1);
+
+      const input2 = document.createElement('input');
+      input2.type = 'number';
+      input2.className = 'pat-input';
+      input2.id = 'input-' + p.id + '-2';
+      row.appendChild(input2);
+
+      const letter2 = document.createElement('span');
+      letter2.textContent = p.l2;
+      row.appendChild(letter2);
+
+      const btn = document.createElement('button');
+      btn.className = 'mini-btn';
+      btn.textContent = 'Check';
+      btn.onclick = ()=>checkPractice(p);
+      row.appendChild(btn);
+
+      const fb = document.createElement('span');
+      fb.className = 'pat-feedback';
+      fb.id = 'fb-' + p.id;
+      row.appendChild(fb);
+
+      container.appendChild(row);
+    });
+  }
+  function checkPractice(p){
+    const input1 = document.getElementById('input-' + p.id + '-1');
+    const input2 = document.getElementById('input-' + p.id + '-2');
+    const fb = document.getElementById('fb-' + p.id);
+    if(input1.value === '' || input2.value === ''){
+      fb.textContent = 'Fill in both blanks!'; fb.style.color = 'var(--red)'; return;
+    }
+    const v1 = Number(input1.value);
+    const v2 = Number(input2.value);
+    if(v1 === p.a1 && v2 === p.a2){
+      input1.classList.remove('wrong'); input1.classList.add('correct');
+      input2.classList.remove('wrong'); input2.classList.add('correct');
+      fb.textContent = '✅ Correct!'; fb.style.color = 'var(--teal)';
+      practiceSolved.add(p.id);
+      if(practiceSolved.size === practiceProblems.length) awardStar('practice');
+    } else {
+      input1.classList.remove('correct'); input1.classList.add('wrong');
+      input2.classList.remove('correct'); input2.classList.add('wrong');
+      fb.textContent = 'Try again!'; fb.style.color = 'var(--red)';
+    }
+  }
+  renderPractice();
+
+  /* ---------- QUIZ ---------- */
+  const quiz = [
+    {q:'Which pair is a LIKE terms pair?', options:['4x and 9y','6z and 2z','5a and 3b','7p and 4q'], answer:1,
+     explain:'6z and 2z both have the letter z — that makes them like terms.'},
+    {q:'Simplify: 8k + 3k', options:['11k','11k²','24k','5k'], answer:0,
+     explain:'8k + 3k = 11k — just add the coefficients.'},
+    {q:'Simplify: 7p + 2q + 3p — what is the coefficient of p in the simplified form?', options:['7','3','10','5'], answer:2,
+     explain:'7p + 3p = 10p.'},
+    {q:'Can 4m and 7n be combined into one term?', options:['Yes, 11mn','Yes, 11m','No, they are unlike terms','Yes, 11n'], answer:2,
+     explain:'4m and 7n have different letters, so they are unlike terms and stay separate.'},
+    {q:'Simplify: 9a + 6b − 3a − 2b', options:['6a+4b','6a+8b','12a+4b','6a+2b'], answer:0,
+     explain:'9a−3a=6a, 6b−2b=4b.'}
+  ];
+  const quizAnswers = {};
+
+  function renderQuiz(){
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    quiz.forEach((item, qi)=>{
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-q';
+      const h4 = document.createElement('h4');
+      h4.textContent = (qi+1) + '. ' + item.q;
+      qDiv.appendChild(h4);
+      const optRow = document.createElement('div');
+      optRow.className = 'opt-row';
+      item.options.forEach((opt, oi)=>{
+        const b = document.createElement('button');
+        b.className = 'opt-btn';
+        b.textContent = opt;
+        b.onclick = ()=>selectOption(qi, oi, qDiv);
+        optRow.appendChild(b);
+      });
+      qDiv.appendChild(optRow);
+      const explain = document.createElement('div');
+      explain.className = 'quiz-explain';
+      explain.id = 'explain-'+qi;
+      explain.textContent = item.explain;
+      qDiv.appendChild(explain);
+      container.appendChild(qDiv);
+    });
+  }
+  function selectOption(qi, oi, qDiv){
+    quizAnswers[qi] = oi;
+    const buttons = qDiv.querySelectorAll('.opt-btn');
+    buttons.forEach((b, idx)=>{
+      b.classList.remove('selected-correct','selected-wrong');
+      if(idx === oi) b.classList.add(idx === quiz[qi].answer ? 'selected-correct' : 'selected-wrong');
+    });
+    document.getElementById('explain-'+qi).classList.add('show');
+  }
+  function checkScore(){
+    if(Object.keys(quizAnswers).length < quiz.length){
+      document.getElementById('answerAllMsg').style.display = 'block';
+      return;
+    }
+    document.getElementById('answerAllMsg').style.display = 'none';
+    let score = 0;
+    quiz.forEach((item, qi)=>{ if(quizAnswers[qi] === item.answer) score++; });
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'block';
+    banner.textContent = 'You scored ' + score + ' / ' + quiz.length + '! ' +
+      (score >= 4 ? '🌟 Superstar!' : score >= 3 ? '👍 Nice work!' : '💪 Keep practicing!');
+    awardStar('quiz');
+    if(score >= 4) confettiBurst(40);
+  }
+  renderQuiz();
+
+  /* ---------- CONFETTI ---------- */
+  function confettiBurst(count){
+    const colors = ['#ff6ec7','#a06cd5','#4cc9f0','#06d6a0','#ffd166','#ff9e45','#ef476f'];
+    for(let i=0;i<count;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random()*100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animationDuration = (2 + Math.random()*2) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(piece);
+      setTimeout(()=>piece.remove(), 4500);
+    }
+  }
+</script>
+</body>
+</html>
