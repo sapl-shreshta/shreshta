@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pinhole Camera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  :root{
+    --ink:#1f1210;
+    --ink-2:#2c1a16;
+    --paper:#FFF3E4;
+    --paper-dim:#f6e6d0;
+    --amber:#FF9D4D;
+    --amber-2:#ff8228;
+    --safelight:#ff5252;
+    --violet:#c9a0ff;
+    --text-on-dark:#fbeee0;
+    --text-dim-on-dark:#d6b8a4;
+    --text-on-paper:#2c1a10;
+    --text-dim-on-paper:#6b4d3a;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.12);
+    --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.65);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-on-dark);
+    font-family:'Nunito', system-ui, sans-serif;
+    font-size:17px;
+    opacity:0;
+    animation:page-in 480ms ease both;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{font-family:'Baloo 2', 'Nunito', system-ui, sans-serif;text-wrap:balance;margin:0;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--amber);color:var(--ink);}
+  a{color:var(--amber);}
+  button{font-family:inherit;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);}
+
+  .topbar{max-width:960px;margin:0 auto;padding:22px 24px 0;}
+  .backlink{
+    display:inline-flex;align-items:center;gap:6px;color:var(--text-dim-on-dark);text-decoration:none;font-weight:800;font-size:14px;
+    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.14);transition:all 160ms ease;
+  }
+  .backlink:hover{border-color:var(--amber);color:var(--amber);}
+
+  @keyframes page-in{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  body.leaving{animation:page-out 260ms ease both;}
+  @keyframes page-out{from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-8px);}}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity 620ms cubic-bezier(.22,.61,.36,1), transform 620ms cubic-bezier(.22,.61,.36,1);}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+  .no-observer .reveal{opacity:1;transform:none;}
+
+  .hero{position:relative;padding:36px 0 50px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .hero::before{
+    content:"";position:absolute;inset:-20% -10% auto -10%;height:520px;
+    background:radial-gradient(closest-side, rgba(255,157,77,0.14), transparent 70%);pointer-events:none;
+  }
+  .hero-inner{position:relative;}
+  .hero h1{font-size:clamp(2.2rem, 5.6vw, 3.4rem);font-weight:800;line-height:1.06;color:var(--paper);margin-top:16px;}
+  .hero h1 em{
+    font-style:normal;background:linear-gradient(100deg, var(--amber), var(--safelight) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lede{max-width:62ch;margin-top:16px;font-size:1.1rem;color:var(--text-dim-on-dark);}
+
+  section.block{padding:60px 0;}
+  section.block + section.block{border-top:1px solid rgba(255,255,255,0.07);}
+  .head{max-width:68ch;margin-bottom:32px;}
+  .head h2{font-size:clamp(1.55rem, 3.2vw, 2.05rem);font-weight:700;color:var(--paper);margin-top:10px;}
+  .head p{color:var(--text-dim-on-dark);margin-top:12px;font-size:1.03rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:28px;}
+
+  /* ---------- HOW IT WORKS DIAGRAM ---------- */
+  .works-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .works-tab{
+    padding:9px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.03);color:var(--text-on-dark);font-weight:800;font-size:13.5px;
+    cursor:pointer;transition:all 160ms ease;
+  }
+  .works-tab:hover{border-color:var(--amber);}
+  .works-tab.active{background:var(--amber);border-color:var(--amber);color:#2c1a00;}
+  .works-svg-wrap{background:#150a08;border-radius:18px;padding:10px;border:1px solid rgba(255,255,255,0.1);}
+  .works-caption{
+    margin-top:16px;padding:16px 18px;border-radius:14px;
+    background:rgba(255,157,77,0.08);border:1px solid rgba(255,157,77,0.25);
+    color:var(--text-on-dark);font-weight:600;
+  }
+
+  /* ---------- PINHOLE CAMERA SIMULATOR ---------- */
+  .sim-stage{
+    border-radius:24px;padding:26px;
+    background:radial-gradient(circle at 15% 20%, rgba(255,255,255,0.04), transparent 40%), linear-gradient(180deg,#150a08 0%, #1f1210 55%, #2c1a16 100%);
+    border:1px solid rgba(255,255,255,0.1);box-shadow:var(--shadow-lg);
+  }
+  .sim-svg-wrap{background:#0f0706;border-radius:18px;padding:10px;}
+  .sim-controls{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
+  @media (max-width:640px){.sim-controls{grid-template-columns:1fr;}}
+  .sim-control{display:flex;flex-direction:column;gap:8px;}
+  .sim-control label{font-weight:800;font-size:13.5px;color:var(--text-dim-on-dark);display:flex;justify-content:space-between;}
+  .sim-control label .val{color:var(--amber);}
+  input[type="range"]{accent-color:var(--amber);height:6px;cursor:pointer;width:100%;}
+  .sim-readout{
+    margin-top:16px;padding:16px 18px;border-radius:14px;
+    background:rgba(255,157,77,0.08);border:1px solid rgba(255,157,77,0.25);
+    color:var(--text-on-dark);font-weight:600;
+  }
+
+  /* ---------- CHARACTERISTICS CHECKLIST ---------- */
+  .char-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;}
+  @media (max-width:760px){.char-grid{grid-template-columns:1fr;}}
+  .char-card{border-radius:20px;padding:22px;background:linear-gradient(160deg, rgba(255,157,77,0.13), rgba(255,157,77,0.02));border:1px solid rgba(255,157,77,0.32);}
+  .char-card h4{font-family:'Baloo 2',sans-serif;font-size:1.05rem;color:var(--amber);margin-bottom:6px;}
+  .char-card p{margin:0;color:var(--text-dim-on-dark);font-size:0.92rem;}
+
+  /* ---------- FORMULA CARD ---------- */
+  .formula-card{
+    background:linear-gradient(160deg, rgba(255,82,82,0.1), rgba(255,157,77,0.04));
+    border:1px solid rgba(255,82,82,0.3);border-radius:22px;padding:28px;text-align:center;
+  }
+  .formula-card .frac{
+    display:inline-flex;flex-direction:column;align-items:center;font-family:'Baloo 2',sans-serif;
+    font-size:1.3rem;color:var(--paper);margin:14px 0;
+  }
+  .formula-card .frac span{padding:4px 14px;}
+  .formula-card .frac .top{border-bottom:2.5px solid var(--paper);}
+  .formula-card p{color:var(--text-dim-on-dark);margin:0;font-size:0.96rem;max-width:56ch;margin:0 auto;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-card{background:var(--paper);color:var(--text-on-paper);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);}
+  .quiz-progress{display:flex;gap:6px;margin-bottom:18px;}
+  .quiz-progress .seg{flex:1;height:6px;border-radius:99px;background:rgba(44,26,16,0.14);overflow:hidden;}
+  .quiz-progress .seg .fill{height:100%;width:0%;background:var(--amber-2);transition:width 300ms ease;}
+  .quiz-progress .seg.done .fill{width:100%;background:#39c07a;}
+  .quiz-progress .seg.current .fill{width:100%;}
+  .q-text{font-family:'Baloo 2',sans-serif;font-size:1.3rem;margin-bottom:16px;}
+  .q-options{display:grid;gap:10px;}
+  .q-option{
+    text-align:left;padding:14px 16px;border-radius:14px;border:2px solid rgba(44,26,16,0.14);
+    background:#fff;font-weight:700;font-size:15px;color:var(--text-on-paper);cursor:pointer;transition:all 150ms ease;
+  }
+  .q-option:hover{border-color:var(--amber-2);}
+  .q-option:focus-visible{outline:3px solid var(--amber);outline-offset:2px;}
+  .q-option.correct{background:#e9fbf1;border-color:#39c07a;}
+  .q-option.wrong{background:#ffe9e9;border-color:var(--safelight);}
+  .q-option[disabled]{cursor:default;}
+  .q-feedback{margin-top:14px;font-weight:700;min-height:24px;}
+  .q-feedback.good{color:#1f8a52;}
+  .q-feedback.bad{color:#c23b3b;}
+  .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+  .next-btn{
+    padding:11px 20px;border-radius:999px;border:none;background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer;
+    opacity:0.35;pointer-events:none;transition:opacity 150ms ease, transform 150ms ease;
+  }
+  .next-btn.ready{opacity:1;pointer-events:auto;}
+  .next-btn:hover.ready{transform:translateY(-1px);}
+  .next-btn:focus-visible{outline:3px solid var(--amber-2);outline-offset:2px;}
+  .quiz-result{display:none;text-align:center;padding:10px 0;}
+  .quiz-result.show{display:block;}
+  .quiz-result .medal{font-size:3rem;}
+  .quiz-result h3{font-family:'Baloo 2',sans-serif;font-size:1.5rem;margin:10px 0 6px;}
+  .quiz-result p{color:var(--text-dim-on-paper);margin-bottom:18px;}
+  .retry-btn{padding:11px 22px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--text-on-paper);font-weight:800;cursor:pointer;}
+  .retry-btn:hover{background:var(--ink);color:var(--paper);}
+
+  .recap{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;}
+  @media (max-width:700px){.recap{grid-template-columns:1fr;}}
+  .recap .card{padding:22px;}
+  .recap .card .emoji{font-size:1.8rem;}
+  .recap .card h4{font-family:'Baloo 2',sans-serif;font-size:1.05rem;margin:10px 0 6px;color:var(--paper);}
+  .recap .card p{margin:0;color:var(--text-dim-on-dark);font-size:0.95rem;}
+
+  .page-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:36px;}
+  .page-nav a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:14.5px;
+    padding:12px 20px;border-radius:999px;transition:all 160ms ease;
+  }
+  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(255,255,255,0.16);}
+  .page-nav a.prev:hover{border-color:var(--amber);color:var(--amber);}
+  .page-nav a.next{background:linear-gradient(135deg, var(--amber), var(--amber-2));color:#2c1a10;box-shadow:0 10px 24px -8px rgba(255,130,40,0.5);}
+  .page-nav a.next:hover{transform:translateY(-2px);}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--text-dim-on-dark);font-size:0.9rem;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.001ms !important; animation-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="backlink" href="../index.html">&larr; Back to Light</a>
+</div>
+
+<main>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow"><span class="dot"></span> LIGHT &middot; TOPIC 6</div>
+      <h1>A box, a tiny hole, and an <em>upside-down</em> picture</h1>
+      <p class="lede">A pinhole camera is the simplest camera you can build &mdash; no lens required. It works purely because light travels in straight lines. Build one virtually below.</p>
+    </div>
+  </header>
+
+  <!-- HOW IT WORKS -->
+  <section class="block reveal" id="how">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> HOW IT WORKS</div>
+        <h2>Why the image flips upside down</h2>
+        <p>Every point on the candle — the flame and every point down the wax stick — sends out light in <em>every</em> direction, not just one. Almost all of those rays slam straight into the opaque wall around the pinhole and stop there. Only the one ray from each point that happens to be aimed exactly at the tiny hole gets through.</p>
+      </div>
+
+      <div class="card">
+        <div class="works-tabs" role="tablist" aria-label="Choose a stage of the explanation">
+          <button class="works-tab active" data-stage="0" role="tab" aria-selected="true">① Light goes everywhere</button>
+          <button class="works-tab" data-stage="1" role="tab" aria-selected="false">② Most rays are blocked</button>
+          <button class="works-tab" data-stage="2" role="tab" aria-selected="false">③ Only pinhole rays survive</button>
+        </div>
+
+        <div class="works-svg-wrap">
+          <svg viewBox="0 0 640 220" width="100%" role="img" aria-labelledby="howTitle">
+            <title id="howTitle">Ray diagram showing light scattering from every point of an object, being blocked by the wall around a pinhole, and only the rays that pass through the pinhole forming an inverted image on the screen</title>
+            <rect x="0" y="0" width="640" height="220" rx="16" fill="#0f0706"/>
+
+            <!-- scattered rays (stage 0 & 1) -->
+            <g id="scatterRaysGroup"></g>
+
+            <!-- opaque wall around pinhole -->
+            <rect x="300" y="20" width="10" height="180" fill="#3a2318"/>
+            <circle cx="305" cy="110" r="5" fill="#0f0706"/>
+            <text x="305" y="212" text-anchor="middle" fill="#d6b8a4" font-family="Nunito" font-weight="800" font-size="12">PINHOLE</text>
+
+            <!-- blocked-ray impact marks (stage 1) -->
+            <g id="blockedMarksGroup"></g>
+
+            <!-- surviving rays through to the screen (stage 2) -->
+            <g id="survivingRaysGroup"></g>
+
+            <rect x="60" y="70" width="8" height="80" fill="#eee8d5"/>
+            <circle cx="64" cy="66" r="9" fill="#ffcf4d"/>
+            <text x="64" y="180" text-anchor="middle" fill="#d6b8a4" font-family="Nunito" font-weight="800" font-size="12">CANDLE</text>
+            <g id="samplePointsGroup"></g>
+
+            <rect id="howScreen" x="555" y="40" width="8" height="140" fill="#f4e3c8" opacity="0" />
+            <g id="screenDotsGroup"></g>
+            <text x="559" y="200" text-anchor="middle" fill="#d6b8a4" font-family="Nunito" font-weight="800" font-size="12">SCREEN</text>
+          </svg>
+        </div>
+        <div class="works-caption" id="howCaption">Every point on the candle — the flame, and every point down the wax below it — scatters light out in all directions. Tap through the three stages above to see what happens to those rays.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULATOR -->
+  <section class="block reveal" id="sim">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Build your own pinhole camera</h2>
+        <p>Drag the sliders to change how far the candle is from the pinhole, and how far the screen is from the pinhole. Watch the image resize live.</p>
+      </div>
+
+      <div class="sim-stage">
+        <div class="sim-svg-wrap">
+          <svg viewBox="0 0 640 220" width="100%" role="img" aria-labelledby="simTitle">
+            <title id="simTitle">Interactive pinhole camera simulator</title>
+            <rect x="0" y="0" width="640" height="220" rx="16" fill="#0f0706"/>
+            <g id="simRaysGroup"></g>
+            <rect x="300" y="20" width="10" height="180" fill="#3a2318"/>
+            <circle cx="305" cy="110" r="5" fill="#0f0706"/>
+            <rect id="simCandle" x="0" y="0" width="8" height="0" fill="#eee8d5"/>
+            <circle id="simFlame" cx="0" cy="0" r="8" fill="#ffcf4d"/>
+            <rect id="simScreen" x="555" y="0" width="8" height="0" fill="#f4e3c8" opacity="0.9"/>
+            <text x="305" y="212" text-anchor="middle" fill="#d6b8a4" font-family="Nunito" font-weight="800" font-size="12">PINHOLE</text>
+          </svg>
+        </div>
+
+        <div class="sim-controls">
+          <div class="sim-control">
+            <label for="objDist">Candle distance from pinhole <span class="val" id="objDistVal">180</span></label>
+            <input type="range" id="objDist" min="80" max="260" step="5" value="180" />
+          </div>
+          <div class="sim-control">
+            <label for="screenDist">Screen distance from pinhole <span class="val" id="screenDistVal">260</span></label>
+            <input type="range" id="screenDist" min="120" max="330" step="5" value="260" />
+          </div>
+        </div>
+
+        <div class="sim-readout" id="simReadout">Move the candle closer or the screen farther, and watch the image on the screen grow bigger.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHARACTERISTICS -->
+  <section class="block reveal" id="characteristics">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> THE BIG IDEA</div>
+        <h2>Three characteristics of the image</h2>
+      </div>
+      <div class="char-grid">
+        <div class="char-card">
+          <h4>🎯 Real</h4>
+          <p>The image actually forms on the screen &mdash; you could catch it on a physical surface like tracing paper.</p>
+        </div>
+        <div class="char-card">
+          <h4>🙃 Inverted</h4>
+          <p>The image is always upside down, because rays from the top and bottom of the object cross at the pinhole.</p>
+        </div>
+        <div class="char-card">
+          <h4>📉 Usually smaller</h4>
+          <p>Since the object is normally farther from the pinhole than the screen is, the image comes out smaller than the object.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULA -->
+  <section class="block reveal" id="formula">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> THE RULE</div>
+        <h2>What controls the size of the image</h2>
+      </div>
+      <div class="formula-card">
+        <div class="frac">
+          <span class="top">Size of image</span>
+          <span class="bottom">Size of object</span>
+        </div>
+        <span style="font-size:1.6rem;color:var(--amber);font-weight:800;"> = </span>
+        <div class="frac">
+          <span class="top">Distance of screen from pinhole</span>
+          <span class="bottom">Distance of object from pinhole</span>
+        </div>
+        <p style="margin-top:18px;">Move the screen farther away and the image grows. Move the candle closer to the pinhole and the image also grows &mdash; exactly what you saw in the simulator above.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="block reveal" id="quiz">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> CHECK YOURSELF</div>
+        <h2>Quick quiz &mdash; four questions</h2>
+        <p>No pressure, no login, no score sent anywhere. Just you and the concept.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-progress" id="quizProgress"></div>
+        <div id="quizBody"></div>
+        <div class="quiz-result" id="quizResult">
+          <div class="medal" id="quizMedal">🏆</div>
+          <h3 id="quizResultTitle">Nice work!</h3>
+          <p id="quizResultText"></p>
+          <button class="retry-btn" id="quizRetry">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="block reveal" id="recap">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> BEFORE YOU GO</div>
+        <h2>Three things to remember</h2>
+      </div>
+      <div class="recap">
+        <div class="card">
+          <div class="emoji">🙃</div>
+          <h4>The image is always inverted</h4>
+          <p>Rays from the top and bottom of the object cross at the pinhole, flipping the picture upside down.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">📏</div>
+          <h4>Distance controls size</h4>
+          <p>A farther screen or a closer object both make the image bigger, following a simple ratio.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🔦</div>
+          <h4>No lens needed</h4>
+          <p>The pinhole camera works purely because light travels in straight lines — proof that rectilinear propagation is real.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <a class="prev" href="5-rectilinear-propagation.html">&larr; Topic 5: Rectilinear Propagation</a>
+        <a class="next" href="7-shadows.html">Topic 7: Shadows &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">Light &middot; Topic 6: Pinhole Camera &middot; made for curious 10&ndash;15 year olds</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- HOW IT WORKS: STAGED RAY DIAGRAM ---------------- */
+  var worksTabs = Array.prototype.slice.call(document.querySelectorAll('.works-tab'));
+  var scatterRaysGroup = document.getElementById('scatterRaysGroup');
+  var blockedMarksGroup = document.getElementById('blockedMarksGroup');
+  var survivingRaysGroup = document.getElementById('survivingRaysGroup');
+  var samplePointsGroup = document.getElementById('samplePointsGroup');
+  var screenDotsGroup = document.getElementById('screenDotsGroup');
+  var howScreen = document.getElementById('howScreen');
+  var howCaption = document.getElementById('howCaption');
+
+  var HOLE_X = 305, HOLE_Y = 110;
+  var WALL_X = 305; // wall sits at x=300..310
+  var SCREEN_X = 559;
+
+  // three sample points along the candle: flame (top), mid-stick, base (bottom)
+  var points = [
+    { x: 64, y: 66,  color: '#ffcf4d', label: 'flame' },
+    { x: 64, y: 108, color: '#8ee6ff', label: 'mid-stick' },
+    { x: 64, y: 146, color: '#ff5252', label: 'base' }
+  ];
+
+  var nsSVG = 'http://www.w3.org/2000/svg';
+
+  function svgLine(x1,y1,x2,y2,color,width,opacity,dash){
+    var l = document.createElementNS(nsSVG, 'line');
+    l.setAttribute('x1', x1); l.setAttribute('y1', y1);
+    l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+    l.setAttribute('stroke', color); l.setAttribute('stroke-width', width || 1.5);
+    l.setAttribute('stroke-opacity', opacity != null ? opacity : 1);
+    if(dash) l.setAttribute('stroke-dasharray', dash);
+    l.setAttribute('stroke-linecap', 'round');
+    return l;
+  }
+  function svgCircle(cx,cy,r,fill,opacity){
+    var c = document.createElementNS(nsSVG, 'circle');
+    c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+    c.setAttribute('fill', fill);
+    if(opacity != null) c.setAttribute('opacity', opacity);
+    return c;
+  }
+
+  // where a ray from (px,py) aimed at angle `rad` would hit the vertical wall plane x=WALL_X
+  function hitOnWallLine(px, py, rad){
+    var dx = Math.cos(rad), dy = Math.sin(rad);
+    if(Math.abs(dx) < 0.0001) return null;
+    var t = (WALL_X - px) / dx;
+    if(t <= 0) return null;
+    return { x: WALL_X, y: py + dy * t, t: t };
+  }
+
+  function renderStage(stage){
+    scatterRaysGroup.innerHTML = '';
+    blockedMarksGroup.innerHTML = '';
+    survivingRaysGroup.innerHTML = '';
+    samplePointsGroup.innerHTML = '';
+    screenDotsGroup.innerHTML = '';
+    howScreen.setAttribute('opacity', stage === 2 ? 0.9 : 0);
+
+    // mark the three sample points on the candle at every stage
+    points.forEach(function(p){
+      samplePointsGroup.appendChild(svgCircle(p.x, p.y, 4, p.color, 1));
+    });
+
+    if(stage === 0){
+      // Stage 1: light goes everywhere — a wide fan of rays from each point, all drawn the same, none marked blocked yet
+      points.forEach(function(p){
+        var angles = [-40,-28,-16,-6,4,14,24,34,44];
+        angles.forEach(function(deg){
+          var rad = deg * Math.PI / 180;
+          var hit = hitOnWallLine(p.x, p.y, rad);
+          if(!hit) return;
+          var endX = Math.min(hit.x, 560);
+          var endY = p.y + Math.tan(rad) * (endX - p.x);
+          scatterRaysGroup.appendChild(svgLine(p.x, p.y, endX, endY, p.color, 1.5, 0.55));
+        });
+      });
+      howCaption.innerHTML = "Every point on the candle — the flame, and every point down the wax below it — scatters light out in <em>lots</em> of directions at once, not just one. This first stage shows a sample fan of rays leaving each point.";
+    }
+
+    if(stage === 1){
+      // Stage 2: most rays hit the opaque wall and stop — show impact marks, dim the rays, only the pinhole-aimed one glows
+      points.forEach(function(p){
+        var angles = [-40,-28,-16,-6,4,14,24,34,44];
+        angles.forEach(function(deg){
+          var rad = deg * Math.PI / 180;
+          var hit = hitOnWallLine(p.x, p.y, rad);
+          if(!hit) return;
+          var throughHole = Math.abs(hit.y - HOLE_Y) < 6;
+          if(throughHole) return; // the surviving ray is drawn separately, brighter
+          scatterRaysGroup.appendChild(svgLine(p.x, p.y, hit.x, hit.y, p.color, 1.5, 0.28));
+          blockedMarksGroup.appendChild(svgCircle(hit.x, hit.y, 2.4, '#ff8a5c', 0.85));
+        });
+        // the one ray heading straight for the pinhole, drawn bright
+        var rad0 = Math.atan2(HOLE_Y - p.y, HOLE_X - p.x);
+        scatterRaysGroup.appendChild(svgLine(p.x, p.y, HOLE_X, HOLE_Y, p.color, 2.6, 1));
+      });
+      howCaption.innerHTML = "Almost every one of those rays runs straight into the solid wall around the pinhole and stops dead — you can see the little impact marks. Only the single ray from each point that happens to be aimed <em>exactly</em> at the tiny hole keeps going.";
+    }
+
+    if(stage === 2){
+      // Stage 3: only the pinhole-surviving ray from each point continues on to the screen
+      points.forEach(function(p){
+        scatterRaysGroup.appendChild(svgLine(p.x, p.y, HOLE_X, HOLE_Y, p.color, 2.6, 1));
+        var rad = Math.atan2(HOLE_Y - p.y, HOLE_X - p.x);
+        var dx = SCREEN_X - HOLE_X;
+        var screenY = HOLE_Y + Math.tan(rad) * dx;
+        survivingRaysGroup.appendChild(svgLine(HOLE_X, HOLE_Y, SCREEN_X, screenY, p.color, 2.6, 1));
+        screenDotsGroup.appendChild(svgCircle(SCREEN_X, screenY, 6, p.color, 1));
+      });
+      howCaption.innerHTML = "The straight line from the flame through the pinhole lands near the <em>bottom</em> of the screen. The straight line from the base lands near the <em>top</em>. Every surviving ray crosses at the pinhole — that crossing is exactly what turns the picture upside down.";
+    }
+  }
+
+  worksTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var stage = Number(tab.getAttribute('data-stage'));
+      worksTabs.forEach(function(t){
+        var active = t === tab;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-selected', String(active));
+      });
+      renderStage(stage);
+    });
+  });
+  renderStage(0);
+
+  /* ---------------- PINHOLE SIMULATOR ---------------- */
+  var objDistSlider = document.getElementById('objDist');
+  var screenDistSlider = document.getElementById('screenDist');
+  var objDistVal = document.getElementById('objDistVal');
+  var screenDistVal = document.getElementById('screenDistVal');
+  var simReadout = document.getElementById('simReadout');
+  var simRaysGroup = document.getElementById('simRaysGroup');
+  var simCandle = document.getElementById('simCandle');
+  var simFlame = document.getElementById('simFlame');
+  var simScreen = document.getElementById('simScreen');
+
+  var PINHOLE_X = 305;
+  var PINHOLE_Y = 110;
+  var CANDLE_HEIGHT = 70; // real-world-ish unit for object size
+  var SCREEN_X_FIXED = 559;
+
+  function render(){
+    var objDist = Number(objDistSlider.value); // pinhole is at x=305; candle x = 305 - objDist scaled
+    var screenDist = Number(screenDistSlider.value);
+
+    objDistVal.textContent = objDist;
+    screenDistVal.textContent = screenDist;
+
+    // Map slider units to horizontal placement (candle to the left of pinhole, screen to the right)
+    var maxObjDist = 260, maxScreenDist = 330;
+    var candleX = PINHOLE_X - (objDist / maxObjDist) * 260 - 20;
+    candleX = Math.max(20, candleX);
+    var screenX = SCREEN_X_FIXED; // keep screen drawn at fixed visual x, but compute distance ratio for sizing
+
+    // image size ratio = screenDist / objDist, applied to candle height for the image on screen
+    var ratio = screenDist / objDist;
+    var imageHeight = CANDLE_HEIGHT * ratio;
+    imageHeight = Math.min(imageHeight, 170); // clamp so it never overflows the SVG viewbox
+
+    // candle (object) — flame at top, stick below
+    var flameY = PINHOLE_Y - CANDLE_HEIGHT / 2;
+    var candleBottomY = PINHOLE_Y + CANDLE_HEIGHT / 2;
+    simFlame.setAttribute('cx', candleX);
+    simFlame.setAttribute('cy', flameY);
+    simCandle.setAttribute('x', candleX - 4);
+    simCandle.setAttribute('y', flameY);
+    simCandle.setAttribute('width', 8);
+    simCandle.setAttribute('height', candleBottomY - flameY);
+
+    // screen image — inverted, so top of object maps to bottom of image and vice versa
+    var screenCenterY = PINHOLE_Y;
+    var screenTopY = screenCenterY - imageHeight / 2;
+    simScreen.setAttribute('x', screenX - 4);
+    simScreen.setAttribute('y', screenTopY);
+    simScreen.setAttribute('width', 8);
+    simScreen.setAttribute('height', imageHeight);
+
+    // rays: from flame (top of candle) through pinhole to bottom of image; from candle-bottom through pinhole to top of image
+    simRaysGroup.innerHTML = '';
+    var ns = 'http://www.w3.org/2000/svg';
+
+    function addRay(x1,y1,x2,y2,color){
+      var l1 = document.createElementNS(ns, 'line');
+      l1.setAttribute('x1', x1); l1.setAttribute('y1', y1);
+      l1.setAttribute('x2', PINHOLE_X); l1.setAttribute('y2', PINHOLE_Y);
+      l1.setAttribute('stroke', color); l1.setAttribute('stroke-width', '2');
+      simRaysGroup.appendChild(l1);
+      var l2 = document.createElementNS(ns, 'line');
+      l2.setAttribute('x1', PINHOLE_X); l2.setAttribute('y1', PINHOLE_Y);
+      l2.setAttribute('x2', x2); l2.setAttribute('y2', y2);
+      l2.setAttribute('stroke', color); l2.setAttribute('stroke-width', '2');
+      simRaysGroup.appendChild(l2);
+    }
+
+    // top of flame -> crosses to bottom of image
+    addRay(candleX, flameY, screenX, screenCenterY + imageHeight / 2, '#FF9D4D');
+    // bottom of candle -> crosses to top of image
+    addRay(candleX, candleBottomY, screenX, screenTopY, '#ff5252');
+
+    var sizeWord = ratio < 0.9 ? 'smaller than' : (ratio > 1.1 ? 'bigger than' : 'about the same size as');
+    simReadout.textContent = 'With the candle ' + objDist + ' units from the pinhole and the screen ' + screenDist + ' units away, the image comes out ' + sizeWord + ' the candle — and it\'s still upside down, just like every pinhole image.';
+  }
+
+  objDistSlider.addEventListener('input', render);
+  screenDistSlider.addEventListener('input', render);
+  render();
+
+  /* ---------------- QUIZ ---------------- */
+  var questions = [
+    {
+      q: "Why is the image formed by a pinhole camera always upside down?",
+      options: [
+        "Because the pinhole is round",
+        "Because rays from the top and bottom of the object cross each other at the pinhole",
+        "Because light gets darker as it travels",
+        "Pinhole camera images are actually right-side up, not inverted"
+      ],
+      correct: 1,
+      why: "A ray from the top of the object travels in a straight line through the pinhole and lands near the bottom of the screen — and vice versa. That crossing point is the pinhole, and it's what flips the image."
+    },
+    {
+      q: "If you move the screen of a pinhole camera farther from the pinhole (keeping the object in place), the image...",
+      options: ["Gets smaller", "Gets bigger", "Disappears completely", "Turns right-side up"],
+      correct: 1,
+      why: "Since image size is proportional to the screen's distance from the pinhole, moving the screen farther away makes the image larger."
+    },
+    {
+      q: "Which of these is NOT a real characteristic of a pinhole camera image?",
+      options: ["It is real (formed on a screen)", "It is inverted", "It is usually smaller than the object", "It is always the same size as the object"],
+      correct: 3,
+      why: "The image size depends on the ratio of screen distance to object distance — it's rarely exactly the same size as the object; it's usually smaller since the object is typically farther from the pinhole than the screen."
+    },
+    {
+      q: "What does a pinhole camera prove about light?",
+      options: [
+        "Light can bend around corners",
+        "Light travels in straight lines",
+        "Light needs a lens to travel anywhere",
+        "Light is invisible even after reflecting"
+      ],
+      correct: 1,
+      why: "A pinhole camera works with no lens at all — the sharp, inverted image only forms because every ray of light travels in a straight line from the object, through the pinhole, to the screen."
+    }
+  ];
+
+  var qIndex = 0;
+  var qScore = 0;
+  var quizBody = document.getElementById('quizBody');
+  var quizProgress = document.getElementById('quizProgress');
+  var quizResult = document.getElementById('quizResult');
+  var quizMedal = document.getElementById('quizMedal');
+  var quizResultTitle = document.getElementById('quizResultTitle');
+  var quizResultText = document.getElementById('quizResultText');
+  var quizRetry = document.getElementById('quizRetry');
+
+  function buildProgress(){
+    quizProgress.innerHTML = '';
+    questions.forEach(function(_, i){
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      if(i < qIndex) seg.classList.add('done');
+      if(i === qIndex) seg.classList.add('current');
+      var fill = document.createElement('div');
+      fill.className = 'fill';
+      seg.appendChild(fill);
+      quizProgress.appendChild(seg);
+    });
+  }
+
+  function renderQuestion(){
+    quizResult.classList.remove('show');
+    quizBody.style.display = 'block';
+    buildProgress();
+
+    var data = questions[qIndex];
+    quizBody.innerHTML = '';
+
+    var qText = document.createElement('div');
+    qText.className = 'q-text';
+    qText.textContent = (qIndex + 1) + '. ' + data.q;
+    quizBody.appendChild(qText);
+
+    var optsWrap = document.createElement('div');
+    optsWrap.className = 'q-options';
+
+    var feedback = document.createElement('div');
+    feedback.className = 'q-feedback';
+
+    var nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    var spacer = document.createElement('div');
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'next-btn';
+    nextBtn.textContent = (qIndex === questions.length - 1) ? 'See results' : 'Next question';
+    nav.appendChild(spacer);
+    nav.appendChild(nextBtn);
+
+    data.options.forEach(function(optText, i){
+      var optBtn = document.createElement('button');
+      optBtn.className = 'q-option';
+      optBtn.textContent = optText;
+      optBtn.addEventListener('click', function(){
+        var allOpts = optsWrap.querySelectorAll('.q-option');
+        allOpts.forEach(function(o){ o.disabled = true; });
+
+        if(i === data.correct){
+          optBtn.classList.add('correct');
+          feedback.textContent = '✓ Correct! ' + data.why;
+          feedback.className = 'q-feedback good';
+          qScore++;
+        } else {
+          optBtn.classList.add('wrong');
+          allOpts[data.correct].classList.add('correct');
+          feedback.textContent = '✗ Not quite. ' + data.why;
+          feedback.className = 'q-feedback bad';
+        }
+        nextBtn.classList.add('ready');
+      });
+      optsWrap.appendChild(optBtn);
+    });
+
+    quizBody.appendChild(optsWrap);
+    quizBody.appendChild(feedback);
+    quizBody.appendChild(nav);
+
+    nextBtn.addEventListener('click', function(){
+      if(qIndex < questions.length - 1){
+        qIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+  }
+
+  function showResult(){
+    quizBody.style.display = 'none';
+    buildProgress();
+    document.querySelectorAll('.seg').forEach(function(s){ s.classList.add('done'); });
+
+    quizResult.classList.add('show');
+    var pct = qScore / questions.length;
+    if(pct === 1){
+      quizMedal.textContent = '🏆';
+      quizResultTitle.textContent = 'Perfect score!';
+    } else if(pct >= 0.5){
+      quizMedal.textContent = '🌟';
+      quizResultTitle.textContent = 'Nice work!';
+    } else {
+      quizMedal.textContent = '🔦';
+      quizResultTitle.textContent = 'Worth another look';
+    }
+    quizResultText.textContent = 'You got ' + qScore + ' out of ' + questions.length + ' correct.';
+  }
+
+  quizRetry.addEventListener('click', function(){
+    qIndex = 0; qScore = 0;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  /* ---------------- SCROLL REVEAL ---------------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window && revealEls.length){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-observer');
+  }
+
+  /* ---------------- PAGE-TO-PAGE TRANSITION ---------------- */
+  var internalLinks = Array.prototype.slice.call(document.querySelectorAll('a[href]')).filter(function(a){
+    var href = a.getAttribute('href');
+    return href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:');
+  });
+  internalLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      e.preventDefault();
+      document.body.classList.add('leaving');
+      setTimeout(function(){ window.location.href = href; }, 220);
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

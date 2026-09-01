@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sources of Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  :root{
+    --ink:#171233;
+    --ink-2:#211a45;
+    --paper:#FFF8E7;
+    --paper-dim:#f4ead0;
+    --sun:#FFC53D;
+    --sun-2:#ffb100;
+    --ray:#7DE2FF;
+    --spark:#FF6B6B;
+    --violet:#9b8cff;
+    --text-on-dark:#f3efff;
+    --text-dim-on-dark:#c7bfe8;
+    --text-on-paper:#241a3d;
+    --text-dim-on-paper:#5c5279;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.12);
+    --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-on-dark);
+    font-family:'Nunito', system-ui, sans-serif;
+    font-size:17px;
+    opacity:0;
+    animation:page-in 480ms ease both;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', 'Nunito', system-ui, sans-serif;
+    text-wrap:balance;
+    margin:0;
+  }
+
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--sun);color:var(--ink);}
+  a{color:var(--ray);}
+  button{font-family:inherit;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--sun);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--sun);box-shadow:0 0 10px var(--sun);}
+
+  .topbar{
+    max-width:960px;margin:0 auto;padding:22px 24px 0;
+  }
+  .backlink{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--text-dim-on-dark);text-decoration:none;font-weight:800;font-size:14px;
+    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.14);
+    transition:all 160ms ease;
+  }
+  .backlink:hover{border-color:var(--ray);color:var(--ray);}
+
+  /* ---------- PAGE TRANSITIONS ---------- */
+  @keyframes page-in{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  body.leaving{
+    animation:page-out 260ms ease both;
+  }
+  @keyframes page-out{
+    from{opacity:1; transform:translateY(0);}
+    to{opacity:0; transform:translateY(-8px);}
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity 620ms cubic-bezier(.22,.61,.36,1), transform 620ms cubic-bezier(.22,.61,.36,1);
+  }
+  .reveal.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:36px 0 50px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .hero::before{
+    content:"";position:absolute;inset:-20% -10% auto -10%;height:520px;
+    background:radial-gradient(closest-side, rgba(125,226,255,0.14), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;}
+  .hero h1{font-size:clamp(2.2rem, 5.6vw, 3.4rem);font-weight:800;line-height:1.06;color:var(--paper);margin-top:16px;}
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg, var(--sun), var(--spark) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lede{max-width:62ch;margin-top:16px;font-size:1.1rem;color:var(--text-dim-on-dark);}
+
+  /* ---------- SECTIONS ---------- */
+  section.block{padding:60px 0;}
+  section.block + section.block{border-top:1px solid rgba(255,255,255,0.07);}
+  .head{max-width:68ch;margin-bottom:32px;}
+  .head h2{font-size:clamp(1.55rem, 3.2vw, 2.05rem);font-weight:700;color:var(--paper);margin-top:10px;}
+  .head p{color:var(--text-dim-on-dark);margin-top:12px;font-size:1.03rem;}
+
+  .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:28px;}
+
+  /* ---------- SKY STAGE (sources) ---------- */
+  .sky-stage{
+    border-radius:24px;
+    padding:26px;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,0.05), transparent 40%),
+      linear-gradient(180deg,#0a0722 0%, #120c33 55%, #1a1240 100%);
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:var(--shadow-lg);
+  }
+  .sky-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .sky-tab{
+    padding:9px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.03);color:var(--text-on-dark);font-weight:800;font-size:13.5px;
+    cursor:pointer;transition:all 160ms ease;letter-spacing:.02em;
+  }
+  .sky-tab:hover{border-color:var(--ray);}
+  .sky-tab.active.natural{background:var(--sun);border-color:var(--sun);color:#3a2600;}
+  .sky-tab.active.artificial{background:var(--ray);border-color:var(--ray);color:#052733;}
+
+  .sky-scene{
+    position:relative;height:230px;border-radius:18px;overflow:hidden;
+    background:linear-gradient(180deg,#050318,#0c0928);
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .sky-scene .horizon{
+    position:absolute;left:0;right:0;bottom:0;height:60px;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,0.35));
+  }
+  .source-row{
+    position:relative;z-index:2;display:flex;gap:20px;align-items:flex-end;
+    padding-bottom:18px;flex-wrap:wrap;justify-content:center;
+  }
+  .source-btn{
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    background:none;border:none;cursor:pointer;color:var(--text-dim-on-dark);
+    padding:6px;width:96px;
+  }
+  .source-btn:focus-visible{outline:3px solid var(--ray);outline-offset:3px;border-radius:12px;}
+  .source-icon-wrap{
+    position:relative;width:64px;height:64px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.12);
+    font-size:28px;transition:all 220ms ease;
+  }
+  .source-icon-wrap .halo{
+    position:absolute;inset:-24px;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,229,140,0.85), rgba(255,197,61,0.2) 45%, transparent 72%);
+    opacity:0;transition:opacity 260ms ease;filter:blur(1px);
+  }
+  .source-btn.lit .source-icon-wrap{background:rgba(255,197,61,0.14);border-color:var(--sun);transform:scale(1.06);}
+  .source-btn.lit .source-icon-wrap .halo{opacity:1;}
+  .source-label{font-weight:800;font-size:12.5px;text-align:center;color:var(--text-dim-on-dark);transition:color 200ms ease;}
+  .source-btn.lit .source-label{color:var(--paper);}
+  .source-tag{
+    font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    padding:2px 8px;border-radius:999px;background:rgba(255,255,255,0.08);color:var(--text-dim-on-dark);
+  }
+
+  .sky-caption{
+    margin-top:18px;padding:16px 18px;border-radius:14px;
+    background:rgba(255,197,61,0.08);border:1px solid rgba(255,197,61,0.25);
+    color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
+  }
+
+  /* ---------- NATURAL VS ARTIFICIAL COMPARE ---------- */
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:700px){.compare-grid{grid-template-columns:1fr;}}
+  .compare-card{border-radius:22px;padding:26px;}
+  .compare-card.natural{background:linear-gradient(160deg, rgba(255,197,61,0.14), rgba(255,107,107,0.06));border:1px solid rgba(255,197,61,0.35);}
+  .compare-card.artificial{background:linear-gradient(160deg, rgba(125,226,255,0.12), rgba(155,140,255,0.07));border:1px solid rgba(125,226,255,0.32);}
+  .compare-card h3{font-size:1.2rem;margin-bottom:6px;}
+  .compare-card.natural h3{color:var(--sun);}
+  .compare-card.artificial h3{color:var(--ray);}
+  .compare-card p.desc{color:var(--text-dim-on-dark);margin:0 0 14px;font-size:0.96rem;}
+  .compare-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .compare-list li{
+    display:flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,0.05);border-radius:12px;padding:9px 12px;font-weight:700;font-size:14.5px;
+  }
+
+  /* ---------- LUMINOUS/NON-LUMINOUS SORT (reused pattern) ---------- */
+  .sort-game{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:640px){.sort-game{grid-template-columns:1fr;}}
+  .sort-bank{
+    grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;padding:18px;border-radius:16px;
+    background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.22);min-height:64px;
+  }
+  .bin{border-radius:18px;padding:16px;min-height:170px;display:flex;flex-direction:column;gap:10px;}
+  .bin h4{margin:0 0 4px;font-family:'Baloo 2',sans-serif;font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .bin.luminous{background:rgba(255,197,61,0.1);border:1.5px solid rgba(255,197,61,0.4);}
+  .bin.nonluminous{background:rgba(125,226,255,0.08);border:1.5px solid rgba(125,226,255,0.35);}
+  .bin .zone{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;border-radius:12px;transition:background 150ms ease;}
+  .bin .zone.drag-over{background:rgba(255,255,255,0.08);}
+
+  .tile{
+    display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+    background:var(--paper);color:var(--text-on-paper);font-weight:800;font-size:14px;
+    cursor:grab;user-select:none;box-shadow:0 8px 16px -8px rgba(0,0,0,0.5);touch-action:none;border:2px solid transparent;
+  }
+  .tile:active{cursor:grabbing;}
+  .tile.correct{border-color:#39c07a;background:#e9fbf1;}
+  .tile.wrong{border-color:var(--spark);background:#ffe9e9;animation:shake 320ms ease;}
+  .tile[aria-disabled="true"]{opacity:0.55;cursor:default;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  .sort-status{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .sort-status .score{font-weight:800;color:var(--sun);}
+  .reset-link{background:none;border:none;color:var(--ray);font-weight:700;cursor:pointer;font-size:14px;text-decoration:underline;padding:4px;}
+
+  /* ---------- MOON VISIBILITY DEMO ---------- */
+  .moon-demo{display:flex;flex-direction:column;gap:18px;}
+  .moon-svg-wrap{background:#0c0924;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:12px;}
+  .moon-controls{display:flex;flex-wrap:wrap;gap:12px;}
+  .toggle-chip{
+    display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;
+    border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);color:var(--text-on-dark);
+    font-weight:700;font-size:14px;cursor:pointer;transition:all 180ms ease;
+  }
+  .toggle-chip:hover{border-color:var(--ray);}
+  .toggle-chip.active{background:var(--ray);border-color:var(--ray);color:#052733;}
+  .toggle-chip:focus-visible{outline:3px solid var(--sun);outline-offset:2px;}
+  .moon-caption{
+    padding:16px 18px;border-radius:14px;background:rgba(125,226,255,0.08);border:1px solid rgba(125,226,255,0.25);
+    color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
+  }
+
+  /* ---------- SCATTERING DEMO ---------- */
+  .scatter-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;}
+  @media (max-width:760px){.scatter-grid{grid-template-columns:1fr;}}
+  .scatter-rooms{display:flex;gap:16px;}
+  .scatter-room{
+    flex:1;border-radius:16px;height:170px;position:relative;overflow:hidden;
+    border:1px solid rgba(255,255,255,0.12);
+    display:flex;align-items:center;justify-content:center;
+    transition:background 400ms ease;
+  }
+  .scatter-room.window{
+    background:radial-gradient(circle at 20% 30%, #fff2c4 0%, #e9c66a 22%, #241a3d 60%);
+  }
+  .scatter-room.corner{
+    background:#1a1440;
+  }
+  .scatter-room.corner.scattered{
+    background:radial-gradient(circle at 50% 50%, #4a3f78 0%, #241a3d 75%);
+  }
+  .scatter-room .room-label{
+    position:absolute;bottom:10px;left:0;right:0;text-align:center;
+    font-weight:800;font-size:12px;color:var(--text-dim-on-dark);text-transform:uppercase;letter-spacing:.05em;
+  }
+  .scatter-room .glow-dot{font-size:1.8rem;opacity:.85;}
+  .scatter-btn-row{margin-top:16px;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-card{background:var(--paper);color:var(--text-on-paper);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);}
+  .quiz-progress{display:flex;gap:6px;margin-bottom:18px;}
+  .quiz-progress .seg{flex:1;height:6px;border-radius:99px;background:rgba(36,26,61,0.14);overflow:hidden;}
+  .quiz-progress .seg .fill{height:100%;width:0%;background:var(--sun-2);transition:width 300ms ease;}
+  .quiz-progress .seg.done .fill{width:100%;background:#39c07a;}
+  .quiz-progress .seg.current .fill{width:100%;}
+  .q-text{font-family:'Baloo 2',sans-serif;font-size:1.3rem;margin-bottom:16px;}
+  .q-options{display:grid;gap:10px;}
+  .q-option{
+    text-align:left;padding:14px 16px;border-radius:14px;border:2px solid rgba(36,26,61,0.14);
+    background:#fff;font-weight:700;font-size:15px;color:var(--text-on-paper);cursor:pointer;transition:all 150ms ease;
+  }
+  .q-option:hover{border-color:var(--sun-2);}
+  .q-option:focus-visible{outline:3px solid var(--ray);outline-offset:2px;}
+  .q-option.correct{background:#e9fbf1;border-color:#39c07a;}
+  .q-option.wrong{background:#ffe9e9;border-color:var(--spark);}
+  .q-option[disabled]{cursor:default;}
+  .q-feedback{margin-top:14px;font-weight:700;min-height:24px;}
+  .q-feedback.good{color:#1f8a52;}
+  .q-feedback.bad{color:#c23b3b;}
+  .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+  .next-btn{
+    padding:11px 20px;border-radius:999px;border:none;background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer;
+    opacity:0.35;pointer-events:none;transition:opacity 150ms ease, transform 150ms ease;
+  }
+  .next-btn.ready{opacity:1;pointer-events:auto;}
+  .next-btn:hover.ready{transform:translateY(-1px);}
+  .next-btn:focus-visible{outline:3px solid var(--sun-2);outline-offset:2px;}
+  .quiz-result{display:none;text-align:center;padding:10px 0;}
+  .quiz-result.show{display:block;}
+  .quiz-result .medal{font-size:3rem;}
+  .quiz-result h3{font-family:'Baloo 2',sans-serif;font-size:1.5rem;margin:10px 0 6px;}
+  .quiz-result p{color:var(--text-dim-on-paper);margin-bottom:18px;}
+  .retry-btn{padding:11px 22px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--text-on-paper);font-weight:800;cursor:pointer;}
+  .retry-btn:hover{background:var(--ink);color:var(--paper);}
+
+  /* ---------- RECAP ---------- */
+  .recap{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;}
+  @media (max-width:700px){.recap{grid-template-columns:1fr;}}
+  .recap .card{padding:22px;}
+  .recap .card .emoji{font-size:1.8rem;}
+  .recap .card h4{font-family:'Baloo 2',sans-serif;font-size:1.05rem;margin:10px 0 6px;color:var(--paper);}
+  .recap .card p{margin:0;color:var(--text-dim-on-dark);font-size:0.95rem;}
+
+  .page-nav{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    margin-top:36px;
+  }
+  .page-nav a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:14.5px;
+    padding:12px 20px;border-radius:999px;transition:all 160ms ease;
+  }
+  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(255,255,255,0.16);}
+  .page-nav a.prev:hover{border-color:var(--ray);color:var(--ray);}
+  .page-nav a.next{background:linear-gradient(135deg, var(--sun), var(--sun-2));color:var(--ink);box-shadow:0 10px 24px -8px rgba(255,177,0,0.5);}
+  .page-nav a.next:hover{transform:translateY(-2px);}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--text-dim-on-dark);font-size:0.9rem;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.001ms !important; animation-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+
+  .no-observer .reveal{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="backlink" href="../index.html">&larr; Back to Light</a>
+</div>
+
+<main>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow"><span class="dot"></span> LIGHT &middot; TOPIC 2</div>
+      <h1>Where does <em>light</em> come from?</h1>
+      <p class="lede">Some things make their own light. Everything else just borrows it. Tap the sky below to switch on eight real light sources and sort them for yourself.</p>
+    </div>
+  </header>
+
+  <!-- SOURCES SKY STAGE -->
+  <section class="block reveal" id="sources">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Natural or artificial?</h2>
+        <p><strong>Natural sources</strong> exist on their own &mdash; nobody switches them on. <strong>Artificial sources</strong> are made or lit by people. Pick a tab, then tap each icon to light it up.</p>
+      </div>
+
+      <div class="sky-stage">
+        <div class="sky-tabs" role="tablist" aria-label="Choose a group of sources">
+          <button class="sky-tab natural active" data-group="natural" role="tab" aria-selected="true">☀️ Natural sources</button>
+          <button class="sky-tab artificial" data-group="artificial" role="tab" aria-selected="false">🔌 Artificial sources</button>
+        </div>
+
+        <div class="sky-scene">
+          <div class="horizon"></div>
+          <div class="source-row" id="sourceRowNatural">
+            <button class="source-btn" data-name="Sun" data-fact="The Sun is our main natural light source — nearly all daylight comes from it.">
+              <div class="source-icon-wrap"><div class="halo"></div><span>☀️</span></div>
+              <span class="source-label">Sun</span>
+            </button>
+            <button class="source-btn" data-name="Stars" data-fact="Stars make their own light too, but they're so far away that only a little of it reaches us.">
+              <div class="source-icon-wrap"><div class="halo"></div><span>✨</span></div>
+              <span class="source-label">Stars</span>
+            </button>
+            <button class="source-btn" data-name="Firefly" data-fact="A firefly (jugnu) makes light naturally using chemicals in its own body — no plug needed!">
+              <div class="source-icon-wrap"><div class="halo"></div><span>🪲</span></div>
+              <span class="source-label">Jugnu</span>
+            </button>
+          </div>
+          <div class="source-row" id="sourceRowArtificial" style="display:none;">
+            <button class="source-btn" data-name="Fire" data-fact="A fire is artificial — people start it, and it burns fuel to release light and heat.">
+              <div class="source-icon-wrap"><div class="halo"></div><span>🔥</span></div>
+              <span class="source-label">Fire</span>
+            </button>
+            <button class="source-btn" data-name="Bulb" data-fact="An electric bulb glows when electricity heats a filament (or lights an LED) inside it.">
+              <div class="source-icon-wrap"><div class="halo"></div><span>💡</span></div>
+              <span class="source-label">Bulb</span>
+            </button>
+            <button class="source-btn" data-name="Tube light" data-fact="A tube light uses electricity to make gas inside it glow evenly along its whole length.">
+              <div class="source-icon-wrap"><div class="halo"></div><span>🪔</span></div>
+              <span class="source-label">Tube light</span>
+            </button>
+            <button class="source-btn" data-name="Candle" data-fact="A burning candle's flame gives off light as its wax fuel burns.">
+              <div class="source-icon-wrap"><div class="halo"></div><span>🕯️</span></div>
+              <span class="source-label">Candle</span>
+            </button>
+            <button class="source-btn" data-name="Torch" data-fact="A torch is a portable electric light — handy for the dark room example!">
+              <div class="source-icon-wrap"><div class="halo"></div><span>🔦</span></div>
+              <span class="source-label">Torch</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sky-caption" id="skyCaption">Tap any icon above to switch it on and learn what makes it a light source.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section class="block reveal" id="compare">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> THE BIG IDEA</div>
+        <h2>Two kinds of sources, side by side</h2>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-card natural">
+          <h3>☀️ Natural sources</h3>
+          <p class="desc">Give out light without anyone making or lighting them.</p>
+          <ul class="compare-list">
+            <li>☀️ The Sun &mdash; our main source of daylight</li>
+            <li>✨ Stars &mdash; distant suns, very faint from here</li>
+            <li>🪲 Jugnu (firefly) &mdash; glows using its own body chemistry</li>
+          </ul>
+        </div>
+        <div class="compare-card artificial">
+          <h3>🔌 Artificial sources</h3>
+          <p class="desc">Made or switched on by people, especially useful after dark.</p>
+          <ul class="compare-list">
+            <li>🔥 Fire</li>
+            <li>💡 Electric bulb</li>
+            <li>🪔 Electric tube light</li>
+            <li>🕯️ Burning candle</li>
+            <li>🔦 Torch</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LUMINOUS / NON-LUMINOUS SORT -->
+  <section class="block reveal" id="sort">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Luminous or non-luminous?</h2>
+        <p>Every one of those sources you just switched on is <strong>luminous</strong> &mdash; it makes its own light. But most things around you are <strong>non-luminous</strong>: you only see them because light from somewhere else lands on them and bounces into your eyes. Sort these eight objects.</p>
+      </div>
+
+      <div class="card sort-game" id="sortGame">
+        <div class="sort-bank" id="sortBank" aria-label="Unsorted objects"></div>
+
+        <div class="bin luminous" data-bin="luminous">
+          <h4>☀️ Luminous <small style="font-weight:600;color:var(--text-dim-on-dark);font-size:12px;">(makes its own light)</small></h4>
+          <div class="zone" data-zone="luminous"></div>
+        </div>
+        <div class="bin nonluminous" data-bin="nonluminous">
+          <h4>🌙 Non-luminous <small style="font-weight:600;color:var(--text-dim-on-dark);font-size:12px;">(only reflects light)</small></h4>
+          <div class="zone" data-zone="nonluminous"></div>
+        </div>
+
+        <div class="sort-status">
+          <span class="score" id="sortScore">0 / 8 sorted correctly</span>
+          <button class="reset-link" id="sortReset">Shuffle &amp; reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEEING THE MOON -->
+  <section class="block reveal" id="moon">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> A FAMOUS EXAMPLE</div>
+        <h2>Then how do we see the moon shining?</h2>
+        <p>The moon isn't luminous &mdash; it has no light of its own. Yet it "shines" brightly at night. Step through the diagram to see the trick.</p>
+      </div>
+
+      <div class="card moon-demo">
+        <div class="moon-svg-wrap">
+          <svg viewBox="0 0 640 260" width="100%" role="img" aria-labelledby="moonTitle">
+            <title id="moonTitle">Diagram of sunlight travelling to the moon, reflecting, and reaching an observer's eye on Earth</title>
+            <defs>
+              <radialGradient id="sunGlow2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff6d0" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#ffcf4d" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect x="0" y="0" width="640" height="260" rx="18" fill="#0c0924"/>
+
+            <circle id="mSunGlow" cx="90" cy="80" r="64" fill="url(#sunGlow2)" opacity="0"/>
+            <circle cx="90" cy="80" r="26" fill="#3a3560" stroke="#5c5279" stroke-width="2"/>
+            <text x="90" y="130" text-anchor="middle" fill="#c7bfe8" font-family="Nunito" font-weight="800" font-size="13">SUN</text>
+
+            <circle id="mMoonCirc" cx="340" cy="150" r="30" fill="#3a3560" stroke="#5c5279" stroke-width="2"/>
+            <text x="340" y="204" text-anchor="middle" fill="#c7bfe8" font-family="Nunito" font-weight="800" font-size="13">MOON</text>
+
+            <g id="mEyeGroup">
+              <ellipse cx="560" cy="150" rx="30" ry="18" fill="#3a3560" stroke="#5c5279" stroke-width="2"/>
+              <circle cx="560" cy="150" r="8" fill="#171233"/>
+            </g>
+            <text x="560" y="186" text-anchor="middle" fill="#c7bfe8" font-family="Nunito" font-weight="800" font-size="13">EARTH (you)</text>
+
+            <path id="mRaySunMoon" d="M112 96 L316 138" stroke="#FFC53D" stroke-width="3" fill="none" opacity="0" stroke-linecap="round"/>
+            <path id="mRayMoonEye" d="M368 145 L534 149" stroke="#7DE2FF" stroke-width="3" fill="none" opacity="0" stroke-dasharray="6 6" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="moon-controls" role="group" aria-label="Moon diagram controls">
+          <button class="toggle-chip" data-mstep="0">1&middot; No sunlight yet</button>
+          <button class="toggle-chip" data-mstep="1">2&middot; Sunlight reaches the moon</button>
+          <button class="toggle-chip" data-mstep="2">3&middot; Moon reflects it to Earth</button>
+        </div>
+
+        <div class="moon-caption" id="moonCaption">Pick a step to build the picture.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCATTERING -->
+  <section class="block reveal" id="scatter">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> BONUS PUZZLE</div>
+        <h2>Why is a room bright even away from the window?</h2>
+        <p>Sunlight doesn't only travel in one straight beam to your desk. Tiny particles of air scatter it in every direction &mdash; called the <strong>scattering of light</strong> &mdash; so even a corner with no direct sunlight still gets some brightness.</p>
+      </div>
+
+      <div class="card scatter-grid">
+        <div>
+          <div class="scatter-rooms">
+            <div class="scatter-room window">
+              <span class="glow-dot">☀️</span>
+              <div class="room-label">Right by the window</div>
+            </div>
+            <div class="scatter-room corner" id="scatterCorner">
+              <span class="glow-dot" id="scatterCornerIcon">🌑</span>
+              <div class="room-label">Far corner, no direct sun</div>
+            </div>
+          </div>
+          <div class="scatter-btn-row">
+            <button class="toggle-chip" id="scatterBtn">✨ Scatter the sunlight</button>
+          </div>
+        </div>
+        <div>
+          <p style="color:var(--text-dim-on-dark);margin:0;">Sunlight enters the room and bounces off countless air molecules and dust particles. That scattered light spreads into every corner &mdash; which is why the far corner is dim, glowing blue-grey, not pitch black, even without direct sun.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="block reveal" id="quiz">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> CHECK YOURSELF</div>
+        <h2>Quick quiz &mdash; four questions</h2>
+        <p>No pressure, no login, no score sent anywhere. Just you and the concept.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-progress" id="quizProgress"></div>
+        <div id="quizBody"></div>
+        <div class="quiz-result" id="quizResult">
+          <div class="medal" id="quizMedal">🏆</div>
+          <h3 id="quizResultTitle">Nice work!</h3>
+          <p id="quizResultText"></p>
+          <button class="retry-btn" id="quizRetry">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="block reveal" id="recap">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> BEFORE YOU GO</div>
+        <h2>Three things to remember</h2>
+      </div>
+      <div class="recap">
+        <div class="card">
+          <div class="emoji">☀️</div>
+          <h4>Natural vs. artificial</h4>
+          <p>Natural sources (sun, stars, jugnu) exist on their own. Artificial sources (bulbs, candles, torches) are made or lit by people.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🌙</div>
+          <h4>The moon borrows its light</h4>
+          <p>The moon is non-luminous. It "shines" only because sunlight strikes it and reflects toward Earth.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🌤️</div>
+          <h4>Scattering fills in the shadows</h4>
+          <p>Air particles scatter sunlight in every direction, so places without direct sun still get soft, ambient brightness.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <a class="prev" href="1-what-is-light.html">&larr; Topic 1: What is Light?</a>
+        <a class="next" href="3-transparent-translucent-opaque.html">Topic 3: Transparent, Translucent &amp; Opaque &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">Light &middot; Topic 2: Sources of Light &middot; made for curious 10&ndash;15 year olds</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- SKY STAGE (source tabs + toggles) ---------------- */
+  var skyTabs = Array.prototype.slice.call(document.querySelectorAll('.sky-tab'));
+  var rowNatural = document.getElementById('sourceRowNatural');
+  var rowArtificial = document.getElementById('sourceRowArtificial');
+  var skyCaption = document.getElementById('skyCaption');
+
+  skyTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      skyTabs.forEach(function(t){ t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      var group = tab.getAttribute('data-group');
+      rowNatural.style.display = (group === 'natural') ? 'flex' : 'none';
+      rowArtificial.style.display = (group === 'artificial') ? 'flex' : 'none';
+      skyCaption.textContent = (group === 'natural')
+        ? 'These sources exist without anyone switching them on. Tap one to learn more.'
+        : 'People make or light these sources — especially useful once the sun goes down. Tap one to learn more.';
+    });
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll('.source-btn')).forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var wasLit = btn.classList.contains('lit');
+      // turn off all in the same row for a clean single focus, then toggle this one
+      var row = btn.closest('.source-row');
+      Array.prototype.slice.call(row.querySelectorAll('.source-btn')).forEach(function(b){ b.classList.remove('lit'); });
+      if(!wasLit){
+        btn.classList.add('lit');
+        skyCaption.textContent = btn.getAttribute('data-fact');
+      } else {
+        skyCaption.textContent = 'Tap any icon above to switch it on and learn what makes it a light source.';
+      }
+    });
+  });
+
+  /* ---------------- LUMINOUS / NON-LUMINOUS SORT ---------------- */
+  var items = [
+    {id:'sun2', label:'☀️ Sun', bin:'luminous'},
+    {id:'moon2', label:'🌙 Moon', bin:'nonluminous'},
+    {id:'torch2', label:'🔦 Torch (on)', bin:'luminous'},
+    {id:'table', label:'🪑 Table', bin:'nonluminous'},
+    {id:'star2', label:'⭐ Star', bin:'luminous'},
+    {id:'mirror2', label:'🪞 Mirror', bin:'nonluminous'},
+    {id:'candle3', label:'🕯️ Lit candle', bin:'luminous'},
+    {id:'paper2', label:'📄 Sheet of paper', bin:'nonluminous'}
+  ];
+
+  var bank = document.getElementById('sortBank');
+  var scoreEl = document.getElementById('sortScore');
+  var resetBtn = document.getElementById('sortReset');
+  var zones = Array.prototype.slice.call(document.querySelectorAll('.zone'));
+  var selectedTile = null;
+  var draggedTile = null;
+
+  function shuffledCopy(arr){
+    var a = arr.slice();
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function updateScore(){
+    var correct = document.querySelectorAll('.tile.correct').length;
+    scoreEl.textContent = correct + ' / ' + items.length + ' sorted correctly';
+  }
+
+  function placeTile(tile, zoneEl, binName){
+    var itemBin = tile.getAttribute('data-bin');
+    zoneEl.appendChild(tile);
+    if(itemBin === binName){
+      tile.classList.remove('wrong');
+      tile.classList.add('correct');
+      tile.setAttribute('aria-disabled', 'true');
+      tile.setAttribute('draggable', 'false');
+    } else {
+      tile.classList.remove('correct');
+      tile.classList.add('wrong');
+      setTimeout(function(){ tile.classList.remove('wrong'); }, 350);
+    }
+    updateScore();
+  }
+
+  function makeTile(item){
+    var tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.textContent = item.label;
+    tile.setAttribute('draggable', 'true');
+    tile.setAttribute('data-bin', item.bin);
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-label', item.label + ', tap then choose a bin');
+
+    tile.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', item.id);
+      e.dataTransfer.effectAllowed = 'move';
+      draggedTile = tile;
+    });
+    tile.addEventListener('dragend', function(){
+      draggedTile = null;
+    });
+
+    tile.addEventListener('click', function(){
+      if(tile.getAttribute('aria-disabled') === 'true') return;
+      if(selectedTile === tile){
+        tile.style.outline = '';
+        selectedTile = null;
+        return;
+      }
+      if(selectedTile) selectedTile.style.outline = '';
+      selectedTile = tile;
+      tile.style.outline = '3px solid var(--ray)';
+    });
+
+    return tile;
+  }
+
+  function buildBank(){
+    bank.innerHTML = '';
+    zones.forEach(function(z){ z.innerHTML = ''; });
+    var order = shuffledCopy(items);
+    order.forEach(function(item){
+      bank.appendChild(makeTile(item));
+    });
+    selectedTile = null;
+    updateScore();
+  }
+
+  zones.forEach(function(zoneEl){
+    var binName = zoneEl.parentElement.getAttribute('data-bin');
+
+    zoneEl.addEventListener('dragover', function(e){
+      e.preventDefault();
+      zoneEl.classList.add('drag-over');
+    });
+    zoneEl.addEventListener('dragleave', function(){
+      zoneEl.classList.remove('drag-over');
+    });
+    zoneEl.addEventListener('drop', function(e){
+      e.preventDefault();
+      zoneEl.classList.remove('drag-over');
+      if(draggedTile) placeTile(draggedTile, zoneEl, binName);
+      draggedTile = null;
+    });
+    zoneEl.addEventListener('click', function(){
+      if(selectedTile){
+        placeTile(selectedTile, zoneEl, binName);
+        selectedTile.style.outline = '';
+        selectedTile = null;
+      }
+    });
+  });
+
+  resetBtn.addEventListener('click', buildBank);
+  buildBank();
+
+  /* ---------------- MOON VISIBILITY DIAGRAM ---------------- */
+  var mStepButtons = Array.prototype.slice.call(document.querySelectorAll('.toggle-chip[data-mstep]'));
+  var mSunGlow = document.getElementById('mSunGlow');
+  var mRaySunMoon = document.getElementById('mRaySunMoon');
+  var mRayMoonEye = document.getElementById('mRayMoonEye');
+  var mMoonCirc = document.getElementById('mMoonCirc');
+  var mEyeGroup = document.getElementById('mEyeGroup');
+  var moonCaption = document.getElementById('moonCaption');
+
+  var moonMessages = [
+    "No sunlight is shown yet. Without it, the moon has nothing to reflect — it would look completely dark.",
+    "Light from the Sun travels through space and strikes the moon's surface.",
+    "The moon reflects that sunlight back toward Earth. When it reaches your eye, the moon appears to 'shine' — even though it never made any light of its own."
+  ];
+
+  function resetMoonDiagram(){
+    mSunGlow.style.opacity = 0;
+    mRaySunMoon.style.opacity = 0;
+    mRayMoonEye.style.opacity = 0;
+    mMoonCirc.setAttribute('fill', '#3a3560');
+    mEyeGroup.style.opacity = 0.35;
+  }
+
+  function showMoonStep(step){
+    resetMoonDiagram();
+    mStepButtons.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-mstep') === String(step)); });
+    moonCaption.textContent = moonMessages[step];
+
+    if(step >= 1){
+      mSunGlow.style.opacity = 1;
+      mRaySunMoon.style.opacity = 1;
+      mMoonCirc.setAttribute('fill', '#5c5279');
+    }
+    if(step === 2){
+      mRayMoonEye.style.opacity = 1;
+      mMoonCirc.setAttribute('fill', '#e9dfae');
+      mEyeGroup.style.opacity = 1;
+    }
+  }
+
+  mStepButtons.forEach(function(b){
+    b.addEventListener('click', function(){ showMoonStep(Number(b.getAttribute('data-mstep'))); });
+  });
+  resetMoonDiagram();
+
+  /* ---------------- SCATTERING DEMO ---------------- */
+  var scatterBtn = document.getElementById('scatterBtn');
+  var scatterCorner = document.getElementById('scatterCorner');
+  var scatterCornerIcon = document.getElementById('scatterCornerIcon');
+  var scattered = false;
+
+  scatterBtn.addEventListener('click', function(){
+    scattered = !scattered;
+    scatterCorner.classList.toggle('scattered', scattered);
+    scatterCornerIcon.textContent = scattered ? '🌫️' : '🌑';
+    scatterBtn.classList.toggle('active', scattered);
+    scatterBtn.textContent = scattered ? '↺ Remove scattered light' : '✨ Scatter the sunlight';
+  });
+
+  /* ---------------- QUIZ ---------------- */
+  var questions = [
+    {
+      q: "Which of these is an artificial source of light?",
+      options: ["The Sun", "A star", "A tube light", "A firefly"],
+      correct: 2,
+      why: "A tube light is switched on by people using electricity — that makes it artificial. The sun, stars, and fireflies all produce light naturally."
+    },
+    {
+      q: "Why can we see the moon shining at night?",
+      options: [
+        "The moon makes its own light, just like the sun",
+        "Sunlight reflects off the moon's surface and reaches our eyes",
+        "The moon glows because it is very cold",
+        "Moonlight is actually starlight passing through the moon"
+      ],
+      correct: 1,
+      why: "The moon is non-luminous — it has no light of its own. What we see is sunlight that has struck the moon and bounced off toward Earth."
+    },
+    {
+      q: "A firefly (jugnu) can glow in complete darkness because...",
+      options: [
+        "It reflects moonlight very efficiently",
+        "It produces light naturally using chemicals in its body",
+        "It is plugged into a hidden battery",
+        "Fireflies cannot actually glow — it's an illusion"
+      ],
+      correct: 1,
+      why: "A firefly makes its own light through a natural chemical reaction inside its body — no electricity or fuel needed, which is why it counts as a natural source."
+    },
+    {
+      q: "A room's far corner gets no direct sunlight, yet it isn't pitch black. Why?",
+      options: [
+        "The corner has its own tiny light source",
+        "Light scattered by particles in the air reaches every part of the room",
+        "Your eyes glow slightly and light up nearby objects",
+        "Non-luminous objects always produce a little light"
+      ],
+      correct: 1,
+      why: "Sunlight scatters off countless air molecules and dust particles in every direction. That scattered light fills the room, giving even shadowed corners some ambient brightness."
+    }
+  ];
+
+  var qIndex = 0;
+  var qScore = 0;
+  var quizBody = document.getElementById('quizBody');
+  var quizProgress = document.getElementById('quizProgress');
+  var quizResult = document.getElementById('quizResult');
+  var quizMedal = document.getElementById('quizMedal');
+  var quizResultTitle = document.getElementById('quizResultTitle');
+  var quizResultText = document.getElementById('quizResultText');
+  var quizRetry = document.getElementById('quizRetry');
+
+  function buildProgress(){
+    quizProgress.innerHTML = '';
+    questions.forEach(function(_, i){
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      if(i < qIndex) seg.classList.add('done');
+      if(i === qIndex) seg.classList.add('current');
+      var fill = document.createElement('div');
+      fill.className = 'fill';
+      seg.appendChild(fill);
+      quizProgress.appendChild(seg);
+    });
+  }
+
+  function renderQuestion(){
+    quizResult.classList.remove('show');
+    quizBody.style.display = 'block';
+    buildProgress();
+
+    var data = questions[qIndex];
+    quizBody.innerHTML = '';
+
+    var qText = document.createElement('div');
+    qText.className = 'q-text';
+    qText.textContent = (qIndex + 1) + '. ' + data.q;
+    quizBody.appendChild(qText);
+
+    var optsWrap = document.createElement('div');
+    optsWrap.className = 'q-options';
+
+    var feedback = document.createElement('div');
+    feedback.className = 'q-feedback';
+
+    var nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    var spacer = document.createElement('div');
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'next-btn';
+    nextBtn.textContent = (qIndex === questions.length - 1) ? 'See results' : 'Next question';
+    nav.appendChild(spacer);
+    nav.appendChild(nextBtn);
+
+    data.options.forEach(function(optText, i){
+      var optBtn = document.createElement('button');
+      optBtn.className = 'q-option';
+      optBtn.textContent = optText;
+      optBtn.addEventListener('click', function(){
+        var allOpts = optsWrap.querySelectorAll('.q-option');
+        allOpts.forEach(function(o){ o.disabled = true; });
+
+        if(i === data.correct){
+          optBtn.classList.add('correct');
+          feedback.textContent = '✓ Correct! ' + data.why;
+          feedback.className = 'q-feedback good';
+          qScore++;
+        } else {
+          optBtn.classList.add('wrong');
+          allOpts[data.correct].classList.add('correct');
+          feedback.textContent = '✗ Not quite. ' + data.why;
+          feedback.className = 'q-feedback bad';
+        }
+        nextBtn.classList.add('ready');
+      });
+      optsWrap.appendChild(optBtn);
+    });
+
+    quizBody.appendChild(optsWrap);
+    quizBody.appendChild(feedback);
+    quizBody.appendChild(nav);
+
+    nextBtn.addEventListener('click', function(){
+      if(qIndex < questions.length - 1){
+        qIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+  }
+
+  function showResult(){
+    quizBody.style.display = 'none';
+    buildProgress();
+    document.querySelectorAll('.seg').forEach(function(s){ s.classList.add('done'); });
+
+    quizResult.classList.add('show');
+    var pct = qScore / questions.length;
+    if(pct === 1){
+      quizMedal.textContent = '🏆';
+      quizResultTitle.textContent = 'Perfect score!';
+    } else if(pct >= 0.5){
+      quizMedal.textContent = '🌟';
+      quizResultTitle.textContent = 'Nice work!';
+    } else {
+      quizMedal.textContent = '🔦';
+      quizResultTitle.textContent = 'Worth another look';
+    }
+    quizResultText.textContent = 'You got ' + qScore + ' out of ' + questions.length + ' correct.';
+  }
+
+  quizRetry.addEventListener('click', function(){
+    qIndex = 0; qScore = 0;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  /* ---------------- SCROLL REVEAL ---------------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window && revealEls.length){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-observer');
+  }
+
+  /* ---------------- PAGE-TO-PAGE TRANSITION ---------------- */
+  var internalLinks = Array.prototype.slice.call(document.querySelectorAll('a[href]')).filter(function(a){
+    var href = a.getAttribute('href');
+    return href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:');
+  });
+  internalLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      e.preventDefault();
+      document.body.classList.add('leaving');
+      setTimeout(function(){ window.location.href = href; }, 220);
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

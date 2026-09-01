@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rectilinear Propagation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  :root{
+    --ink:#0a0a0d;
+    --ink-2:#151519;
+    --paper:#f4f4f0;
+    --paper-dim:#e6e6df;
+    --laser:#39ff8a;
+    --laser-2:#1fe070;
+    --blocked:#ff5c5c;
+    --violet:#9b8cff;
+    --text-on-dark:#f0f0ee;
+    --text-dim-on-dark:#a8a8a4;
+    --text-on-paper:#141416;
+    --text-dim-on-paper:#5c5c58;
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.1);
+    --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.7);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-on-dark);
+    font-family:'Nunito', system-ui, sans-serif;
+    font-size:17px;
+    opacity:0;
+    animation:page-in 480ms ease both;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{font-family:'Baloo 2', 'Nunito', system-ui, sans-serif;text-wrap:balance;margin:0;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--laser);color:var(--ink);}
+  a{color:var(--laser);}
+  button{font-family:inherit;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--laser);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--laser);box-shadow:0 0 10px var(--laser);}
+
+  .topbar{max-width:960px;margin:0 auto;padding:22px 24px 0;}
+  .backlink{
+    display:inline-flex;align-items:center;gap:6px;color:var(--text-dim-on-dark);text-decoration:none;font-weight:800;font-size:14px;
+    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.14);transition:all 160ms ease;
+  }
+  .backlink:hover{border-color:var(--laser);color:var(--laser);}
+
+  @keyframes page-in{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  body.leaving{animation:page-out 260ms ease both;}
+  @keyframes page-out{from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-8px);}}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity 620ms cubic-bezier(.22,.61,.36,1), transform 620ms cubic-bezier(.22,.61,.36,1);}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+  .no-observer .reveal{opacity:1;transform:none;}
+
+  .hero{position:relative;padding:36px 0 50px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .hero::before{
+    content:"";position:absolute;inset:-20% -10% auto -10%;height:520px;
+    background:radial-gradient(closest-side, rgba(57,255,138,0.1), transparent 70%);pointer-events:none;
+  }
+  .hero-inner{position:relative;}
+  .hero h1{font-size:clamp(2.2rem, 5.6vw, 3.4rem);font-weight:800;line-height:1.06;color:var(--paper);margin-top:16px;}
+  .hero h1 em{
+    font-style:normal;background:linear-gradient(100deg, var(--laser), #9effc6 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lede{max-width:62ch;margin-top:16px;font-size:1.1rem;color:var(--text-dim-on-dark);}
+
+  section.block{padding:60px 0;}
+  section.block + section.block{border-top:1px solid rgba(255,255,255,0.07);}
+  .head{max-width:68ch;margin-bottom:32px;}
+  .head h2{font-size:clamp(1.55rem, 3.2vw, 2.05rem);font-weight:700;color:var(--paper);margin-top:10px;}
+  .head p{color:var(--text-dim-on-dark);margin-top:12px;font-size:1.03rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:28px;}
+
+  /* ---------- STRAW ACTIVITY (Activity 2) ---------- */
+  .straw-stage{
+    border-radius:24px;padding:26px;
+    background:linear-gradient(180deg,#050506 0%, #101013 100%);
+    border:1px solid rgba(255,255,255,0.1);box-shadow:var(--shadow-lg);
+  }
+  .straw-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .straw-tab{
+    padding:9px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.03);color:var(--text-on-dark);font-weight:800;font-size:13.5px;
+    cursor:pointer;transition:all 160ms ease;
+  }
+  .straw-tab:hover{border-color:var(--laser);}
+  .straw-tab.active{background:var(--laser);border-color:var(--laser);color:#04220f;}
+
+  .straw-svg-wrap{background:#020203;border-radius:18px;padding:10px;}
+  .straw-caption{
+    margin-top:18px;padding:16px 18px;border-radius:14px;
+    background:rgba(57,255,138,0.06);border:1px solid rgba(57,255,138,0.22);
+    color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
+  }
+
+  /* ---------- THREE-CARDBOARD ACTIVITY (Activity 3) ---------- */
+  .cards-stage{
+    border-radius:24px;padding:26px;
+    background:linear-gradient(180deg,#050506 0%, #101013 100%);
+    border:1px solid rgba(255,255,255,0.1);box-shadow:var(--shadow-lg);
+  }
+  .cards-svg-wrap{background:#020203;border-radius:18px;padding:10px;}
+  .cards-controls{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;}
+  .toggle-chip{
+    display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;
+    border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.03);color:var(--text-on-dark);
+    font-weight:700;font-size:14px;cursor:pointer;transition:all 180ms ease;
+  }
+  .toggle-chip:hover{border-color:var(--laser);}
+  .toggle-chip.active{background:var(--laser);border-color:var(--laser);color:#04220f;}
+  .toggle-chip:focus-visible{outline:3px solid var(--violet);outline-offset:2px;}
+  .cards-caption{
+    margin-top:16px;padding:16px 18px;border-radius:14px;
+    background:rgba(57,255,138,0.06);border:1px solid rgba(57,255,138,0.22);
+    color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
+  }
+
+  /* ---------- TRUE/FALSE GAME ---------- */
+  .tf-grid{display:grid;gap:12px;}
+  .tf-item{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;
+    padding:16px 20px;
+  }
+  .tf-item p{margin:0;font-weight:700;font-size:15px;max-width:56ch;}
+  .tf-buttons{display:flex;gap:8px;flex:none;}
+  .tf-btn{
+    padding:9px 16px;border-radius:999px;border:2px solid rgba(255,255,255,0.18);
+    background:transparent;color:var(--text-on-dark);font-weight:800;font-size:13px;cursor:pointer;
+    transition:all 160ms ease;
+  }
+  .tf-btn:hover{border-color:var(--laser);}
+  .tf-item.answered .tf-btn{pointer-events:none;}
+  .tf-item.correct{border-color:#39c07a;background:rgba(57,192,122,0.08);}
+  .tf-item.incorrect{border-color:var(--blocked);background:rgba(255,92,92,0.08);}
+  .tf-btn.chosen-right{background:#39c07a;border-color:#39c07a;color:#04220f;}
+  .tf-btn.chosen-wrong{background:var(--blocked);border-color:var(--blocked);color:#2a0808;}
+  .tf-explain{width:100%;font-weight:600;font-size:13.5px;color:var(--text-dim-on-dark);margin-top:4px;display:none;}
+  .tf-item.answered .tf-explain{display:block;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-card{background:var(--paper);color:var(--text-on-paper);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);}
+  .quiz-progress{display:flex;gap:6px;margin-bottom:18px;}
+  .quiz-progress .seg{flex:1;height:6px;border-radius:99px;background:rgba(20,20,22,0.14);overflow:hidden;}
+  .quiz-progress .seg .fill{height:100%;width:0%;background:var(--laser-2);transition:width 300ms ease;}
+  .quiz-progress .seg.done .fill{width:100%;background:#39c07a;}
+  .quiz-progress .seg.current .fill{width:100%;}
+  .q-text{font-family:'Baloo 2',sans-serif;font-size:1.3rem;margin-bottom:16px;}
+  .q-options{display:grid;gap:10px;}
+  .q-option{
+    text-align:left;padding:14px 16px;border-radius:14px;border:2px solid rgba(20,20,22,0.14);
+    background:#fff;font-weight:700;font-size:15px;color:var(--text-on-paper);cursor:pointer;transition:all 150ms ease;
+  }
+  .q-option:hover{border-color:var(--laser-2);}
+  .q-option:focus-visible{outline:3px solid var(--laser);outline-offset:2px;}
+  .q-option.correct{background:#e9fbf1;border-color:#39c07a;}
+  .q-option.wrong{background:#ffe9e9;border-color:var(--blocked);}
+  .q-option[disabled]{cursor:default;}
+  .q-feedback{margin-top:14px;font-weight:700;min-height:24px;}
+  .q-feedback.good{color:#1f8a52;}
+  .q-feedback.bad{color:#c23b3b;}
+  .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+  .next-btn{
+    padding:11px 20px;border-radius:999px;border:none;background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer;
+    opacity:0.35;pointer-events:none;transition:opacity 150ms ease, transform 150ms ease;
+  }
+  .next-btn.ready{opacity:1;pointer-events:auto;}
+  .next-btn:hover.ready{transform:translateY(-1px);}
+  .next-btn:focus-visible{outline:3px solid var(--laser-2);outline-offset:2px;}
+  .quiz-result{display:none;text-align:center;padding:10px 0;}
+  .quiz-result.show{display:block;}
+  .quiz-result .medal{font-size:3rem;}
+  .quiz-result h3{font-family:'Baloo 2',sans-serif;font-size:1.5rem;margin:10px 0 6px;}
+  .quiz-result p{color:var(--text-dim-on-paper);margin-bottom:18px;}
+  .retry-btn{padding:11px 22px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--text-on-paper);font-weight:800;cursor:pointer;}
+  .retry-btn:hover{background:var(--ink);color:var(--paper);}
+
+  .recap{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;}
+  @media (max-width:700px){.recap{grid-template-columns:1fr;}}
+  .recap .card{padding:22px;}
+  .recap .card .emoji{font-size:1.8rem;}
+  .recap .card h4{font-family:'Baloo 2',sans-serif;font-size:1.05rem;margin:10px 0 6px;color:var(--paper);}
+  .recap .card p{margin:0;color:var(--text-dim-on-dark);font-size:0.95rem;}
+
+  .page-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:36px;}
+  .page-nav a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:14.5px;
+    padding:12px 20px;border-radius:999px;transition:all 160ms ease;
+  }
+  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(255,255,255,0.16);}
+  .page-nav a.prev:hover{border-color:var(--laser);color:var(--laser);}
+  .page-nav a.next{background:linear-gradient(135deg, var(--laser), var(--laser-2));color:#04220f;box-shadow:0 10px 24px -8px rgba(57,255,138,0.4);}
+  .page-nav a.next:hover{transform:translateY(-2px);}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--text-dim-on-dark);font-size:0.9rem;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.001ms !important; animation-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="backlink" href="../index.html">&larr; Back to Light</a>
+</div>
+
+<main>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow"><span class="dot"></span> LIGHT &middot; TOPIC 5</div>
+      <h1>Light only ever travels in a <em>straight line</em></h1>
+      <p class="lede">This one rule &mdash; called rectilinear propagation &mdash; explains pinhole cameras, shadows, and eclipses. Prove it to yourself with two classic experiments.</p>
+    </div>
+  </header>
+
+  <!-- ACTIVITY 2: STRAW -->
+  <section class="block reveal" id="straw">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> ACTIVITY 2</div>
+        <h2>The bendy straw test</h2>
+        <p>Look at a candle flame through a drinking straw. Then bend the straw in the middle and look again. Try both below.</p>
+      </div>
+
+      <div class="straw-stage">
+        <div class="straw-tabs" role="tablist" aria-label="Choose straw shape">
+          <button class="straw-tab active" data-straw="straight" role="tab" aria-selected="true">➖ Straight straw</button>
+          <button class="straw-tab" data-straw="bent" role="tab" aria-selected="false">〰️ Bent straw</button>
+        </div>
+
+        <div class="straw-svg-wrap">
+          <svg viewBox="0 0 640 200" width="100%" role="img" aria-labelledby="strawTitle">
+            <title id="strawTitle">Diagram of a candle viewed through a straight or bent straw</title>
+            <rect x="0" y="0" width="640" height="200" rx="16" fill="#020203"/>
+            <text x="70" y="40" fill="#a8a8a4" font-family="Nunito" font-weight="800" font-size="12">CANDLE</text>
+            <circle cx="80" cy="100" r="8" fill="#ffcf4d"/>
+            <rect x="76" y="100" width="8" height="40" fill="#eee8d5"/>
+
+            <g id="strawGroup"></g>
+
+            <text x="560" y="40" fill="#a8a8a4" font-family="Nunito" font-weight="800" font-size="12" text-anchor="end">EYE</text>
+            <ellipse cx="560" cy="100" rx="20" ry="13" fill="#26262b" stroke="#4a4a52" stroke-width="2"/>
+            <circle cx="560" cy="100" r="6" fill="#f4f4f0" id="eyePupil"/>
+          </svg>
+        </div>
+
+        <div class="straw-caption" id="strawCaption">Through a straight straw, light from the candle travels directly down the tube to your eye — the flame is clearly visible.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITY 3: THREE CARDBOARDS -->
+  <section class="block reveal" id="cards">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> ACTIVITY 3</div>
+        <h2>The three-cardboard test</h2>
+        <p>Three cards, each with a pinhole at the same height, lined up in a straight line. Slide the middle card and see what happens to the candle's visibility.</p>
+      </div>
+
+      <div class="cards-stage">
+        <div class="cards-svg-wrap">
+          <svg viewBox="0 0 640 220" width="100%" role="img" aria-labelledby="cardsTitle">
+            <title id="cardsTitle">Diagram of three cardboards with holes, aligned or misaligned, showing whether light passes through</title>
+            <rect x="0" y="0" width="640" height="220" rx="16" fill="#020203"/>
+            <text x="60" y="40" fill="#a8a8a4" font-family="Nunito" font-weight="800" font-size="12">CANDLE</text>
+            <circle cx="70" cy="110" r="9" fill="#ffcf4d"/>
+            <rect x="66" y="110" width="8" height="40" fill="#eee8d5"/>
+
+            <rect x="180" y="40" width="14" height="140" fill="#3a3a3f" stroke="#57575d" stroke-width="1.5"/>
+            <circle id="holeA" cx="187" cy="110" r="7" fill="#020203"/>
+
+            <rect id="cardB" x="340" y="40" width="14" height="140" fill="#3a3a3f" stroke="#57575d" stroke-width="1.5"/>
+            <circle id="holeB" cx="347" cy="110" r="7" fill="#020203"/>
+
+            <rect x="500" y="40" width="14" height="140" fill="#3a3a3f" stroke="#57575d" stroke-width="1.5"/>
+            <circle id="holeC" cx="507" cy="110" r="7" fill="#020203"/>
+
+            <line id="cardsRay" x1="79" y1="110" x2="560" y2="110" stroke="#39ff8a" stroke-width="3" stroke-linecap="round" opacity="1"/>
+
+            <text x="600" y="40" fill="#a8a8a4" font-family="Nunito" font-weight="800" font-size="12" text-anchor="end">EYE</text>
+            <ellipse cx="600" cy="110" rx="18" ry="12" fill="#26262b" stroke="#4a4a52" stroke-width="2"/>
+            <circle cx="600" cy="110" r="5" fill="#f4f4f0"/>
+          </svg>
+        </div>
+
+        <div class="cards-controls">
+          <button class="toggle-chip active" data-aligned="true">📏 Holes aligned</button>
+          <button class="toggle-chip" data-aligned="false">↕️ Middle card shifted</button>
+        </div>
+
+        <div class="cards-caption" id="cardsCaption">All three holes are in a straight line, so light from the candle travels straight through every hole and reaches the eye — the flame is visible.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUE OR FALSE -->
+  <section class="block reveal" id="truefalse">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>True or false?</h2>
+        <p>Both activities point to the same conclusion. Test your understanding on these four statements.</p>
+      </div>
+
+      <div class="tf-grid" id="tfGrid"></div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="block reveal" id="quiz">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> CHECK YOURSELF</div>
+        <h2>Quick quiz &mdash; four questions</h2>
+        <p>No pressure, no login, no score sent anywhere. Just you and the concept.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-progress" id="quizProgress"></div>
+        <div id="quizBody"></div>
+        <div class="quiz-result" id="quizResult">
+          <div class="medal" id="quizMedal">🏆</div>
+          <h3 id="quizResultTitle">Nice work!</h3>
+          <p id="quizResultText"></p>
+          <button class="retry-btn" id="quizRetry">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="block reveal" id="recap">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> BEFORE YOU GO</div>
+        <h2>Three things to remember</h2>
+      </div>
+      <div class="recap">
+        <div class="card">
+          <div class="emoji">📏</div>
+          <h4>Light travels in straight lines</h4>
+          <p>This is called the rectilinear propagation of light — light never curves around a corner by itself.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">〰️</div>
+          <h4>Bend the path, block the light</h4>
+          <p>A bent straw or a misaligned hole breaks the straight-line path, so no light gets through.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🎯</div>
+          <h4>The foundation for what's next</h4>
+          <p>This single rule explains how pinhole cameras, shadows, and eclipses all work.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <a class="prev" href="4-rays-and-beams.html">&larr; Topic 4: Rays &amp; Beams</a>
+        <a class="next" href="6-pinhole-camera.html">Topic 6: Pinhole Camera &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">Light &middot; Topic 5: Rectilinear Propagation &middot; made for curious 10&ndash;15 year olds</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- STRAW ACTIVITY ---------------- */
+  var strawTabs = Array.prototype.slice.call(document.querySelectorAll('.straw-tab'));
+  var strawGroup = document.getElementById('strawGroup');
+  var strawCaption = document.getElementById('strawCaption');
+  var eyePupil = document.getElementById('eyePupil');
+
+  function drawStraw(bent){
+    var ns = 'http://www.w3.org/2000/svg';
+    strawGroup.innerHTML = '';
+
+    var strawColor = '#8a8a90';
+    if(!bent){
+      var rect = document.createElementNS(ns, 'rect');
+      rect.setAttribute('x', 140); rect.setAttribute('y', 92);
+      rect.setAttribute('width', 340); rect.setAttribute('height', 16);
+      rect.setAttribute('rx', 8);
+      rect.setAttribute('fill', 'none');
+      rect.setAttribute('stroke', strawColor);
+      rect.setAttribute('stroke-width', '3');
+      strawGroup.appendChild(rect);
+
+      var ray = document.createElementNS(ns, 'line');
+      ray.setAttribute('x1', 90); ray.setAttribute('y1', 100);
+      ray.setAttribute('x2', 552); ray.setAttribute('y2', 100);
+      ray.setAttribute('stroke', '#39ff8a'); ray.setAttribute('stroke-width', '3');
+      ray.setAttribute('stroke-linecap', 'round');
+      strawGroup.appendChild(ray);
+    } else {
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', 'M140 100 L320 100 L320 40 L480 40');
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', strawColor);
+      path.setAttribute('stroke-width', '16');
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-linejoin', 'round');
+      strawGroup.appendChild(path);
+
+      // ray stops where the straw bends since light can't turn the corner
+      var ray2 = document.createElementNS(ns, 'line');
+      ray2.setAttribute('x1', 90); ray2.setAttribute('y1', 100);
+      ray2.setAttribute('x2', 315); ray2.setAttribute('y2', 100);
+      ray2.setAttribute('stroke', '#ff5c5c'); ray2.setAttribute('stroke-width', '3');
+      ray2.setAttribute('stroke-linecap', 'round');
+      ray2.setAttribute('stroke-dasharray', '3 5');
+      strawGroup.appendChild(ray2);
+
+      var blockedLabel = document.createElementNS(ns, 'text');
+      blockedLabel.setAttribute('x', 320); blockedLabel.setAttribute('y', 130);
+      blockedLabel.setAttribute('fill', '#ff5c5c');
+      blockedLabel.setAttribute('font-family', 'Nunito');
+      blockedLabel.setAttribute('font-weight', '800');
+      blockedLabel.setAttribute('font-size', '12');
+      blockedLabel.setAttribute('text-anchor', 'middle');
+      blockedLabel.textContent = 'LIGHT CAN\'T BEND HERE';
+      strawGroup.appendChild(blockedLabel);
+    }
+  }
+
+  function setStraw(bent){
+    drawStraw(bent);
+    strawCaption.textContent = bent
+      ? "The straw is bent, but light travels only in straight lines — it can't turn the corner. No light reaches your eye, so the flame is not visible."
+      : "Through a straight straw, light from the candle travels directly down the tube to your eye — the flame is clearly visible.";
+    eyePupil.style.opacity = bent ? 0.15 : 1;
+    strawTabs.forEach(function(t){
+      var active = (t.getAttribute('data-straw') === 'bent') === bent;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', String(active));
+    });
+  }
+
+  strawTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){ setStraw(tab.getAttribute('data-straw') === 'bent'); });
+  });
+  setStraw(false);
+
+  /* ---------------- THREE-CARDBOARD ACTIVITY ---------------- */
+  var cardsTabs = Array.prototype.slice.call(document.querySelectorAll('.cards-controls .toggle-chip'));
+  var cardB = document.getElementById('cardB');
+  var holeB = document.getElementById('holeB');
+  var cardsRay = document.getElementById('cardsRay');
+  var cardsCaption = document.getElementById('cardsCaption');
+
+  function setAligned(aligned){
+    if(aligned){
+      cardB.setAttribute('y', 40);
+      holeB.setAttribute('cy', 110);
+      cardsRay.setAttribute('opacity', '1');
+      cardsRay.setAttribute('x1', 79); cardsRay.setAttribute('x2', 590);
+      cardsCaption.textContent = "All three holes are in a straight line, so light from the candle travels straight through every hole and reaches the eye — the flame is visible.";
+    } else {
+      cardB.setAttribute('y', 10);
+      holeB.setAttribute('cy', 80);
+      cardsRay.setAttribute('opacity', '0.35');
+      cardsRay.setAttribute('x1', 79); cardsRay.setAttribute('x2', 340);
+      cardsCaption.textContent = "The middle card has shifted, so its hole is no longer in line with the other two. Light travels straight, so it hits the solid cardboard instead of passing through — the flame disappears from view.";
+    }
+    cardsTabs.forEach(function(t){
+      var active = (t.getAttribute('data-aligned') === 'true') === aligned;
+      t.classList.toggle('active', active);
+    });
+  }
+
+  cardsTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){ setAligned(tab.getAttribute('data-aligned') === 'true'); });
+  });
+  setAligned(true);
+
+  /* ---------------- TRUE OR FALSE ---------------- */
+  var tfStatements = [
+    {
+      text: "Light can bend around a corner if the corner is small enough.",
+      answer: false,
+      explain: "False — light always travels in straight lines. It never bends around obstacles on its own, no matter how small the corner is."
+    },
+    {
+      text: "If you shine a torch at a wall, the beam takes the shortest straight path to the wall.",
+      answer: true,
+      explain: "True — light doesn't wander or curve; it takes the straight-line path from the source to whatever it hits."
+    },
+    {
+      text: "A bent drinking straw will still let you see a candle flame clearly through it.",
+      answer: false,
+      explain: "False — once the straw bends, light travelling in a straight line can't follow the curve, so it never reaches your eye."
+    },
+    {
+      text: "Rectilinear propagation is the scientific name for light travelling in straight lines.",
+      answer: true,
+      explain: "True — 'rectilinear' literally means 'straight-line', and 'propagation' means how something travels or spreads."
+    }
+  ];
+
+  var tfGrid = document.getElementById('tfGrid');
+  tfStatements.forEach(function(stmt, idx){
+    var item = document.createElement('div');
+    item.className = 'tf-item';
+
+    var p = document.createElement('p');
+    p.textContent = stmt.text;
+
+    var btnWrap = document.createElement('div');
+    btnWrap.className = 'tf-buttons';
+
+    var trueBtn = document.createElement('button');
+    trueBtn.className = 'tf-btn';
+    trueBtn.textContent = 'True';
+
+    var falseBtn = document.createElement('button');
+    falseBtn.className = 'tf-btn';
+    falseBtn.textContent = 'False';
+
+    var explain = document.createElement('div');
+    explain.className = 'tf-explain';
+    explain.textContent = stmt.explain;
+
+    function answer(chosenTrue){
+      if(item.classList.contains('answered')) return;
+      item.classList.add('answered');
+      var isCorrect = chosenTrue === stmt.answer;
+      item.classList.add(isCorrect ? 'correct' : 'incorrect');
+      var chosenBtn = chosenTrue ? trueBtn : falseBtn;
+      chosenBtn.classList.add(isCorrect ? 'chosen-right' : 'chosen-wrong');
+      if(!isCorrect){
+        var correctBtn = stmt.answer ? trueBtn : falseBtn;
+        correctBtn.classList.add('chosen-right');
+      }
+      item.appendChild(explain);
+    }
+
+    trueBtn.addEventListener('click', function(){ answer(true); });
+    falseBtn.addEventListener('click', function(){ answer(false); });
+
+    btnWrap.appendChild(trueBtn);
+    btnWrap.appendChild(falseBtn);
+    item.appendChild(p);
+    item.appendChild(btnWrap);
+    tfGrid.appendChild(item);
+  });
+
+  /* ---------------- QUIZ ---------------- */
+  var questions = [
+    {
+      q: "What does 'rectilinear propagation of light' mean?",
+      options: [
+        "Light bends around every corner it meets",
+        "Light travels in straight lines",
+        "Light only travels at night",
+        "Light changes color as it travels"
+      ],
+      correct: 1,
+      why: "Rectilinear propagation means light travels in straight-line paths — it's the core rule behind pinhole cameras, shadows, and eclipses."
+    },
+    {
+      q: "In the three-cardboard activity, why does the candle disappear from view when the middle card is shifted?",
+      options: [
+        "The candle actually goes out",
+        "Light bends to follow the new position of the hole",
+        "The straight-line path from candle to eye is now blocked by solid cardboard",
+        "Cardboard absorbs all light in the room"
+      ],
+      correct: 2,
+      why: "Once the holes are no longer aligned, the straight-line path from the candle to your eye runs into solid cardboard instead of a hole — and light can't detour around it."
+    },
+    {
+      q: "Why can't you see a candle flame through a bent drinking straw?",
+      options: [
+        "Straws are opaque even when straight",
+        "Light travels in a straight line and can't turn the corner created by the bend",
+        "Bending a straw puts out the candle",
+        "The straw becomes translucent when bent"
+      ],
+      correct: 1,
+      why: "Light only moves in straight lines. Once the straw bends, the light heading down the first section can't curve to follow the second section, so none reaches your eye."
+    },
+    {
+      q: "Which everyday observation best demonstrates that light travels in straight lines?",
+      options: [
+        "A rainbow appearing after rain",
+        "Sharp-edged sunbeams visible through gaps in clouds or curtains",
+        "A mirror reflecting your face",
+        "The sky appearing blue during the day"
+      ],
+      correct: 1,
+      why: "Sharp, straight shafts of light streaming through a gap show the straight-line path light takes — if light curved, those beams would look fuzzy or bent instead of razor-straight."
+    }
+  ];
+
+  var qIndex = 0;
+  var qScore = 0;
+  var quizBody = document.getElementById('quizBody');
+  var quizProgress = document.getElementById('quizProgress');
+  var quizResult = document.getElementById('quizResult');
+  var quizMedal = document.getElementById('quizMedal');
+  var quizResultTitle = document.getElementById('quizResultTitle');
+  var quizResultText = document.getElementById('quizResultText');
+  var quizRetry = document.getElementById('quizRetry');
+
+  function buildProgress(){
+    quizProgress.innerHTML = '';
+    questions.forEach(function(_, i){
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      if(i < qIndex) seg.classList.add('done');
+      if(i === qIndex) seg.classList.add('current');
+      var fill = document.createElement('div');
+      fill.className = 'fill';
+      seg.appendChild(fill);
+      quizProgress.appendChild(seg);
+    });
+  }
+
+  function renderQuestion(){
+    quizResult.classList.remove('show');
+    quizBody.style.display = 'block';
+    buildProgress();
+
+    var data = questions[qIndex];
+    quizBody.innerHTML = '';
+
+    var qText = document.createElement('div');
+    qText.className = 'q-text';
+    qText.textContent = (qIndex + 1) + '. ' + data.q;
+    quizBody.appendChild(qText);
+
+    var optsWrap = document.createElement('div');
+    optsWrap.className = 'q-options';
+
+    var feedback = document.createElement('div');
+    feedback.className = 'q-feedback';
+
+    var nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    var spacer = document.createElement('div');
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'next-btn';
+    nextBtn.textContent = (qIndex === questions.length - 1) ? 'See results' : 'Next question';
+    nav.appendChild(spacer);
+    nav.appendChild(nextBtn);
+
+    data.options.forEach(function(optText, i){
+      var optBtn = document.createElement('button');
+      optBtn.className = 'q-option';
+      optBtn.textContent = optText;
+      optBtn.addEventListener('click', function(){
+        var allOpts = optsWrap.querySelectorAll('.q-option');
+        allOpts.forEach(function(o){ o.disabled = true; });
+
+        if(i === data.correct){
+          optBtn.classList.add('correct');
+          feedback.textContent = '✓ Correct! ' + data.why;
+          feedback.className = 'q-feedback good';
+          qScore++;
+        } else {
+          optBtn.classList.add('wrong');
+          allOpts[data.correct].classList.add('correct');
+          feedback.textContent = '✗ Not quite. ' + data.why;
+          feedback.className = 'q-feedback bad';
+        }
+        nextBtn.classList.add('ready');
+      });
+      optsWrap.appendChild(optBtn);
+    });
+
+    quizBody.appendChild(optsWrap);
+    quizBody.appendChild(feedback);
+    quizBody.appendChild(nav);
+
+    nextBtn.addEventListener('click', function(){
+      if(qIndex < questions.length - 1){
+        qIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+  }
+
+  function showResult(){
+    quizBody.style.display = 'none';
+    buildProgress();
+    document.querySelectorAll('.seg').forEach(function(s){ s.classList.add('done'); });
+
+    quizResult.classList.add('show');
+    var pct = qScore / questions.length;
+    if(pct === 1){
+      quizMedal.textContent = '🏆';
+      quizResultTitle.textContent = 'Perfect score!';
+    } else if(pct >= 0.5){
+      quizMedal.textContent = '🌟';
+      quizResultTitle.textContent = 'Nice work!';
+    } else {
+      quizMedal.textContent = '🔦';
+      quizResultTitle.textContent = 'Worth another look';
+    }
+    quizResultText.textContent = 'You got ' + qScore + ' out of ' + questions.length + ' correct.';
+  }
+
+  quizRetry.addEventListener('click', function(){
+    qIndex = 0; qScore = 0;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  /* ---------------- SCROLL REVEAL ---------------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window && revealEls.length){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-observer');
+  }
+
+  /* ---------------- PAGE-TO-PAGE TRANSITION ---------------- */
+  var internalLinks = Array.prototype.slice.call(document.querySelectorAll('a[href]')).filter(function(a){
+    var href = a.getAttribute('href');
+    return href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:');
+  });
+  internalLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      e.preventDefault();
+      document.body.classList.add('leaving');
+      setTimeout(function(){ window.location.href = href; }, 220);
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

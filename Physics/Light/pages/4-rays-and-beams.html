@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rays &amp; Beams</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  :root{
+    --ink:#1a1130;
+    --ink-2:#241a45;
+    --paper:#FFF8E7;
+    --paper-dim:#f4ead0;
+    --sun:#FFC94D;
+    --sun-2:#ffb100;
+    --ray:#8ee6ff;
+    --spark:#FF7A6B;
+    --violet:#b09bff;
+    --text-on-dark:#f3efff;
+    --text-dim-on-dark:#c9bfe8;
+    --text-on-paper:#241a3d;
+    --text-dim-on-paper:#5c5279;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.12);
+    --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-on-dark);
+    font-family:'Nunito', system-ui, sans-serif;
+    font-size:17px;
+    opacity:0;
+    animation:page-in 480ms ease both;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{font-family:'Baloo 2', 'Nunito', system-ui, sans-serif;text-wrap:balance;margin:0;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--sun);color:var(--ink);}
+  a{color:var(--ray);}
+  button{font-family:inherit;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--sun);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--sun);box-shadow:0 0 10px var(--sun);}
+
+  .topbar{max-width:960px;margin:0 auto;padding:22px 24px 0;}
+  .backlink{
+    display:inline-flex;align-items:center;gap:6px;color:var(--text-dim-on-dark);text-decoration:none;font-weight:800;font-size:14px;
+    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.14);transition:all 160ms ease;
+  }
+  .backlink:hover{border-color:var(--ray);color:var(--ray);}
+
+  @keyframes page-in{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  body.leaving{animation:page-out 260ms ease both;}
+  @keyframes page-out{from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-8px);}}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity 620ms cubic-bezier(.22,.61,.36,1), transform 620ms cubic-bezier(.22,.61,.36,1);}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+  .no-observer .reveal{opacity:1;transform:none;}
+
+  .hero{position:relative;padding:36px 0 50px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .hero::before{
+    content:"";position:absolute;inset:-20% -10% auto -10%;height:520px;
+    background:radial-gradient(closest-side, rgba(255,201,77,0.16), transparent 70%);pointer-events:none;
+  }
+  .hero-inner{position:relative;}
+  .hero h1{font-size:clamp(2.2rem, 5.6vw, 3.4rem);font-weight:800;line-height:1.06;color:var(--paper);margin-top:16px;}
+  .hero h1 em{
+    font-style:normal;background:linear-gradient(100deg, var(--sun), var(--ray) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lede{max-width:62ch;margin-top:16px;font-size:1.1rem;color:var(--text-dim-on-dark);}
+
+  section.block{padding:60px 0;}
+  section.block + section.block{border-top:1px solid rgba(255,255,255,0.07);}
+  .head{max-width:68ch;margin-bottom:32px;}
+  .head h2{font-size:clamp(1.55rem, 3.2vw, 2.05rem);font-weight:700;color:var(--paper);margin-top:10px;}
+  .head p{color:var(--text-dim-on-dark);margin-top:12px;font-size:1.03rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:28px;}
+
+  /* ---------- RAY VS BEAM INTRO ---------- */
+  .rb-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:700px){.rb-grid{grid-template-columns:1fr;}}
+  .rb-card{border-radius:22px;padding:24px;}
+  .rb-card svg{width:100%;height:auto;margin-top:10px;}
+  .rb-card.ray-c{background:linear-gradient(160deg, rgba(255,201,77,0.14), rgba(255,201,77,0.03));border:1px solid rgba(255,201,77,0.4);}
+  .rb-card.beam-c{background:linear-gradient(160deg, rgba(142,230,255,0.13), rgba(142,230,255,0.03));border:1px solid rgba(142,230,255,0.38);}
+  .rb-card h3{font-size:1.15rem;}
+  .rb-card.ray-c h3{color:var(--sun);}
+  .rb-card.beam-c h3{color:var(--ray);}
+  .rb-card p{color:var(--text-dim-on-dark);margin:8px 0 0;font-size:0.96rem;}
+
+  /* ---------- BEAM PLAYGROUND ---------- */
+  .beam-stage{
+    border-radius:24px;padding:26px;
+    background:radial-gradient(circle at 15% 20%, rgba(255,255,255,0.04), transparent 40%), linear-gradient(180deg,#100a26 0%, #1a1240 55%, #241a45 100%);
+    border:1px solid rgba(255,255,255,0.1);box-shadow:var(--shadow-lg);
+  }
+  .beam-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .beam-tab{
+    padding:9px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.03);color:var(--text-on-dark);font-weight:800;font-size:13.5px;
+    cursor:pointer;transition:all 160ms ease;
+  }
+  .beam-tab:hover{border-color:var(--ray);}
+  .beam-tab.active{background:var(--sun);border-color:var(--sun);color:#3a2600;}
+
+  .beam-svg-wrap{background:#0a0620;border-radius:18px;padding:10px;}
+  .beam-caption{
+    margin-top:18px;padding:16px 18px;border-radius:14px;
+    background:rgba(255,201,77,0.08);border:1px solid rgba(255,201,77,0.25);
+    color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
+  }
+
+  /* ---------- SOURCE DISTANCE SLIDER ---------- */
+  .slider-row{display:flex;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap;}
+  .slider-row label{font-weight:800;font-size:14px;color:var(--text-dim-on-dark);}
+  input[type="range"]{
+    flex:1;min-width:180px;accent-color:var(--ray);height:6px;cursor:pointer;
+  }
+
+  /* ---------- MATCH GAME ---------- */
+  .sort-game{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  @media (max-width:760px){.sort-game{grid-template-columns:1fr;}}
+  .sort-bank{
+    grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;padding:18px;border-radius:16px;
+    background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.22);min-height:64px;
+  }
+  .bin{border-radius:18px;padding:16px;min-height:170px;display:flex;flex-direction:column;gap:10px;}
+  .bin h4{margin:0 0 4px;font-family:'Baloo 2',sans-serif;font-size:1rem;display:flex;align-items:center;gap:6px;}
+  .bin.parallel{background:rgba(255,201,77,0.1);border:1.5px solid rgba(255,201,77,0.4);}
+  .bin.divergent{background:rgba(142,230,255,0.08);border:1.5px solid rgba(142,230,255,0.35);}
+  .bin.convergent{background:rgba(255,122,107,0.1);border:1.5px solid rgba(255,122,107,0.4);}
+  .bin .zone{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;border-radius:12px;transition:background 150ms ease;}
+  .bin .zone.drag-over{background:rgba(255,255,255,0.08);}
+
+  .tile{
+    display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+    background:var(--paper);color:var(--text-on-paper);font-weight:800;font-size:13.5px;
+    cursor:grab;user-select:none;box-shadow:0 8px 16px -8px rgba(0,0,0,0.5);touch-action:none;border:2px solid transparent;
+  }
+  .tile:active{cursor:grabbing;}
+  .tile.correct{border-color:#39c07a;background:#e9fbf1;}
+  .tile.wrong{border-color:var(--spark);background:#ffe9e5;animation:shake 320ms ease;}
+  .tile[aria-disabled="true"]{opacity:0.55;cursor:default;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  .sort-status{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .sort-status .score{font-weight:800;color:var(--sun);}
+  .reset-link{background:none;border:none;color:var(--ray);font-weight:700;cursor:pointer;font-size:14px;text-decoration:underline;padding:4px;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-card{background:var(--paper);color:var(--text-on-paper);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);}
+  .quiz-progress{display:flex;gap:6px;margin-bottom:18px;}
+  .quiz-progress .seg{flex:1;height:6px;border-radius:99px;background:rgba(36,26,61,0.14);overflow:hidden;}
+  .quiz-progress .seg .fill{height:100%;width:0%;background:var(--sun-2);transition:width 300ms ease;}
+  .quiz-progress .seg.done .fill{width:100%;background:#39c07a;}
+  .quiz-progress .seg.current .fill{width:100%;}
+  .q-text{font-family:'Baloo 2',sans-serif;font-size:1.3rem;margin-bottom:16px;}
+  .q-options{display:grid;gap:10px;}
+  .q-option{
+    text-align:left;padding:14px 16px;border-radius:14px;border:2px solid rgba(36,26,61,0.14);
+    background:#fff;font-weight:700;font-size:15px;color:var(--text-on-paper);cursor:pointer;transition:all 150ms ease;
+  }
+  .q-option:hover{border-color:var(--sun-2);}
+  .q-option:focus-visible{outline:3px solid var(--ray);outline-offset:2px;}
+  .q-option.correct{background:#e9fbf1;border-color:#39c07a;}
+  .q-option.wrong{background:#ffe9e5;border-color:var(--spark);}
+  .q-option[disabled]{cursor:default;}
+  .q-feedback{margin-top:14px;font-weight:700;min-height:24px;}
+  .q-feedback.good{color:#1f8a52;}
+  .q-feedback.bad{color:#c2432b;}
+  .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+  .next-btn{
+    padding:11px 20px;border-radius:999px;border:none;background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer;
+    opacity:0.35;pointer-events:none;transition:opacity 150ms ease, transform 150ms ease;
+  }
+  .next-btn.ready{opacity:1;pointer-events:auto;}
+  .next-btn:hover.ready{transform:translateY(-1px);}
+  .next-btn:focus-visible{outline:3px solid var(--sun-2);outline-offset:2px;}
+  .quiz-result{display:none;text-align:center;padding:10px 0;}
+  .quiz-result.show{display:block;}
+  .quiz-result .medal{font-size:3rem;}
+  .quiz-result h3{font-family:'Baloo 2',sans-serif;font-size:1.5rem;margin:10px 0 6px;}
+  .quiz-result p{color:var(--text-dim-on-paper);margin-bottom:18px;}
+  .retry-btn{padding:11px 22px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--text-on-paper);font-weight:800;cursor:pointer;}
+  .retry-btn:hover{background:var(--ink);color:var(--paper);}
+
+  .recap{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;}
+  @media (max-width:700px){.recap{grid-template-columns:1fr;}}
+  .recap .card{padding:22px;}
+  .recap .card .emoji{font-size:1.8rem;}
+  .recap .card h4{font-family:'Baloo 2',sans-serif;font-size:1.05rem;margin:10px 0 6px;color:var(--paper);}
+  .recap .card p{margin:0;color:var(--text-dim-on-dark);font-size:0.95rem;}
+
+  .page-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:36px;}
+  .page-nav a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:14.5px;
+    padding:12px 20px;border-radius:999px;transition:all 160ms ease;
+  }
+  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(255,255,255,0.16);}
+  .page-nav a.prev:hover{border-color:var(--ray);color:var(--ray);}
+  .page-nav a.next{background:linear-gradient(135deg, var(--sun), var(--sun-2));color:var(--ink);box-shadow:0 10px 24px -8px rgba(255,177,0,0.5);}
+  .page-nav a.next:hover{transform:translateY(-2px);}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--text-dim-on-dark);font-size:0.9rem;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.001ms !important; animation-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="backlink" href="../index.html">&larr; Back to Light</a>
+</div>
+
+<main>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow"><span class="dot"></span> LIGHT &middot; TOPIC 4</div>
+      <h1>One <em>ray</em>, or a whole <em>beam</em>?</h1>
+      <p class="lede">A single arrow of light is a ray. A crowd of rays travelling together is a beam &mdash; and beams come in three distinct shapes depending on how far away their source is.</p>
+    </div>
+  </header>
+
+  <!-- RAY VS BEAM -->
+  <section class="block reveal" id="raybeam">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> THE BASICS</div>
+        <h2>Ray vs. beam</h2>
+      </div>
+      <div class="rb-grid">
+        <div class="rb-card ray-c">
+          <h3>➡️ A ray</h3>
+          <p>A single straight line showing the direction light is travelling in. Drawn as one line with an arrowhead.</p>
+          <svg viewBox="0 0 260 60"><line x1="20" y1="30" x2="220" y2="30" stroke="#FFC94D" stroke-width="4" stroke-linecap="round"/><polygon points="220,20 240,30 220,40" fill="#FFC94D"/></svg>
+        </div>
+        <div class="rb-card beam-c">
+          <h3>🎇 A beam</h3>
+          <p>A group of rays travelling together from the same source. Drawn as several lines, all with arrowheads.</p>
+          <svg viewBox="0 0 260 90"><g stroke="#8ee6ff" stroke-width="3" stroke-linecap="round"><line x1="20" y1="20" x2="220" y2="20"/><line x1="20" y1="45" x2="220" y2="45"/><line x1="20" y1="70" x2="220" y2="70"/></g><g fill="#8ee6ff"><polygon points="220,12 236,20 220,28"/><polygon points="220,37 236,45 220,53"/><polygon points="220,62 236,70 220,78"/></g></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEAM SHAPE PLAYGROUND -->
+  <section class="block reveal" id="shapes">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Three shapes of beam</h2>
+        <p>The shape of a beam depends only on how far its source is. Tap each tab to see the rays rearrange.</p>
+      </div>
+
+      <div class="beam-stage">
+        <div class="beam-tabs" role="tablist" aria-label="Choose a beam shape">
+          <button class="beam-tab active" data-shape="parallel" role="tab" aria-selected="true">➖ Parallel</button>
+          <button class="beam-tab" data-shape="divergent" role="tab" aria-selected="false">📤 Divergent</button>
+          <button class="beam-tab" data-shape="convergent" role="tab" aria-selected="false">📥 Convergent</button>
+        </div>
+
+        <div class="beam-svg-wrap">
+          <svg viewBox="0 0 640 240" width="100%" role="img" aria-labelledby="beamTitle">
+            <title id="beamTitle">Diagram showing parallel, divergent, or convergent light rays</title>
+            <rect x="0" y="0" width="640" height="240" rx="16" fill="#0a0620"/>
+            <g id="beamRaysGroup" stroke="#FFC94D" stroke-width="3" stroke-linecap="round"></g>
+            <text id="sourceLabel" x="320" y="225" text-anchor="middle" fill="#c9bfe8" font-family="Nunito" font-weight="800" font-size="13">DISTANT SOURCE (SUN-LIKE)</text>
+          </svg>
+        </div>
+
+        <div class="beam-caption" id="beamShapeCaption">A distant source (like the sun) sends rays that are essentially parallel to each other by the time they reach us.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POINT VS EXTENDED SOURCE -->
+  <section class="block reveal" id="pointsource">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> ANOTHER IDEA</div>
+        <h2>Point source vs. extended source</h2>
+        <p>A tiny, distant, or pinhole-sized source is treated as a single <strong>point source</strong> &mdash; its rays spread out from one spot. A large glowing source like a candle flame or a tube light is an <strong>extended source</strong> &mdash; really many point sources side by side, all sending out their own rays at once.</p>
+      </div>
+
+      <div class="card">
+        <div class="slider-row">
+          <label for="sourceSize">Source size</label>
+          <input type="range" id="sourceSize" min="0" max="1" step="1" value="0" />
+          <label id="sourceSizeLabel">Point source</label>
+        </div>
+        <div class="beam-svg-wrap" style="margin-top:16px;">
+          <svg viewBox="0 0 640 200" width="100%" role="img" aria-labelledby="srcTitle">
+            <title id="srcTitle">Diagram comparing a point source and an extended source of light</title>
+            <rect x="0" y="0" width="640" height="200" rx="16" fill="#0a0620"/>
+            <g id="pointSourceGroup"></g>
+          </svg>
+        </div>
+        <p id="sourceCaption" style="color:var(--text-dim-on-dark);margin:14px 0 0;font-size:0.96rem;">A single point source (like a pinhole, or a very distant star) sends out rays from one tiny spot, spreading out in every direction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATCH GAME -->
+  <section class="block reveal" id="sort">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Match each example to its beam shape</h2>
+        <p>Sort these six real situations into parallel, divergent, or convergent.</p>
+      </div>
+
+      <div class="card sort-game" id="sortGame">
+        <div class="sort-bank" id="sortBank" aria-label="Unsorted examples"></div>
+
+        <div class="bin parallel" data-bin="parallel">
+          <h4>➖ Parallel</h4>
+          <div class="zone" data-zone="parallel"></div>
+        </div>
+        <div class="bin divergent" data-bin="divergent">
+          <h4>📤 Divergent</h4>
+          <div class="zone" data-zone="divergent"></div>
+        </div>
+        <div class="bin convergent" data-bin="convergent">
+          <h4>📥 Convergent</h4>
+          <div class="zone" data-zone="convergent"></div>
+        </div>
+
+        <div class="sort-status">
+          <span class="score" id="sortScore">0 / 6 sorted correctly</span>
+          <button class="reset-link" id="sortReset">Shuffle &amp; reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="block reveal" id="quiz">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> CHECK YOURSELF</div>
+        <h2>Quick quiz &mdash; four questions</h2>
+        <p>No pressure, no login, no score sent anywhere. Just you and the concept.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-progress" id="quizProgress"></div>
+        <div id="quizBody"></div>
+        <div class="quiz-result" id="quizResult">
+          <div class="medal" id="quizMedal">🏆</div>
+          <h3 id="quizResultTitle">Nice work!</h3>
+          <p id="quizResultText"></p>
+          <button class="retry-btn" id="quizRetry">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="block reveal" id="recap">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> BEFORE YOU GO</div>
+        <h2>Three things to remember</h2>
+      </div>
+      <div class="recap">
+        <div class="card">
+          <div class="emoji">➡️</div>
+          <h4>Ray vs. beam</h4>
+          <p>A ray is one line showing light's direction. A beam is a whole group of rays travelling together.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🎇</div>
+          <h4>Three beam shapes</h4>
+          <p>Parallel (distant source), divergent (spreading from a nearby source), and convergent (rays meeting at a point).</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🔵</div>
+          <h4>Point vs. extended source</h4>
+          <p>A point source is one tiny spot of light; an extended source is really many point sources glowing side by side.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <a class="prev" href="3-transparent-translucent-opaque.html">&larr; Topic 3: Transparent, Translucent &amp; Opaque</a>
+        <a class="next" href="5-rectilinear-propagation.html">Topic 5: Rectilinear Propagation &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">Light &middot; Topic 4: Rays &amp; Beams &middot; made for curious 10&ndash;15 year olds</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- BEAM SHAPE PLAYGROUND ---------------- */
+  var beamTabs = Array.prototype.slice.call(document.querySelectorAll('.beam-tab'));
+  var raysGroup = document.getElementById('beamRaysGroup');
+  var sourceLabel = document.getElementById('sourceLabel');
+  var beamShapeCaption = document.getElementById('beamShapeCaption');
+
+  var shapeData = {
+    parallel: {
+      label: 'DISTANT SOURCE (SUN-LIKE)',
+      caption: "A distant source (like the sun) sends rays that are essentially parallel to each other by the time they reach us.",
+      lines: [
+        [40,40,600,40],[40,80,600,80],[40,120,600,120],[40,160,600,160],[40,200,600,200]
+      ],
+      color: '#FFC94D'
+    },
+    divergent: {
+      label: 'NEARBY POINT SOURCE',
+      caption: "A source close by (like a torch or a lamp) sends rays spreading outward in every direction — this is called a divergent beam.",
+      lines: [
+        [60,120,600,20],[60,120,600,70],[60,120,600,120],[60,120,600,170],[60,120,600,220]
+      ],
+      color: '#8ee6ff'
+    },
+    convergent: {
+      label: 'RAYS BENT TO MEET AT A POINT',
+      caption: "When rays are bent (for example by a lens) so they all meet at one point, that's called a convergent beam.",
+      lines: [
+        [40,20,580,120],[40,70,580,120],[40,120,580,120],[40,170,580,120],[40,220,580,120]
+      ],
+      color: '#FF7A6B'
+    }
+  };
+
+  function drawArrow(x1,y1,x2,y2,color){
+    var ns = 'http://www.w3.org/2000/svg';
+    var line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '3');
+    line.setAttribute('stroke-linecap', 'round');
+    raysGroup.appendChild(line);
+
+    var angle = Math.atan2(y2 - y1, x2 - x1);
+    var ah = 9;
+    var p1x = x2 - ah * Math.cos(angle - Math.PI/7);
+    var p1y = y2 - ah * Math.sin(angle - Math.PI/7);
+    var p2x = x2 - ah * Math.cos(angle + Math.PI/7);
+    var p2y = y2 - ah * Math.sin(angle + Math.PI/7);
+    var poly = document.createElementNS(ns, 'polygon');
+    poly.setAttribute('points', x2 + ',' + y2 + ' ' + p1x + ',' + p1y + ' ' + p2x + ',' + p2y);
+    poly.setAttribute('fill', color);
+    raysGroup.appendChild(poly);
+  }
+
+  function setShape(key){
+    var data = shapeData[key];
+    raysGroup.innerHTML = '';
+    data.lines.forEach(function(l){ drawArrow(l[0], l[1], l[2], l[3], data.color); });
+    sourceLabel.textContent = data.label;
+    beamShapeCaption.textContent = data.caption;
+    beamTabs.forEach(function(t){
+      var active = t.getAttribute('data-shape') === key;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', String(active));
+    });
+  }
+
+  beamTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){ setShape(tab.getAttribute('data-shape')); });
+  });
+  setShape('parallel');
+
+  /* ---------------- POINT VS EXTENDED SOURCE ---------------- */
+  var sourceSlider = document.getElementById('sourceSize');
+  var sourceSizeLabel = document.getElementById('sourceSizeLabel');
+  var pointSourceGroup = document.getElementById('pointSourceGroup');
+  var sourceCaption = document.getElementById('sourceCaption');
+
+  function renderPointSource(isExtended){
+    var ns = 'http://www.w3.org/2000/svg';
+    pointSourceGroup.innerHTML = '';
+
+    if(!isExtended){
+      // single point source: rays spreading out in EVERY direction, all the way around
+      var cx = 280, cy = 100, rayLen = 95;
+      var glow = document.createElementNS(ns, 'circle');
+      glow.setAttribute('cx', cx); glow.setAttribute('cy', cy); glow.setAttribute('r', 26);
+      glow.setAttribute('fill', '#FFC94D'); glow.setAttribute('opacity', '0.18');
+      pointSourceGroup.appendChild(glow);
+
+      var rayCount = 16;
+      for(var i = 0; i < rayCount; i++){
+        var rad = (i / rayCount) * Math.PI * 2;
+        var x2 = cx + rayLen * Math.cos(rad);
+        var y2 = cy + rayLen * Math.sin(rad);
+        var line = document.createElementNS(ns, 'line');
+        line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+        line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+        line.setAttribute('stroke', '#FFC94D'); line.setAttribute('stroke-width', '2.5');
+        line.setAttribute('stroke-linecap', 'round');
+        pointSourceGroup.appendChild(line);
+      }
+
+      var circ = document.createElementNS(ns, 'circle');
+      circ.setAttribute('cx', cx); circ.setAttribute('cy', cy); circ.setAttribute('r', 10);
+      circ.setAttribute('fill', '#FFC94D');
+      pointSourceGroup.appendChild(circ);
+    } else {
+      // extended source: several point sources side by side (candle flame shape)
+      var centers = [
+        {x:90, y:60}, {x:90, y:100}, {x:90, y:140}
+      ];
+      centers.forEach(function(c, idx){
+        var circ2 = document.createElementNS(ns, 'circle');
+        circ2.setAttribute('cx', c.x); circ2.setAttribute('cy', c.y); circ2.setAttribute('r', 7);
+        circ2.setAttribute('fill', '#8ee6ff');
+        pointSourceGroup.appendChild(circ2);
+
+        [-20, 0, 20].forEach(function(deg){
+          var rad = deg * Math.PI / 180;
+          var x2 = c.x + 440 * Math.cos(rad);
+          var y2 = c.y + 440 * Math.sin(rad) * 0.3;
+          var line2 = document.createElementNS(ns, 'line');
+          line2.setAttribute('x1', c.x); line2.setAttribute('y1', c.y);
+          line2.setAttribute('x2', Math.min(x2, 560)); line2.setAttribute('y2', y2);
+          line2.setAttribute('stroke', '#8ee6ff'); line2.setAttribute('stroke-width', '1.6');
+          line2.setAttribute('stroke-opacity', '0.75');
+          line2.setAttribute('stroke-linecap', 'round');
+          pointSourceGroup.appendChild(line2);
+        });
+      });
+    }
+  }
+
+  sourceSlider.addEventListener('input', function(){
+    var isExtended = sourceSlider.value === '1';
+    sourceSizeLabel.textContent = isExtended ? 'Extended source' : 'Point source';
+    sourceCaption.textContent = isExtended
+      ? "An extended source (like a candle flame or a tube light) is really many tiny point sources glowing side by side — each sending out its own set of rays at the same time."
+      : "A single point source (like a pinhole, or a very distant star) sends out rays from one tiny spot, spreading out in every direction.";
+    renderPointSource(isExtended);
+  });
+  renderPointSource(false);
+
+  /* ---------------- MATCH GAME ---------------- */
+  var items = [
+    {id:'sunrays', label:'☀️ Sunlight reaching Earth', bin:'parallel'},
+    {id:'searchlight', label:'💡 Torch beam spreading out', bin:'divergent'},
+    {id:'magnifier', label:'🔍 Rays focused by a magnifying glass', bin:'convergent'},
+    {id:'laser', label:'📏 A laser pointer\'s beam', bin:'parallel'},
+    {id:'candlelight', label:'🕯️ Light from a nearby candle', bin:'divergent'},
+    {id:'lensfocus', label:'🔬 Light bent to a single focus point', bin:'convergent'}
+  ];
+
+  var bank = document.getElementById('sortBank');
+  var scoreEl = document.getElementById('sortScore');
+  var resetBtn = document.getElementById('sortReset');
+  var zones = Array.prototype.slice.call(document.querySelectorAll('.zone'));
+  var selectedTile = null;
+  var draggedTile = null;
+
+  function shuffledCopy(arr){
+    var a = arr.slice();
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function updateScore(){
+    var correct = document.querySelectorAll('.tile.correct').length;
+    scoreEl.textContent = correct + ' / ' + items.length + ' sorted correctly';
+  }
+
+  function placeTile(tile, zoneEl, binName){
+    var itemBin = tile.getAttribute('data-bin');
+    zoneEl.appendChild(tile);
+    if(itemBin === binName){
+      tile.classList.remove('wrong');
+      tile.classList.add('correct');
+      tile.setAttribute('aria-disabled', 'true');
+      tile.setAttribute('draggable', 'false');
+    } else {
+      tile.classList.remove('correct');
+      tile.classList.add('wrong');
+      setTimeout(function(){ tile.classList.remove('wrong'); }, 350);
+    }
+    updateScore();
+  }
+
+  function makeTile(item){
+    var tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.textContent = item.label;
+    tile.setAttribute('draggable', 'true');
+    tile.setAttribute('data-bin', item.bin);
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-label', item.label + ', tap then choose a bin');
+
+    tile.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', item.id);
+      e.dataTransfer.effectAllowed = 'move';
+      draggedTile = tile;
+    });
+    tile.addEventListener('dragend', function(){ draggedTile = null; });
+
+    tile.addEventListener('click', function(){
+      if(tile.getAttribute('aria-disabled') === 'true') return;
+      if(selectedTile === tile){
+        tile.style.outline = '';
+        selectedTile = null;
+        return;
+      }
+      if(selectedTile) selectedTile.style.outline = '';
+      selectedTile = tile;
+      tile.style.outline = '3px solid var(--ray)';
+    });
+
+    return tile;
+  }
+
+  function buildBank(){
+    bank.innerHTML = '';
+    zones.forEach(function(z){ z.innerHTML = ''; });
+    var order = shuffledCopy(items);
+    order.forEach(function(item){ bank.appendChild(makeTile(item)); });
+    selectedTile = null;
+    updateScore();
+  }
+
+  zones.forEach(function(zoneEl){
+    var binName = zoneEl.parentElement.getAttribute('data-bin');
+    zoneEl.addEventListener('dragover', function(e){ e.preventDefault(); zoneEl.classList.add('drag-over'); });
+    zoneEl.addEventListener('dragleave', function(){ zoneEl.classList.remove('drag-over'); });
+    zoneEl.addEventListener('drop', function(e){
+      e.preventDefault();
+      zoneEl.classList.remove('drag-over');
+      if(draggedTile) placeTile(draggedTile, zoneEl, binName);
+      draggedTile = null;
+    });
+    zoneEl.addEventListener('click', function(){
+      if(selectedTile){
+        placeTile(selectedTile, zoneEl, binName);
+        selectedTile.style.outline = '';
+        selectedTile = null;
+      }
+    });
+  });
+
+  resetBtn.addEventListener('click', buildBank);
+  buildBank();
+
+  /* ---------------- QUIZ ---------------- */
+  var questions = [
+    {
+      q: "What is the difference between a ray and a beam of light?",
+      options: [
+        "A ray is faster than a beam",
+        "A ray is a single line showing light's direction; a beam is a group of rays travelling together",
+        "There is no difference — they mean the same thing",
+        "A beam only exists at night"
+      ],
+      correct: 1,
+      why: "A ray is drawn as one straight arrow showing which way light travels. A beam is a bundle of many rays moving together."
+    },
+    {
+      q: "Sunlight reaching Earth is treated as a parallel beam mainly because...",
+      options: [
+        "The sun is a point source with no size at all",
+        "The sun is so far away that its rays are almost exactly parallel by the time they arrive",
+        "Sunlight is a different color than other light",
+        "Parallel beams only come from very small sources"
+      ],
+      correct: 1,
+      why: "Even though the sun is enormous, it's so far from Earth that the rays reaching us have spread out to be essentially parallel — that's why sunbeams through clouds look like straight parallel shafts."
+    },
+    {
+      q: "A torch held close to a wall produces a spreading circle of light. This is an example of a...",
+      options: ["Parallel beam", "Divergent beam", "Convergent beam", "Ray"],
+      correct: 1,
+      why: "Rays spreading outward from a nearby source form a divergent beam — that's why the lit patch grows bigger as you move the torch further from the wall."
+    },
+    {
+      q: "A candle flame is usually treated as an extended source rather than a point source because...",
+      options: [
+        "It doesn't actually give off any light",
+        "It is really made up of many tiny glowing points side by side, not just one",
+        "It only produces convergent beams",
+        "Extended sources must always be electric"
+      ],
+      correct: 1,
+      why: "A candle flame has real size — every glowing point along the flame acts like its own tiny point source, all sending out rays at once. That collection of point sources is what makes it an extended source."
+    }
+  ];
+
+  var qIndex = 0;
+  var qScore = 0;
+  var quizBody = document.getElementById('quizBody');
+  var quizProgress = document.getElementById('quizProgress');
+  var quizResult = document.getElementById('quizResult');
+  var quizMedal = document.getElementById('quizMedal');
+  var quizResultTitle = document.getElementById('quizResultTitle');
+  var quizResultText = document.getElementById('quizResultText');
+  var quizRetry = document.getElementById('quizRetry');
+
+  function buildProgress(){
+    quizProgress.innerHTML = '';
+    questions.forEach(function(_, i){
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      if(i < qIndex) seg.classList.add('done');
+      if(i === qIndex) seg.classList.add('current');
+      var fill = document.createElement('div');
+      fill.className = 'fill';
+      seg.appendChild(fill);
+      quizProgress.appendChild(seg);
+    });
+  }
+
+  function renderQuestion(){
+    quizResult.classList.remove('show');
+    quizBody.style.display = 'block';
+    buildProgress();
+
+    var data = questions[qIndex];
+    quizBody.innerHTML = '';
+
+    var qText = document.createElement('div');
+    qText.className = 'q-text';
+    qText.textContent = (qIndex + 1) + '. ' + data.q;
+    quizBody.appendChild(qText);
+
+    var optsWrap = document.createElement('div');
+    optsWrap.className = 'q-options';
+
+    var feedback = document.createElement('div');
+    feedback.className = 'q-feedback';
+
+    var nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    var spacer = document.createElement('div');
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'next-btn';
+    nextBtn.textContent = (qIndex === questions.length - 1) ? 'See results' : 'Next question';
+    nav.appendChild(spacer);
+    nav.appendChild(nextBtn);
+
+    data.options.forEach(function(optText, i){
+      var optBtn = document.createElement('button');
+      optBtn.className = 'q-option';
+      optBtn.textContent = optText;
+      optBtn.addEventListener('click', function(){
+        var allOpts = optsWrap.querySelectorAll('.q-option');
+        allOpts.forEach(function(o){ o.disabled = true; });
+
+        if(i === data.correct){
+          optBtn.classList.add('correct');
+          feedback.textContent = '✓ Correct! ' + data.why;
+          feedback.className = 'q-feedback good';
+          qScore++;
+        } else {
+          optBtn.classList.add('wrong');
+          allOpts[data.correct].classList.add('correct');
+          feedback.textContent = '✗ Not quite. ' + data.why;
+          feedback.className = 'q-feedback bad';
+        }
+        nextBtn.classList.add('ready');
+      });
+      optsWrap.appendChild(optBtn);
+    });
+
+    quizBody.appendChild(optsWrap);
+    quizBody.appendChild(feedback);
+    quizBody.appendChild(nav);
+
+    nextBtn.addEventListener('click', function(){
+      if(qIndex < questions.length - 1){
+        qIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+  }
+
+  function showResult(){
+    quizBody.style.display = 'none';
+    buildProgress();
+    document.querySelectorAll('.seg').forEach(function(s){ s.classList.add('done'); });
+
+    quizResult.classList.add('show');
+    var pct = qScore / questions.length;
+    if(pct === 1){
+      quizMedal.textContent = '🏆';
+      quizResultTitle.textContent = 'Perfect score!';
+    } else if(pct >= 0.5){
+      quizMedal.textContent = '🌟';
+      quizResultTitle.textContent = 'Nice work!';
+    } else {
+      quizMedal.textContent = '🔦';
+      quizResultTitle.textContent = 'Worth another look';
+    }
+    quizResultText.textContent = 'You got ' + qScore + ' out of ' + questions.length + ' correct.';
+  }
+
+  quizRetry.addEventListener('click', function(){
+    qIndex = 0; qScore = 0;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  /* ---------------- SCROLL REVEAL ---------------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window && revealEls.length){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-observer');
+  }
+
+  /* ---------------- PAGE-TO-PAGE TRANSITION ---------------- */
+  var internalLinks = Array.prototype.slice.call(document.querySelectorAll('a[href]')).filter(function(a){
+    var href = a.getAttribute('href');
+    return href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:');
+  });
+  internalLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      e.preventDefault();
+      document.body.classList.add('leaving');
+      setTimeout(function(){ window.location.href = href; }, 220);
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

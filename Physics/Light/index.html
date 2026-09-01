@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Light</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  body{
+    min-height:100vh;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:#1d2b53;padding:16px 12px;
+    opacity:0;animation:page-in 420ms ease both;
+  }
+  @keyframes page-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  body.leaving{animation:page-out 220ms ease both;}
+  @keyframes page-out{from{opacity:1;transform:translateY(0);}to{opacity:0;transform:translateY(-8px);}}
+  .top{max-width:1000px;margin:0 auto 30px;}
+  .back{display:inline-block;background:#a06cd5;color:white;text-decoration:none;padding:12px 24px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;}
+  .big{font-size:clamp(80px,15vw,160px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+  h1{font-size:clamp(40px,6vw,72px);text-align:center;margin:20px 0;background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{text-align:center;font-size:clamp(18px,2.2vw,24px);color:#a06cd5;margin-bottom:30px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:1000px;margin:0 auto;}
+  .topic{
+    background:#fff8f0;border-radius:16px;padding:24px;text-decoration:none;color:#1d2b53;
+    border:3px solid #4cc9f0;box-shadow:0 4px 12px rgba(0,0,0,.08);display:block;
+    transition:all .25s cubic-bezier(0.34,1.56,0.64,1);
+    opacity:0;transform:translateY(16px);
+    animation:card-in .5s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes card-in{to{opacity:1;transform:translateY(0);}}
+  .topic:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .topic .icon{font-size:50px;display:block;margin-bottom:10px;}
+  .topic h3{font-size:22px;margin-bottom:6px;}
+  .topic p{font-size:16px;color:#555;}
+  .header{text-align:center;margin:60px 0 40px 0;}
+  .soon{opacity:.55;filter:grayscale(.3);cursor:default;pointer-events:none;position:relative;}
+  .soon::after{content:"Coming soon";position:absolute;top:14px;right:14px;background:#ffd166;color:#7a5b00;font-size:12px;font-weight:bold;padding:4px 10px;border-radius:20px;}
+  .group-label{
+    max-width:1000px;margin:36px auto 14px;padding:0 4px;
+    font-weight:bold;color:#a06cd5;font-size:15px;letter-spacing:.02em;
+  }
+  .group-label:first-of-type{margin-top:0;}
+</style>
+</head>
+<body>
+  <div class="top"><a class="back" href="../index.html">⬅️ Back to Physics</a></div>
+  <div class="header">
+    <div class="big">💡</div>
+    <h1>Light</h1>
+    <p class="sub">Discover how we see the world! ✨</p>
+  </div>
+
+  <div class="group-label">🌟 Getting started</div>
+  <div class="grid">
+    <a class="topic" style="animation-delay:.02s" href="pages/1-what-is-light.html">
+      <span class="icon">🔦</span>
+      <h3>1. What is Light?</h3>
+      <p>Flip the switch, bend a ray, and find out why things become visible!</p>
+    </a>
+    <a class="topic" style="animation-delay:.08s" href="pages/2-sources-of-light.html">
+      <span class="icon">☀️</span>
+      <h3>2. Sources of Light</h3>
+      <p>Switch on the sun, stars, torches and more &mdash; then sort luminous from non-luminous!</p>
+    </a>
+    <a class="topic" style="animation-delay:.14s" href="pages/3-transparent-translucent-opaque.html">
+      <span class="icon">🥛</span>
+      <h3>3. Transparent, Translucent &amp; Opaque</h3>
+      <p>See how much light gets through glass, frosted glass, and wood!</p>
+    </a>
+  </div>
+
+  <div class="group-label">📐 How light travels</div>
+  <div class="grid">
+    <a class="topic" style="animation-delay:.2s" href="pages/4-rays-and-beams.html">
+      <span class="icon">🔺</span>
+      <h3>4. Rays &amp; Beams</h3>
+      <p>Point vs. extended sources, and parallel, divergent &amp; convergent beams!</p>
+    </a>
+    <a class="topic" style="animation-delay:.26s" href="pages/5-rectilinear-propagation.html">
+      <span class="icon">📏</span>
+      <h3>5. Rectilinear Propagation</h3>
+      <p>Prove that light only ever travels in straight lines!</p>
+    </a>
+  </div>
+
+  <div class="group-label">🎯 Putting it to use</div>
+  <div class="grid">
+    <a class="topic" style="animation-delay:.32s" href="pages/6-pinhole-camera.html">
+      <span class="icon">📷</span>
+      <h3>6. Pinhole Camera</h3>
+      <p>How a tiny hole can make a picture!</p>
+    </a>
+    <a class="topic" style="animation-delay:.38s" href="pages/7-shadows.html">
+      <span class="icon">🌑</span>
+      <h3>7. Shadows</h3>
+      <p>Umbra and penumbra &mdash; the dark and dim parts of a shadow!</p>
+    </a>
+    <a class="topic" style="animation-delay:.44s" href="pages/8-eclipses.html">
+      <span class="icon">🌗</span>
+      <h3>8. Eclipses</h3>
+      <p>Why the sun and moon sometimes seem to disappear!</p>
+    </a>
+  </div>
+
+  <script>
+    (function(){
+      "use strict";
+      Array.prototype.slice.call(document.querySelectorAll('a.topic:not(.soon)')).forEach(function(a){
+        a.addEventListener('click', function(e){
+          e.preventDefault();
+          var href = a.getAttribute('href');
+          document.body.classList.add('leaving');
+          setTimeout(function(){ window.location.href = href; }, 200);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

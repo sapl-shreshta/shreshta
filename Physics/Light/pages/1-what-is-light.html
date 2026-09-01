@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What Is Light?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  :root{
+    --ink:#171233;
+    --ink-2:#211a45;
+    --paper:#FFF8E7;
+    --paper-dim:#f4ead0;
+    --sun:#FFC53D;
+    --sun-2:#ffb100;
+    --ray:#7DE2FF;
+    --spark:#FF6B6B;
+    --violet:#9b8cff;
+    --text-on-dark:#f3efff;
+    --text-dim-on-dark:#c7bfe8;
+    --text-on-paper:#241a3d;
+    --text-dim-on-paper:#5c5279;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.12);
+    --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-on-dark);
+    font-family:'Nunito', system-ui, sans-serif;
+    font-size:17px;
+    opacity:0;
+    animation:page-in 480ms ease both;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', 'Nunito', system-ui, sans-serif;
+    text-wrap:balance;
+    margin:0;
+  }
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+
+  ::selection{background:var(--sun);color:var(--ink);}
+
+  a{color:var(--ray);}
+
+  button{font-family:inherit;}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Nunito',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--sun);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--sun);box-shadow:0 0 10px var(--sun);}
+
+  /* ---------- PAGE TRANSITIONS ---------- */
+  @keyframes page-in{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  body.leaving{
+    animation:page-out 260ms ease both;
+  }
+  @keyframes page-out{
+    from{opacity:1; transform:translateY(0);}
+    to{opacity:0; transform:translateY(-8px);}
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity 620ms cubic-bezier(.22,.61,.36,1), transform 620ms cubic-bezier(.22,.61,.36,1);
+  }
+  .reveal.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---------- HERO / LIGHT SWITCH DEMO ---------- */
+  .hero{
+    position:relative;
+    padding:72px 0 56px;
+    overflow:hidden;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:-20% -10% auto -10%;
+    height:520px;
+    background:radial-gradient(closest-side, rgba(255,197,61,0.16), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;}
+  .kicker{margin-bottom:18px;}
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 3.6rem);
+    font-weight:800;
+    line-height:1.05;
+    color:var(--paper);
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg, var(--sun), var(--spark) 90%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.lede{
+    max-width:60ch;
+    margin-top:18px;
+    font-size:1.14rem;
+    color:var(--text-dim-on-dark);
+  }
+
+  /* dark room stage */
+  .stage{
+    margin-top:42px;
+    border-radius:28px;
+    border:1px solid rgba(255,255,255,0.1);
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.03), transparent 60%),
+      linear-gradient(180deg, #0e0a26, #14103a);
+    padding:28px;
+    box-shadow: var(--shadow-lg);
+  }
+  .stage-room{
+    position:relative;
+    height:300px;
+    border-radius:20px;
+    overflow:hidden;
+    background:#050311;
+    transition:background 500ms ease;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .stage-room.lit{
+    background: radial-gradient(circle at 50% 40%, #fff6d8 0%, #ffe9a8 30%, #caa64a 68%, #4a3a15 100%);
+  }
+  .stage-room .glow{
+    position:absolute;
+    width:340px;height:340px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,229,140,0.9), rgba(255,197,61,0.25) 45%, transparent 70%);
+    opacity:0;
+    transition:opacity 500ms ease;
+    filter:blur(2px);
+  }
+  .stage-room.lit .glow{opacity:1;}
+
+  .room-objects{position:relative;z-index:2;display:flex;gap:34px;align-items:flex-end;}
+  .room-objects .obj{
+    font-size:2.6rem;
+    opacity:0.08;
+    filter:grayscale(1) brightness(0.3);
+    transition:opacity 500ms ease, filter 500ms ease, transform 500ms ease;
+    transform:translateY(4px);
+  }
+  .stage-room.lit .room-objects .obj{
+    opacity:1;
+    filter:grayscale(0) brightness(1) drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+    transform:translateY(0);
+  }
+  .room-objects .obj span.label{
+    display:block;
+    text-align:center;
+    font-family:'Nunito',sans-serif;
+    font-weight:800;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink);
+    opacity:0;
+    transition:opacity 500ms ease 150ms;
+    margin-top:2px;
+  }
+  .stage-room.lit .room-objects .obj span.label{opacity:0.65;}
+
+  .stage-caption{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-top:20px;
+    flex-wrap:wrap;
+  }
+  .stage-caption p{
+    margin:0;
+    color:var(--text-dim-on-dark);
+    font-size:0.98rem;
+    max-width:46ch;
+  }
+  .switch-btn{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 22px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    font-weight:800;
+    font-size:15px;
+    color:var(--ink);
+    background:linear-gradient(135deg, var(--sun), var(--sun-2));
+    box-shadow:0 10px 24px -8px rgba(255,177,0,0.55);
+    transition:transform 150ms ease, box-shadow 150ms ease;
+    white-space:nowrap;
+  }
+  .switch-btn:hover{transform:translateY(-2px);}
+  .switch-btn:active{transform:translateY(0px) scale(0.98);}
+  .switch-btn:focus-visible{outline:3px solid var(--ray);outline-offset:3px;}
+  .switch-btn .ico{font-size:18px;}
+  .stage-room.lit ~ .stage-caption .switch-btn{
+    background:linear-gradient(135deg, #2a2350, #171233);
+    color:var(--paper);
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.6);
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section.block{padding:64px 0;}
+  section.block + section.block{border-top:1px solid rgba(255,255,255,0.07);}
+
+  .head{max-width:66ch;margin-bottom:34px;}
+  .head h2{
+    font-size:clamp(1.6rem, 3.4vw, 2.15rem);
+    font-weight:700;
+    color:var(--paper);
+    margin-top:10px;
+  }
+  .head p{color:var(--text-dim-on-dark);margin-top:12px;font-size:1.05rem;}
+
+  .card{
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:22px;
+    padding:28px;
+  }
+
+  /* ---------- ENERGY SECTION ---------- */
+  .energy-row{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center;}
+  @media (max-width:760px){.energy-row{grid-template-columns:1fr;}}
+
+  .energy-chain{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .energy-pill{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--paper);
+    color:var(--text-on-paper);
+    border-radius:16px;
+    padding:14px 18px;
+    font-weight:800;
+    box-shadow:0 12px 24px -14px rgba(0,0,0,0.5);
+    position:relative;
+  }
+  .energy-pill .num{
+    width:30px;height:30px;flex:none;
+    border-radius:50%;
+    background:var(--ink);
+    color:var(--sun);
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;
+  }
+  .energy-pill small{
+    display:block;font-weight:600;color:var(--text-dim-on-paper);font-size:0.85rem;margin-top:2px;
+  }
+  .energy-arrow{
+    align-self:center;
+    color:var(--sun);
+    font-size:1.4rem;
+    line-height:1;
+  }
+
+  .fact-card{
+    background:linear-gradient(160deg, rgba(255,197,61,0.14), rgba(255,107,107,0.08));
+    border:1px solid rgba(255,197,61,0.35);
+    border-radius:22px;
+    padding:26px;
+  }
+  .fact-card h3{color:var(--sun);font-size:1.15rem;margin-bottom:10px;}
+  .fact-card p{color:var(--text-dim-on-dark);margin:0;}
+  .fact-card .big-num{
+    font-family:'Baloo 2',sans-serif;
+    font-size:2.6rem;
+    color:var(--paper);
+    line-height:1;
+    margin:8px 0 6px;
+  }
+
+  /* ---------- WHY WE SEE (ray to eye demo) ---------- */
+  .see-demo{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  .ray-svg-wrap{
+    background:#0c0924;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px;
+    padding:12px;
+  }
+  .ray-controls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:18px;
+  }
+  .toggle-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 16px;
+    border-radius:999px;
+    border:1.5px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.04);
+    color:var(--text-on-dark);
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    transition:all 180ms ease;
+  }
+  .toggle-chip:hover{border-color:var(--ray);}
+  .toggle-chip.active{
+    background:var(--ray);
+    border-color:var(--ray);
+    color:#052733;
+  }
+  .toggle-chip:focus-visible{outline:3px solid var(--sun);outline-offset:2px;}
+
+  .see-caption{
+    margin-top:14px;
+    padding:16px 18px;
+    border-radius:14px;
+    background:rgba(125,226,255,0.08);
+    border:1px solid rgba(125,226,255,0.25);
+    color:var(--text-on-dark);
+    font-weight:600;
+    min-height:52px;
+    display:flex;
+    align-items:center;
+  }
+
+  /* ---------- SORTING GAME ---------- */
+  .sort-game{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  @media (max-width:640px){.sort-game{grid-template-columns:1fr;}}
+  .sort-bank{
+    grid-column:1 / -1;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:18px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.04);
+    border:1px dashed rgba(255,255,255,0.22);
+    min-height:64px;
+  }
+  .bin{
+    border-radius:18px;
+    padding:16px;
+    min-height:170px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .bin h4{
+    margin:0 0 4px;
+    font-family:'Baloo 2',sans-serif;
+    font-size:1.05rem;
+    display:flex;align-items:center;gap:8px;
+  }
+  .bin.luminous{background:rgba(255,197,61,0.1);border:1.5px solid rgba(255,197,61,0.4);}
+  .bin.nonluminous{background:rgba(125,226,255,0.08);border:1.5px solid rgba(125,226,255,0.35);}
+  .bin .zone{
+    flex:1;
+    display:flex;
+    flex-wrap:wrap;
+    align-content:flex-start;
+    gap:8px;
+    border-radius:12px;
+    transition:background 150ms ease;
+  }
+  .bin .zone.drag-over{background:rgba(255,255,255,0.08);}
+
+  .tile{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 14px;
+    border-radius:999px;
+    background:var(--paper);
+    color:var(--text-on-paper);
+    font-weight:800;
+    font-size:14px;
+    cursor:grab;
+    user-select:none;
+    box-shadow:0 8px 16px -8px rgba(0,0,0,0.5);
+    touch-action:none;
+    border:2px solid transparent;
+  }
+  .tile:active{cursor:grabbing;}
+  .tile.correct{border-color:#39c07a;background:#e9fbf1;}
+  .tile.wrong{border-color:var(--spark);background:#ffe9e9;animation:shake 320ms ease;}
+  .tile[aria-disabled="true"]{opacity:0.55;cursor:default;}
+
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-6px);}
+    75%{transform:translateX(6px);}
+  }
+
+  .sort-status{
+    grid-column:1/-1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .sort-status .score{font-weight:800;color:var(--sun);}
+  .reset-link{
+    background:none;border:none;color:var(--ray);font-weight:700;cursor:pointer;font-size:14px;
+    text-decoration:underline;
+    padding:4px;
+  }
+
+  /* ---------- QUIZ ---------- */
+  .quiz-card{
+    background:var(--paper);
+    color:var(--text-on-paper);
+    border-radius:24px;
+    padding:30px;
+    box-shadow:var(--shadow-lg);
+  }
+  .quiz-progress{
+    display:flex;
+    gap:6px;
+    margin-bottom:18px;
+  }
+  .quiz-progress .seg{
+    flex:1;height:6px;border-radius:99px;background:rgba(36,26,61,0.14);
+    overflow:hidden;
+  }
+  .quiz-progress .seg .fill{height:100%;width:0%;background:var(--sun-2);transition:width 300ms ease;}
+  .quiz-progress .seg.done .fill{width:100%;background:#39c07a;}
+  .quiz-progress .seg.current .fill{width:100%;}
+
+  .q-text{font-family:'Baloo 2',sans-serif;font-size:1.3rem;margin-bottom:16px;}
+  .q-options{display:grid;gap:10px;}
+  .q-option{
+    text-align:left;
+    padding:14px 16px;
+    border-radius:14px;
+    border:2px solid rgba(36,26,61,0.14);
+    background:#fff;
+    font-weight:700;
+    font-size:15px;
+    color:var(--text-on-paper);
+    cursor:pointer;
+    transition:all 150ms ease;
+  }
+  .q-option:hover{border-color:var(--sun-2);}
+  .q-option:focus-visible{outline:3px solid var(--ray);outline-offset:2px;}
+  .q-option.correct{background:#e9fbf1;border-color:#39c07a;}
+  .q-option.wrong{background:#ffe9e9;border-color:var(--spark);}
+  .q-option[disabled]{cursor:default;}
+
+  .q-feedback{
+    margin-top:14px;
+    font-weight:700;
+    min-height:24px;
+  }
+  .q-feedback.good{color:#1f8a52;}
+  .q-feedback.bad{color:#c23b3b;}
+
+  .quiz-nav{
+    display:flex;justify-content:space-between;align-items:center;margin-top:20px;
+  }
+  .next-btn{
+    padding:11px 20px;border-radius:999px;border:none;
+    background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer;
+    opacity:0.35;pointer-events:none;
+    transition:opacity 150ms ease, transform 150ms ease;
+  }
+  .next-btn.ready{opacity:1;pointer-events:auto;}
+  .next-btn:hover.ready{transform:translateY(-1px);}
+  .next-btn:focus-visible{outline:3px solid var(--sun-2);outline-offset:2px;}
+
+  .quiz-result{display:none;text-align:center;padding:10px 0;}
+  .quiz-result.show{display:block;}
+  .quiz-result .medal{font-size:3rem;}
+  .quiz-result h3{font-family:'Baloo 2',sans-serif;font-size:1.5rem;margin:10px 0 6px;}
+  .quiz-result p{color:var(--text-dim-on-paper);margin-bottom:18px;}
+  .retry-btn{
+    padding:11px 22px;border-radius:999px;border:2px solid var(--ink);
+    background:transparent;color:var(--text-on-paper);font-weight:800;cursor:pointer;
+  }
+  .retry-btn:hover{background:var(--ink);color:var(--paper);}
+
+  /* ---------- RECAP ---------- */
+  .recap{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+  }
+  @media (max-width:700px){.recap{grid-template-columns:1fr;}}
+  .recap .card{padding:22px;}
+  .recap .card .emoji{font-size:1.8rem;}
+  .recap .card h4{font-family:'Baloo 2',sans-serif;font-size:1.05rem;margin:10px 0 6px;color:var(--paper);}
+  .recap .card p{margin:0;color:var(--text-dim-on-dark);font-size:0.95rem;}
+
+  footer{
+    padding:40px 0 60px;
+    text-align:center;
+    color:var(--text-dim-on-dark);
+    font-size:0.9rem;
+  }
+
+  .topbar{max-width:920px;margin:0 auto;padding:22px 24px 0;}
+  .backlink{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--text-dim-on-dark);text-decoration:none;font-weight:800;font-size:14px;
+    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.14);
+    transition:all 160ms ease;
+  }
+  .backlink:hover{border-color:var(--ray);color:var(--ray);}
+
+  .page-nav{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    margin-top:36px;
+  }
+  .page-nav a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:14.5px;
+    padding:12px 20px;border-radius:999px;transition:all 160ms ease;
+  }
+  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(255,255,255,0.16);}
+  .page-nav a.prev:hover{border-color:var(--ray);color:var(--ray);}
+  .page-nav a.next{background:linear-gradient(135deg, var(--sun), var(--sun-2));color:var(--ink);box-shadow:0 10px 24px -8px rgba(255,177,0,0.5);}
+  .page-nav a.next:hover{transform:translateY(-2px);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.001ms !important; animation-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+
+  .no-js .reveal, .no-observer .reveal{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="backlink" href="../index.html">&larr; Back to Light</a>
+</div>
+
+<main>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="kicker eyebrow"><span class="dot"></span> LIGHT &middot; TOPIC 1</div>
+      <h1>What <em>is</em> light,<br>really?</h1>
+      <p class="lede">Flip the switch below. Watch what happens to the room &mdash; and notice something strange: you never actually <em>see</em> the light itself. You only see what it touches.</p>
+
+      <div class="stage">
+        <div class="stage-room" id="stageRoom">
+          <div class="glow"></div>
+          <div class="room-objects">
+            <div class="obj">📖<span class="label">Book</span></div>
+            <div class="obj">🪑<span class="label">Chair</span></div>
+            <div class="obj">🧸<span class="label">Toy</span></div>
+            <div class="obj">🖼️<span class="label">Frame</span></div>
+            <div class="obj">🪴<span class="label">Plant</span></div>
+          </div>
+        </div>
+        <div class="stage-caption">
+          <p id="stageText">Right now the room is pitch dark. The book, the chair, the toy &mdash; they're all still there. You just can't see any of them.</p>
+          <button class="switch-btn" id="switchBtn" aria-pressed="false">
+            <span class="ico">💡</span><span id="switchLabel">Turn the light ON</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ENERGY SECTION -->
+  <section class="block reveal" id="energy">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> THE BIG IDEA</div>
+        <h2>Light is a form of energy</h2>
+        <p>Heat is energy that warms things. Sound is energy that makes things vibrate. Light is energy too &mdash; a kind that travels incredibly fast and, when it reaches your eye, gives you the <strong>sensation of vision</strong>. That's the whole job of light: it doesn't just light things up, it lets you <em>see</em>.</p>
+      </div>
+
+      <div class="energy-row">
+        <div class="energy-chain">
+          <div class="energy-pill">
+            <div class="num">1</div>
+            <div>A light source releases energy<small>Sun, a bulb, a candle flame&hellip;</small></div>
+          </div>
+          <div class="energy-arrow">↓</div>
+          <div class="energy-pill">
+            <div class="num">2</div>
+            <div>That energy travels outward as light<small>In straight lines, at enormous speed</small></div>
+          </div>
+          <div class="energy-arrow">↓</div>
+          <div class="energy-pill">
+            <div class="num">3</div>
+            <div>It strikes an object and bounces off<small>This bounce is called reflection</small></div>
+          </div>
+          <div class="energy-arrow">↓</div>
+          <div class="energy-pill">
+            <div class="num">4</div>
+            <div>The reflected light enters your eye<small>Your brain reads it as an image</small></div>
+          </div>
+        </div>
+
+        <div class="fact-card">
+          <h3>⚡ How fast is fast?</h3>
+          <div class="big-num">300,000 km/s</div>
+          <p>Light could race around the entire Earth about <strong>7&nbsp;times in one second</strong>. That's why flipping a switch seems to light up a room instantly &mdash; the light has already crossed it before you finish blinking.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY WE SEE THINGS -->
+  <section class="block reveal" id="see">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> THE PUZZLE</div>
+        <h2>If light is invisible, why do we see anything at all?</h2>
+        <p>Here's the trick: <strong>you never see light travelling through empty air.</strong> You only see light after it has hit something and bounced toward your eye. Try the three switches below on the same simple scene.</p>
+      </div>
+
+      <div class="card see-demo">
+        <div class="ray-svg-wrap">
+          <svg viewBox="0 0 640 300" width="100%" role="img" aria-labelledby="rayTitle">
+            <title id="rayTitle">Diagram of a bulb, a book, and an eye, showing how light must reflect off the book to reach the eye</title>
+            <defs>
+              <radialGradient id="bulbGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff6d0" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#ffcf4d" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+
+            <!-- room bg -->
+            <rect x="0" y="0" width="640" height="300" rx="18" fill="#0c0924"/>
+
+            <!-- bulb -->
+            <circle id="bulbGlowCirc" cx="120" cy="90" r="70" fill="url(#bulbGlow)" opacity="0"/>
+            <circle cx="120" cy="90" r="14" fill="#3a3560" stroke="#5c5279" stroke-width="2"/>
+            <text x="120" y="140" text-anchor="middle" fill="#c7bfe8" font-family="Nunito" font-weight="800" font-size="13">LIGHT SOURCE</text>
+
+            <!-- book -->
+            <rect id="bookRect" x="330" y="150" width="70" height="50" rx="6" fill="#3a3560" stroke="#5c5279" stroke-width="2"/>
+            <text x="365" y="222" text-anchor="middle" fill="#c7bfe8" font-family="Nunito" font-weight="800" font-size="13">BOOK</text>
+
+            <!-- eye -->
+            <g id="eyeGroup">
+              <ellipse cx="560" cy="150" rx="34" ry="20" fill="#3a3560" stroke="#5c5279" stroke-width="2"/>
+              <circle cx="560" cy="150" r="9" fill="#171233"/>
+            </g>
+            <text x="560" y="188" text-anchor="middle" fill="#c7bfe8" font-family="Nunito" font-weight="800" font-size="13">YOUR EYE</text>
+
+            <!-- ray: source to book -->
+            <path id="rayToBook" d="M132 100 L340 165" stroke="#FFC53D" stroke-width="3" fill="none" opacity="0" stroke-linecap="round"/>
+            <!-- ray: book to eye (reflection) -->
+            <path id="rayToEye" d="M395 168 L535 152" stroke="#7DE2FF" stroke-width="3" fill="none" opacity="0" stroke-linecap="round" stroke-dasharray="6 6"/>
+            <!-- straight beam ignoring book, into empty space (wrong idea) -->
+            <path id="rayEmpty" d="M132 100 L 560 150" stroke="#FF6B6B" stroke-width="2.5" fill="none" opacity="0" stroke-dasharray="3 6" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="ray-controls" role="group" aria-label="Diagram controls">
+          <button class="toggle-chip" data-step="0">1&middot; Dark (nothing shown)</button>
+          <button class="toggle-chip" data-step="1">2&middot; Light hits the book</button>
+          <button class="toggle-chip" data-step="2">3&middot; Light bounces to your eye</button>
+          <button class="toggle-chip" data-step="3">4&middot; What if it misses the book?</button>
+        </div>
+
+        <div class="see-caption" id="seeCaption">Pick a step above to build the picture, piece by piece.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SORTING GAME -->
+  <section class="block reveal" id="sort">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Luminous or non-luminous?</h2>
+        <p>A <strong>luminous</strong> body makes its own light. A <strong>non-luminous</strong> body has no light of its own &mdash; you only see it because light from somewhere else bounces off it. Drag each object into the correct bin. (On a touch screen, tap a tile, then tap the bin.)</p>
+      </div>
+
+      <div class="card sort-game" id="sortGame">
+        <div class="sort-bank" id="sortBank" aria-label="Unsorted objects"></div>
+
+        <div class="bin luminous" data-bin="luminous">
+          <h4>☀️ Luminous <small style="font-weight:600;color:var(--text-dim-on-dark);font-size:12px;">(makes its own light)</small></h4>
+          <div class="zone" data-zone="luminous"></div>
+        </div>
+        <div class="bin nonluminous" data-bin="nonluminous">
+          <h4>🌙 Non-luminous <small style="font-weight:600;color:var(--text-dim-on-dark);font-size:12px;">(only reflects light)</small></h4>
+          <div class="zone" data-zone="nonluminous"></div>
+        </div>
+
+        <div class="sort-status">
+          <span class="score" id="sortScore">0 / 8 sorted correctly</span>
+          <button class="reset-link" id="sortReset">Shuffle &amp; reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="block reveal" id="quiz">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> CHECK YOURSELF</div>
+        <h2>Quick quiz &mdash; four questions</h2>
+        <p>No pressure, no login, no score sent anywhere. Just you and the concept.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-progress" id="quizProgress"></div>
+
+        <div id="quizBody"></div>
+
+        <div class="quiz-result" id="quizResult">
+          <div class="medal" id="quizMedal">🏆</div>
+          <h3 id="quizResultTitle">Nice work!</h3>
+          <p id="quizResultText"></p>
+          <button class="retry-btn" id="quizRetry">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="block reveal" id="recap">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> BEFORE YOU GO</div>
+        <h2>Three things to remember</h2>
+      </div>
+      <div class="recap">
+        <div class="card">
+          <div class="emoji">⚡</div>
+          <h4>Light is energy</h4>
+          <p>It's a form of energy that produces the sensation of vision when it reaches your eye &mdash; just like heat and sound are forms of energy for touch and hearing.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🙈</div>
+          <h4>Light itself is invisible</h4>
+          <p>You never see a beam of light travelling through empty space. You only see it the instant it hits something and reflects.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">👁️</div>
+          <h4>Seeing = reflected light reaching your eye</h4>
+          <p>Objects become visible when light bounces off them and lands on your eye. No bounce reaching your eye, no image &mdash; however bright the room is.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <a class="prev" href="../index.html">&larr; Back to Light hub</a>
+        <a class="next" href="2-sources-of-light.html">Topic 2: Sources of Light &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">Light &middot; Topic 1: What is Light &middot; made for curious 10&ndash;15 year olds</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- DARK ROOM SWITCH ---------------- */
+  var room = document.getElementById('stageRoom');
+  var btn = document.getElementById('switchBtn');
+  var label = document.getElementById('switchLabel');
+  var stageText = document.getElementById('stageText');
+  var isLit = false;
+
+  function setRoom(lit){
+    isLit = lit;
+    room.classList.toggle('lit', lit);
+    btn.setAttribute('aria-pressed', String(lit));
+    label.textContent = lit ? 'Turn the light OFF' : 'Turn the light ON';
+    stageText.textContent = lit
+      ? "Light from an unseen source is bouncing off every object and landing in your eyes — that bounce is the only reason you can see the book, the chair, the toy."
+      : "Right now the room is pitch dark. The book, the chair, the toy — they're all still there. You just can't see any of them.";
+  }
+  btn.addEventListener('click', function(){ setRoom(!isLit); });
+
+  /* ---------------- RAY-TO-EYE DIAGRAM ---------------- */
+  var stepButtons = Array.prototype.slice.call(document.querySelectorAll('.toggle-chip'));
+  var bulbGlow = document.getElementById('bulbGlowCirc');
+  var rayToBook = document.getElementById('rayToBook');
+  var rayToEye = document.getElementById('rayToEye');
+  var rayEmpty = document.getElementById('rayEmpty');
+  var eyeGroup = document.getElementById('eyeGroup');
+  var bookRect = document.getElementById('bookRect');
+  var seeCaption = document.getElementById('seeCaption');
+
+  var seeMessages = [
+    "Nothing lit yet. In total darkness, there is no light travelling anywhere in this scene.",
+    "The bulb sends out light energy. This ray travels in a straight line until it strikes the book.",
+    "The instant light bounces off the book toward the eye, the book becomes visible. This is reflection — and it's the only reason you ever see anything.",
+    "If a ray never touches the book and heads straight for empty space, nothing reflects into your eye — that light stays completely invisible to you."
+  ];
+
+  function resetDiagram(){
+    bulbGlow.style.opacity = 0;
+    rayToBook.style.opacity = 0;
+    rayToEye.style.opacity = 0;
+    rayEmpty.style.opacity = 0;
+    bookRect.setAttribute('fill', '#3a3560');
+    eyeGroup.style.opacity = 0.35;
+  }
+
+  function showStep(step){
+    resetDiagram();
+    stepButtons.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-step') === String(step)); });
+    seeCaption.textContent = seeMessages[step];
+
+    if(step >= 1){
+      bulbGlow.style.opacity = 1;
+      rayToBook.style.opacity = 1;
+      bookRect.setAttribute('fill', '#5c5279');
+    }
+    if(step === 2){
+      rayToEye.style.opacity = 1;
+      bookRect.setAttribute('fill', '#FFC53D');
+      eyeGroup.style.opacity = 1;
+    }
+    if(step === 3){
+      rayToBook.style.opacity = 0;
+      rayEmpty.style.opacity = 1;
+      eyeGroup.style.opacity = 0.35;
+    }
+  }
+
+  stepButtons.forEach(function(b){
+    b.addEventListener('click', function(){ showStep(Number(b.getAttribute('data-step'))); });
+  });
+  resetDiagram();
+
+  /* ---------------- SORTING GAME ---------------- */
+  var items = [
+    {id:'sun', label:'☀️ Sun', bin:'luminous'},
+    {id:'moon', label:'🌙 Moon', bin:'nonluminous'},
+    {id:'candle', label:'🕯️ Candle flame', bin:'luminous'},
+    {id:'book2', label:'📖 Book', bin:'nonluminous'},
+    {id:'firefly', label:'✨ Firefly', bin:'luminous'},
+    {id:'chair2', label:'🪑 Chair', bin:'nonluminous'},
+    {id:'bulb2', label:'💡 Bulb (switched on)', bin:'luminous'},
+    {id:'mirror', label:'🪞 Mirror', bin:'nonluminous'}
+  ];
+
+  var bank = document.getElementById('sortBank');
+  var scoreEl = document.getElementById('sortScore');
+  var resetBtn = document.getElementById('sortReset');
+  var zones = Array.prototype.slice.call(document.querySelectorAll('.zone'));
+  var selectedTile = null;
+  var draggedTile = null;
+
+  function shuffledCopy(arr){
+    var a = arr.slice();
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function updateScore(){
+    var correct = document.querySelectorAll('.tile.correct').length;
+    scoreEl.textContent = correct + ' / ' + items.length + ' sorted correctly';
+  }
+
+  function placeTile(tile, zoneEl, binName){
+    var itemBin = tile.getAttribute('data-bin');
+    zoneEl.appendChild(tile);
+    if(itemBin === binName){
+      tile.classList.remove('wrong');
+      tile.classList.add('correct');
+      tile.setAttribute('aria-disabled', 'true');
+      tile.setAttribute('draggable', 'false');
+    } else {
+      tile.classList.remove('correct');
+      tile.classList.add('wrong');
+      setTimeout(function(){ tile.classList.remove('wrong'); }, 350);
+    }
+    updateScore();
+  }
+
+  function makeTile(item){
+    var tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.textContent = item.label;
+    tile.setAttribute('draggable', 'true');
+    tile.setAttribute('data-bin', item.bin);
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-label', item.label + ', tap then choose a bin');
+
+    tile.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', item.id);
+      e.dataTransfer.effectAllowed = 'move';
+      draggedTile = tile;
+    });
+
+    tile.addEventListener('dragend', function(){
+      draggedTile = null;
+    });
+
+    tile.addEventListener('click', function(){
+      if(tile.getAttribute('aria-disabled') === 'true') return;
+      if(selectedTile === tile){
+        tile.style.outline = '';
+        selectedTile = null;
+        return;
+      }
+      if(selectedTile) selectedTile.style.outline = '';
+      selectedTile = tile;
+      tile.style.outline = '3px solid var(--ray)';
+    });
+
+    return tile;
+  }
+
+  function buildBank(){
+    bank.innerHTML = '';
+    zones.forEach(function(z){ z.innerHTML = ''; });
+    var order = shuffledCopy(items);
+    order.forEach(function(item){
+      bank.appendChild(makeTile(item));
+    });
+    selectedTile = null;
+    updateScore();
+  }
+
+  zones.forEach(function(zoneEl){
+    var binName = zoneEl.parentElement.getAttribute('data-bin');
+
+    zoneEl.addEventListener('dragover', function(e){
+      e.preventDefault();
+      zoneEl.classList.add('drag-over');
+    });
+    zoneEl.addEventListener('dragleave', function(){
+      zoneEl.classList.remove('drag-over');
+    });
+    zoneEl.addEventListener('drop', function(e){
+      e.preventDefault();
+      zoneEl.classList.remove('drag-over');
+      if(draggedTile) placeTile(draggedTile, zoneEl, binName);
+      draggedTile = null;
+    });
+    zoneEl.addEventListener('click', function(){
+      if(selectedTile){
+        placeTile(selectedTile, zoneEl, binName);
+        selectedTile.style.outline = '';
+        selectedTile = null;
+      }
+    });
+  });
+
+  resetBtn.addEventListener('click', buildBank);
+  buildBank();
+
+  /* ---------------- QUIZ ---------------- */
+  var questions = [
+    {
+      q: "Why can you see a book lying on a lit table?",
+      options: [
+        "The book makes its own light",
+        "Light from the room bounces off the book and reaches your eyes",
+        "Your eyes send out light that lands on the book",
+        "Books are naturally visible, with or without light"
+      ],
+      correct: 1,
+      why: "The book is non-luminous — it only becomes visible when light from a source (like a bulb) reflects off it into your eyes."
+    },
+    {
+      q: "Which of these is a natural source of light?",
+      options: ["A torch", "A candle", "The sun", "A tube light"],
+      correct: 2,
+      why: "The sun produces light on its own without anyone making it — that's what makes it a natural source. Torches, candles and tube lights are all artificial sources."
+    },
+    {
+      q: "You are in a completely dark, sealed room. What happens if you open your eyes wide and stare very hard at a chair in front of you?",
+      options: [
+        "You'll see it faintly after a while",
+        "You still won't see it at all — there's no light to reflect off it",
+        "You'll see its outline in black and white",
+        "You'll see it, just blurry"
+      ],
+      correct: 1,
+      why: "No light source means no light to bounce off the chair. Without reflected light reaching your eyes, the chair stays completely invisible — no matter how hard you stare."
+    },
+    {
+      q: "Which statement best describes what light actually is?",
+      options: [
+        "A type of gas that fills a room",
+        "A form of energy that produces the sensation of vision in the eye",
+        "A liquid that pours out of the sun",
+        "The color you see when you close your eyes"
+      ],
+      correct: 1,
+      why: "Light is a form of energy — just like heat and sound are — and its special job is to trigger the sensation of vision when it reaches your eyes."
+    }
+  ];
+
+  var qIndex = 0;
+  var qScore = 0;
+  var quizBody = document.getElementById('quizBody');
+  var quizProgress = document.getElementById('quizProgress');
+  var quizResult = document.getElementById('quizResult');
+  var quizCard = document.getElementById('quizCard');
+  var quizMedal = document.getElementById('quizMedal');
+  var quizResultTitle = document.getElementById('quizResultTitle');
+  var quizResultText = document.getElementById('quizResultText');
+  var quizRetry = document.getElementById('quizRetry');
+
+  function buildProgress(){
+    quizProgress.innerHTML = '';
+    questions.forEach(function(_, i){
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      if(i < qIndex) seg.classList.add('done');
+      if(i === qIndex) seg.classList.add('current');
+      var fill = document.createElement('div');
+      fill.className = 'fill';
+      seg.appendChild(fill);
+      quizProgress.appendChild(seg);
+    });
+  }
+
+  function renderQuestion(){
+    quizResult.classList.remove('show');
+    quizBody.style.display = 'block';
+    buildProgress();
+
+    var data = questions[qIndex];
+    quizBody.innerHTML = '';
+
+    var qText = document.createElement('div');
+    qText.className = 'q-text';
+    qText.textContent = (qIndex + 1) + '. ' + data.q;
+    quizBody.appendChild(qText);
+
+    var optsWrap = document.createElement('div');
+    optsWrap.className = 'q-options';
+
+    var feedback = document.createElement('div');
+    feedback.className = 'q-feedback';
+
+    var nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    var spacer = document.createElement('div');
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'next-btn';
+    nextBtn.textContent = (qIndex === questions.length - 1) ? 'See results' : 'Next question';
+    nav.appendChild(spacer);
+    nav.appendChild(nextBtn);
+
+    data.options.forEach(function(optText, i){
+      var optBtn = document.createElement('button');
+      optBtn.className = 'q-option';
+      optBtn.textContent = optText;
+      optBtn.addEventListener('click', function(){
+        var allOpts = optsWrap.querySelectorAll('.q-option');
+        allOpts.forEach(function(o){ o.disabled = true; });
+
+        if(i === data.correct){
+          optBtn.classList.add('correct');
+          feedback.textContent = '✓ Correct! ' + data.why;
+          feedback.className = 'q-feedback good';
+          qScore++;
+        } else {
+          optBtn.classList.add('wrong');
+          allOpts[data.correct].classList.add('correct');
+          feedback.textContent = '✗ Not quite. ' + data.why;
+          feedback.className = 'q-feedback bad';
+        }
+        nextBtn.classList.add('ready');
+      });
+      optsWrap.appendChild(optBtn);
+    });
+
+    quizBody.appendChild(optsWrap);
+    quizBody.appendChild(feedback);
+    quizBody.appendChild(nav);
+
+    nextBtn.addEventListener('click', function(){
+      if(qIndex < questions.length - 1){
+        qIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+  }
+
+  function showResult(){
+    quizBody.style.display = 'none';
+    buildProgress();
+    document.querySelectorAll('.seg').forEach(function(s){ s.classList.add('done'); });
+
+    quizResult.classList.add('show');
+    var pct = qScore / questions.length;
+    if(pct === 1){
+      quizMedal.textContent = '🏆';
+      quizResultTitle.textContent = 'Perfect score!';
+    } else if(pct >= 0.5){
+      quizMedal.textContent = '🌟';
+      quizResultTitle.textContent = 'Nice work!';
+    } else {
+      quizMedal.textContent = '🔦';
+      quizResultTitle.textContent = 'Worth another look';
+    }
+    quizResultText.textContent = 'You got ' + qScore + ' out of ' + questions.length + ' correct.';
+  }
+
+  quizRetry.addEventListener('click', function(){
+    qIndex = 0; qScore = 0;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  /* ---------------- SCROLL REVEAL ---------------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window && revealEls.length){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-observer');
+  }
+
+  /* ---------------- PAGE-TO-PAGE TRANSITION ---------------- */
+  var internalLinks = Array.prototype.slice.call(document.querySelectorAll('a[href]')).filter(function(a){
+    var href = a.getAttribute('href');
+    return href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:');
+  });
+  internalLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      e.preventDefault();
+      document.body.classList.add('leaving');
+      setTimeout(function(){ window.location.href = href; }, 220);
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

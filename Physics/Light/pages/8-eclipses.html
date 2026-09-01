@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eclipses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  :root{
+    --ink:#04050f;
+    --ink-2:#0a0d1f;
+    --paper:#f4f1ff;
+    --paper-dim:#e2ddf5;
+    --sun:#ffcf4d;
+    --sun-2:#ffab00;
+    --earth-blue:#4fa8ff;
+    --moon-grey:#c9c4d6;
+    --corona:#fff3c9;
+    --violet:#8ea3ff;
+    --text-on-dark:#eceaf9;
+    --text-dim-on-dark:#a8a4c4;
+    --text-on-paper:#171425;
+    --text-dim-on-paper:#575271;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.12);
+    --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.75);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-on-dark);
+    font-family:'Nunito', system-ui, sans-serif;
+    font-size:17px;
+    opacity:0;
+    animation:page-in 480ms ease both;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{font-family:'Baloo 2', 'Nunito', system-ui, sans-serif;text-wrap:balance;margin:0;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--sun);color:var(--ink);}
+  a{color:var(--earth-blue);}
+  button{font-family:inherit;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--sun);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--sun);box-shadow:0 0 10px var(--sun);}
+
+  .topbar{max-width:960px;margin:0 auto;padding:22px 24px 0;}
+  .backlink{
+    display:inline-flex;align-items:center;gap:6px;color:var(--text-dim-on-dark);text-decoration:none;font-weight:800;font-size:14px;
+    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.14);transition:all 160ms ease;
+  }
+  .backlink:hover{border-color:var(--sun);color:var(--sun);}
+
+  @keyframes page-in{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  body.leaving{animation:page-out 260ms ease both;}
+  @keyframes page-out{from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-8px);}}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity 620ms cubic-bezier(.22,.61,.36,1), transform 620ms cubic-bezier(.22,.61,.36,1);}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+  .no-observer .reveal{opacity:1;transform:none;}
+
+  .hero{position:relative;padding:36px 0 50px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .hero::before{
+    content:"";position:absolute;inset:-20% -10% auto -10%;height:520px;
+    background:radial-gradient(closest-side, rgba(255,207,77,0.12), transparent 70%);pointer-events:none;
+  }
+  .hero-inner{position:relative;}
+  .hero h1{font-size:clamp(2.2rem, 5.6vw, 3.4rem);font-weight:800;line-height:1.06;color:var(--paper);margin-top:16px;}
+  .hero h1 em{
+    font-style:normal;background:linear-gradient(100deg, var(--sun), var(--earth-blue) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lede{max-width:62ch;margin-top:16px;font-size:1.1rem;color:var(--text-dim-on-dark);}
+
+  section.block{padding:60px 0;}
+  section.block + section.block{border-top:1px solid rgba(255,255,255,0.07);}
+  .head{max-width:68ch;margin-bottom:32px;}
+  .head h2{font-size:clamp(1.55rem, 3.2vw, 2.05rem);font-weight:700;color:var(--paper);margin-top:10px;}
+  .head p{color:var(--text-dim-on-dark);margin-top:12px;font-size:1.03rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:28px;}
+
+  /* ---------- ORBIT SIMULATOR ---------- */
+  .orbit-stage{
+    border-radius:24px;padding:26px;
+    background:radial-gradient(circle at 20% 15%, rgba(255,255,255,0.05), transparent 45%), linear-gradient(180deg,#020208 0%, #04050f 55%, #0a0d1f 100%);
+    border:1px solid rgba(255,255,255,0.1);box-shadow:var(--shadow-lg);
+  }
+  .orbit-svg-wrap{background:#010108;border-radius:18px;padding:10px;position:relative;}
+  .orbit-slider-row{display:flex;align-items:center;gap:14px;margin-top:18px;flex-wrap:wrap;}
+  .orbit-slider-row label{font-weight:800;font-size:13.5px;color:var(--text-dim-on-dark);white-space:nowrap;}
+  input[type="range"]{accent-color:var(--sun);height:6px;cursor:pointer;flex:1;min-width:200px;}
+  .orbit-caption{
+    margin-top:16px;padding:16px 18px;border-radius:14px;
+    background:rgba(255,207,77,0.08);border:1px solid rgba(255,207,77,0.22);
+    color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
+  }
+  .orbit-badge{
+    display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;
+    font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    background:rgba(255,255,255,0.08);color:var(--text-dim-on-dark);margin-bottom:10px;
+  }
+  .orbit-badge.active-lunar{background:rgba(201,196,214,0.25);color:var(--paper);}
+  .orbit-badge.active-solar{background:rgba(255,207,77,0.25);color:var(--sun);}
+
+  /* ---------- SOLAR ECLIPSE TYPES ---------- */
+  .solar-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .solar-tab{
+    padding:9px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.03);color:var(--text-on-dark);font-weight:800;font-size:13.5px;
+    cursor:pointer;transition:all 160ms ease;
+  }
+  .solar-tab:hover{border-color:var(--sun);}
+  .solar-tab.active{background:var(--sun);border-color:var(--sun);color:#3a2600;}
+  .solar-visual{
+    height:180px;border-radius:18px;background:#010108;display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .solar-disc-wrap{position:relative;width:120px;height:120px;}
+  .solar-sun-disc{
+    position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle, #fff6d0, #ffcf4d 55%, #ff9d00 100%);
+    box-shadow:0 0 50px 12px rgba(255,207,77,0.4);
+  }
+  .solar-moon-disc{
+    position:absolute;inset:0;border-radius:50%;background:#0a0a12;
+    transition:transform 400ms ease;
+  }
+  .solar-corona{
+    position:absolute;inset:-14px;border-radius:50%;
+    box-shadow:0 0 0 6px rgba(255,243,201,0.55);
+    opacity:0;transition:opacity 400ms ease;
+  }
+  .solar-caption{
+    margin-top:16px;padding:16px 18px;border-radius:14px;
+    background:rgba(255,207,77,0.08);border:1px solid rgba(255,207,77,0.22);
+    color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
+  }
+
+  /* ---------- TRUE/FALSE ---------- */
+  .tf-grid{display:grid;gap:12px;}
+  .tf-item{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;
+    padding:16px 20px;
+  }
+  .tf-item p{margin:0;font-weight:700;font-size:15px;max-width:56ch;}
+  .tf-buttons{display:flex;gap:8px;flex:none;}
+  .tf-btn{
+    padding:9px 16px;border-radius:999px;border:2px solid rgba(255,255,255,0.18);
+    background:transparent;color:var(--text-on-dark);font-weight:800;font-size:13px;cursor:pointer;
+    transition:all 160ms ease;
+  }
+  .tf-btn:hover{border-color:var(--sun);}
+  .tf-item.answered .tf-btn{pointer-events:none;}
+  .tf-item.correct{border-color:#39c07a;background:rgba(57,192,122,0.08);}
+  .tf-item.incorrect{border-color:#ff6b6b;background:rgba(255,107,107,0.08);}
+  .tf-btn.chosen-right{background:#39c07a;border-color:#39c07a;color:#04220f;}
+  .tf-btn.chosen-wrong{background:#ff6b6b;border-color:#ff6b6b;color:#2a0808;}
+  .tf-explain{width:100%;font-weight:600;font-size:13.5px;color:var(--text-dim-on-dark);margin-top:4px;display:none;}
+  .tf-item.answered .tf-explain{display:block;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-card{background:var(--paper);color:var(--text-on-paper);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);}
+  .quiz-progress{display:flex;gap:6px;margin-bottom:18px;}
+  .quiz-progress .seg{flex:1;height:6px;border-radius:99px;background:rgba(23,20,37,0.14);overflow:hidden;}
+  .quiz-progress .seg .fill{height:100%;width:0%;background:var(--sun-2);transition:width 300ms ease;}
+  .quiz-progress .seg.done .fill{width:100%;background:#39c07a;}
+  .quiz-progress .seg.current .fill{width:100%;}
+  .q-text{font-family:'Baloo 2',sans-serif;font-size:1.3rem;margin-bottom:16px;}
+  .q-options{display:grid;gap:10px;}
+  .q-option{
+    text-align:left;padding:14px 16px;border-radius:14px;border:2px solid rgba(23,20,37,0.14);
+    background:#fff;font-weight:700;font-size:15px;color:var(--text-on-paper);cursor:pointer;transition:all 150ms ease;
+  }
+  .q-option:hover{border-color:var(--sun-2);}
+  .q-option:focus-visible{outline:3px solid var(--earth-blue);outline-offset:2px;}
+  .q-option.correct{background:#e9fbf1;border-color:#39c07a;}
+  .q-option.wrong{background:#ffe9e9;border-color:#ff6b6b;}
+  .q-option[disabled]{cursor:default;}
+  .q-feedback{margin-top:14px;font-weight:700;min-height:24px;}
+  .q-feedback.good{color:#1f8a52;}
+  .q-feedback.bad{color:#c23b3b;}
+  .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+  .next-btn{
+    padding:11px 20px;border-radius:999px;border:none;background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer;
+    opacity:0.35;pointer-events:none;transition:opacity 150ms ease, transform 150ms ease;
+  }
+  .next-btn.ready{opacity:1;pointer-events:auto;}
+  .next-btn:hover.ready{transform:translateY(-1px);}
+  .next-btn:focus-visible{outline:3px solid var(--sun-2);outline-offset:2px;}
+  .quiz-result{display:none;text-align:center;padding:10px 0;}
+  .quiz-result.show{display:block;}
+  .quiz-result .medal{font-size:3rem;}
+  .quiz-result h3{font-family:'Baloo 2',sans-serif;font-size:1.5rem;margin:10px 0 6px;}
+  .quiz-result p{color:var(--text-dim-on-paper);margin-bottom:18px;}
+  .retry-btn{padding:11px 22px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--text-on-paper);font-weight:800;cursor:pointer;}
+  .retry-btn:hover{background:var(--ink);color:var(--paper);}
+
+  .recap{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;}
+  @media (max-width:700px){.recap{grid-template-columns:1fr;}}
+  .recap .card{padding:22px;}
+  .recap .card .emoji{font-size:1.8rem;}
+  .recap .card h4{font-family:'Baloo 2',sans-serif;font-size:1.05rem;margin:10px 0 6px;color:var(--paper);}
+  .recap .card p{margin:0;color:var(--text-dim-on-dark);font-size:0.95rem;}
+
+  .page-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:36px;}
+  .page-nav a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:14.5px;
+    padding:12px 20px;border-radius:999px;transition:all 160ms ease;
+  }
+  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(255,255,255,0.16);}
+  .page-nav a.prev:hover{border-color:var(--sun);color:var(--sun);}
+  .page-nav a.next{background:linear-gradient(135deg, var(--sun), var(--sun-2));color:var(--ink);box-shadow:0 10px 24px -8px rgba(255,171,0,0.5);}
+  .page-nav a.next:hover{transform:translateY(-2px);}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--text-dim-on-dark);font-size:0.9rem;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.001ms !important; animation-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="backlink" href="../index.html">&larr; Back to Light</a>
+</div>
+
+<main>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow"><span class="dot"></span> LIGHT &middot; TOPIC 8</div>
+      <h1>When shadows fall <em>across space</em></h1>
+      <p class="lede">An eclipse is just a shadow &mdash; but cast by one whole world onto another. Drag the moon around its orbit and watch both kinds of eclipse form.</p>
+    </div>
+  </header>
+
+  <!-- ORBIT SIMULATOR -->
+  <section class="block reveal" id="orbit">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Move the moon around its orbit</h2>
+        <p>The sun, earth and moon only cause an eclipse when they line up almost exactly. Drag the slider to move the moon and see what happens at each position.</p>
+      </div>
+
+      <div class="orbit-stage">
+        <div class="orbit-svg-wrap">
+          <svg viewBox="0 0 640 260" width="100%" role="img" aria-labelledby="orbitTitle">
+            <title id="orbitTitle">Interactive diagram of the moon orbiting Earth, showing when lunar and solar eclipses occur</title>
+            <rect x="0" y="0" width="640" height="260" rx="16" fill="#010108"/>
+            <circle cx="60" cy="130" r="34" fill="url(#sunGrad)"/>
+            <text x="60" y="180" text-anchor="middle" fill="#a8a4c4" font-family="Nunito" font-weight="800" font-size="12">SUN</text>
+            <defs>
+              <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff6d0"/>
+                <stop offset="60%" stop-color="#ffcf4d"/>
+                <stop offset="100%" stop-color="#ff9d00"/>
+              </radialGradient>
+            </defs>
+
+            <circle cx="380" cy="130" r="26" fill="#3a6fd6" stroke="#4fa8ff" stroke-width="1.5"/>
+            <text x="380" y="172" text-anchor="middle" fill="#a8a4c4" font-family="Nunito" font-weight="800" font-size="12">EARTH</text>
+
+            <ellipse cx="380" cy="130" rx="130" ry="46" fill="none" stroke="#2a2a44" stroke-width="1.5" stroke-dasharray="4 5"/>
+
+            <g id="earthShadowGroup"></g>
+            <g id="moonGroup"></g>
+          </svg>
+        </div>
+
+        <div class="orbit-slider-row">
+          <label for="moonOrbit">Moon's position</label>
+          <input type="range" id="moonOrbit" min="0" max="100" step="1" value="25" />
+        </div>
+
+        <div id="orbitBadgeWrap"></div>
+        <div class="orbit-caption" id="orbitCaption">Move the slider to bring the moon into line with the sun and Earth.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLAR ECLIPSE TYPES -->
+  <section class="block reveal" id="solartypes">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> A CLOSER LOOK</div>
+        <h2>Three ways a solar eclipse can look</h2>
+        <p>Exactly how much of the sun the moon covers &mdash; and from where on Earth you're watching &mdash; changes what a solar eclipse looks like.</p>
+      </div>
+
+      <div class="card">
+        <div class="solar-tabs" role="tablist" aria-label="Choose a solar eclipse type">
+          <button class="solar-tab active" data-type="total" role="tab" aria-selected="true">⚫ Total</button>
+          <button class="solar-tab" data-type="partial" role="tab" aria-selected="false">🌘 Partial</button>
+          <button class="solar-tab" data-type="annular" role="tab" aria-selected="false">💍 Annular</button>
+        </div>
+
+        <div class="solar-visual">
+          <div class="solar-disc-wrap">
+            <div class="solar-sun-disc"></div>
+            <div class="solar-corona" id="solarCorona"></div>
+            <div class="solar-moon-disc" id="solarMoonDisc"></div>
+          </div>
+        </div>
+
+        <div class="solar-caption" id="solarCaption">In a total solar eclipse, the moon's umbra reaches Earth and completely covers the sun's disc. Only the corona — the sun's faint outer atmosphere — is left glowing around the edge. This is what creates the famous "diamond ring" moment.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUE OR FALSE -->
+  <section class="block reveal" id="truefalse">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>True or false?</h2>
+      </div>
+      <div class="tf-grid" id="tfGrid"></div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="block reveal" id="quiz">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> CHECK YOURSELF</div>
+        <h2>Quick quiz &mdash; four questions</h2>
+        <p>No pressure, no login, no score sent anywhere. Just you and the concept.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-progress" id="quizProgress"></div>
+        <div id="quizBody"></div>
+        <div class="quiz-result" id="quizResult">
+          <div class="medal" id="quizMedal">🏆</div>
+          <h3 id="quizResultTitle">Nice work!</h3>
+          <p id="quizResultText"></p>
+          <button class="retry-btn" id="quizRetry">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="block reveal" id="recap">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> COURSE COMPLETE</div>
+        <h2>Three things to remember</h2>
+      </div>
+      <div class="recap">
+        <div class="card">
+          <div class="emoji">🌕</div>
+          <h4>Lunar eclipse = Earth's shadow on the moon</h4>
+          <p>It happens on a full moon night, when Earth sits directly between the sun and the moon.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🌑</div>
+          <h4>Solar eclipse = the moon's shadow on Earth</h4>
+          <p>It happens on a new moon day, when the moon sits directly between the sun and Earth.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">💍</div>
+          <h4>Every eclipse is really just a shadow</h4>
+          <p>Total, partial, and annular are simply different ways of standing in the umbra, penumbra, or the tip of a shadow that doesn't quite reach.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <a class="prev" href="7-shadows.html">&larr; Topic 7: Shadows</a>
+        <a class="next" href="../index.html">Back to Light hub &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">Light &middot; Topic 8: Eclipses &middot; you've completed the Light module! &middot; made for curious 10&ndash;15 year olds</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- ORBIT SIMULATOR ---------------- */
+  var moonOrbitSlider = document.getElementById('moonOrbit');
+  var moonGroup = document.getElementById('moonGroup');
+  var earthShadowGroup = document.getElementById('earthShadowGroup');
+  var orbitCaption = document.getElementById('orbitCaption');
+  var orbitBadgeWrap = document.getElementById('orbitBadgeWrap');
+
+  var EARTH_X = 380, EARTH_Y = 130, ORBIT_RX = 130, ORBIT_RY = 46;
+  var SUN_X = 60, SUN_Y = 130;
+
+  function renderOrbit(){
+    var t = Number(moonOrbitSlider.value) / 100; // 0..1 around the ellipse, 0 = far side (behind earth from sun), 0.5-ish near sun side
+    var angle = t * Math.PI * 2;
+    var moonX = EARTH_X - ORBIT_RX * Math.cos(angle);
+    var moonY = EARTH_Y - ORBIT_RY * Math.sin(angle);
+
+    var ns = 'http://www.w3.org/2000/svg';
+    moonGroup.innerHTML = '';
+    earthShadowGroup.innerHTML = '';
+
+    var moonCirc = document.createElementNS(ns, 'circle');
+    moonCirc.setAttribute('cx', moonX); moonCirc.setAttribute('cy', moonY); moonCirc.setAttribute('r', 12);
+    moonCirc.setAttribute('fill', '#c9c4d6'); moonCirc.setAttribute('stroke', '#8a86a0'); moonCirc.setAttribute('stroke-width', '1.2');
+    moonGroup.appendChild(moonCirc);
+
+    // determine alignment: near side (between sun and earth) = solar eclipse zone; far side (earth between sun and moon) = lunar eclipse zone
+    var isNearSunSide = moonX < EARTH_X; // moon between sun and earth
+    var verticalOffset = Math.abs(moonY - EARTH_Y);
+    var aligned = verticalOffset < 9; // tight alignment threshold
+
+    orbitBadgeWrap.innerHTML = '';
+    var badge = document.createElement('div');
+    badge.className = 'orbit-badge';
+
+    if(aligned && isNearSunSide){
+      badge.classList.add('active-solar');
+      badge.textContent = '☀️ SOLAR ECLIPSE ZONE — new moon day';
+      orbitCaption.textContent = "The moon is now directly between the sun and Earth. Its shadow falls on Earth — this is a solar eclipse, and it can only happen on a new moon day.";
+      // draw moon's shadow reaching toward earth
+      var shadowLine = document.createElementNS(ns, 'polygon');
+      shadowLine.setAttribute('points', (moonX+10)+','+(moonY-4)+' '+(EARTH_X-20)+','+(EARTH_Y-3)+' '+(EARTH_X-20)+','+(EARTH_Y+3)+' '+(moonX+10)+','+(moonY+4));
+      shadowLine.setAttribute('fill', '#0a0a12'); shadowLine.setAttribute('opacity', '0.85');
+      earthShadowGroup.appendChild(shadowLine);
+    } else if(aligned && !isNearSunSide){
+      badge.classList.add('active-lunar');
+      badge.textContent = '🌕 LUNAR ECLIPSE ZONE — full moon night';
+      orbitCaption.textContent = "Earth is now directly between the sun and the moon. Earth's shadow falls on the moon — this is a lunar eclipse, and it can only happen on a full moon night.";
+      var shadowLine2 = document.createElementNS(ns, 'polygon');
+      shadowLine2.setAttribute('points', (EARTH_X+20)+','+(EARTH_Y-6)+' '+(moonX-10)+','+(moonY-3)+' '+(moonX-10)+','+(moonY+3)+' '+(EARTH_X+20)+','+(EARTH_Y+6));
+      shadowLine2.setAttribute('fill', '#0a0a12'); shadowLine2.setAttribute('opacity', '0.85');
+      earthShadowGroup.appendChild(shadowLine2);
+    } else {
+      badge.textContent = '🌗 NO ECLIPSE — moon is out of line';
+      orbitCaption.textContent = "Most of the time, the moon's orbit is tilted just enough that it passes slightly above or below the direct sun-Earth line — so no shadow lines up, and there's no eclipse.";
+    }
+    orbitBadgeWrap.appendChild(badge);
+  }
+
+  moonOrbitSlider.addEventListener('input', renderOrbit);
+  renderOrbit();
+
+  /* ---------------- SOLAR ECLIPSE TYPES ---------------- */
+  var solarTabs = Array.prototype.slice.call(document.querySelectorAll('.solar-tab'));
+  var solarMoonDisc = document.getElementById('solarMoonDisc');
+  var solarCorona = document.getElementById('solarCorona');
+  var solarCaption = document.getElementById('solarCaption');
+
+  var solarData = {
+    total: {
+      transform: 'translate(0px, 0px) scale(1)',
+      corona: 1,
+      caption: "In a total solar eclipse, the moon's umbra reaches Earth and completely covers the sun's disc. Only the corona — the sun's faint outer atmosphere — is left glowing around the edge. This is what creates the famous \"diamond ring\" moment."
+    },
+    partial: {
+      transform: 'translate(38px, -30px) scale(1)',
+      corona: 0,
+      caption: "In a partial solar eclipse, you're standing in the moon's lighter penumbra, not its umbra. The moon only covers part of the sun's disc, leaving a bright crescent visible."
+    },
+    annular: {
+      transform: 'translate(0px, 0px) scale(0.78)',
+      corona: 0,
+      caption: "In an annular solar eclipse, the moon is at a point in its orbit where it looks slightly smaller than the sun. Even lined up perfectly, its umbra doesn't quite reach Earth — so a bright ring (the sun's outer rim) stays visible all the way around."
+    }
+  };
+
+  function setSolarType(key){
+    var data = solarData[key];
+    solarMoonDisc.style.transform = data.transform;
+    solarCorona.style.opacity = data.corona;
+    solarCaption.textContent = data.caption;
+    solarTabs.forEach(function(t){
+      var active = t.getAttribute('data-type') === key;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', String(active));
+    });
+  }
+
+  solarTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){ setSolarType(tab.getAttribute('data-type')); });
+  });
+  setSolarType('total');
+
+  /* ---------------- TRUE OR FALSE ---------------- */
+  var tfStatements = [
+    {
+      text: "A lunar eclipse happens on a new moon day.",
+      answer: false,
+      explain: "False — a lunar eclipse happens on a full moon night, when Earth passes between the sun and the moon."
+    },
+    {
+      text: "A solar eclipse is caused by the moon's shadow falling on Earth.",
+      answer: true,
+      explain: "True — during a solar eclipse, the moon sits between the sun and Earth, and its shadow sweeps across part of Earth's surface."
+    },
+    {
+      text: "Every new moon day produces a solar eclipse.",
+      answer: false,
+      explain: "False — the moon's orbit is slightly tilted, so most new moons pass just above or below the direct sun-Earth line, missing an eclipse entirely."
+    },
+    {
+      text: "During an annular eclipse, a bright ring of the sun stays visible around the moon.",
+      answer: true,
+      explain: "True — 'annular' means ring-shaped. It happens when the moon appears too small to fully cover the sun, leaving its outer rim glowing as a ring."
+    }
+  ];
+
+  var tfGrid = document.getElementById('tfGrid');
+  tfStatements.forEach(function(stmt){
+    var item = document.createElement('div');
+    item.className = 'tf-item';
+
+    var p = document.createElement('p');
+    p.textContent = stmt.text;
+
+    var btnWrap = document.createElement('div');
+    btnWrap.className = 'tf-buttons';
+
+    var trueBtn = document.createElement('button');
+    trueBtn.className = 'tf-btn';
+    trueBtn.textContent = 'True';
+
+    var falseBtn = document.createElement('button');
+    falseBtn.className = 'tf-btn';
+    falseBtn.textContent = 'False';
+
+    var explain = document.createElement('div');
+    explain.className = 'tf-explain';
+    explain.textContent = stmt.explain;
+
+    function answer(chosenTrue){
+      if(item.classList.contains('answered')) return;
+      item.classList.add('answered');
+      var isCorrect = chosenTrue === stmt.answer;
+      item.classList.add(isCorrect ? 'correct' : 'incorrect');
+      var chosenBtn = chosenTrue ? trueBtn : falseBtn;
+      chosenBtn.classList.add(isCorrect ? 'chosen-right' : 'chosen-wrong');
+      if(!isCorrect){
+        var correctBtn = stmt.answer ? trueBtn : falseBtn;
+        correctBtn.classList.add('chosen-right');
+      }
+      item.appendChild(explain);
+    }
+
+    trueBtn.addEventListener('click', function(){ answer(true); });
+    falseBtn.addEventListener('click', function(){ answer(false); });
+
+    btnWrap.appendChild(trueBtn);
+    btnWrap.appendChild(falseBtn);
+    item.appendChild(p);
+    item.appendChild(btnWrap);
+    tfGrid.appendChild(item);
+  });
+
+  /* ---------------- QUIZ ---------------- */
+  var questions = [
+    {
+      q: "What causes a lunar eclipse?",
+      options: [
+        "The moon's shadow falls on Earth",
+        "Earth's shadow falls on the moon",
+        "The sun disappears for a few hours",
+        "Clouds block the moon"
+      ],
+      correct: 1,
+      why: "A lunar eclipse happens when Earth moves between the sun and the moon, casting its shadow onto the moon's surface."
+    },
+    {
+      q: "A solar eclipse can only happen on...",
+      options: ["A full moon night", "A new moon day", "Any clear night", "The first day of summer"],
+      correct: 1,
+      why: "A solar eclipse needs the moon directly between the sun and Earth — that alignment only happens on a new moon day, when the moon is between Earth and the sun in its orbit."
+    },
+    {
+      q: "Why doesn't a solar eclipse happen every single new moon?",
+      options: [
+        "New moons happen too rarely",
+        "The moon's orbit is tilted, so it usually passes slightly above or below the direct sun-Earth line",
+        "The sun is only sometimes bright enough",
+        "Solar eclipses require a full moon, not a new moon"
+      ],
+      correct: 1,
+      why: "The moon's orbit is tilted a few degrees relative to Earth's path around the sun, so most new moons miss lining up exactly — the shadow passes above or below Earth instead of onto it."
+    },
+    {
+      q: "During an annular solar eclipse, why can you still see a bright ring around the moon?",
+      options: [
+        "The moon is transparent",
+        "The moon appears slightly smaller than the sun at that point in its orbit, so its umbra doesn't fully reach Earth",
+        "The sun moves out of the way",
+        "Clouds create the ring effect"
+      ],
+      correct: 1,
+      why: "The moon's distance from Earth varies slightly during its orbit. When it's a bit farther away, it looks smaller than the sun, so even a perfect alignment leaves the sun's outer rim glowing as a ring."
+    }
+  ];
+
+  var qIndex = 0;
+  var qScore = 0;
+  var quizBody = document.getElementById('quizBody');
+  var quizProgress = document.getElementById('quizProgress');
+  var quizResult = document.getElementById('quizResult');
+  var quizMedal = document.getElementById('quizMedal');
+  var quizResultTitle = document.getElementById('quizResultTitle');
+  var quizResultText = document.getElementById('quizResultText');
+  var quizRetry = document.getElementById('quizRetry');
+
+  function buildProgress(){
+    quizProgress.innerHTML = '';
+    questions.forEach(function(_, i){
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      if(i < qIndex) seg.classList.add('done');
+      if(i === qIndex) seg.classList.add('current');
+      var fill = document.createElement('div');
+      fill.className = 'fill';
+      seg.appendChild(fill);
+      quizProgress.appendChild(seg);
+    });
+  }
+
+  function renderQuestion(){
+    quizResult.classList.remove('show');
+    quizBody.style.display = 'block';
+    buildProgress();
+
+    var data = questions[qIndex];
+    quizBody.innerHTML = '';
+
+    var qText = document.createElement('div');
+    qText.className = 'q-text';
+    qText.textContent = (qIndex + 1) + '. ' + data.q;
+    quizBody.appendChild(qText);
+
+    var optsWrap = document.createElement('div');
+    optsWrap.className = 'q-options';
+
+    var feedback = document.createElement('div');
+    feedback.className = 'q-feedback';
+
+    var nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    var spacer = document.createElement('div');
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'next-btn';
+    nextBtn.textContent = (qIndex === questions.length - 1) ? 'See results' : 'Next question';
+    nav.appendChild(spacer);
+    nav.appendChild(nextBtn);
+
+    data.options.forEach(function(optText, i){
+      var optBtn = document.createElement('button');
+      optBtn.className = 'q-option';
+      optBtn.textContent = optText;
+      optBtn.addEventListener('click', function(){
+        var allOpts = optsWrap.querySelectorAll('.q-option');
+        allOpts.forEach(function(o){ o.disabled = true; });
+
+        if(i === data.correct){
+          optBtn.classList.add('correct');
+          feedback.textContent = '✓ Correct! ' + data.why;
+          feedback.className = 'q-feedback good';
+          qScore++;
+        } else {
+          optBtn.classList.add('wrong');
+          allOpts[data.correct].classList.add('correct');
+          feedback.textContent = '✗ Not quite. ' + data.why;
+          feedback.className = 'q-feedback bad';
+        }
+        nextBtn.classList.add('ready');
+      });
+      optsWrap.appendChild(optBtn);
+    });
+
+    quizBody.appendChild(optsWrap);
+    quizBody.appendChild(feedback);
+    quizBody.appendChild(nav);
+
+    nextBtn.addEventListener('click', function(){
+      if(qIndex < questions.length - 1){
+        qIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+  }
+
+  function showResult(){
+    quizBody.style.display = 'none';
+    buildProgress();
+    document.querySelectorAll('.seg').forEach(function(s){ s.classList.add('done'); });
+
+    quizResult.classList.add('show');
+    var pct = qScore / questions.length;
+    if(pct === 1){
+      quizMedal.textContent = '🏆';
+      quizResultTitle.textContent = 'Perfect score!';
+    } else if(pct >= 0.5){
+      quizMedal.textContent = '🌟';
+      quizResultTitle.textContent = 'Nice work!';
+    } else {
+      quizMedal.textContent = '🔦';
+      quizResultTitle.textContent = 'Worth another look';
+    }
+    quizResultText.textContent = 'You got ' + qScore + ' out of ' + questions.length + ' correct.';
+  }
+
+  quizRetry.addEventListener('click', function(){
+    qIndex = 0; qScore = 0;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  /* ---------------- SCROLL REVEAL ---------------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window && revealEls.length){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-observer');
+  }
+
+  /* ---------------- PAGE-TO-PAGE TRANSITION ---------------- */
+  var internalLinks = Array.prototype.slice.call(document.querySelectorAll('a[href]')).filter(function(a){
+    var href = a.getAttribute('href');
+    return href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:');
+  });
+  internalLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      e.preventDefault();
+      document.body.classList.add('leaving');
+      setTimeout(function(){ window.location.href = href; }, 220);
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

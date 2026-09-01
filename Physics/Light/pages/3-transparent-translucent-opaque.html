@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Transparent, Translucent, Opaque</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  :root{
+    --ink:#0a2233;
+    --ink-2:#0f3247;
+    --paper:#eaf6fb;
+    --paper-dim:#d7ecf3;
+    --aqua:#4fd7e8;
+    --aqua-2:#28b8ca;
+    --amber:#FF8B5E;
+    --amber-2:#ff7440;
+    --violet:#8ec9ff;
+    --text-on-dark:#eaf6fb;
+    --text-dim-on-dark:#a9c7d4;
+    --text-on-paper:#0c2634;
+    --text-dim-on-paper:#4d6b78;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.12);
+    --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-on-dark);
+    font-family:'Nunito', system-ui, sans-serif;
+    font-size:17px;
+    opacity:0;
+    animation:page-in 480ms ease both;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', 'Nunito', system-ui, sans-serif;
+    text-wrap:balance;
+    margin:0;
+  }
+
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--aqua);color:var(--ink);}
+  a{color:var(--aqua);}
+  button{font-family:inherit;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--aqua);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--aqua);box-shadow:0 0 10px var(--aqua);}
+
+  .topbar{max-width:960px;margin:0 auto;padding:22px 24px 0;}
+  .backlink{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--text-dim-on-dark);text-decoration:none;font-weight:800;font-size:14px;
+    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.14);
+    transition:all 160ms ease;
+  }
+  .backlink:hover{border-color:var(--aqua);color:var(--aqua);}
+
+  /* ---------- PAGE TRANSITIONS ---------- */
+  @keyframes page-in{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  body.leaving{animation:page-out 260ms ease both;}
+  @keyframes page-out{from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-8px);}}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity 620ms cubic-bezier(.22,.61,.36,1), transform 620ms cubic-bezier(.22,.61,.36,1);}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+  .no-observer .reveal{opacity:1;transform:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:36px 0 50px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .hero::before{
+    content:"";position:absolute;inset:-20% -10% auto -10%;height:520px;
+    background:radial-gradient(closest-side, rgba(79,215,232,0.16), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;}
+  .hero h1{font-size:clamp(2.2rem, 5.6vw, 3.4rem);font-weight:800;line-height:1.06;color:var(--paper);margin-top:16px;}
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg, var(--aqua), var(--amber) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lede{max-width:62ch;margin-top:16px;font-size:1.1rem;color:var(--text-dim-on-dark);}
+
+  /* ---------- SECTIONS ---------- */
+  section.block{padding:60px 0;}
+  section.block + section.block{border-top:1px solid rgba(255,255,255,0.07);}
+  .head{max-width:68ch;margin-bottom:32px;}
+  .head h2{font-size:clamp(1.55rem, 3.2vw, 2.05rem);font-weight:700;color:var(--paper);margin-top:10px;}
+  .head p{color:var(--text-dim-on-dark);margin-top:12px;font-size:1.03rem;}
+
+  .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:28px;}
+
+  /* ---------- MATERIAL BEAM DEMO ---------- */
+  .beam-stage{
+    border-radius:24px;padding:26px;
+    background:radial-gradient(circle at 15% 20%, rgba(255,255,255,0.04), transparent 40%), linear-gradient(180deg,#071c29 0%, #0b2839 55%, #0f3247 100%);
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:var(--shadow-lg);
+  }
+  .material-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .material-tab{
+    padding:9px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.03);color:var(--text-on-dark);font-weight:800;font-size:13.5px;
+    cursor:pointer;transition:all 160ms ease;
+  }
+  .material-tab:hover{border-color:var(--aqua);}
+  .material-tab.active{background:var(--aqua);border-color:var(--aqua);color:#052733;}
+
+  .beam-scene{
+    position:relative;height:210px;border-radius:18px;overflow:hidden;
+    background:#050f16;
+    display:flex;align-items:center;
+  }
+  .beam-source{
+    width:34px;height:34px;border-radius:50%;margin-left:24px;flex:none;
+    background:radial-gradient(circle, #fff6d0, #ffd166 60%, transparent 100%);
+    box-shadow:0 0 30px 8px rgba(255,209,102,0.5);
+    position:relative;z-index:3;
+  }
+  .beam-path{position:relative;flex:1;height:100%;display:flex;align-items:center;}
+  .beam-ray{
+    position:absolute;left:0;top:50%;height:6px;transform:translateY(-50%);
+    background:linear-gradient(90deg, rgba(255,222,140,0.95), rgba(255,222,140,0.15));
+    border-radius:4px;
+  }
+  .material-slab{
+    position:absolute;left:44%;top:0;bottom:0;width:60px;
+    border-radius:6px;
+    transition:all 300ms ease;
+  }
+  .material-slab.glass{background:rgba(180,230,240,0.18);border:1.5px solid rgba(180,230,240,0.55);backdrop-filter:blur(1px);}
+  .material-slab.frosted{background:rgba(180,230,240,0.42);border:1.5px solid rgba(180,230,240,0.6);}
+  .material-slab.wood{background:linear-gradient(180deg,#6b4226,#4a2d18);border:1.5px solid #3a2312;}
+  .beam-screen{
+    width:26px;height:100%;flex:none;margin-right:24px;border-radius:5px;
+    background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.12);
+    position:relative;z-index:2;
+  }
+  .beam-screen .glow-patch{
+    position:absolute;inset:0;border-radius:5px;
+    background:radial-gradient(ellipse at 50% 50%, rgba(255,222,140,0.95), transparent 75%);
+    transition:opacity 300ms ease;
+  }
+  .beam-outline{
+    position:absolute;right:10px;top:10px;font-size:11px;font-weight:800;text-transform:uppercase;
+    letter-spacing:.05em;color:var(--text-dim-on-dark);
+  }
+  .blocked-mark{
+    position:absolute;left:44%;top:50%;transform:translate(-50%,-50%);
+    font-size:22px;opacity:0;transition:opacity 200ms ease 250ms;
+    z-index:4;filter:drop-shadow(0 0 6px rgba(255,139,94,0.6));
+  }
+  .blocked-mark.show{opacity:1;}
+
+  .beam-caption{
+    margin-top:18px;padding:16px 18px;border-radius:14px;
+    background:rgba(79,215,232,0.08);border:1px solid rgba(79,215,232,0.25);
+    color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
+  }
+
+  /* ---------- DEFINITIONS ---------- */
+  .def-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;}
+  @media (max-width:780px){.def-grid{grid-template-columns:1fr;}}
+  .def-card{border-radius:22px;padding:24px;position:relative;overflow:hidden;}
+  .def-card.transparent{background:linear-gradient(160deg, rgba(79,215,232,0.16), rgba(79,215,232,0.03));border:1px solid rgba(79,215,232,0.4);}
+  .def-card.translucent{background:linear-gradient(160deg, rgba(142,201,255,0.14), rgba(142,201,255,0.03));border:1px solid rgba(142,201,255,0.35);}
+  .def-card.opaque{background:linear-gradient(160deg, rgba(255,139,94,0.16), rgba(255,139,94,0.03));border:1px solid rgba(255,139,94,0.4);}
+  .def-card h3{font-size:1.1rem;margin-bottom:8px;}
+  .def-card.transparent h3{color:var(--aqua);}
+  .def-card.translucent h3{color:var(--violet);}
+  .def-card.opaque h3{color:var(--amber);}
+  .def-card p{color:var(--text-dim-on-dark);margin:0 0 14px;font-size:0.95rem;}
+  .def-examples{display:flex;flex-wrap:wrap;gap:6px;}
+  .def-examples span{
+    font-size:12.5px;font-weight:700;background:rgba(255,255,255,0.07);padding:5px 11px;border-radius:999px;
+  }
+
+  /* ---------- SORT GAME ---------- */
+  .sort-game{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  @media (max-width:760px){.sort-game{grid-template-columns:1fr;}}
+  .sort-bank{
+    grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;padding:18px;border-radius:16px;
+    background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.22);min-height:64px;
+  }
+  .bin{border-radius:18px;padding:16px;min-height:170px;display:flex;flex-direction:column;gap:10px;}
+  .bin h4{margin:0 0 4px;font-family:'Baloo 2',sans-serif;font-size:1rem;display:flex;align-items:center;gap:6px;}
+  .bin.transparent{background:rgba(79,215,232,0.1);border:1.5px solid rgba(79,215,232,0.4);}
+  .bin.translucent{background:rgba(142,201,255,0.08);border:1.5px solid rgba(142,201,255,0.35);}
+  .bin.opaque{background:rgba(255,139,94,0.1);border:1.5px solid rgba(255,139,94,0.4);}
+  .bin .zone{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;border-radius:12px;transition:background 150ms ease;}
+  .bin .zone.drag-over{background:rgba(255,255,255,0.08);}
+
+  .tile{
+    display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+    background:var(--paper);color:var(--text-on-paper);font-weight:800;font-size:13.5px;
+    cursor:grab;user-select:none;box-shadow:0 8px 16px -8px rgba(0,0,0,0.5);touch-action:none;border:2px solid transparent;
+  }
+  .tile:active{cursor:grabbing;}
+  .tile.correct{border-color:#39c07a;background:#e9fbf1;}
+  .tile.wrong{border-color:var(--amber-2);background:#ffe9de;animation:shake 320ms ease;}
+  .tile[aria-disabled="true"]{opacity:0.55;cursor:default;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  .sort-status{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .sort-status .score{font-weight:800;color:var(--aqua);}
+  .reset-link{background:none;border:none;color:var(--aqua);font-weight:700;cursor:pointer;font-size:14px;text-decoration:underline;padding:4px;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-card{background:var(--paper);color:var(--text-on-paper);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);}
+  .quiz-progress{display:flex;gap:6px;margin-bottom:18px;}
+  .quiz-progress .seg{flex:1;height:6px;border-radius:99px;background:rgba(12,38,52,0.14);overflow:hidden;}
+  .quiz-progress .seg .fill{height:100%;width:0%;background:var(--aqua-2);transition:width 300ms ease;}
+  .quiz-progress .seg.done .fill{width:100%;background:#39c07a;}
+  .quiz-progress .seg.current .fill{width:100%;}
+  .q-text{font-family:'Baloo 2',sans-serif;font-size:1.3rem;margin-bottom:16px;}
+  .q-options{display:grid;gap:10px;}
+  .q-option{
+    text-align:left;padding:14px 16px;border-radius:14px;border:2px solid rgba(12,38,52,0.14);
+    background:#fff;font-weight:700;font-size:15px;color:var(--text-on-paper);cursor:pointer;transition:all 150ms ease;
+  }
+  .q-option:hover{border-color:var(--aqua-2);}
+  .q-option:focus-visible{outline:3px solid var(--aqua);outline-offset:2px;}
+  .q-option.correct{background:#e9fbf1;border-color:#39c07a;}
+  .q-option.wrong{background:#ffe9de;border-color:var(--amber-2);}
+  .q-option[disabled]{cursor:default;}
+  .q-feedback{margin-top:14px;font-weight:700;min-height:24px;}
+  .q-feedback.good{color:#1f8a52;}
+  .q-feedback.bad{color:#c2532b;}
+  .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+  .next-btn{
+    padding:11px 20px;border-radius:999px;border:none;background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer;
+    opacity:0.35;pointer-events:none;transition:opacity 150ms ease, transform 150ms ease;
+  }
+  .next-btn.ready{opacity:1;pointer-events:auto;}
+  .next-btn:hover.ready{transform:translateY(-1px);}
+  .next-btn:focus-visible{outline:3px solid var(--aqua-2);outline-offset:2px;}
+  .quiz-result{display:none;text-align:center;padding:10px 0;}
+  .quiz-result.show{display:block;}
+  .quiz-result .medal{font-size:3rem;}
+  .quiz-result h3{font-family:'Baloo 2',sans-serif;font-size:1.5rem;margin:10px 0 6px;}
+  .quiz-result p{color:var(--text-dim-on-paper);margin-bottom:18px;}
+  .retry-btn{padding:11px 22px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--text-on-paper);font-weight:800;cursor:pointer;}
+  .retry-btn:hover{background:var(--ink);color:var(--paper);}
+
+  /* ---------- RECAP ---------- */
+  .recap{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;}
+  @media (max-width:700px){.recap{grid-template-columns:1fr;}}
+  .recap .card{padding:22px;}
+  .recap .card .emoji{font-size:1.8rem;}
+  .recap .card h4{font-family:'Baloo 2',sans-serif;font-size:1.05rem;margin:10px 0 6px;color:var(--paper);}
+  .recap .card p{margin:0;color:var(--text-dim-on-dark);font-size:0.95rem;}
+
+  .page-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:36px;}
+  .page-nav a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:14.5px;
+    padding:12px 20px;border-radius:999px;transition:all 160ms ease;
+  }
+  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(255,255,255,0.16);}
+  .page-nav a.prev:hover{border-color:var(--aqua);color:var(--aqua);}
+  .page-nav a.next{background:linear-gradient(135deg, var(--aqua), var(--aqua-2));color:#052733;box-shadow:0 10px 24px -8px rgba(40,184,202,0.5);}
+  .page-nav a.next:hover{transform:translateY(-2px);}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--text-dim-on-dark);font-size:0.9rem;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.001ms !important; animation-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="backlink" href="../index.html">&larr; Back to Light</a>
+</div>
+
+<main>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow"><span class="dot"></span> LIGHT &middot; TOPIC 3</div>
+      <h1>How much light gets <em>through</em>?</h1>
+      <p class="lede">Hold up a clear glass, a frosted window, and a wooden board to a lamp. Each one treats the light completely differently. Try it below.</p>
+    </div>
+  </header>
+
+  <!-- BEAM THROUGH MATERIAL DEMO -->
+  <section class="block reveal" id="beam">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Shine a light through three materials</h2>
+        <p>Pick a material. Watch how much of the beam makes it past the slab to light up the screen on the right.</p>
+      </div>
+
+      <div class="beam-stage">
+        <div class="material-tabs" role="tablist" aria-label="Choose a material">
+          <button class="material-tab active" data-material="glass" role="tab" aria-selected="true">🥛 Clear glass</button>
+          <button class="material-tab" data-material="frosted" role="tab" aria-selected="false">🧊 Frosted glass</button>
+          <button class="material-tab" data-material="wood" role="tab" aria-selected="false">🪵 Wooden board</button>
+        </div>
+
+        <div class="beam-scene">
+          <div class="beam-outline" id="beamOutline">CLEAR GLASS</div>
+          <div class="beam-source"></div>
+          <div class="beam-path">
+            <div class="beam-ray" id="beamRay1" style="width:0%;"></div>
+            <div class="material-slab glass" id="materialSlab"></div>
+            <div class="beam-ray" id="beamRay2" style="left:44%;width:0%;"></div>
+            <div class="blocked-mark" id="blockedMark">⛔</div>
+          </div>
+          <div class="beam-screen">
+            <div class="glow-patch" id="screenGlow"></div>
+          </div>
+        </div>
+
+        <div class="beam-caption" id="beamCaption">Clear glass is transparent: nearly all the light passes straight through, so the screen lights up brightly and you'd see a sharp image through it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEFINITIONS -->
+  <section class="block reveal" id="defs">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> THE BIG IDEA</div>
+        <h2>Three ways a substance can treat light</h2>
+      </div>
+      <div class="def-grid">
+        <div class="def-card transparent">
+          <h3>🥛 Transparent</h3>
+          <p>Light passes through easily. You can see objects clearly and distinctly on the other side.</p>
+          <div class="def-examples"><span>Glass</span><span>Air</span><span>Water</span><span>Clear plastic</span></div>
+        </div>
+        <div class="def-card translucent">
+          <h3>🧊 Translucent</h3>
+          <p>Only some light gets through. Shapes and colours blur into a faint impression &mdash; not a clear picture.</p>
+          <div class="def-examples"><span>Frosted glass</span><span>Tracing paper</span><span>Butter paper</span><span>Thin curtain</span></div>
+        </div>
+        <div class="def-card opaque">
+          <h3>🪵 Opaque</h3>
+          <p>No light gets through at all. Whatever is behind it is completely hidden &mdash; a shadow forms.</p>
+          <div class="def-examples"><span>Wood</span><span>Metal</span><span>Brick wall</span><span>Cardboard</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SORT GAME -->
+  <section class="block reveal" id="sort">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> TRY IT</div>
+        <h2>Sort nine everyday materials</h2>
+        <p>Think about how much light would pass through each one, then drop it in the right bin.</p>
+      </div>
+
+      <div class="card sort-game" id="sortGame">
+        <div class="sort-bank" id="sortBank" aria-label="Unsorted materials"></div>
+
+        <div class="bin transparent" data-bin="transparent">
+          <h4>🥛 Transparent</h4>
+          <div class="zone" data-zone="transparent"></div>
+        </div>
+        <div class="bin translucent" data-bin="translucent">
+          <h4>🧊 Translucent</h4>
+          <div class="zone" data-zone="translucent"></div>
+        </div>
+        <div class="bin opaque" data-bin="opaque">
+          <h4>🪵 Opaque</h4>
+          <div class="zone" data-zone="opaque"></div>
+        </div>
+
+        <div class="sort-status">
+          <span class="score" id="sortScore">0 / 9 sorted correctly</span>
+          <button class="reset-link" id="sortReset">Shuffle &amp; reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="block reveal" id="quiz">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> CHECK YOURSELF</div>
+        <h2>Quick quiz &mdash; four questions</h2>
+        <p>No pressure, no login, no score sent anywhere. Just you and the concept.</p>
+      </div>
+
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-progress" id="quizProgress"></div>
+        <div id="quizBody"></div>
+        <div class="quiz-result" id="quizResult">
+          <div class="medal" id="quizMedal">🏆</div>
+          <h3 id="quizResultTitle">Nice work!</h3>
+          <p id="quizResultText"></p>
+          <button class="retry-btn" id="quizRetry">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="block reveal" id="recap">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow"><span class="dot"></span> BEFORE YOU GO</div>
+        <h2>Three things to remember</h2>
+      </div>
+      <div class="recap">
+        <div class="card">
+          <div class="emoji">🥛</div>
+          <h4>Transparent = passes through easily</h4>
+          <p>Glass, air and water let light travel through with almost nothing lost, so you see clearly across them.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🧊</div>
+          <h4>Translucent = partly blocked</h4>
+          <p>Frosted glass and tracing paper scatter the light as it passes, so only a blurry glow gets through.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🪵</div>
+          <h4>Opaque = fully blocked</h4>
+          <p>Wood and metal stop light completely, casting a shadow on whatever is behind them.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <a class="prev" href="2-sources-of-light.html">&larr; Topic 2: Sources of Light</a>
+        <a class="next" href="4-rays-and-beams.html">Topic 4: Rays &amp; Beams &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">Light &middot; Topic 3: Transparent, Translucent &amp; Opaque &middot; made for curious 10&ndash;15 year olds</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- MATERIAL BEAM DEMO ---------------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.material-tab'));
+  var slab = document.getElementById('materialSlab');
+  var ray1 = document.getElementById('beamRay1');
+  var ray2 = document.getElementById('beamRay2');
+  var screenGlow = document.getElementById('screenGlow');
+  var beamCaption = document.getElementById('beamCaption');
+  var beamOutline = document.getElementById('beamOutline');
+
+  var blockedMark = document.getElementById('blockedMark');
+
+  var materialData = {
+    glass: {
+      label: 'CLEAR GLASS',
+      className: 'glass',
+      screenOpacity: 0.95,
+      ray2Width: '56%',
+      ray2Opacity: 1,
+      blocked: false,
+      caption: "Clear glass is transparent: the light keeps going straight through it, all the way to the screen on the other side — it barely even slows the beam down."
+    },
+    frosted: {
+      label: 'FROSTED GLASS',
+      className: 'frosted',
+      screenOpacity: 0.4,
+      ray2Width: '56%',
+      ray2Opacity: 0.5,
+      blocked: false,
+      caption: "Frosted glass is translucent: the light still gets all the way through to the screen, but it's scattered on the way — so it arrives as a soft, blurry glow instead of a sharp beam."
+    },
+    wood: {
+      label: 'WOODEN BOARD',
+      className: 'wood',
+      screenOpacity: 0.02,
+      ray2Width: '0%',
+      ray2Opacity: 0,
+      blocked: true,
+      caption: "A wooden board is opaque: the light stops dead at the surface of the board. None of it makes it through — behind the board is just a dark shadow."
+    }
+  };
+
+  function setMaterial(key){
+    var data = materialData[key];
+    slab.className = 'material-slab ' + data.className;
+    screenGlow.style.opacity = data.screenOpacity;
+    beamCaption.textContent = data.caption;
+    beamOutline.textContent = data.label;
+    tabs.forEach(function(t){
+      var active = t.getAttribute('data-material') === key;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', String(active));
+    });
+    // ray1: source to the slab's near face (always reaches the slab)
+    ray1.style.width = '44%';
+    // ray2: slab's far face onward — reaches the screen for transparent/translucent, stays at 0 for opaque
+    ray2.style.width = data.ray2Width;
+    ray2.style.opacity = data.ray2Opacity;
+    blockedMark.classList.toggle('show', data.blocked);
+  }
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){ setMaterial(tab.getAttribute('data-material')); });
+  });
+  setMaterial('glass');
+
+  /* ---------------- SORT GAME ---------------- */
+  var items = [
+    {id:'glass1', label:'🪟 Window glass', bin:'transparent'},
+    {id:'water1', label:'💧 Clear water', bin:'transparent'},
+    {id:'air1', label:'💨 Air', bin:'transparent'},
+    {id:'frosted1', label:'🧊 Frosted glass', bin:'translucent'},
+    {id:'tracing1', label:'📄 Tracing paper', bin:'translucent'},
+    {id:'curtain1', label:'🪟 Thin curtain', bin:'translucent'},
+    {id:'wood1', label:'🪵 Wooden door', bin:'opaque'},
+    {id:'metal1', label:'🥫 Metal sheet', bin:'opaque'},
+    {id:'brick1', label:'🧱 Brick wall', bin:'opaque'}
+  ];
+
+  var bank = document.getElementById('sortBank');
+  var scoreEl = document.getElementById('sortScore');
+  var resetBtn = document.getElementById('sortReset');
+  var zones = Array.prototype.slice.call(document.querySelectorAll('.zone'));
+  var selectedTile = null;
+  var draggedTile = null;
+
+  function shuffledCopy(arr){
+    var a = arr.slice();
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function updateScore(){
+    var correct = document.querySelectorAll('.tile.correct').length;
+    scoreEl.textContent = correct + ' / ' + items.length + ' sorted correctly';
+  }
+
+  function placeTile(tile, zoneEl, binName){
+    var itemBin = tile.getAttribute('data-bin');
+    zoneEl.appendChild(tile);
+    if(itemBin === binName){
+      tile.classList.remove('wrong');
+      tile.classList.add('correct');
+      tile.setAttribute('aria-disabled', 'true');
+      tile.setAttribute('draggable', 'false');
+    } else {
+      tile.classList.remove('correct');
+      tile.classList.add('wrong');
+      setTimeout(function(){ tile.classList.remove('wrong'); }, 350);
+    }
+    updateScore();
+  }
+
+  function makeTile(item){
+    var tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.textContent = item.label;
+    tile.setAttribute('draggable', 'true');
+    tile.setAttribute('data-bin', item.bin);
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-label', item.label + ', tap then choose a bin');
+
+    tile.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', item.id);
+      e.dataTransfer.effectAllowed = 'move';
+      draggedTile = tile;
+    });
+    tile.addEventListener('dragend', function(){ draggedTile = null; });
+
+    tile.addEventListener('click', function(){
+      if(tile.getAttribute('aria-disabled') === 'true') return;
+      if(selectedTile === tile){
+        tile.style.outline = '';
+        selectedTile = null;
+        return;
+      }
+      if(selectedTile) selectedTile.style.outline = '';
+      selectedTile = tile;
+      tile.style.outline = '3px solid var(--aqua)';
+    });
+
+    return tile;
+  }
+
+  function buildBank(){
+    bank.innerHTML = '';
+    zones.forEach(function(z){ z.innerHTML = ''; });
+    var order = shuffledCopy(items);
+    order.forEach(function(item){ bank.appendChild(makeTile(item)); });
+    selectedTile = null;
+    updateScore();
+  }
+
+  zones.forEach(function(zoneEl){
+    var binName = zoneEl.parentElement.getAttribute('data-bin');
+    zoneEl.addEventListener('dragover', function(e){ e.preventDefault(); zoneEl.classList.add('drag-over'); });
+    zoneEl.addEventListener('dragleave', function(){ zoneEl.classList.remove('drag-over'); });
+    zoneEl.addEventListener('drop', function(e){
+      e.preventDefault();
+      zoneEl.classList.remove('drag-over');
+      if(draggedTile) placeTile(draggedTile, zoneEl, binName);
+      draggedTile = null;
+    });
+    zoneEl.addEventListener('click', function(){
+      if(selectedTile){
+        placeTile(selectedTile, zoneEl, binName);
+        selectedTile.style.outline = '';
+        selectedTile = null;
+      }
+    });
+  });
+
+  resetBtn.addEventListener('click', buildBank);
+  buildBank();
+
+  /* ---------------- QUIZ ---------------- */
+  var questions = [
+    {
+      q: "You look through a car's clean windshield and see the road perfectly clearly. The windshield glass is...",
+      options: ["Opaque", "Translucent", "Transparent", "Luminous"],
+      correct: 2,
+      why: "Since you can see a clear, sharp image straight through it, the glass is transparent — it lets nearly all the light pass through undisturbed."
+    },
+    {
+      q: "A bathroom window is made of frosted glass so people outside can't see in clearly, but daylight still gets through. This glass is...",
+      options: ["Transparent", "Translucent", "Opaque", "Non-luminous"],
+      correct: 1,
+      why: "Frosted glass scatters light as it passes through — enough gets through to brighten the room, but not enough to form a clear image, which is exactly what translucent means."
+    },
+    {
+      q: "Why can't you see your friend standing behind a closed wooden door?",
+      options: [
+        "The door is transparent",
+        "The door is translucent",
+        "The door is opaque, so no light passes through it",
+        "Wooden doors absorb sound, not light"
+      ],
+      correct: 2,
+      why: "Wood is opaque — it blocks light completely, so no light carrying an image of your friend can reach your eyes through it."
+    },
+    {
+      q: "Which pair correctly matches a material to its category?",
+      options: [
+        "Air — opaque",
+        "Tracing paper — translucent",
+        "Brick wall — transparent",
+        "Water — opaque"
+      ],
+      correct: 1,
+      why: "Tracing paper is a classic translucent material — it glows when held to light but you can't see a sharp image through it. Air and water are transparent; a brick wall is opaque."
+    }
+  ];
+
+  var qIndex = 0;
+  var qScore = 0;
+  var quizBody = document.getElementById('quizBody');
+  var quizProgress = document.getElementById('quizProgress');
+  var quizResult = document.getElementById('quizResult');
+  var quizMedal = document.getElementById('quizMedal');
+  var quizResultTitle = document.getElementById('quizResultTitle');
+  var quizResultText = document.getElementById('quizResultText');
+  var quizRetry = document.getElementById('quizRetry');
+
+  function buildProgress(){
+    quizProgress.innerHTML = '';
+    questions.forEach(function(_, i){
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      if(i < qIndex) seg.classList.add('done');
+      if(i === qIndex) seg.classList.add('current');
+      var fill = document.createElement('div');
+      fill.className = 'fill';
+      seg.appendChild(fill);
+      quizProgress.appendChild(seg);
+    });
+  }
+
+  function renderQuestion(){
+    quizResult.classList.remove('show');
+    quizBody.style.display = 'block';
+    buildProgress();
+
+    var data = questions[qIndex];
+    quizBody.innerHTML = '';
+
+    var qText = document.createElement('div');
+    qText.className = 'q-text';
+    qText.textContent = (qIndex + 1) + '. ' + data.q;
+    quizBody.appendChild(qText);
+
+    var optsWrap = document.createElement('div');
+    optsWrap.className = 'q-options';
+
+    var feedback = document.createElement('div');
+    feedback.className = 'q-feedback';
+
+    var nav = document.createElement('div');
+    nav.className = 'quiz-nav';
+    var spacer = document.createElement('div');
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'next-btn';
+    nextBtn.textContent = (qIndex === questions.length - 1) ? 'See results' : 'Next question';
+    nav.appendChild(spacer);
+    nav.appendChild(nextBtn);
+
+    data.options.forEach(function(optText, i){
+      var optBtn = document.createElement('button');
+      optBtn.className = 'q-option';
+      optBtn.textContent = optText;
+      optBtn.addEventListener('click', function(){
+        var allOpts = optsWrap.querySelectorAll('.q-option');
+        allOpts.forEach(function(o){ o.disabled = true; });
+
+        if(i === data.correct){
+          optBtn.classList.add('correct');
+          feedback.textContent = '✓ Correct! ' + data.why;
+          feedback.className = 'q-feedback good';
+          qScore++;
+        } else {
+          optBtn.classList.add('wrong');
+          allOpts[data.correct].classList.add('correct');
+          feedback.textContent = '✗ Not quite. ' + data.why;
+          feedback.className = 'q-feedback bad';
+        }
+        nextBtn.classList.add('ready');
+      });
+      optsWrap.appendChild(optBtn);
+    });
+
+    quizBody.appendChild(optsWrap);
+    quizBody.appendChild(feedback);
+    quizBody.appendChild(nav);
+
+    nextBtn.addEventListener('click', function(){
+      if(qIndex < questions.length - 1){
+        qIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+  }
+
+  function showResult(){
+    quizBody.style.display = 'none';
+    buildProgress();
+    document.querySelectorAll('.seg').forEach(function(s){ s.classList.add('done'); });
+
+    quizResult.classList.add('show');
+    var pct = qScore / questions.length;
+    if(pct === 1){
+      quizMedal.textContent = '🏆';
+      quizResultTitle.textContent = 'Perfect score!';
+    } else if(pct >= 0.5){
+      quizMedal.textContent = '🌟';
+      quizResultTitle.textContent = 'Nice work!';
+    } else {
+      quizMedal.textContent = '🔦';
+      quizResultTitle.textContent = 'Worth another look';
+    }
+    quizResultText.textContent = 'You got ' + qScore + ' out of ' + questions.length + ' correct.';
+  }
+
+  quizRetry.addEventListener('click', function(){
+    qIndex = 0; qScore = 0;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  /* ---------------- SCROLL REVEAL ---------------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window && revealEls.length){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-observer');
+  }
+
+  /* ---------------- PAGE-TO-PAGE TRANSITION ---------------- */
+  var internalLinks = Array.prototype.slice.call(document.querySelectorAll('a[href]')).filter(function(a){
+    var href = a.getAttribute('href');
+    return href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:');
+  });
+  internalLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      e.preventDefault();
+      document.body.classList.add('leaving');
+      setTimeout(function(){ window.location.href = href; }, 220);
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
