@@ -107,6 +107,12 @@
   .rig-slider-row{display:flex;align-items:center;gap:14px;margin-top:16px;flex-wrap:wrap;}
   .rig-slider-row label{font-weight:800;font-size:13.5px;color:var(--text-dim-on-dark);white-space:nowrap;}
   input[type="range"]{accent-color:var(--glow);height:6px;cursor:pointer;flex:1;min-width:160px;}
+  .rig-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;}
+  .legend-chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text-dim-on-dark);}
+  .legend-chip .swatch{width:16px;height:16px;border-radius:5px;flex:none;border:1px solid rgba(255,255,255,0.2);}
+  .swatch-umbra{background:#1a1228;}
+  .swatch-penumbra{background:#9a8ec4;}
+  .legend-chip.hidden{opacity:0.3;}
   .rig-caption{
     margin-top:16px;padding:16px 18px;border-radius:14px;
     background:rgba(255,206,84,0.08);border:1px solid rgba(255,206,84,0.25);
@@ -250,7 +256,7 @@
             <rect x="0" y="0" width="640" height="240" rx="16" fill="#08050f"/>
             <g id="rigRaysGroup"></g>
             <rect x="270" y="70" width="16" height="100" fill="#3a2f52" stroke="#5b4d84" stroke-width="1.5" id="rigObject"/>
-            <rect id="rigScreen" x="540" y="10" width="10" height="220" fill="#2a2140" stroke="#5b4d84" stroke-width="1.5"/>
+            <rect id="rigScreen" x="540" y="10" width="10" height="220" fill="#f2ecff" stroke="#8b7bb8" stroke-width="1.5"/>
             <g id="rigShadowGroup"></g>
             <text x="278" y="190" fill="#b9aed8" font-family="Nunito" font-weight="800" font-size="12">OBJECT</text>
             <text x="545" y="228" fill="#b9aed8" font-family="Nunito" font-weight="800" font-size="12" text-anchor="middle">SCREEN</text>
@@ -260,6 +266,11 @@
         <div class="rig-slider-row">
           <label for="screenPos">Screen distance</label>
           <input type="range" id="screenPos" min="400" max="620" step="5" value="540" />
+        </div>
+
+        <div class="rig-legend" id="rigLegend">
+          <span class="legend-chip"><span class="swatch swatch-umbra"></span> Umbra — no light at all</span>
+          <span class="legend-chip" id="legendPenumbra"><span class="swatch swatch-penumbra"></span> Penumbra — partly lit</span>
         </div>
 
         <div class="rig-caption" id="rigCaption">With a single point source, the shadow has just one zone: a completely dark umbra with sharp, well-defined edges.</div>
@@ -386,6 +397,7 @@
   var rigShadowGroup = document.getElementById('rigShadowGroup');
   var rigScreen = document.getElementById('rigScreen');
   var rigCaption = document.getElementById('rigCaption');
+  var legendPenumbra = document.getElementById('legendPenumbra');
 
   var OBJ_X = 278, OBJ_TOP = 70, OBJ_BOTTOM = 170;
   var currentSource = 'point';
@@ -396,6 +408,7 @@
     var ns = 'http://www.w3.org/2000/svg';
     rigRaysGroup.innerHTML = '';
     rigShadowGroup.innerHTML = '';
+    legendPenumbra.classList.toggle('hidden', currentSource === 'point');
 
     function addLine(x1,y1,x2,y2,color,opacity,dash){
       var l = document.createElementNS(ns, 'line');
@@ -433,7 +446,7 @@
       // umbra region on screen (between the two projected rays)
       var shadowTop = Math.min(topAtScreen, botAtScreen);
       var shadowHeight = Math.abs(botAtScreen - topAtScreen);
-      addRect(screenX - 3, shadowTop, 16, shadowHeight, '#0a0614', 0.92);
+      addRect(screenX - 3, shadowTop, 16, shadowHeight, '#1a1228', 0.97);
 
       rigCaption.textContent = "With a single point source, the shadow has just one zone: a completely dark umbra with sharp, well-defined edges.";
     } else {
@@ -485,11 +498,12 @@
       umbraBottom = Math.min(SCREEN_BOTTOM, umbraBottom);
       umbraHeight = Math.max(0, umbraBottom - umbraTop);
 
-      // draw penumbra band first (lighter, spans the full blocked-from-at-least-one-point range),
-      // then umbra on top (darker, only the fully-blocked-from-both-points core)
-      addRect(screenX - 3, penTop, 16, Math.max(0, penBottom - penTop), '#5b4d84', 0.6);
+      // draw penumbra band first (a warm mid-grey, spans the full blocked-from-at-least-one-point
+      // range) then umbra on top (near-black, only the fully-blocked-from-both-points core) —
+      // against the now-light screen surface, both zones read clearly as distinct shades.
+      addRect(screenX - 3, penTop, 16, Math.max(0, penBottom - penTop), '#9a8ec4', 0.85);
       if(umbraHeight > 0){
-        addRect(screenX - 3, umbraTop, 16, umbraHeight, '#0a0614', 0.92);
+        addRect(screenX - 3, umbraTop, 16, umbraHeight, '#1a1228', 0.97);
       }
 
       var penumbraVisible = (umbraTop - penTop) > 2 || (penBottom - umbraBottom) > 2;

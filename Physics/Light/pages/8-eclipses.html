@@ -8,23 +8,23 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
   :root{
-    --ink:#04050f;
-    --ink-2:#0a0d1f;
-    --paper:#f4f1ff;
-    --paper-dim:#e2ddf5;
-    --sun:#ffcf4d;
-    --sun-2:#ffab00;
-    --earth-blue:#4fa8ff;
-    --moon-grey:#c9c4d6;
-    --corona:#fff3c9;
-    --violet:#8ea3ff;
-    --text-on-dark:#eceaf9;
-    --text-dim-on-dark:#a8a4c4;
+    --ink:#fff9ec;
+    --ink-2:#fff2d9;
+    --paper:#2a2140;
+    --paper-dim:#4a3f66;
+    --sun:#ff9d1f;
+    --sun-2:#e88400;
+    --earth-blue:#1f7ae0;
+    --moon-grey:#8a8496;
+    --corona:#a3711a;
+    --violet:#6a4fd6;
+    --text-on-dark:#2a2140;
+    --text-dim-on-dark:#5c5279;
     --text-on-paper:#171425;
     --text-dim-on-paper:#575271;
-    --card-bg: rgba(255,255,255,0.05);
-    --card-border: rgba(255,255,255,0.12);
-    --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.75);
+    --card-bg: rgba(42,33,64,0.04);
+    --card-border: rgba(42,33,64,0.14);
+    --shadow-lg: 0 24px 60px -20px rgba(42,33,64,0.25);
   }
 
   *{box-sizing:border-box;}
@@ -58,7 +58,7 @@
   .topbar{max-width:960px;margin:0 auto;padding:22px 24px 0;}
   .backlink{
     display:inline-flex;align-items:center;gap:6px;color:var(--text-dim-on-dark);text-decoration:none;font-weight:800;font-size:14px;
-    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.14);transition:all 160ms ease;
+    padding:8px 14px;border-radius:999px;border:1.5px solid rgba(42,33,64,0.16);transition:all 160ms ease;
   }
   .backlink:hover{border-color:var(--sun);color:var(--sun);}
 
@@ -69,10 +69,10 @@
   .reveal.in-view{opacity:1;transform:translateY(0);}
   .no-observer .reveal{opacity:1;transform:none;}
 
-  .hero{position:relative;padding:36px 0 50px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .hero{position:relative;padding:36px 0 50px;overflow:hidden;border-bottom:1px solid rgba(42,33,64,0.08);}
   .hero::before{
     content:"";position:absolute;inset:-20% -10% auto -10%;height:520px;
-    background:radial-gradient(closest-side, rgba(255,207,77,0.12), transparent 70%);pointer-events:none;
+    background:radial-gradient(closest-side, rgba(255,157,31,0.14), transparent 70%);pointer-events:none;
   }
   .hero-inner{position:relative;}
   .hero h1{font-size:clamp(2.2rem, 5.6vw, 3.4rem);font-weight:800;line-height:1.06;color:var(--paper);margin-top:16px;}
@@ -83,7 +83,7 @@
   .hero p.lede{max-width:62ch;margin-top:16px;font-size:1.1rem;color:var(--text-dim-on-dark);}
 
   section.block{padding:60px 0;}
-  section.block + section.block{border-top:1px solid rgba(255,255,255,0.07);}
+  section.block + section.block{border-top:1px solid rgba(42,33,64,0.08);}
   .head{max-width:68ch;margin-bottom:32px;}
   .head h2{font-size:clamp(1.55rem, 3.2vw, 2.05rem);font-weight:700;color:var(--paper);margin-top:10px;}
   .head p{color:var(--text-dim-on-dark);margin-top:12px;font-size:1.03rem;}
@@ -92,37 +92,46 @@
   /* ---------- ORBIT SIMULATOR ---------- */
   .orbit-stage{
     border-radius:24px;padding:26px;
-    background:radial-gradient(circle at 20% 15%, rgba(255,255,255,0.05), transparent 45%), linear-gradient(180deg,#020208 0%, #04050f 55%, #0a0d1f 100%);
-    border:1px solid rgba(255,255,255,0.1);box-shadow:var(--shadow-lg);
+    background:linear-gradient(180deg,#fffaf0 0%, #fff3dc 100%);
+    border:1px solid rgba(42,33,64,0.1);box-shadow:var(--shadow-lg);
   }
-  .orbit-svg-wrap{background:#010108;border-radius:18px;padding:10px;position:relative;}
+  .orbit-svg-wrap{background:#0b0d1c;border-radius:18px;padding:10px;position:relative;}
   .orbit-slider-row{display:flex;align-items:center;gap:14px;margin-top:18px;flex-wrap:wrap;}
   .orbit-slider-row label{font-weight:800;font-size:13.5px;color:var(--text-dim-on-dark);white-space:nowrap;}
   input[type="range"]{accent-color:var(--sun);height:6px;cursor:pointer;flex:1;min-width:200px;}
   .orbit-caption{
     margin-top:16px;padding:16px 18px;border-radius:14px;
-    background:rgba(255,207,77,0.08);border:1px solid rgba(255,207,77,0.22);
+    background:rgba(255,157,31,0.1);border:1px solid rgba(255,157,31,0.28);
     color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
   }
   .orbit-badge{
     display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;
     font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
-    background:rgba(255,255,255,0.08);color:var(--text-dim-on-dark);margin-bottom:10px;
+    background:rgba(42,33,64,0.08);color:var(--text-dim-on-dark);margin-bottom:10px;
   }
-  .orbit-badge.active-lunar{background:rgba(201,196,214,0.25);color:var(--paper);}
-  .orbit-badge.active-solar{background:rgba(255,207,77,0.25);color:var(--sun);}
+  .orbit-badge.active-lunar{background:rgba(90,80,120,0.18);color:var(--paper);}
+  .orbit-badge.active-solar{background:rgba(255,157,31,0.22);color:var(--sun-2);}
+  .month-row{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;}
+  .month-row label{font-weight:800;font-size:13.5px;color:var(--text-dim-on-dark);white-space:nowrap;}
+  .month-pips{display:flex;gap:4px;flex:1;min-width:200px;}
+  .month-pip{
+    flex:1;height:6px;border-radius:99px;background:rgba(42,33,64,0.14);cursor:pointer;
+    transition:background 150ms ease;
+  }
+  .month-pip.hit{background:rgba(255,157,31,0.85);}
+  .month-pip.current{outline:2px solid var(--paper);outline-offset:2px;}
 
   /* ---------- SOLAR ECLIPSE TYPES ---------- */
   .solar-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
   .solar-tab{
-    padding:9px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.16);
-    background:rgba(255,255,255,0.03);color:var(--text-on-dark);font-weight:800;font-size:13.5px;
+    padding:9px 18px;border-radius:999px;border:1.5px solid rgba(42,33,64,0.18);
+    background:rgba(42,33,64,0.03);color:var(--text-on-dark);font-weight:800;font-size:13.5px;
     cursor:pointer;transition:all 160ms ease;
   }
   .solar-tab:hover{border-color:var(--sun);}
-  .solar-tab.active{background:var(--sun);border-color:var(--sun);color:#3a2600;}
+  .solar-tab.active{background:var(--sun);border-color:var(--sun);color:#fff;}
   .solar-visual{
-    height:180px;border-radius:18px;background:#010108;display:flex;align-items:center;justify-content:center;
+    height:180px;border-radius:18px;background:#0b0d1c;display:flex;align-items:center;justify-content:center;
     position:relative;overflow:hidden;
   }
   .solar-disc-wrap{position:relative;width:120px;height:120px;}
@@ -142,7 +151,7 @@
   }
   .solar-caption{
     margin-top:16px;padding:16px 18px;border-radius:14px;
-    background:rgba(255,207,77,0.08);border:1px solid rgba(255,207,77,0.22);
+    background:rgba(255,157,31,0.1);border:1px solid rgba(255,157,31,0.28);
     color:var(--text-on-dark);font-weight:600;min-height:52px;display:flex;align-items:center;
   }
 
@@ -150,13 +159,13 @@
   .tf-grid{display:grid;gap:12px;}
   .tf-item{
     display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;
+    background:rgba(42,33,64,0.03);border:1px solid rgba(42,33,64,0.1);border-radius:16px;
     padding:16px 20px;
   }
   .tf-item p{margin:0;font-weight:700;font-size:15px;max-width:56ch;}
   .tf-buttons{display:flex;gap:8px;flex:none;}
   .tf-btn{
-    padding:9px 16px;border-radius:999px;border:2px solid rgba(255,255,255,0.18);
+    padding:9px 16px;border-radius:999px;border:2px solid rgba(42,33,64,0.2);
     background:transparent;color:var(--text-on-dark);font-weight:800;font-size:13px;cursor:pointer;
     transition:all 160ms ease;
   }
@@ -170,7 +179,7 @@
   .tf-item.answered .tf-explain{display:block;}
 
   /* ---------- QUIZ ---------- */
-  .quiz-card{background:var(--paper);color:var(--text-on-paper);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);}
+  .quiz-card{background:#fff;color:var(--text-on-paper);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);border:1px solid rgba(42,33,64,0.08);}
   .quiz-progress{display:flex;gap:6px;margin-bottom:18px;}
   .quiz-progress .seg{flex:1;height:6px;border-radius:99px;background:rgba(23,20,37,0.14);overflow:hidden;}
   .quiz-progress .seg .fill{height:100%;width:0%;background:var(--sun-2);transition:width 300ms ease;}
@@ -218,7 +227,7 @@
     display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:14.5px;
     padding:12px 20px;border-radius:999px;transition:all 160ms ease;
   }
-  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(255,255,255,0.16);}
+  .page-nav a.prev{color:var(--text-dim-on-dark);border:1.5px solid rgba(42,33,64,0.18);}
   .page-nav a.prev:hover{border-color:var(--sun);color:var(--sun);}
   .page-nav a.next{background:linear-gradient(135deg, var(--sun), var(--sun-2));color:var(--ink);box-shadow:0 10px 24px -8px rgba(255,171,0,0.5);}
   .page-nav a.next:hover{transform:translateY(-2px);}
@@ -251,28 +260,32 @@
       <div class="head">
         <div class="eyebrow"><span class="dot"></span> TRY IT</div>
         <h2>Move the moon around its orbit</h2>
-        <p>The sun, earth and moon only cause an eclipse when they line up almost exactly. Drag the slider to move the moon and see what happens at each position.</p>
+        <p>The sun, Earth and moon only cause an eclipse when they line up almost exactly. Drag the first slider to move the moon around its monthly orbit. The moon's orbit is also tilted slightly, so try the second slider too — it jumps between different months, and in most of them the moon passes just above or below the line, missing the eclipse completely.</p>
       </div>
 
       <div class="orbit-stage">
         <div class="orbit-svg-wrap">
           <svg viewBox="0 0 640 260" width="100%" role="img" aria-labelledby="orbitTitle">
             <title id="orbitTitle">Interactive diagram of the moon orbiting Earth, showing when lunar and solar eclipses occur</title>
-            <rect x="0" y="0" width="640" height="260" rx="16" fill="#010108"/>
+            <rect x="0" y="0" width="640" height="260" rx="16" fill="#0b0d1c"/>
             <circle cx="60" cy="130" r="34" fill="url(#sunGrad)"/>
-            <text x="60" y="180" text-anchor="middle" fill="#a8a4c4" font-family="Nunito" font-weight="800" font-size="12">SUN</text>
+            <text x="60" y="180" text-anchor="middle" fill="#b8b4d0" font-family="Nunito" font-weight="800" font-size="12">SUN</text>
             <defs>
               <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="#fff6d0"/>
                 <stop offset="60%" stop-color="#ffcf4d"/>
                 <stop offset="100%" stop-color="#ff9d00"/>
               </radialGradient>
+              <radialGradient id="moonBaseGrad" cx="35%" cy="30%" r="75%">
+                <stop offset="0%" stop-color="#f4f1ff"/>
+                <stop offset="100%" stop-color="#c9c4d6"/>
+              </radialGradient>
             </defs>
 
             <circle cx="380" cy="130" r="26" fill="#3a6fd6" stroke="#4fa8ff" stroke-width="1.5"/>
-            <text x="380" y="172" text-anchor="middle" fill="#a8a4c4" font-family="Nunito" font-weight="800" font-size="12">EARTH</text>
+            <text x="380" y="172" text-anchor="middle" fill="#b8b4d0" font-family="Nunito" font-weight="800" font-size="12">EARTH</text>
 
-            <ellipse cx="380" cy="130" rx="130" ry="46" fill="none" stroke="#2a2a44" stroke-width="1.5" stroke-dasharray="4 5"/>
+            <ellipse cx="380" cy="130" rx="130" ry="46" fill="none" stroke="#3a3a5c" stroke-width="1.5" stroke-dasharray="4 5"/>
 
             <g id="earthShadowGroup"></g>
             <g id="moonGroup"></g>
@@ -283,6 +296,12 @@
           <label for="moonOrbit">Moon's position</label>
           <input type="range" id="moonOrbit" min="0" max="100" step="1" value="25" />
         </div>
+
+        <div class="month-row">
+          <label for="orbitMonth">Which month <span id="monthLabel">(1 of 12)</span></label>
+          <input type="range" id="orbitMonth" min="0" max="11" step="1" value="0" />
+        </div>
+        <div class="month-pips" id="monthPips" aria-hidden="true"></div>
 
         <div id="orbitBadgeWrap"></div>
         <div class="orbit-caption" id="orbitCaption">Move the slider to bring the moon into line with the sun and Earth.</div>
@@ -395,6 +414,9 @@
 
   /* ---------------- ORBIT SIMULATOR ---------------- */
   var moonOrbitSlider = document.getElementById('moonOrbit');
+  var orbitMonthSlider = document.getElementById('orbitMonth');
+  var monthLabel = document.getElementById('monthLabel');
+  var monthPips = document.getElementById('monthPips');
   var moonGroup = document.getElementById('moonGroup');
   var earthShadowGroup = document.getElementById('earthShadowGroup');
   var orbitCaption = document.getElementById('orbitCaption');
@@ -402,26 +424,75 @@
 
   var EARTH_X = 380, EARTH_Y = 130, ORBIT_RX = 130, ORBIT_RY = 46;
   var SUN_X = 60, SUN_Y = 130;
+  var TILT_MAX = 22; // px of extra vertical wobble at new/full moon, standing in for the moon's ~5 degree orbital tilt
+  var NUM_MONTHS = 12;
+
+  // The moon's real orbit is tilted about 5 degrees to the sun-Earth plane. That tilt doesn't
+  // change month to month, but the two points where the tilted orbit crosses the flat plane
+  // (the "nodes") slowly sweep around over time. So whether a given month's new/full moon
+  // happens to land near a node (eclipse possible) or far from it (no eclipse) varies by month.
+  // We model that node-drift as a phase that advances a bit each month.
+  function nodePhaseForMonth(monthIndex){
+    return (monthIndex / NUM_MONTHS) * Math.PI * 2 * 2.2; // node sweeps around roughly every ~5.5 months, like eclipse seasons
+  }
+
+  // extra vertical offset added by the tilted orbit at a given orbital angle, for a given month's node phase
+  function tiltOffsetAt(angle, monthIndex){
+    var nodePhase = nodePhaseForMonth(monthIndex);
+    return TILT_MAX * Math.sin(angle - nodePhase);
+  }
+
+  function buildMonthPips(){
+    monthPips.innerHTML = '';
+    for(var m = 0; m < NUM_MONTHS; m++){
+      var pip = document.createElement('div');
+      pip.className = 'month-pip';
+      pip.setAttribute('data-month', m);
+      // mark this pip as an "eclipse possible" month if either the new-moon or full-moon
+      // position for that month lands close enough to a node
+      var newMoonOffset = Math.abs(tiltOffsetAt(0, m));
+      var fullMoonOffset = Math.abs(tiltOffsetAt(Math.PI, m));
+      if(newMoonOffset < 6 || fullMoonOffset < 6){ pip.classList.add('hit'); }
+      pip.addEventListener('click', function(){
+        orbitMonthSlider.value = this.getAttribute('data-month');
+        renderOrbit();
+      });
+      monthPips.appendChild(pip);
+    }
+  }
 
   function renderOrbit(){
     var t = Number(moonOrbitSlider.value) / 100; // 0..1 around the ellipse, 0 = far side (behind earth from sun), 0.5-ish near sun side
+    var monthIndex = Number(orbitMonthSlider.value);
     var angle = t * Math.PI * 2;
     var moonX = EARTH_X - ORBIT_RX * Math.cos(angle);
-    var moonY = EARTH_Y - ORBIT_RY * Math.sin(angle);
+    var baseY = EARTH_Y - ORBIT_RY * Math.sin(angle);
+    var tiltOffset = tiltOffsetAt(angle, monthIndex);
+    var moonY = baseY + tiltOffset;
+
+    monthLabel.textContent = '(' + (monthIndex + 1) + ' of ' + NUM_MONTHS + ')';
+    Array.prototype.slice.call(monthPips.children).forEach(function(pip, i){
+      pip.classList.toggle('current', i === monthIndex);
+    });
 
     var ns = 'http://www.w3.org/2000/svg';
     moonGroup.innerHTML = '';
     earthShadowGroup.innerHTML = '';
 
-    var moonCirc = document.createElementNS(ns, 'circle');
-    moonCirc.setAttribute('cx', moonX); moonCirc.setAttribute('cy', moonY); moonCirc.setAttribute('r', 12);
-    moonCirc.setAttribute('fill', '#c9c4d6'); moonCirc.setAttribute('stroke', '#8a86a0'); moonCirc.setAttribute('stroke-width', '1.2');
-    moonGroup.appendChild(moonCirc);
-
     // determine alignment: near side (between sun and earth) = solar eclipse zone; far side (earth between sun and moon) = lunar eclipse zone
     var isNearSunSide = moonX < EARTH_X; // moon between sun and earth
     var verticalOffset = Math.abs(moonY - EARTH_Y);
-    var aligned = verticalOffset < 9; // tight alignment threshold
+    var ALIGN_THRESHOLD = 9;
+    var aligned = verticalOffset < ALIGN_THRESHOLD; // tight alignment threshold
+    var nearNewOrFullPoint = Math.abs(Math.sin(angle)) < 0.18; // close to angle=0 or angle=PI (new/full moon points)
+    // how deep into the shadow the moon is, 0 = just grazing the edge, 1 = dead-center aligned
+    var eclipseDepth = aligned ? Math.max(0, 1 - verticalOffset / ALIGN_THRESHOLD) : 0;
+
+    var MOON_R = 12;
+    var moonCirc = document.createElementNS(ns, 'circle');
+    moonCirc.setAttribute('cx', moonX); moonCirc.setAttribute('cy', moonY); moonCirc.setAttribute('r', MOON_R);
+    moonCirc.setAttribute('fill', 'url(#moonBaseGrad)'); moonCirc.setAttribute('stroke', '#8a86a0'); moonCirc.setAttribute('stroke-width', '1.2');
+    moonGroup.appendChild(moonCirc);
 
     orbitBadgeWrap.innerHTML = '';
     var badge = document.createElement('div');
@@ -439,11 +510,37 @@
     } else if(aligned && !isNearSunSide){
       badge.classList.add('active-lunar');
       badge.textContent = '🌕 LUNAR ECLIPSE ZONE — full moon night';
-      orbitCaption.textContent = "Earth is now directly between the sun and the moon. Earth's shadow falls on the moon — this is a lunar eclipse, and it can only happen on a full moon night.";
+      orbitCaption.textContent = "Earth is now directly between the sun and the moon. Earth's shadow reaches all the way out and falls right on the moon's face — see it darken to a dim, reddish 'blood moon' below. This is a lunar eclipse, and it can only happen on a full moon night.";
+
+      // Earth's shadow cone, reaching from Earth out toward and past the moon
       var shadowLine2 = document.createElementNS(ns, 'polygon');
-      shadowLine2.setAttribute('points', (EARTH_X+20)+','+(EARTH_Y-6)+' '+(moonX-10)+','+(moonY-3)+' '+(moonX-10)+','+(moonY+3)+' '+(EARTH_X+20)+','+(EARTH_Y+6));
-      shadowLine2.setAttribute('fill', '#0a0a12'); shadowLine2.setAttribute('opacity', '0.85');
+      shadowLine2.setAttribute('points', (EARTH_X+20)+','+(EARTH_Y-6)+' '+(moonX-16)+','+(moonY-3)+' '+(moonX-16)+','+(moonY+3)+' '+(EARTH_X+20)+','+(EARTH_Y+6));
+      shadowLine2.setAttribute('fill', '#2a2140'); shadowLine2.setAttribute('opacity', '0.35');
       earthShadowGroup.appendChild(shadowLine2);
+
+      // the shadow actually landing ON the moon's disc — a dim reddish overlay, clipped to the moon's own circle,
+      // growing to cover the whole disc as alignment gets more exact (this is the part a child can SEE on the moon)
+      var clipId = 'moonClip';
+      var defsEl = document.querySelector('svg defs');
+      var existingClip = document.getElementById(clipId);
+      if(existingClip) existingClip.parentNode.removeChild(existingClip);
+      var clipPath = document.createElementNS(ns, 'clipPath');
+      clipPath.setAttribute('id', clipId);
+      var clipCirc = document.createElementNS(ns, 'circle');
+      clipCirc.setAttribute('cx', moonX); clipCirc.setAttribute('cy', moonY); clipCirc.setAttribute('r', MOON_R);
+      clipPath.appendChild(clipCirc);
+      defsEl.appendChild(clipPath);
+
+      var eclipseOverlay = document.createElementNS(ns, 'circle');
+      eclipseOverlay.setAttribute('cx', moonX); eclipseOverlay.setAttribute('cy', moonY); eclipseOverlay.setAttribute('r', MOON_R);
+      eclipseOverlay.setAttribute('fill', '#7a2a2a');
+      eclipseOverlay.setAttribute('opacity', 0.35 + eclipseDepth * 0.5);
+      eclipseOverlay.setAttribute('clip-path', 'url(#' + clipId + ')');
+      moonGroup.appendChild(eclipseOverlay);
+    } else if(nearNewOrFullPoint){
+      badge.textContent = '🌗 NO ECLIPSE THIS MONTH — moon passes above/below the shadow';
+      var whichDay = isNearSunSide ? 'new moon day' : 'full moon night';
+      orbitCaption.textContent = "This is a " + whichDay + " — the moon IS lined up left-to-right with the sun and Earth. But this month, its tilted orbit carries it just above or below the flat sun-Earth line, so the shadow misses completely. This is why most new and full moons do NOT produce an eclipse — try a different month above to find one where it lines up.";
     } else {
       badge.textContent = '🌗 NO ECLIPSE — moon is out of line';
       orbitCaption.textContent = "Most of the time, the moon's orbit is tilted just enough that it passes slightly above or below the direct sun-Earth line — so no shadow lines up, and there's no eclipse.";
@@ -452,6 +549,8 @@
   }
 
   moonOrbitSlider.addEventListener('input', renderOrbit);
+  orbitMonthSlider.addEventListener('input', renderOrbit);
+  buildMonthPips();
   renderOrbit();
 
   /* ---------------- SOLAR ECLIPSE TYPES ---------------- */
