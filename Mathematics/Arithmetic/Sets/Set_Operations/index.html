@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🔵 Set Operations</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:1000px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    flex:0 0 auto;width:70px;height:70px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  table.recap-table{width:100%;border-collapse:collapse;margin-top:14px;background:white;border-radius:14px;overflow:hidden;font-size:14px;}
+  table.recap-table th, table.recap-table td{padding:10px 12px;border-bottom:1px solid #e2d9f5;text-align:left;line-height:1.4;}
+  table.recap-table th{background:var(--purple);color:white;}
+  table.recap-table tr:last-child td{border-bottom:none;}
+  table.recap-table td b{color:var(--pink);}
+
+  .progress-note{
+    text-align:center;font-size:15px;color:var(--ink);background:white;display:inline-block;
+    padding:8px 18px;border-radius:999px;border:2px dashed var(--purple);margin-top:14px;
+  }
+  .progress-wrap{text-align:center;}
+
+  .topics-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:28px 0;
+  }
+  .topic-card{
+    background:white;border-radius:16px;padding:20px 16px;border:3px solid var(--red);
+    box-shadow:0 4px 12px rgba(0,0,0,.08);text-decoration:none;color:inherit;
+    transition:all .25s cubic-bezier(0.34, 1.56, 0.64, 1);cursor:pointer;position:relative;
+  }
+  .topic-card:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .topic-emoji{font-size:36px;margin-bottom:8px;}
+  .topic-card h3{font-size:clamp(16px,2.5vw,20px);color:var(--pink);margin-bottom:8px;}
+  .topic-card p{font-size:clamp(12px,1.5vw,14px);color:var(--ink);line-height:1.5;}
+  .badge{
+    position:absolute;top:-10px;right:-10px;background:var(--teal);color:white;font-size:11px;font-weight:bold;
+    padding:5px 10px;border-radius:999px;box-shadow:0 3px 0 #04946e;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Sets">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🔵 🔴 🟢</div>
+    <h1><span class="highlight">Set Operations</span></h1>
+    <p class="subtitle">Combining sets — union, intersection, difference, and complement!</p>
+    <div class="progress-wrap"><span class="progress-note">🚀 4 deep-dive lessons, one for each operation</span></div>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧮</div>
+    <p>Hi again! I'm Sunny the Sorter 👋 You already know what sets are and how to write them. Now let's combine sets
+      together, like mixing paint colors! Sometimes we mix everything together, sometimes we only keep the overlap,
+      and sometimes we look at what's left over. Each operation gets its own full lesson with plenty of practice —
+      pick one below to get started!</p>
+  </div>
+
+  <!-- QUICK RECAP TABLE -->
+  <section class="section">
+    <h2>📊 Quick Overview</h2>
+    <p class="lead">A bird's-eye view of the four operations you're about to learn. Click into each lesson below for
+      the full explanation, worked examples, and practice activities.</p>
+    <table class="recap-table">
+      <tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr>
+      <tr><td><b>∪</b></td><td>Union — combine both, no repeats</td><td>{1,2} ∪ {2,3} = {1,2,3}</td></tr>
+      <tr><td><b>∩</b></td><td>Intersection — common elements</td><td>{1,2,3} ∩ {2,3,4} = {2,3}</td></tr>
+      <tr><td><b>−</b></td><td>Difference — in one but not the other</td><td>{1,2,3} − {2,3} = {1}</td></tr>
+      <tr><td><b>A′</b></td><td>Complement — everything in U except A</td><td>U={1..5}, A={1,2} → A′={3,4,5}</td></tr>
+    </table>
+  </section>
+
+  <div class="topics-grid">
+    <a href="Union/index.html" class="topic-card">
+      <span class="badge">Start Here ▶</span>
+      <div class="topic-emoji">🔵</div>
+      <h3>Union</h3>
+      <p>Combine two sets into one big set — with no repeats!</p>
+    </a>
+    <a href="Intersection/index.html" class="topic-card">
+      <div class="topic-emoji">🟢</div>
+      <h3>Intersection</h3>
+      <p>Find what two sets have in common, and meet disjoint sets!</p>
+    </a>
+    <a href="Difference/index.html" class="topic-card">
+      <div class="topic-emoji">🔴</div>
+      <h3>Difference</h3>
+      <p>What's in one set, but not the other? Both directions!</p>
+    </a>
+    <a href="Complement/index.html" class="topic-card">
+      <div class="topic-emoji">⚪</div>
+      <h3>Complement</h3>
+      <p>Everything OUTSIDE a set — but still inside the universe!</p>
+    </a>
+  </div>
+</div>
+</body>
+</html>

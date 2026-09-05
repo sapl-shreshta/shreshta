@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🟢 Intersection of Sets</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    flex:0 0 auto;width:70px;height:70px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+  .section p.lead + p.lead{margin-top:-8px;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .example-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px;}
+  .example-card{background:white;border-radius:14px;padding:14px 16px;border-left:6px solid var(--teal);font-size:14px;line-height:1.5;}
+  .example-card.bad{border-left-color:var(--red);}
+  .example-card b{color:var(--purple);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+  .info-box.purple{background:#f3e8ff;border-color:var(--purple);}
+
+  .svg-wrap{display:flex;flex-direction:column;align-items:center;margin:16px 0;}
+  .svg-wrap p.caption{font-size:13px;font-style:italic;margin-top:8px;text-align:center;max-width:400px;}
+
+  /* Sorting exercise */
+  .progress-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;white-space:nowrap;}
+  .exercise-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .sort-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+  .sort-card{background:white;border-radius:16px;padding:14px 16px;border:3px solid #cbd5e1;transition:border-color .2s;}
+  .sort-card.answered-correct{border-color:var(--teal);}
+  .sort-card.answered-wrong{border-color:var(--red);}
+  .sort-text{font-size:14px;font-weight:bold;margin-bottom:10px;min-height:40px;}
+  .sort-btns{display:flex;gap:8px;flex-wrap:wrap;}
+  .sort-btn{
+    flex:1 1 auto;background:white;border:3px solid var(--blue);border-radius:12px;padding:8px 10px;font-size:13px;
+    font-weight:bold;cursor:pointer;transition:all .15s;
+  }
+  .sort-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .sort-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .sort-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .sort-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .sort-reason{margin-top:10px;font-size:13px;background:#f0e6ff;border-radius:10px;padding:8px 10px;display:none;}
+
+  /* Quiz (shared pattern) */
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action.purple{background:var(--purple);box-shadow:0 4px 0 #7a3b97;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .next-box{
+    background:linear-gradient(135deg,#f3e8ff,#e0f7ff);border:3px dashed var(--purple);
+    border-radius:22px;padding:24px 22px;margin:28px 0;text-align:center;
+  }
+  .next-box h2{color:var(--purple);font-size:clamp(20px,3vw,26px);margin-bottom:10px;}
+  .next-box p{font-size:15px;margin-bottom:16px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Set Operations">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🟢 🔎 🤝</div>
+    <h1><span class="highlight">Intersection of Sets</span></h1>
+    <p class="subtitle">Finding what two sets have in common!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧮</div>
+    <p>Hi again! I'm Sunny the Sorter 👋 You've already learned how to combine sets with a <b>union</b>. Now let's do
+      something a little different — instead of putting everything together, let's find the <b>overlap</b> between
+      two sets. Get ready to hunt for what they share!</p>
+  </div>
+
+  <!-- BLOCK 1: WHAT DOES INTERSECTION MEAN -->
+  <section class="section">
+    <h2>🟢 What Does "Intersection" Mean?</h2>
+    <p class="lead">Imagine two friends each write down their favourite colours on separate lists. If someone asked,
+      "Which colours do you <b>BOTH</b> like?" — you'd only write down the colours that show up on <b>both</b> lists.
+      Everything else gets left off. That overlapping bit is exactly what an <b>intersection</b> is!</p>
+    <p class="lead">Formally: the <b>intersection</b> of two sets A and B, written <b>A ∩ B</b>, is the set of
+      elements that appear in <b>BOTH</b> A and B at the same time. If an element is only in one of the sets, it
+      does <b>NOT</b> belong in the intersection.</p>
+
+    <div class="example-grid">
+      <div class="example-card"><b>Numeric example</b><br>A = {1, 2, 3, 4}, B = {3, 4, 5, 6}<br>A ∩ B = {3, 4} — only
+        3 and 4 are in both sets.</div>
+      <div class="example-card"><b>Real-world example</b><br>A = students who play cricket = {Ravi, Meena, Karan}<br>
+        B = students who play football = {Meena, Aisha}<br>A ∩ B = {Meena} — Meena is the only one who plays
+        <b>both</b> sports.</div>
+    </div>
+
+    <div class="svg-wrap">
+      <svg viewBox="0 0 280 200" width="260" style="max-width:100%;height:auto;">
+        <defs>
+          <mask id="interMaskA">
+            <rect x="0" y="0" width="280" height="200" fill="black"/>
+            <circle cx="100" cy="100" r="58" fill="white"/>
+          </mask>
+        </defs>
+        <rect x="10" y="15" width="260" height="170" rx="20" fill="#ffffff" stroke="#1d2b53" stroke-width="3"/>
+        <circle cx="170" cy="100" r="58" fill="#06d6a0" fill-opacity="0.85" mask="url(#interMaskA)"/>
+        <circle cx="100" cy="100" r="58" fill="none" stroke="#a06cd5" stroke-width="3"/>
+        <circle cx="170" cy="100" r="58" fill="none" stroke="#ff6ec7" stroke-width="3"/>
+        <text x="20" y="38" font-size="14" font-weight="bold" fill="#1d2b53">U</text>
+        <text x="62" y="68" font-size="16" font-weight="bold" fill="#a06cd5">A</text>
+        <text x="198" y="68" font-size="16" font-weight="bold" fill="#ff6ec7">B</text>
+      </svg>
+      <p class="caption">The shaded region is A ∩ B — only what's common to BOTH A and B.</p>
+    </div>
+  </section>
+
+  <!-- ACTIVITY 1 -->
+  <section class="section" id="inter-try1-section">
+    <div class="exercise-head">
+      <h2 style="margin:0;">🕵️ Try It: Find A ∩ B <span class="try-badge">Click one!</span></h2>
+      <span class="progress-badge" id="inter-try1-badge">Correct: 0 / 4</span>
+    </div>
+    <p class="lead">For each pair of sets below, pick the correct intersection.</p>
+    <div class="sort-grid" id="inter-try1"></div>
+  </section>
+
+  <!-- BLOCK 2: STEP BY STEP -->
+  <section class="section">
+    <h2>📝 Step-by-Step: How to Find an Intersection</h2>
+    <p class="lead">Follow this simple mini-guide whenever you need to find A ∩ B:</p>
+    <div class="example-grid">
+      <div class="example-card"><b>Step 1</b><br>Write out both sets in roster form.</div>
+      <div class="example-card"><b>Step 2</b><br>Go through set A element by element.</div>
+      <div class="example-card"><b>Step 3</b><br>For each element, check: does it ALSO appear in set B? If yes,
+        keep it. If no, leave it out.</div>
+      <div class="example-card"><b>Step 4</b><br>Whatever's left over is your intersection!</div>
+    </div>
+    <div class="info-box blue">🔍 <b>Worked example:</b> A = {2, 4, 6, 8, 10}, B = {4, 8, 12}<br>
+      Check 2 → not in B, skip. Check 4 → in B, keep! Check 6 → not in B, skip. Check 8 → in B, keep! Check 10 →
+      not in B, skip.<br><b>A ∩ B = {4, 8}</b></div>
+  </section>
+
+  <!-- BLOCK 3: DISJOINT SETS (expanded) -->
+  <section class="section">
+    <h2>🚧 Disjoint Sets — When There's NO Overlap At All</h2>
+    <p class="lead">Sometimes, when you go looking for the intersection of two sets, you search and search... and
+      find <b>nothing at all</b>! Not a single shared element. This is actually an important and common situation
+      in maths, and it has a special name.</p>
+
+    <p class="lead"><b>Definition:</b> If A ∩ B = φ (the empty set) — meaning A and B have <b>NO elements at all
+      in common</b> — then A and B are called <b>DISJOINT SETS</b>.</p>
+
+    <div class="info-box purple">🐾 <b>A relatable analogy:</b> Imagine one friend only owns cats and dogs as pets,
+      and another friend only owns fish and birds. If you compare their pet lists, there is <b>zero overlap</b> in
+      the TYPES of pets they own — none of the same animal type appears on both lists. Their sets of pet types are
+      disjoint.</div>
+
+    <p class="lead" style="margin-top:16px;">Let's look at <b>three</b> worked examples so this idea really sticks —
+      including one tricky case where sets look very different but are actually <b>NOT</b> disjoint!</p>
+
+    <div class="example-grid">
+      <div class="example-card"><b>Example 1: Disjoint</b><br>A = {1, 2, 3}, B = {4, 5, 6}<br>
+        Check every element of A against B: Is 1 in B? No. Is 2 in B? No. Is 3 in B? No.<br>
+        None of A's elements show up in B, so A ∩ B = φ. <b>A and B are disjoint.</b></div>
+      <div class="example-card"><b>Example 2: Disjoint</b><br>A = {red, blue, green} (colours)<br>
+        B = {triangle, square, circle} (shapes)<br>
+        These sets describe completely different KINDS of things, so obviously nothing overlaps.
+        A ∩ B = φ, <b>disjoint.</b></div>
+      <div class="example-card bad"><b>Example 3: NOT Disjoint!</b><br>A = {2, 4, 6, 8}, B = {1, 3, 6, 9}<br>
+        Here, <b>6 appears in BOTH sets!</b> So A ∩ B = {6}, which is NOT empty.<br>
+        A and B are <b>NOT disjoint</b> — even though most of their elements are different, it only takes
+        <b>ONE</b> shared element to rule out being disjoint.</div>
+    </div>
+
+    <p class="lead" style="margin-top:16px;">Here's a visual way to think about it: when two sets are disjoint,
+      their circles in a Venn diagram wouldn't overlap at all — there'd be a gap between them, unlike the
+      overlapping circles you saw earlier for A ∩ B.</p>
+
+    <div class="svg-wrap">
+      <svg viewBox="0 0 280 200" width="260" style="max-width:100%;height:auto;">
+        <rect x="10" y="15" width="260" height="170" rx="20" fill="#ffffff" stroke="#1d2b53" stroke-width="3"/>
+        <circle cx="80" cy="100" r="45" fill="#a06cd5" fill-opacity="0.45" stroke="#a06cd5" stroke-width="3"/>
+        <circle cx="200" cy="100" r="45" fill="#ff6ec7" fill-opacity="0.45" stroke="#ff6ec7" stroke-width="3"/>
+        <text x="20" y="38" font-size="14" font-weight="bold" fill="#1d2b53">U</text>
+        <text x="72" y="68" font-size="16" font-weight="bold" fill="#a06cd5">A</text>
+        <text x="192" y="68" font-size="16" font-weight="bold" fill="#ff6ec7">B</text>
+      </svg>
+      <p class="caption">A and B are disjoint — their circles don't even touch! There's a gap between them because
+        they share absolutely nothing.</p>
+    </div>
+  </section>
+
+  <!-- ACTIVITY 2 -->
+  <section class="section" id="inter-try2-section">
+    <div class="exercise-head">
+      <h2 style="margin:0;">🕵️ Disjoint or Not Disjoint? <span class="try-badge">Click one!</span></h2>
+      <span class="progress-badge" id="inter-try2-badge">Correct: 0 / 6</span>
+    </div>
+    <p class="lead">For each pair of sets, decide whether they are disjoint (no elements in common) or not.</p>
+    <div class="sort-grid" id="inter-try2"></div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Up next:</b> now that you can find what two sets share, the next topic is
+    <b>Difference of Sets</b> — finding the elements that are in one set but NOT the other (A − B and B − A)!</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember about intersections and disjoint sets!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 5</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+  <!-- NEXT STEP CTA -->
+  <div class="next-box" id="next-box" style="display:none;">
+    <h2>🎉 You've mastered intersections and disjoint sets!</h2>
+    <p>You now know how to find <b>A ∩ B</b> — the elements common to both sets — and you can spot <b>disjoint
+      sets</b>, which share nothing at all. Great work!</p>
+    <div class="btnrow">
+      <a href="../../index.html" style="text-decoration:none;"><button class="action purple">⬅️ Back to Sets Topics</button></a>
+      <a href="../Difference/index.html" style="text-decoration:none;"><button class="action">Next Topic: Difference of Sets ▶</button></a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Reusable flexible-choice exercise ---------- */
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function buildFlexExercise(gridId, badgeId, items){
+  const grid = document.getElementById(gridId);
+  const badge = document.getElementById(badgeId);
+  let correctCount = 0;
+  items.forEach((item, idx) => {
+    const choices = shuffleArray(item.choices.slice());
+    const card = document.createElement('div');
+    card.className = 'sort-card';
+    card.innerHTML = `
+      <div class="sort-text">${item.text}</div>
+      <div class="sort-btns">
+        ${choices.map((c,ci) => `<button class="sort-btn" data-ci="${ci}">${c.label}</button>`).join('')}
+      </div>
+      <div class="sort-reason" id="${gridId}-reason-${idx}">${item.reason}</div>
+    `;
+    grid.appendChild(card);
+    const btns = card.querySelectorAll('.sort-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ci = Number(btn.dataset.ci);
+        btns.forEach(b => b.disabled = true);
+        const isCorrect = !!choices[ci].correct;
+        btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        if(!isCorrect){
+          const correctIdx = choices.findIndex(c => c.correct);
+          btns[correctIdx].classList.add('correct');
+        } else {
+          correctCount++;
+          badge.textContent = 'Correct: ' + correctCount + ' / ' + items.length;
+        }
+        card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+        document.getElementById(gridId + '-reason-' + idx).style.display = 'block';
+      });
+    });
+  });
+}
+
+buildFlexExercise('inter-try1', 'inter-try1-badge', [
+  {text:"A = {1,2,3}, B = {2,3,4} → A ∩ B = ?",
+   choices:[{label:"{2,3}",correct:true},{label:"{1,2,3,4}"},{label:"{1}"},{label:"{4}"}],
+   reason:"Only 2 and 3 show up in both sets."},
+  {text:"A = {a,b,c}, B = {d,e,f} → A ∩ B = ?",
+   choices:[{label:"φ",correct:true},{label:"{a,b,c,d,e,f}"},{label:"{a}"},{label:"{d}"}],
+   reason:"No letter appears in both lists, so the intersection is empty."},
+  {text:"A = {5,10,15}, B = {10,20,30} → A ∩ B = ?",
+   choices:[{label:"{10}",correct:true},{label:"{5,15}"},{label:"{20,30}"},{label:"{5,10,15,20,30}"}],
+   reason:"Only 10 is shared by both sets."},
+  {text:"A = {1,2,3}, B = {1,2,3} → A ∩ B = ?",
+   choices:[{label:"{1,2,3}",correct:true},{label:"φ"},{label:"{1}"},{label:"{2,3}"}],
+   reason:"When the sets are identical, the intersection is the whole set."}
+]);
+
+buildFlexExercise('inter-try2', 'inter-try2-badge', [
+  {text:"A = {1,2,3}, B = {4,5,6}",
+   choices:[{label:"✅ Disjoint",correct:true},{label:"❌ Not Disjoint"}],
+   reason:"No number appears in both sets."},
+  {text:"A = {2,4,6,8}, B = {1,3,6,9}",
+   choices:[{label:"✅ Disjoint"},{label:"❌ Not Disjoint",correct:true}],
+   reason:"They share the number 6!"},
+  {text:"A = {cat, dog}, B = {fish, bird}",
+   choices:[{label:"✅ Disjoint",correct:true},{label:"❌ Not Disjoint"}],
+   reason:"No animal appears on both lists."},
+  {text:"A = {Monday, Tuesday}, B = {Tuesday, Wednesday}",
+   choices:[{label:"✅ Disjoint"},{label:"❌ Not Disjoint",correct:true}],
+   reason:"They share Tuesday!"},
+  {text:"A = {prime numbers less than 10} = {2,3,5,7}, B = {multiples of 4 less than 10} = {4,8}",
+   choices:[{label:"✅ Disjoint",correct:true},{label:"❌ Not Disjoint"}],
+   reason:"No number is both a small prime and a small multiple of 4."},
+  {text:"A = {factors of 12} = {1,2,3,4,6,12}, B = {factors of 15} = {1,3,5,15}",
+   choices:[{label:"✅ Disjoint"},{label:"❌ Not Disjoint",correct:true}],
+   reason:"They share 1 and 3!"}
+]);
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"What does A ∩ B mean?", opts:["Only the elements common to BOTH A and B","Every element from A and B combined","Elements in A only","Elements not in either set"], answer:0,
+   explain:"A ∩ B is the intersection — only the elements that appear in BOTH A and B."},
+  {q:"A = {1,2,3,4}, B = {3,4,5,6}. What is A ∩ B?", opts:["{1,2,5,6}","{1,2,3,4,5,6}","{3,4}","φ"], answer:2,
+   explain:"Only 3 and 4 appear in both sets, so A ∩ B = {3,4}."},
+  {q:"If A ∩ B = φ, what do we call A and B?", opts:["Equal sets","Equivalent sets","Subsets","Disjoint sets"], answer:3,
+   explain:"When two sets share no elements at all (A ∩ B = φ), they are called disjoint sets."},
+  {q:"A = {2,4,6}, B = {1,3,5}. Are A and B disjoint?", opts:["No — they share 2","Yes — they share no elements","No — they share every element","Cannot tell"], answer:1,
+   explain:"None of A's elements (2,4,6) appear in B (1,3,5), so A ∩ B = φ and they are disjoint."},
+  {q:"A = {factors of 12} = {1,2,3,4,6,12}, B = {factors of 15} = {1,3,5,15}. Are A and B disjoint?", opts:["Yes — they share nothing","Yes — they are equal","No — they share 1 and 3","Cannot tell"], answer:2,
+   explain:"1 and 3 are factors of both 12 and 15, so A ∩ B = {1,3} — not empty, so they are NOT disjoint."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function shuffleOptions(raw){
+  const idxs = raw.opts.map((_,i)=>i);
+  for(let i=idxs.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [idxs[i],idxs[j]] = [idxs[j],idxs[i]];
+  }
+  return { ...raw, opts: idxs.map(i=>raw.opts[i]), answer: idxs.indexOf(raw.answer) };
+}
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = shuffleOptions(quizData[qIndex]);
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You really understand intersections and disjoint sets! 🌟"
+          : score>=total*0.6 ? "Great job! You've got the main idea! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+  document.getElementById('next-box').style.display = 'block';
+}
+renderQuestion();
+</script>
+</body>
+</html>

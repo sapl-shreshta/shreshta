@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>📊 Summary & Practice</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    flex:0 0 auto;width:70px;height:70px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .example-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px;}
+  .example-card{background:white;border-radius:14px;padding:14px 16px;border-left:6px solid var(--teal);font-size:14px;line-height:1.5;}
+  .example-card.bad{border-left-color:var(--red);}
+  .example-card b{color:var(--purple);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+  .info-box.purple{background:#f3e8ff;border-color:var(--purple);}
+
+  /* Summary table (reused from Factors_and_Multiples) */
+  .summary-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    font-size:14px;
+  }
+  .summary-table th{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166);
+    color:white;
+    padding:12px;
+    text-align:left;
+    font-weight:bold;
+  }
+  .summary-table td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+  }
+  .summary-table tr:hover{background:#f9f9f9;}
+  .summary-table td:first-child{font-weight:bold;color:var(--purple);font-size:16px;white-space:nowrap;}
+
+  /* Types recap list */
+  .recap-list{list-style:none;margin-top:10px;}
+  .recap-list li{
+    background:white;border-radius:12px;padding:10px 14px;margin-bottom:10px;
+    border-left:6px solid var(--blue);font-size:14px;line-height:1.5;
+  }
+  .recap-list li b{color:var(--purple);}
+
+  /* Quiz (shared pattern) */
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action.purple{background:var(--purple);box-shadow:0 4px 0 #7a3b97;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .next-box{
+    background:linear-gradient(135deg,#f3e8ff,#e0f7ff);border:3px dashed var(--purple);
+    border-radius:22px;padding:24px 22px;margin:28px 0;text-align:center;
+  }
+  .next-box h2{color:var(--purple);font-size:clamp(20px,3vw,26px);margin-bottom:10px;}
+  .next-box p{font-size:15px;margin-bottom:16px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Sets">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📊 🏆 🎓</div>
+    <h1><span class="highlight">Summary & Practice</span></h1>
+    <p class="subtitle">Every symbol and idea from Sets, all in one place!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧮</div>
+    <p>Hi again! I'm Sunny the Sorter 👋 Wow — look how far you've come! You've learned what a set is, how to write
+      one, all its types, cardinal numbers, equal and equivalent sets, subsets, and set operations. You made it
+      through the <b>whole Sets unit</b>! 🎉 This page is your final review — skim the big table below to refresh
+      everything, then take the <b>Big Final Quiz</b> to prove you've mastered it all!</p>
+  </div>
+
+  <div class="info-box purple">🎓 This is it — the final stop in your Sets journey! Skim the table below, then take
+    the <b>Big Final Quiz</b> to prove you've mastered it all.</div>
+
+  <!-- 1. QUICK REFERENCE TABLE -->
+  <section class="section">
+    <h2>📊 Quick Reference Table</h2>
+    <p class="lead">Every symbol you've met in Sets, together in one handy table.</p>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Meaning</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>∈</td>
+          <td>belongs to</td>
+          <td>e ∈ V (e is a vowel)</td>
+        </tr>
+        <tr>
+          <td>∉</td>
+          <td>does not belong to</td>
+          <td>k ∉ V (k is not a vowel)</td>
+        </tr>
+        <tr>
+          <td>⊂</td>
+          <td>is a subset of</td>
+          <td>{2,3} ⊂ {1,2,3,4}</td>
+        </tr>
+        <tr>
+          <td>⊃</td>
+          <td>is a superset of</td>
+          <td>{1,2,3,4} ⊃ {2,3}</td>
+        </tr>
+        <tr>
+          <td>n(A)</td>
+          <td>cardinal number (count of elements)</td>
+          <td>n({a,b,c}) = 3</td>
+        </tr>
+        <tr>
+          <td>φ or { }</td>
+          <td>empty / null set</td>
+          <td>n(φ) = 0</td>
+        </tr>
+        <tr>
+          <td>∪</td>
+          <td>union (combine, no repeats)</td>
+          <td>{1,2} ∪ {2,3} = {1,2,3}</td>
+        </tr>
+        <tr>
+          <td>∩</td>
+          <td>intersection (common elements)</td>
+          <td>{1,2,3} ∩ {2,3,4} = {2,3}</td>
+        </tr>
+        <tr>
+          <td>−</td>
+          <td>difference (in one, not the other)</td>
+          <td>{1,2,3} − {2,3} = {1}</td>
+        </tr>
+        <tr>
+          <td>A′</td>
+          <td>complement (everything in U except A)</td>
+          <td>if U = {1,2,3,4,5} and A = {1,2}, then A′ = {3,4,5}</td>
+        </tr>
+        <tr>
+          <td>↔</td>
+          <td>equivalent sets (same number of elements)</td>
+          <td>{a,b,c} ↔ {1,2,3}</td>
+        </tr>
+        <tr>
+          <td>=</td>
+          <td>equal sets (same elements)</td>
+          <td>{1,2,3} = {3,2,1}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 2. TYPES OF SETS RECAP -->
+  <section class="section">
+    <h2>🗂️ Types of Sets at a Glance</h2>
+    <p class="lead">A quick recap of every kind of set you've met.</p>
+    <ul class="recap-list">
+      <li><b>Finite set</b> — a limited, countable number of elements.</li>
+      <li><b>Infinite set</b> — an unlimited number of elements.</li>
+      <li><b>Singleton set</b> — exactly one element.</li>
+      <li><b>Empty (null) set</b> — no elements at all, denoted φ or { }.</li>
+      <li><b>Universal set</b> — the "container" set (U or ξ) holding everything relevant to a problem.</li>
+    </ul>
+  </section>
+
+  <!-- FINAL QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Big Final Quiz!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">8 questions — show everything you've learned about Sets!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 8</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <div class="next-box" id="next-box" style="display:none;">
+    <h2>🎉🏆 You've completed the ENTIRE Sets unit!</h2>
+    <p>From knowing what a set is, to writing sets three different ways, to types of sets, cardinal numbers,
+      equal and equivalent sets, subsets, and combining sets with union, intersection, difference, and
+      complement — you've mastered it all. Amazing work! 🌟</p>
+    <div class="btnrow">
+      <a href="../index.html" style="text-decoration:none;"><button class="action purple">⬅️ Back to Sets Topics</button></a>
+      <a href="../../index.html" style="text-decoration:none;"><button class="action secondary">🔢 Explore More of Arithmetic</button></a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"Which of these is a well-defined set?", opts:["All tall students in a class","The first five prime numbers","All beautiful paintings","All clever people in a city"], answer:1,
+   explain:"'The first five prime numbers' (2,3,5,7,11) is well-defined — everyone agrees. The others depend on opinion."},
+  {q:"Which method lists every element separated by commas inside braces?", opts:["Roster (tabular) method","Description method","Set-builder method","None of these"], answer:0,
+   explain:"The roster (tabular) method lists every element, separated by commas, inside braces — like {1, 2, 3}."},
+  {q:"What do we call a set with exactly one element?", opts:["Singleton set","Empty set","Finite set","Universal set"], answer:0,
+   explain:"A set with exactly one element is called a singleton set."},
+  {q:"What is n(φ)?", opts:["0","1","Undefined","φ"], answer:0,
+   explain:"The empty set has no elements at all, so its cardinal number n(φ) = 0."},
+  {q:"If n(A) = n(B) but A and B have completely different elements, then...", opts:["A ↔ B, but A ≠ B","A = B","A ↔ B and A = B","Neither holds"], answer:0,
+   explain:"Same count of elements makes them equivalent (A ↔ B), but since the elements themselves differ, they are not equal."},
+  {q:"The empty set is a subset of...", opts:["every set","no set","only itself","only infinite sets"], answer:0,
+   explain:"The empty set φ is considered a subset of every set."},
+  {q:"If A ∩ B = φ, A and B are called...", opts:["disjoint sets","equal sets","subsets of each other","singleton sets"], answer:0,
+   explain:"When two sets share no common elements (their intersection is empty), they are called disjoint sets."},
+  {q:"If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, what is A ∪ B?", opts:["{1,2,3,4,5,6}","{3,4}","{1,2}","{5,6}"], answer:0,
+   explain:"Union combines all elements from both sets, without repeating: {1,2,3,4} ∪ {3,4,5,6} = {1,2,3,4,5,6}."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function shuffleOptions(raw){
+  const idxs = raw.opts.map((_,i)=>i);
+  for(let i=idxs.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [idxs[i],idxs[j]] = [idxs[j],idxs[i]];
+  }
+  return { ...raw, opts: idxs.map(i=>raw.opts[i]), answer: idxs.indexOf(raw.answer) };
+}
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = shuffleOptions(quizData[qIndex]);
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You are a true Sets champion! 🌟"
+          : score>=total*0.6 ? "Great job! You've really got the hang of Sets! 🎉"
+          : "Nice try! Scroll up, review the table, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+  document.getElementById('next-box').style.display = 'block';
+}
+renderQuestion();
+</script>
+</body>
+</html>

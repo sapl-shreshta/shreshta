@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🔗 Subsets & Supersets</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    flex:0 0 auto;width:70px;height:70px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .example-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px;}
+  .example-card{background:white;border-radius:14px;padding:14px 16px;border-left:6px solid var(--teal);font-size:14px;line-height:1.5;}
+  .example-card.bad{border-left-color:var(--red);}
+  .example-card b{color:var(--purple);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+  .info-box.purple{background:#f3e8ff;border-color:var(--purple);}
+  .info-box ul{margin:6px 0 0 20px;}
+  .info-box li{margin-bottom:6px;}
+
+  /* Sorting exercise */
+  .progress-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;white-space:nowrap;}
+  .exercise-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .sort-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+  .sort-card{background:white;border-radius:16px;padding:14px 16px;border:3px solid #cbd5e1;transition:border-color .2s;}
+  .sort-card.answered-correct{border-color:var(--teal);}
+  .sort-card.answered-wrong{border-color:var(--red);}
+  .sort-text{font-size:14px;font-weight:bold;margin-bottom:10px;min-height:40px;}
+  .sort-btns{display:flex;gap:8px;flex-wrap:wrap;}
+  .sort-btn{
+    flex:1 1 auto;background:white;border:3px solid var(--blue);border-radius:12px;padding:8px 10px;font-size:13px;
+    font-weight:bold;cursor:pointer;transition:all .15s;
+  }
+  .sort-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .sort-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .sort-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .sort-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .sort-reason{margin-top:10px;font-size:13px;background:#f0e6ff;border-radius:10px;padding:8px 10px;display:none;}
+
+  /* Quiz (shared pattern) */
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action.purple{background:var(--purple);box-shadow:0 4px 0 #7a3b97;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .next-box{
+    background:linear-gradient(135deg,#f3e8ff,#e0f7ff);border:3px dashed var(--purple);
+    border-radius:22px;padding:24px 22px;margin:28px 0;text-align:center;
+  }
+  .next-box h2{color:var(--purple);font-size:clamp(20px,3vw,26px);margin-bottom:10px;}
+  .next-box p{font-size:15px;margin-bottom:16px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Sets">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🔗 📦 🧩</div>
+    <h1><span class="highlight">Subsets & Supersets</span></h1>
+    <p class="subtitle">When one set lives entirely inside another!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧮</div>
+    <p>Hi again! I'm Sunny the Sorter 👋 Did you know sets can <b>hide inside</b> other sets, like a smaller box tucked
+      inside a bigger one? Today we'll learn exactly how to spot when that happens, and the special names we give
+      those set pairs!</p>
+  </div>
+
+  <!-- 1. SUBSET -->
+  <section class="section">
+    <h2>🔗 Subset (⊂)</h2>
+    <p class="lead">A set <b>A</b> is called a <b>subset</b> of set <b>B</b> — written <b>A ⊂ B</b> — if
+      <b>every single element</b> of A is also an element of B. Every member of A must find a match inside B, with
+      no exceptions.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>A = {2, 3, 5}</b><br>B = {1, 2, 3, 4, 5, 6}<br>A ⊂ B, since every member of A
+        (2, 3, and 5) is found in B.</div>
+    </div>
+    <div class="info-box blue">🧠 <b>Think of it like:</b> a small toy box (A) that fits completely inside a big
+      toy chest (B) — nothing from the small box sticks out!</div>
+  </section>
+
+  <!-- 2. SUPERSET -->
+  <section class="section">
+    <h2>📦 Superset (⊃)</h2>
+    <p class="lead">The same relationship can be read the <b>other way round</b>. If A ⊂ B, we also say that
+      <b>B is a superset of A</b>, written <b>B ⊃ A</b>. B is the bigger set that "contains" A.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>A ⊂ B</b><br>"A is a subset of B"</div>
+      <div class="example-card"><b>B ⊃ A</b><br>"B is a superset of A"</div>
+    </div>
+    <div class="info-box">📌 <b>A ⊂ B</b> and <b>B ⊃ A</b> mean <b>exactly the same thing</b> — just told from two
+      different points of view!</div>
+  </section>
+
+  <!-- 3. KEY PROPERTIES -->
+  <section class="section">
+    <h2>⚠️ Key Properties</h2>
+    <p class="lead">A few important rules always hold true for subsets:</p>
+    <div class="info-box purple">
+      <ul>
+        <li>Every set is a subset of <b>itself</b>: <b>A ⊂ A</b>, always.</li>
+        <li>The <b>empty set</b> is a subset of <b>every</b> set: <b>φ ⊂ A</b>, for any set A.</li>
+        <li><b>A ⊄ B</b> means A is <b>NOT</b> a subset of B — there is at least one element of A missing from B.
+          Example: A = {2, 3, 5}, B = {1, 2, 4, 6}: since <b>3 ∉ B</b>, we get <b>A ⊄ B</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. LISTING ALL SUBSETS -->
+  <section class="section">
+    <h2>📋 Listing All Subsets of a Set</h2>
+    <p class="lead">Let's list <b>every possible subset</b> of A = {1, 2, 3} — including the tiniest one and the
+      biggest one!</p>
+    <div class="example-grid">
+      <div class="example-card"><b>φ</b><br>The empty subset</div>
+      <div class="example-card"><b>{1}, {2}, {3}</b><br>Subsets with one element each</div>
+      <div class="example-card"><b>{1,2}, {1,3}, {2,3}</b><br>Subsets with two elements each</div>
+      <div class="example-card"><b>{1,2,3}</b><br>The whole set itself</div>
+    </div>
+    <div class="info-box">📌 Counting them up: φ, {1}, {2}, {3}, {1,2}, {1,3}, {2,3}, {1,2,3} — that's
+      <b>8 subsets in total</b>!</div>
+  </section>
+
+  <!-- 5. POWER SET / 2^n -->
+  <section class="section">
+    <h2>✨ Number of Subsets = 2ⁿ (the Power Set)</h2>
+    <p class="lead">Here's a wonderful shortcut: if a set A has <b>n(A) = n</b> elements, then A has
+      <b>exactly 2ⁿ subsets</b>. This complete collection of all the subsets of A is called the <b>Power Set</b>
+      of A.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>{1, 2, 3}</b><br>n = 3 elements → 2³ = 8 subsets ✓ (matches our list above!)</div>
+      <div class="example-card"><b>{a, b}</b><br>n = 2 elements → 2² = 4 subsets: φ, {a}, {b}, {a,b}</div>
+    </div>
+    <div class="info-box orange">💡 No need to list every subset by hand — just count the elements (n) and work
+      out 2ⁿ!</div>
+  </section>
+
+  <!-- 6. INTERACTIVE EXERCISE -->
+  <section class="section" id="tf-section">
+    <div class="exercise-head">
+      <h2 style="margin:0;">🕵️ True or False? <span class="try-badge">Click one!</span></h2>
+      <span class="progress-badge" id="tf-badge">Correct: 0 / 6</span>
+    </div>
+    <p class="lead">Using <b>A = {1, 2, 3}</b> and <b>B = {1, 2, 3, 4, 5}</b> — decide if each statement below is
+      true or false.</p>
+    <div class="sort-grid" id="tf-grid"></div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Coming soon:</b> next up is <b>Set Operations</b> — you'll learn how to combine
+    and compare sets using <b>union</b>, <b>intersection</b>, <b>difference</b>, <b>complement</b>, and even draw
+    them using <b>Venn diagrams</b>!</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 5</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+  <!-- NEXT STEP CTA -->
+  <div class="next-box" id="next-box" style="display:none;">
+    <h2>🎉 You've unlocked subsets and supersets!</h2>
+    <p>You now know how to spot a <b>subset (A ⊂ B)</b> and a <b>superset (B ⊃ A)</b>, and how to use the
+      <b>2ⁿ rule</b> to count all of a set's subsets. Head back to the Sets hub, or jump straight into Set
+      Operations!</p>
+    <div class="btnrow">
+      <a href="../index.html" style="text-decoration:none;"><button class="action purple">⬅️ Back to Sets Topics</button></a>
+      <a href="../Set_Operations/index.html" style="text-decoration:none;"><button class="action">Next Topic: Set Operations ▶</button></a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Reusable flexible-choice exercise ---------- */
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function buildFlexExercise(gridId, badgeId, items){
+  const grid = document.getElementById(gridId);
+  const badge = document.getElementById(badgeId);
+  let correctCount = 0;
+  items.forEach((item, idx) => {
+    const choices = shuffleArray(item.choices.slice());
+    const card = document.createElement('div');
+    card.className = 'sort-card';
+    card.innerHTML = `
+      <div class="sort-text">${item.text}</div>
+      <div class="sort-btns">
+        ${choices.map((c,ci) => `<button class="sort-btn" data-ci="${ci}">${c.label}</button>`).join('')}
+      </div>
+      <div class="sort-reason" id="${gridId}-reason-${idx}">${item.reason}</div>
+    `;
+    grid.appendChild(card);
+    const btns = card.querySelectorAll('.sort-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ci = Number(btn.dataset.ci);
+        btns.forEach(b => b.disabled = true);
+        const isCorrect = !!choices[ci].correct;
+        btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        if(!isCorrect){
+          const correctIdx = choices.findIndex(c => c.correct);
+          btns[correctIdx].classList.add('correct');
+        } else {
+          correctCount++;
+          badge.textContent = 'Correct: ' + correctCount + ' / ' + items.length;
+        }
+        card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+        document.getElementById(gridId + '-reason-' + idx).style.display = 'block';
+      });
+    });
+  });
+}
+
+buildFlexExercise('tf-grid', 'tf-badge', [
+  {text:"A ⊂ B", reason:"✅ True — every element of A (1, 2, and 3) is also found in B.",
+   choices:[{label:'✅ True', correct:true},{label:'❌ False', correct:false}]},
+  {text:"B ⊂ A", reason:"❌ False — 4 and 5 are in B, but neither is in A.",
+   choices:[{label:'✅ True', correct:false},{label:'❌ False', correct:true}]},
+  {text:"φ ⊂ A", reason:"✅ True — the empty set is a subset of every set.",
+   choices:[{label:'✅ True', correct:true},{label:'❌ False', correct:false}]},
+  {text:"A ⊂ A", reason:"✅ True — every set is a subset of itself.",
+   choices:[{label:'✅ True', correct:true},{label:'❌ False', correct:false}]},
+  {text:"{4} ⊂ A", reason:"❌ False — 4 is not an element of A, so {4} can't be a subset of A.",
+   choices:[{label:'✅ True', correct:false},{label:'❌ False', correct:true}]},
+  {text:"{1, 2} ⊂ B", reason:"✅ True — both 1 and 2 are elements of B.",
+   choices:[{label:'✅ True', correct:true},{label:'❌ False', correct:false}]}
+]);
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"'A ⊂ B' means...", opts:["every element of A is also in B","A and B have no elements in common","A and B are equal","A has more elements than B"], answer:0,
+   explain:"A ⊂ B means every single element of A is also found in B — no exceptions."},
+  {q:"The empty set is a subset of...", opts:["no set","every set","only itself","only infinite sets"], answer:1,
+   explain:"The empty set φ is a subset of every set, since it has no elements that could ever be 'missing' from another set."},
+  {q:"If A = {1, 2}, how many subsets does A have (using 2ⁿ)?", opts:["2","3","4","8"], answer:2,
+   explain:"A has n = 2 elements, so it has 2² = 4 subsets: φ, {1}, {2}, {1,2}."},
+  {q:"If B ⊃ A, this means the same thing as...", opts:["A ⊃ B","A ⊂ B","A = B","A ∩ B = φ"], answer:1,
+   explain:"'B ⊃ A' (B is a superset of A) is just another way of saying 'A ⊂ B' (A is a subset of B)."},
+  {q:"True or False: 'Every set is a subset of itself.'", opts:["True","False"], answer:0,
+   explain:"True! For any set A, A ⊂ A always holds — every element of A is obviously in A."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function shuffleOptions(raw){
+  const idxs = raw.opts.map((_,i)=>i);
+  for(let i=idxs.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [idxs[i],idxs[j]] = [idxs[j],idxs[i]];
+  }
+  return { ...raw, opts: idxs.map(i=>raw.opts[i]), answer: idxs.indexOf(raw.answer) };
+}
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = shuffleOptions(quizData[qIndex]);
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You really understand subsets and supersets! 🌟"
+          : score>=total*0.6 ? "Great job! You've got the main idea! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+  document.getElementById('next-box').style.display = 'block';
+}
+renderQuestion();
+</script>
+</body>
+</html>

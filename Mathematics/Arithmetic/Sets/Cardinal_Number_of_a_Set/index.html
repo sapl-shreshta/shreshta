@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🔢 Cardinal Number of a Set</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    flex:0 0 auto;width:70px;height:70px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .example-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px;}
+  .example-card{background:white;border-radius:14px;padding:14px 16px;border-left:6px solid var(--teal);font-size:14px;line-height:1.5;}
+  .example-card.bad{border-left-color:var(--red);}
+  .example-card b{color:var(--purple);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+  .info-box.purple{background:#f3e8ff;border-color:var(--purple);}
+
+  /* Sorting exercise */
+  .progress-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;white-space:nowrap;}
+  .exercise-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .sort-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+  .sort-card{background:white;border-radius:16px;padding:14px 16px;border:3px solid #cbd5e1;transition:border-color .2s;}
+  .sort-card.answered-correct{border-color:var(--teal);}
+  .sort-card.answered-wrong{border-color:var(--red);}
+  .sort-text{font-size:14px;font-weight:bold;margin-bottom:10px;min-height:40px;}
+  .sort-btns{display:flex;gap:8px;flex-wrap:wrap;}
+  .sort-btn{
+    flex:1 1 auto;background:white;border:3px solid var(--blue);border-radius:12px;padding:8px 10px;font-size:13px;
+    font-weight:bold;cursor:pointer;transition:all .15s;
+  }
+  .sort-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .sort-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .sort-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .sort-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .sort-reason{margin-top:10px;font-size:13px;background:#f0e6ff;border-radius:10px;padding:8px 10px;display:none;}
+
+  /* Quiz (shared pattern) */
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action.purple{background:var(--purple);box-shadow:0 4px 0 #7a3b97;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .next-box{
+    background:linear-gradient(135deg,#f3e8ff,#e0f7ff);border:3px dashed var(--purple);
+    border-radius:22px;padding:24px 22px;margin:28px 0;text-align:center;
+  }
+  .next-box h2{color:var(--purple);font-size:clamp(20px,3vw,26px);margin-bottom:10px;}
+  .next-box p{font-size:15px;margin-bottom:16px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Sets">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🔢 🧮 #️⃣</div>
+    <h1><span class="highlight">Cardinal Number of a Set</span></h1>
+    <p class="subtitle">Counting how many elements are inside!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧮</div>
+    <p>Hi again! I'm Sunny the Sorter 👋 Now that you know what a set and its elements are, let's learn a super quick
+      skill: <b>counting</b> exactly how many elements live inside a set. Ready? Let's count what's inside!</p>
+  </div>
+
+  <!-- 1. DEFINITION -->
+  <section class="section">
+    <h2>🔢 What is n(A)?</h2>
+    <p class="lead">The <b>cardinal number</b> of a finite set A, written <b>n(A)</b>, is simply the number of
+      <b>distinct (different)</b> elements in A. To find it, just list the set out and count!</p>
+    <div class="example-grid">
+      <div class="example-card"><b>A = {a, b, c, d, e}</b><br>There are 5 distinct letters, so n(A) = 5</div>
+      <div class="example-card"><b>B = {x | x ∈ W, x &lt; 7}</b><br>B = {0, 1, 2, 3, 4, 5, 6} → n(B) = 7</div>
+      <div class="example-card"><b>P = letters of the word QUEEN</b><br>P = {Q, U, E, N} → n(P) = 4</div>
+    </div>
+    <div class="info-box purple">🔍 <b>Careful!</b> Even though the letter <b>E</b> appears TWICE in the word
+      "QUEEN", it is written and counted only <b>ONCE</b> in the set — sets never repeat elements!</div>
+  </section>
+
+  <!-- 2. SPECIAL CASES -->
+  <section class="section">
+    <h2>⚠️ Special Cases</h2>
+    <p class="lead">A few cardinal numbers are worth remembering by heart:</p>
+    <div class="example-grid">
+      <div class="example-card"><b>n(φ) = 0</b><br>The empty set has zero elements — nothing to count!</div>
+      <div class="example-card"><b>Singleton set → n(A) = 1</b><br>A singleton set always has exactly one element.</div>
+      <div class="example-card bad"><b>Infinite set → n(A) is UNDEFINED</b><br>You can never finish counting an infinite set, so it has no cardinal number.</div>
+    </div>
+  </section>
+
+  <!-- 3. WORKED EXAMPLE -->
+  <section class="section">
+    <h2>🧮 Worked Example</h2>
+    <p class="lead">Let <b>D = {x | x is a digit in the numeral 11056771}</b>. Let's find n(D) step by step.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>Step 1: List the digits as they appear</b><br>1, 1, 0, 5, 6, 7, 7, 1</div>
+      <div class="example-card"><b>Step 2: Write as a SET (no repeats!)</b><br>D = {1, 0, 5, 6, 7}</div>
+      <div class="example-card"><b>Step 3: Count the distinct elements</b><br>n(D) = 5</div>
+    </div>
+    <div class="info-box blue">📌 The digit <b>1</b> appears three times and <b>7</b> appears twice in 11056771 —
+      but in the set D, each is counted only <b>once</b>. That's why n(D) = 5, not 8!</div>
+  </section>
+
+  <!-- 4. INTERACTIVE EXERCISE -->
+  <section class="section" id="exercise-section">
+    <div class="exercise-head">
+      <h2 style="margin:0;">🧮 Find n(A)! <span class="try-badge">Click one!</span></h2>
+      <span class="progress-badge" id="exercise-badge">Correct: 0 / 6</span>
+    </div>
+    <p class="lead">For each set below, work out its cardinal number and click the correct answer!</p>
+    <div class="sort-grid" id="exercise-grid"></div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Coming soon:</b> the next topic is <b>Equal &amp; Equivalent Sets</b> — you'll
+    learn the difference between two sets that have exactly the <b>same elements</b>, and two sets that simply have
+    the <b>same number</b> of elements!</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 5</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+  <!-- NEXT STEP CTA -->
+  <div class="next-box" id="next-box" style="display:none;">
+    <h2>🎉 You can now count any set!</h2>
+    <p>You've learned that <b>n(A)</b> tells you how many distinct elements are in a set, that n(φ) = 0, a
+      singleton always has n(A) = 1, and an infinite set's cardinal number is undefined. Great work!</p>
+    <div class="btnrow">
+      <a href="../index.html" style="text-decoration:none;"><button class="action purple">⬅️ Back to Sets Topics</button></a>
+      <a href="../Equal_and_Equivalent_Sets/index.html" style="text-decoration:none;"><button class="action">Next Topic: Equal &amp; Equivalent Sets ▶</button></a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Reusable flexible-choice exercise ---------- */
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function buildFlexExercise(gridId, badgeId, items){
+  const grid = document.getElementById(gridId);
+  const badge = document.getElementById(badgeId);
+  let correctCount = 0;
+  items.forEach((item, idx) => {
+    const choices = shuffleArray(item.choices.slice());
+    const card = document.createElement('div');
+    card.className = 'sort-card';
+    card.innerHTML = `
+      <div class="sort-text">${item.text}</div>
+      <div class="sort-btns">
+        ${choices.map((c,ci) => `<button class="sort-btn" data-ci="${ci}">${c.label}</button>`).join('')}
+      </div>
+      <div class="sort-reason" id="${gridId}-reason-${idx}">${item.reason}</div>
+    `;
+    grid.appendChild(card);
+    const btns = card.querySelectorAll('.sort-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ci = Number(btn.dataset.ci);
+        btns.forEach(b => b.disabled = true);
+        const isCorrect = !!choices[ci].correct;
+        btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        if(!isCorrect){
+          const correctIdx = choices.findIndex(c => c.correct);
+          btns[correctIdx].classList.add('correct');
+        } else {
+          correctCount++;
+          badge.textContent = 'Correct: ' + correctCount + ' / ' + items.length;
+        }
+        card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+        document.getElementById(gridId + '-reason-' + idx).style.display = 'block';
+      });
+    });
+  });
+}
+
+buildFlexExercise('exercise-grid', 'exercise-badge', [
+  {text:"A = {a, b, c, d, e}", choices:[
+      {label:"4"}, {label:"5", correct:true}, {label:"6"}, {label:"7"}
+    ], reason:"5 distinct letters: a, b, c, d, e."},
+  {text:"P = letters of the word QUEEN", choices:[
+      {label:"3"}, {label:"4", correct:true}, {label:"5"}, {label:"6"}
+    ], reason:"Q, U, E, N — only 4 distinct letters (E is not counted twice)."},
+  {text:"φ (the empty set)", choices:[
+      {label:"0", correct:true}, {label:"1"}, {label:"undefined"}, {label:"10"}
+    ], reason:"The empty set has zero elements, so n(φ) = 0."},
+  {text:"{-7} (a singleton set)", choices:[
+      {label:"0"}, {label:"1", correct:true}, {label:"2"}, {label:"7"}
+    ], reason:"A singleton set always has exactly 1 element."},
+  {text:"B = {x | x ∈ W, x < 7}", choices:[
+      {label:"6"}, {label:"7", correct:true}, {label:"8"}, {label:"5"}
+    ], reason:"B = {0,1,2,3,4,5,6} — that's 7 elements."},
+  {text:"N = the set of all natural numbers", choices:[
+      {label:"0"}, {label:"100"}, {label:"1"}, {label:"Undefined — N is infinite", correct:true}
+    ], reason:"N never ends, so its cardinal number is undefined, not a number."}
+]);
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"What does n(A) represent?", opts:["The number of distinct elements in set A","The largest element in A","The sum of all elements in A","Whether A is finite or infinite"], answer:0,
+   explain:"n(A) is the cardinal number of A — the count of distinct elements it contains."},
+  {q:"If A = {a, b, c, d, e}, what is n(A)?", opts:["5","4","6","10"], answer:0,
+   explain:"A has exactly 5 distinct letters, so n(A) = 5."},
+  {q:"What is n(φ)?", opts:["0","1","Undefined","φ"], answer:0,
+   explain:"The empty set has no elements at all, so n(φ) = 0."},
+  {q:"What is the cardinal number of a singleton set?", opts:["1","0","2","Undefined"], answer:0,
+   explain:"A singleton set contains exactly one element, so its cardinal number is always 1."},
+  {q:"What is n(N), the set of natural numbers?", opts:["Undefined — N is infinite","0","1","A very large fixed number"], answer:0,
+   explain:"N goes on forever, so you can never finish counting it — its cardinal number is undefined."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function shuffleOptions(raw){
+  const idxs = raw.opts.map((_,i)=>i);
+  for(let i=idxs.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [idxs[i],idxs[j]] = [idxs[j],idxs[i]];
+  }
+  return { ...raw, opts: idxs.map(i=>raw.opts[i]), answer: idxs.indexOf(raw.answer) };
+}
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = shuffleOptions(quizData[qIndex]);
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You're a cardinal number champion! 🌟"
+          : score>=total*0.6 ? "Great job! You've got the main idea! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+  document.getElementById('next-box').style.display = 'block';
+}
+renderQuestion();
+</script>
+</body>
+</html>
