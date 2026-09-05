@@ -100,6 +100,20 @@
     padding:5px 10px;border-radius:999px;box-shadow:0 3px 0 #04946e;
   }
   .badge.soon{background:#94a3b8;box-shadow:0 3px 0 #64748b;}
+  .worksheet-banner{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    background:linear-gradient(135deg,#f3e8ff,#e0f7ff);border:3px dashed var(--purple);
+    border-radius:20px;padding:20px 24px;margin:36px 0 20px;
+  }
+  .worksheet-banner .wb-text h2{color:var(--purple);font-size:clamp(18px,3vw,24px);margin-bottom:4px;}
+  .worksheet-banner .wb-text p{font-size:14px;color:var(--ink);line-height:1.5;}
+  .worksheet-banner .wb-btn{
+    background:var(--teal);color:white;text-decoration:none;font-weight:bold;font-size:15px;
+    padding:12px 22px;border-radius:14px;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+    white-space:nowrap;
+  }
+  .worksheet-banner .wb-btn:hover{transform:translateY(-2px);}
+  .worksheet-banner .wb-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
 </style>
 </head>
 <body>
@@ -154,6 +168,15 @@
         <h2>Summary & Practice</h2>
         <p>A quick-reference table of every symbol and idea you've learned!</p>
       </a>
+    </div>
+
+    <div class="worksheet-banner">
+      <div class="wb-text">
+        <h2>📄 Advanced Practice Paper</h2>
+        <p>A printable, black-and-white test covering every topic in this chapter — MCQs, fill-in-the-blanks,<br>
+          short answer, Venn diagram drawing, and higher-order thinking questions. 80 marks, 2 hours.</p>
+      </div>
+      <a class="wb-btn" href="Sets_Practice_Paper.pdf" download="Sets_Advanced_Practice_Paper.pdf">⬇️ Download PDF</a>
     </div>
   </div>
 </body>

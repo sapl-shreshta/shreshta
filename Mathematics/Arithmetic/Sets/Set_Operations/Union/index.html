@@ -239,6 +239,40 @@
     <div class="sort-grid" id="union-try2"></div>
   </section>
 
+  <!-- 3. PROPERTIES OF UNION -->
+  <section class="section">
+    <h2>⚖️ Properties (Laws) of Union</h2>
+    <p class="lead">You've already discovered some of these patterns yourself in the True/False activity above!
+      Mathematicians have given each pattern an official name — here are the five key laws of union:</p>
+    <div class="example-grid">
+      <div class="example-card"><b>1. Commutative Law</b><br>A ∪ B = B ∪ A<br>The order you combine sets doesn't matter.</div>
+      <div class="example-card"><b>2. Associative Law</b><br>(A ∪ B) ∪ C = A ∪ (B ∪ C)<br>When combining three sets, the grouping doesn't matter.</div>
+      <div class="example-card"><b>3. Identity Law</b><br>A ∪ φ = A<br>Union with the empty set changes nothing.</div>
+      <div class="example-card"><b>4. Idempotent Law</b><br>A ∪ A = A<br>Union of a set with itself is just itself.</div>
+      <div class="example-card"><b>5. Law of U</b><br>U ∪ A = U<br>Union with the universal set just gives you U back — it already contains everything!</div>
+    </div>
+    <div class="info-box blue">
+      <b>🧵 Verifying the Associative Law:</b> Let A = {1, 2}, B = {3, 4}, C = {5, 6}.<br>
+      (A ∪ B) ∪ C: first A ∪ B = {1,2,3,4}, then ∪ C = {1,2,3,4,5,6}.<br>
+      A ∪ (B ∪ C): first B ∪ C = {3,4,5,6}, then A ∪ that = {1,2,3,4,5,6}.<br>
+      Both give the <b>same answer</b> — it doesn't matter which pair you combine first! ✓
+    </div>
+    <div class="info-box purple">
+      <b>🎁 Bonus property:</b> If B ⊂ A, then A ∪ B = A. Example: A = {1,2,3,4,5}, B = {2,4} (B ⊂ A) →
+      A ∪ B = {1,2,3,4,5} = A. Unioning a set with its own subset adds nothing new!
+    </div>
+  </section>
+
+  <!-- ACTIVITY 3 -->
+  <section class="section" id="union-try3-section">
+    <div class="exercise-head">
+      <h2 style="margin:0;">🧩 Spot the Law! <span class="try-badge">Click one!</span></h2>
+      <span class="progress-badge" id="union-try3-badge">Correct: 0 / 4</span>
+    </div>
+    <p class="lead">Decide whether each statement about the laws of union is true or false.</p>
+    <div class="sort-grid" id="union-try3"></div>
+  </section>
+
   <div class="info-box orange">🔮 <b>Coming soon:</b> the next topic is <b>Intersection of Sets</b> — instead of
     combining everything, we'll find only the elements that are <b>common to BOTH sets</b>. We'll also meet an
     interesting idea called <b>disjoint sets</b> — sets that share nothing in common at all!</div>
@@ -340,6 +374,21 @@ buildFlexExercise('union-try2', 'union-try2-badge', [
   {text:"A ∪ φ (union with the empty set) always equals φ.",
    choices:[{label:"✅ True"},{label:"❌ False",correct:true}],
    reason:"❌ False — union with the empty set changes nothing. A ∪ φ = A."}
+]);
+
+buildFlexExercise('union-try3', 'union-try3-badge', [
+  {text:"A ∪ A = A",
+   choices:[{label:"✅ True",correct:true},{label:"❌ False"}],
+   reason:"✅ True — this is the Idempotent Law. Unioning a set with itself changes nothing."},
+  {text:"If B ⊂ A, then A ∪ B = A",
+   choices:[{label:"✅ True",correct:true},{label:"❌ False"}],
+   reason:"✅ True — since every element of B is already in A, unioning adds nothing new."},
+  {text:"(A ∪ B) ∪ C is always equal to A ∪ (B ∪ C)",
+   choices:[{label:"✅ True",correct:true},{label:"❌ False"}],
+   reason:"✅ True — this is the Associative Law. The grouping doesn't change the final result."},
+  {text:"A ∪ U (union with the universal set) always equals φ",
+   choices:[{label:"✅ True"},{label:"❌ False",correct:true}],
+   reason:"❌ False — A ∪ U = U, not φ. Since U already contains everything, unioning with it just gives U back."}
 ]);
 
 /* ---------- Quiz ---------- */

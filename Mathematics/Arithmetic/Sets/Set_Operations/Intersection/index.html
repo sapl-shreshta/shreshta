@@ -273,6 +273,34 @@
     <div class="sort-grid" id="inter-try2"></div>
   </section>
 
+  <!-- PROPERTIES OF INTERSECTION -->
+  <section class="section">
+    <h2>⚖️ Properties (Laws) of Intersection</h2>
+    <p class="lead">Just like union, intersection follows its own set of named laws. Some of these will look very
+      familiar!</p>
+    <div class="example-grid">
+      <div class="example-card"><b>1. Commutative Law</b><br>A ∩ B = B ∩ A<br>The order you intersect sets doesn't matter.</div>
+      <div class="example-card"><b>2. Associative Law</b><br>(A ∩ B) ∩ C = A ∩ (B ∩ C)<br>When intersecting three sets, the grouping doesn't matter.</div>
+      <div class="example-card"><b>3. Law of φ</b><br>φ ∩ A = φ<br>Intersecting with the empty set always gives the empty set — there's nothing to share.</div>
+      <div class="example-card"><b>4. Law of U</b><br>U ∩ A = A<br>Intersecting with the universal set just gives you A back.</div>
+      <div class="example-card"><b>5. Idempotent Law</b><br>A ∩ A = A<br>Intersection of a set with itself is just itself.</div>
+    </div>
+    <div class="info-box blue">
+      <b>🧵 A useful bonus fact:</b> If B ⊂ A, then A ∩ B = B. Example: A = {1,2,3,4,5}, B = {2,4} (B ⊂ A) →
+      A ∩ B = {2,4} = B. Since every element of B is already inside A, the "common" elements are simply all of B!
+    </div>
+  </section>
+
+  <!-- ACTIVITY 3 -->
+  <section class="section" id="inter-try3-section">
+    <div class="exercise-head">
+      <h2 style="margin:0;">🧩 Spot the Law! <span class="try-badge">Click one!</span></h2>
+      <span class="progress-badge" id="inter-try3-badge">Correct: 0 / 4</span>
+    </div>
+    <p class="lead">Decide whether each statement about the laws of intersection is true or false.</p>
+    <div class="sort-grid" id="inter-try3"></div>
+  </section>
+
   <div class="info-box orange">🔮 <b>Up next:</b> now that you can find what two sets share, the next topic is
     <b>Difference of Sets</b> — finding the elements that are in one set but NOT the other (A − B and B − A)!</div>
 
@@ -379,6 +407,21 @@ buildFlexExercise('inter-try2', 'inter-try2-badge', [
   {text:"A = {factors of 12} = {1,2,3,4,6,12}, B = {factors of 15} = {1,3,5,15}",
    choices:[{label:"✅ Disjoint"},{label:"❌ Not Disjoint",correct:true}],
    reason:"They share 1 and 3!"}
+]);
+
+buildFlexExercise('inter-try3', 'inter-try3-badge', [
+  {text:"A ∩ A = A",
+   choices:[{label:"✅ True",correct:true},{label:"❌ False"}],
+   reason:"✅ True — this is the Idempotent Law. Intersecting a set with itself changes nothing."},
+  {text:"If B ⊂ A, then A ∩ B = B",
+   choices:[{label:"✅ True",correct:true},{label:"❌ False"}],
+   reason:"✅ True — since every element of B is already in A, the common elements are all of B."},
+  {text:"φ ∩ A always equals A",
+   choices:[{label:"✅ True"},{label:"❌ False",correct:true}],
+   reason:"❌ False — φ ∩ A = φ, not A. There's nothing in the empty set to share with A."},
+  {text:"U ∩ A always equals A",
+   choices:[{label:"✅ True",correct:true},{label:"❌ False"}],
+   reason:"✅ True — this is the Law of U. Since U contains everything, intersecting with it just gives A back."}
 ]);
 
 /* ---------- Quiz ---------- */

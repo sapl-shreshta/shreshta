@@ -172,6 +172,18 @@
     </div>
     <div class="info-box">📌 <b>A ⊂ B</b> and <b>B ⊃ A</b> mean <b>exactly the same thing</b> — just told from two
       different points of view!</div>
+    <div style="display:flex;justify-content:center;margin:14px 0;">
+      <svg viewBox="0 0 280 200" width="240" style="max-width:100%;height:auto;">
+        <rect x="10" y="15" width="260" height="170" rx="20" fill="#ffffff" stroke="#1d2b53" stroke-width="3"/>
+        <circle cx="140" cy="100" r="75" fill="none" stroke="#a06cd5" stroke-width="3"/>
+        <circle cx="140" cy="100" r="35" fill="#ff6ec7" fill-opacity="0.35" stroke="#ff6ec7" stroke-width="3"/>
+        <text x="20" y="38" font-size="13" font-weight="bold" fill="#1d2b53">U</text>
+        <text x="150" y="42" font-size="15" font-weight="bold" fill="#a06cd5">A</text>
+        <text x="132" y="104" font-size="14" font-weight="bold" fill="#ff6ec7">B</text>
+      </svg>
+    </div>
+    <p class="caption" style="text-align:center;font-weight:bold;color:var(--purple);">B ⊂ A — every element of B
+      sits completely inside A, with room to spare!</p>
   </section>
 
   <!-- 3. KEY PROPERTIES -->
@@ -186,6 +198,21 @@
           Example: A = {2, 3, 5}, B = {1, 2, 4, 6}: since <b>3 ∉ B</b>, we get <b>A ⊄ B</b>.</li>
       </ul>
     </div>
+  </section>
+
+  <!-- 3B. PROPER SUBSET -->
+  <section class="section">
+    <h2>➰ Proper Subset</h2>
+    <p class="lead">Here's a useful refinement: if <b>A ⊂ B</b> AND <b>A ≠ B</b> (meaning B has at least one extra
+      element that A doesn't have), then A is called a <b>proper subset</b> of B.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>A = {1, 2, 3}, B = {1, 2, 3, 4}</b><br>A is a <b>proper</b> subset of B — B has
+        the extra element 4 that A is missing.</div>
+      <div class="example-card bad"><b>A = {1, 2, 3}, B = {1, 2, 3}</b><br>A ⊂ B still holds (every set is a subset
+        of itself), but A is <b>NOT a proper subset</b> of B — there's no extra element in B.</div>
+    </div>
+    <div class="info-box">📌 The key idea: a <b>proper</b> subset must be strictly <b>smaller</b> — missing at least
+      one element that the bigger set has.</div>
   </section>
 
   <!-- 4. LISTING ALL SUBSETS -->
@@ -221,7 +248,7 @@
   <section class="section" id="tf-section">
     <div class="exercise-head">
       <h2 style="margin:0;">🕵️ True or False? <span class="try-badge">Click one!</span></h2>
-      <span class="progress-badge" id="tf-badge">Correct: 0 / 6</span>
+      <span class="progress-badge" id="tf-badge">Correct: 0 / 8</span>
     </div>
     <p class="lead">Using <b>A = {1, 2, 3}</b> and <b>B = {1, 2, 3, 4, 5}</b> — decide if each statement below is
       true or false.</p>
@@ -314,7 +341,11 @@ buildFlexExercise('tf-grid', 'tf-badge', [
   {text:"{4} ⊂ A", reason:"❌ False — 4 is not an element of A, so {4} can't be a subset of A.",
    choices:[{label:'✅ True', correct:false},{label:'❌ False', correct:true}]},
   {text:"{1, 2} ⊂ B", reason:"✅ True — both 1 and 2 are elements of B.",
-   choices:[{label:'✅ True', correct:true},{label:'❌ False', correct:false}]}
+   choices:[{label:'✅ True', correct:true},{label:'❌ False', correct:false}]},
+  {text:"A is a proper subset of B", reason:"✅ True — A ⊂ B, and B has extra elements (4 and 5) that A doesn't have.",
+   choices:[{label:'✅ True', correct:true},{label:'❌ False', correct:false}]},
+  {text:"A is a proper subset of A", reason:"❌ False — A equals A, so there's no 'extra' element making it proper.",
+   choices:[{label:'✅ True', correct:false},{label:'❌ False', correct:true}]}
 ]);
 
 /* ---------- Quiz ---------- */
