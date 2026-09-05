@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>⚖️ Equal & Equivalent Sets</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    flex:0 0 auto;width:70px;height:70px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .example-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px;}
+  .example-card{background:white;border-radius:14px;padding:14px 16px;border-left:6px solid var(--teal);font-size:14px;line-height:1.5;}
+  .example-card.bad{border-left-color:var(--red);}
+  .example-card b{color:var(--purple);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+  .info-box.purple{background:#f3e8ff;border-color:var(--purple);}
+
+  /* Sorting exercise */
+  .progress-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;white-space:nowrap;}
+  .exercise-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .sort-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+  .sort-card{background:white;border-radius:16px;padding:14px 16px;border:3px solid #cbd5e1;transition:border-color .2s;}
+  .sort-card.answered-correct{border-color:var(--teal);}
+  .sort-card.answered-wrong{border-color:var(--red);}
+  .sort-text{font-size:14px;font-weight:bold;margin-bottom:10px;min-height:40px;}
+  .sort-btns{display:flex;gap:8px;flex-wrap:wrap;}
+  .sort-btn{
+    flex:1 1 auto;background:white;border:3px solid var(--blue);border-radius:12px;padding:8px 10px;font-size:13px;
+    font-weight:bold;cursor:pointer;transition:all .15s;
+  }
+  .sort-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .sort-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .sort-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .sort-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .sort-reason{margin-top:10px;font-size:13px;background:#f0e6ff;border-radius:10px;padding:8px 10px;display:none;}
+
+  /* Quiz (shared pattern) */
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action.purple{background:var(--purple);box-shadow:0 4px 0 #7a3b97;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .next-box{
+    background:linear-gradient(135deg,#f3e8ff,#e0f7ff);border:3px dashed var(--purple);
+    border-radius:22px;padding:24px 22px;margin:28px 0;text-align:center;
+  }
+  .next-box h2{color:var(--purple);font-size:clamp(20px,3vw,26px);margin-bottom:10px;}
+  .next-box p{font-size:15px;margin-bottom:16px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Sets">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">⚖️ 🟰 🔢</div>
+    <h1><span class="highlight">Equal & Equivalent Sets</span></h1>
+    <p class="subtitle">Same elements, or just the same number of elements?</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧮</div>
+    <p>Hi again! I'm Sunny the Sorter 👋 Sometimes two sets look similar but they're not really "the same" in the same
+      way. Two sets can be alike because they hold <b>exactly the same things</b>, or just because they hold the
+      <b>same number of things</b>. Let's compare them and learn to tell the difference!</p>
+  </div>
+
+  <!-- 1. EQUAL SETS -->
+  <section class="section">
+    <h2>🟰 Equal Sets</h2>
+    <p class="lead">Two sets <b>A</b> and <b>B</b> are called <b>equal</b> (written <b>A = B</b>) if they have
+      <b>exactly the same elements</b>. It doesn't matter what <b>order</b> the elements are written in, and repeated
+      elements are simply ignored — a set only cares WHICH elements are in it, not how many times they're written.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>A = {a, b, c}, B = {b, c, a, a}</b><br>A = B — both contain exactly a, b, c. The
+        order is different and B repeats "a", but repeats and order don't matter!</div>
+      <div class="example-card"><b>A = letters of "STOP" = {S, T, O, P}</b><br>B = letters of "POTS" = {P, O, T, S}.
+        A = B, because both words use exactly the same 4 letters!</div>
+    </div>
+  </section>
+
+  <!-- 2. EQUIVALENT SETS -->
+  <section class="section">
+    <h2>🔢 Equivalent Sets</h2>
+    <p class="lead">Two sets <b>A</b> and <b>B</b> are called <b>equivalent</b> (written <b>A ↔ B</b>) if they have
+      the <b>same number of elements</b> — that is, <b>n(A) = n(B)</b>. The actual elements can be completely
+      different; only the <b>count</b> needs to match!</p>
+    <div class="example-grid">
+      <div class="example-card"><b>A = {a, e, i, o, u}, B = {1, 2, 3, 4, 5}</b><br>n(A) = 5 = n(B), so A ↔ B — even
+        though A and B don't share a single element (A ≠ B)!</div>
+      <div class="example-card"><b>A = days of the week (7), B = {x : x ∈ W, x ≤ 6} = {0,1,2,3,4,5,6}</b><br>n(A) = 7
+        and n(B) = 7, so n(A) = n(B) and A ↔ B.</div>
+    </div>
+  </section>
+
+  <!-- 3. KEY DISTINCTION -->
+  <section class="section">
+    <h2>🔑 The Key Distinction</h2>
+    <p class="lead">Here's the important part every student must remember:</p>
+    <div class="info-box purple">✨ Every pair of <b>equal</b> sets is <b>automatically equivalent</b> too — if two
+      sets have exactly the same elements, they must have the same number of elements! But the reverse is
+      <b>not true</b>: two <b>equivalent</b> sets do <b>not</b> need to be equal, because having the same count
+      doesn't mean having the same elements.</div>
+    <div class="example-grid">
+      <div class="example-card"><b>C = {1, 3, 5}, D = {3, 5, 1}</b><br>C = D (same elements) AND C ↔ D (same count).
+        Both hold — they're truly identical sets!</div>
+      <div class="example-card"><b>E = {1, 3, 5}, F = {2, 4, 6}</b><br>n(E) = n(F) = 3, so E ↔ F. But E ≠ F, because
+        they don't share any elements at all.</div>
+    </div>
+  </section>
+
+  <!-- 4. INTERACTIVE EXERCISE -->
+  <section class="section" id="compare-section">
+    <div class="exercise-head">
+      <h2 style="margin:0;">🕵️ Equal, Equivalent, or Neither? <span class="try-badge">Click one!</span></h2>
+      <span class="progress-badge" id="compare-badge">Correct: 0 / 6</span>
+    </div>
+    <p class="lead">For each pair of sets below, decide how they're related.</p>
+    <div class="sort-grid" id="compare-grid"></div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Coming soon:</b> the next topic is <b>Subsets & Supersets</b> — you'll learn
+    what it means for one set to live entirely inside another, and how to list <b>all</b> the subsets of a set!</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 5</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+  <!-- NEXT STEP CTA -->
+  <div class="next-box" id="next-box" style="display:none;">
+    <h2>🎉 You can now compare any two sets!</h2>
+    <p>You've learned that <b>equal</b> sets share the exact same elements, while <b>equivalent</b> sets just share
+      the same number of elements. Ready for the next idea in Sets?</p>
+    <div class="btnrow">
+      <a href="../index.html" style="text-decoration:none;"><button class="action purple">⬅️ Back to Sets Topics</button></a>
+      <a href="../Subsets_and_Supersets/index.html" style="text-decoration:none;"><button class="action">Next Topic: Subsets & Supersets ▶</button></a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Reusable flexible-choice exercise (2, 3, or more options per item) ---------- */
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function buildFlexExercise(gridId, badgeId, items){
+  const grid = document.getElementById(gridId);
+  const badge = document.getElementById(badgeId);
+  let correctCount = 0;
+  items.forEach((item, idx) => {
+    const choices = shuffleArray(item.choices.slice());
+    const card = document.createElement('div');
+    card.className = 'sort-card';
+    card.innerHTML = `
+      <div class="sort-text">${item.text}</div>
+      <div class="sort-btns">
+        ${choices.map((c,ci) => `<button class="sort-btn" data-ci="${ci}">${c.label}</button>`).join('')}
+      </div>
+      <div class="sort-reason" id="${gridId}-reason-${idx}">${item.reason}</div>
+    `;
+    grid.appendChild(card);
+    const btns = card.querySelectorAll('.sort-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ci = Number(btn.dataset.ci);
+        btns.forEach(b => b.disabled = true);
+        const isCorrect = !!choices[ci].correct;
+        btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        if(!isCorrect){
+          const correctIdx = choices.findIndex(c => c.correct);
+          btns[correctIdx].classList.add('correct');
+        } else {
+          correctCount++;
+          badge.textContent = 'Correct: ' + correctCount + ' / ' + items.length;
+        }
+        card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+        document.getElementById(gridId + '-reason-' + idx).style.display = 'block';
+      });
+    });
+  });
+}
+
+buildFlexExercise('compare-grid', 'compare-badge', [
+  {text:"A = {1, 2, 3}, B = {3, 2, 1}",
+   choices:[{label:'🟰 Equal', correct:true},{label:'🔢 Equivalent Only'},{label:'❌ Neither'}],
+   reason:"✅ Equal! A and B contain exactly the same elements, just written in a different order — and since they're equal, they're automatically equivalent too."},
+  {text:"A = {a, b, c}, B = {1, 2, 3}",
+   choices:[{label:'🟰 Equal'},{label:'🔢 Equivalent Only', correct:true},{label:'❌ Neither'}],
+   reason:"✅ Equivalent Only! Both have 3 elements, but the elements themselves (letters vs numbers) are totally different."},
+  {text:"A = {x : x ∈ N, x < 3} = {1, 2}, B = {red, blue}",
+   choices:[{label:'🟰 Equal'},{label:'🔢 Equivalent Only', correct:true},{label:'❌ Neither'}],
+   reason:"✅ Equivalent Only! Both A and B have 2 elements, but one is numbers and the other is colours — different kinds of elements."},
+  {text:"A = {2, 4, 6}, B = {2, 2, 4, 6, 6}",
+   choices:[{label:'🟰 Equal', correct:true},{label:'🔢 Equivalent Only'},{label:'❌ Neither'}],
+   reason:"✅ Equal! B's repeated elements collapse down — B is really just {2, 4, 6}, the exact same set as A."},
+  {text:"A = {1, 2, 3}, B = {1, 2, 3, 4}",
+   choices:[{label:'🟰 Equal'},{label:'🔢 Equivalent Only'},{label:'❌ Neither', correct:true}],
+   reason:"✅ Neither! A has 3 elements and B has 4 — different counts, AND 4 is in B but not in A."},
+  {text:"A = vowels = {a, e, i, o, u}, B = {1, 2, 3, 4, 5}",
+   choices:[{label:'🟰 Equal'},{label:'🔢 Equivalent Only', correct:true},{label:'❌ Neither'}],
+   reason:"✅ Equivalent Only! Both A and B have 5 elements each, but vowels and numbers are completely different things."}
+]);
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"Two sets are called EQUAL if...", opts:["they have exactly the same elements","they have the same number of elements","they are both finite","they both contain the number 1"], answer:0,
+   explain:"Equal sets (A = B) have exactly the same elements — nothing more, nothing less."},
+  {q:"Two sets are called EQUIVALENT if...", opts:["they have exactly the same elements","they have the same number of elements","they are both infinite","neither has repeated elements"], answer:1,
+   explain:"Equivalent sets (A ↔ B) just need n(A) = n(B) — the same number of elements. The elements themselves can be totally different."},
+  {q:"If A = {1, 3, 5} and B = {5, 1, 3}, then...", opts:["A = B, because order doesn't matter","A ↔ B only, they are not equal","A and B are unrelated","B is a bigger set than A"], answer:0,
+   explain:"A and B contain exactly the same elements, just in a different order — so A = B (and they're also equivalent)."},
+  {q:"True or False: 'All equal sets are equivalent, but not all equivalent sets are equal.'", opts:["True","False"], answer:0,
+   explain:"True! Equal sets always have the same count (so they're equivalent), but equivalent sets can have completely different elements (so they aren't always equal)."},
+  {q:"If A = {1, 2, 3, 4} and B = {a, b, c, d}, which statement is TRUE?", opts:["A ↔ B, but A ≠ B","A = B","A ↔ B and A = B","Neither equal nor equivalent"], answer:0,
+   explain:"Both sets have 4 elements, so A ↔ B. But the elements are completely different (numbers vs letters), so A ≠ B."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function shuffleOptions(raw){
+  const idxs = raw.opts.map((_,i)=>i);
+  for(let i=idxs.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [idxs[i],idxs[j]] = [idxs[j],idxs[i]];
+  }
+  return { ...raw, opts: idxs.map(i=>raw.opts[i]), answer: idxs.indexOf(raw.answer) };
+}
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = shuffleOptions(quizData[qIndex]);
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You really understand equal and equivalent sets! 🌟"
+          : score>=total*0.6 ? "Great job! You've got the main idea! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+  document.getElementById('next-box').style.display = 'block';
+}
+renderQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🗂️ Types of Sets</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    flex:0 0 auto;width:70px;height:70px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+
+  .try-badge{
+    display:inline-block;background:var(--red);color:white;font-size:12px;font-weight:bold;
+    padding:4px 10px;border-radius:999px;margin-left:8px;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+  .example-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px;}
+  .example-card{background:white;border-radius:14px;padding:14px 16px;border-left:6px solid var(--teal);font-size:14px;line-height:1.5;}
+  .example-card.bad{border-left-color:var(--red);}
+  .example-card b{color:var(--purple);}
+
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+  .info-box.blue{background:#e6f7ff;border-color:var(--blue);}
+  .info-box.purple{background:#f3e8ff;border-color:var(--purple);}
+
+  /* Sorting exercise */
+  .progress-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;white-space:nowrap;}
+  .exercise-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .sort-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+  .sort-card{background:white;border-radius:16px;padding:14px 16px;border:3px solid #cbd5e1;transition:border-color .2s;}
+  .sort-card.answered-correct{border-color:var(--teal);}
+  .sort-card.answered-wrong{border-color:var(--red);}
+  .sort-text{font-size:14px;font-weight:bold;margin-bottom:10px;min-height:40px;}
+  .sort-btns{display:flex;gap:8px;flex-wrap:wrap;}
+  .sort-btn{
+    flex:1 1 auto;background:white;border:3px solid var(--blue);border-radius:12px;padding:8px 10px;font-size:13px;
+    font-weight:bold;cursor:pointer;transition:all .15s;
+  }
+  .sort-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .sort-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .sort-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .sort-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .sort-reason{margin-top:10px;font-size:13px;background:#f0e6ff;border-radius:10px;padding:8px 10px;display:none;}
+
+  /* Quiz (shared pattern) */
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .score-badge{background:var(--purple);color:white;font-weight:bold;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .qtext{font-size:clamp(16px,2.4vw,19px);font-weight:bold;margin-bottom:14px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .opt-btn{
+    background:white;border:3px solid var(--blue);border-radius:14px;padding:12px 14px;font-size:14px;
+    font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.85;}
+  .explain{margin-top:14px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;}
+  .quiz-final{text-align:center;}
+  .quiz-final .big-score{font-size:48px;font-weight:bold;color:var(--pink);}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.action.purple{background:var(--purple);box-shadow:0 4px 0 #7a3b97;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+
+  .next-box{
+    background:linear-gradient(135deg,#f3e8ff,#e0f7ff);border:3px dashed var(--purple);
+    border-radius:22px;padding:24px 22px;margin:28px 0;text-align:center;
+  }
+  .next-box h2{color:var(--purple);font-size:clamp(20px,3vw,26px);margin-bottom:10px;}
+  .next-box p{font-size:15px;margin-bottom:16px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Sets">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🗂️ ♾️ 1️⃣</div>
+    <h1><span class="highlight">Types of Sets</span></h1>
+    <p class="subtitle">Finite, infinite, singleton, empty, and universal sets!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧮</div>
+    <p>Hi again! I'm Sunny the Sorter 👋 Now that you know what a set is, here's something fun — sets come in
+      different <b>flavors</b>! Some are small, some go on forever, some have just one member, and some have
+      none at all. Let's meet all five types!</p>
+  </div>
+
+  <!-- 1. FINITE -->
+  <section class="section">
+    <h2>🔢 Finite Set</h2>
+    <p class="lead">A <b>finite set</b> is a set with a <b>limited (countable) number of elements</b>. If you kept
+      counting, you would eventually reach the last element and stop.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>A = {a, b, c, d, e}</b><br>Has exactly 5 elements — finite!</div>
+      <div class="example-card"><b>B = {x | x ∈ W, x &lt; 7}</b><br>= {0, 1, 2, 3, 4, 5, 6} — 7 elements, finite!</div>
+      <div class="example-card"><b>C = {1, 3, 5, ..., 101}</b><br>Even though it uses "…", it stops at 101 — so it's still finite!</div>
+    </div>
+  </section>
+
+  <!-- 2. INFINITE -->
+  <section class="section">
+    <h2>♾️ Infinite Set</h2>
+    <p class="lead">An <b>infinite set</b> is a set with an <b>unlimited number of elements</b> — in other words,
+      a set that is <b>NOT finite</b>. No matter how long you count, you never reach a last element.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>N = {1, 2, 3, ...}</b><br>The natural numbers — they never stop.</div>
+      <div class="example-card"><b>W = {0, 1, 2, 3, ...}</b><br>The whole numbers — infinite too.</div>
+      <div class="example-card"><b>I = {..., -2, -1, 0, 1, 2, ...}</b><br>The integers — go on forever in both directions.</div>
+      <div class="example-card"><b>Even integers</b><br>{..., -4, -2, 0, 2, 4, ...} — also infinite.</div>
+    </div>
+  </section>
+
+  <!-- 3. SINGLETON -->
+  <section class="section">
+    <h2>1️⃣ Singleton Set</h2>
+    <p class="lead">A <b>singleton set</b> is a set with <b>exactly one element</b> — no more, no less.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>{-3}</b><br>Just one element: -3.</div>
+      <div class="example-card"><b>{x : x ∈ W, x &lt; 1}</b><br>= {0} — only one whole number is less than 1.</div>
+      <div class="example-card"><b>{x : x is the capital of India}</b><br>= {New Delhi} — only one city fits.</div>
+    </div>
+  </section>
+
+  <!-- 4. EMPTY -->
+  <section class="section">
+    <h2>∅ Empty (Null) Set</h2>
+    <p class="lead">An <b>empty set</b> — also called a <b>null set</b> or <b>void set</b> — has <b>no elements
+      at all</b>. It's written as <b>φ</b> or <b>{ }</b>.</p>
+    <div class="example-grid">
+      <div class="example-card"><b>{x | 2x - 1 = 6, x ∈ N}</b><br>= φ — no natural number solves this equation.</div>
+      <div class="example-card"><b>{triangles having 4 sides}</b><br>= φ — every triangle has exactly 3 sides.</div>
+      <div class="example-card"><b>{whole numbers less than 0}</b><br>= φ — no whole number is negative.</div>
+    </div>
+    <div class="info-box orange">⚠️ <b>Careful!</b> {0} and {φ} are <b>NOT empty sets</b>! Each one actually
+      contains exactly one element — the number 0, or the symbol φ itself. This is a classic mix-up, so watch
+      out for it!</div>
+  </section>
+
+  <!-- 5. UNIVERSAL -->
+  <section class="section">
+    <h2>🌍 Universal Set</h2>
+    <p class="lead">The <b>universal set</b> (written <b>U</b> or <b>ξ</b>) is the "container" set holding
+      <b>every element relevant to a particular problem</b>. Its choice is <b>not fixed</b> — it can change
+      depending on the problem you're working on!</p>
+    <div class="example-grid">
+      <div class="example-card"><b>V = {vowels}</b><br>Universal set could be {all letters of the alphabet}.</div>
+      <div class="example-card"><b>A = {x ∈ N, 5 &lt; x &lt; 10}</b><br>Universal set could be N, or {1, 2, ..., 10}.</div>
+    </div>
+    <div class="info-box blue">🧠 Think of the universal set as the "whole world" for a problem — every other
+      set you talk about lives inside it.</div>
+  </section>
+
+  <!-- 6. INTERACTIVE CLASSIFY EXERCISE -->
+  <section class="section" id="classify-section">
+    <div class="exercise-head">
+      <h2 style="margin:0;">🕵️ Classify the Set! <span class="try-badge">Click one!</span></h2>
+      <span class="progress-badge" id="classify-badge">Correct: 0 / 8</span>
+    </div>
+    <p class="lead">For each set below, decide which type it is: <b>Finite</b>, <b>Infinite</b>,
+      <b>Singleton</b>, or <b>Empty</b>.</p>
+    <div class="sort-grid" id="classify-grid"></div>
+  </section>
+
+  <div class="info-box orange">🔮 <b>Coming soon:</b> now that you know the different types of sets, the next
+    topic will teach you about the <b>Cardinal Number of a Set</b> — how to count the elements in a set using
+    n(A), and the special cases that come with it!</div>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz-section">
+    <h2>🏆 Quick Quiz Time!</h2>
+    <div class="quiz-head">
+      <p class="lead" style="margin:0;">Let's see what you remember!</p>
+      <span class="score-badge" id="score-badge">Score: 0 / 5</span>
+    </div>
+    <div id="quiz-body"></div>
+  </section>
+
+  <!-- NEXT STEP CTA -->
+  <div class="next-box" id="next-box" style="display:none;">
+    <h2>🎉 You've mastered every type of set!</h2>
+    <p>You now know how to spot <b>finite</b>, <b>infinite</b>, <b>singleton</b>, <b>empty</b>, and
+      <b>universal</b> sets. Great work — let's keep going!</p>
+    <div class="btnrow">
+      <a href="../index.html" style="text-decoration:none;"><button class="action purple">⬅️ Back to Sets Topics</button></a>
+      <a href="../Cardinal_Number_of_a_Set/index.html" style="text-decoration:none;"><button class="action">Next Topic: Cardinal Number of a Set ▶</button></a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Reusable flexible-choice sort exercise (2, 3, or more choices per item) ---------- */
+function shuffleArray(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function buildFlexExercise(gridId, badgeId, items){
+  const grid = document.getElementById(gridId);
+  const badge = document.getElementById(badgeId);
+  let correctCount = 0;
+  items.forEach((item, idx) => {
+    const choices = shuffleArray(item.choices.slice());
+    const card = document.createElement('div');
+    card.className = 'sort-card';
+    card.innerHTML = `
+      <div class="sort-text">${item.text}</div>
+      <div class="sort-btns">
+        ${choices.map((c,ci) => `<button class="sort-btn" data-ci="${ci}">${c.label}</button>`).join('')}
+      </div>
+      <div class="sort-reason" id="${gridId}-reason-${idx}">${item.reason}</div>
+    `;
+    grid.appendChild(card);
+    const btns = card.querySelectorAll('.sort-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ci = Number(btn.dataset.ci);
+        btns.forEach(b => b.disabled = true);
+        const isCorrect = !!choices[ci].correct;
+        btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        if(!isCorrect){
+          const correctIdx = choices.findIndex(c => c.correct);
+          btns[correctIdx].classList.add('correct');
+        } else {
+          correctCount++;
+          badge.textContent = 'Correct: ' + correctCount + ' / ' + items.length;
+        }
+        card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+        document.getElementById(gridId + '-reason-' + idx).style.display = 'block';
+      });
+    });
+  });
+}
+
+const typeChoices = () => ([
+  {label:'🔢 Finite', correct:false},
+  {label:'♾️ Infinite', correct:false},
+  {label:'1️⃣ Singleton', correct:false},
+  {label:'∅ Empty', correct:false}
+]);
+function withCorrect(idx){
+  const c = typeChoices();
+  c[idx].correct = true;
+  return c;
+}
+
+buildFlexExercise('classify-grid', 'classify-badge', [
+  {text:"{a, b, c, d, e}", choices: withCorrect(0),
+   reason:"✅ Finite — it has exactly 5 elements."},
+  {text:"N = {1, 2, 3, ...}, the natural numbers", choices: withCorrect(1),
+   reason:"✅ Infinite — the natural numbers go on forever."},
+  {text:"{x : x ∈ W, x < 1}", choices: withCorrect(2),
+   reason:"✅ Singleton — this equals {0}, just one element."},
+  {text:"{triangles having 4 sides}", choices: withCorrect(3),
+   reason:"✅ Empty — no triangle has 4 sides, so there are no elements."},
+  {text:"{x : 2x = 10, x ∈ N}", choices: withCorrect(2),
+   reason:"✅ Singleton — this equals {5}, just one element."},
+  {text:"The set of all integers", choices: withCorrect(1),
+   reason:"✅ Infinite — integers continue forever in both directions."},
+  {text:"{months of a year}", choices: withCorrect(0),
+   reason:"✅ Finite — it has exactly 12 elements."},
+  {text:"{whole numbers less than 0}", choices: withCorrect(3),
+   reason:"✅ Empty — no whole number is negative."}
+]);
+
+/* ---------- Quiz ---------- */
+const quizData = [
+  {q:"A set with an unlimited number of elements is called a(n)...", opts:["Finite set","Infinite set","Singleton set","Empty set"], answer:1,
+   explain:"An infinite set has an unlimited number of elements — it never stops, unlike a finite set."},
+  {q:"Which of these is a singleton set?", opts:["{0, 1}","φ","{x : x ∈ W, x < 1}","N"], answer:2,
+   explain:"{x : x ∈ W, x < 1} equals {0} — exactly one element, which makes it a singleton set."},
+  {q:"Which symbol(s) represent the empty set?", opts:["{0}","ξ","N","φ or { }"], answer:3,
+   explain:"The empty set is written as φ or { } — a set with no elements at all."},
+  {q:"True or False: '{0} is an empty set.'", opts:["True — it looks empty","False — it has one element, the number 0"], answer:1,
+   explain:"{0} contains the number 0 as its element, so it has ONE element — it is a singleton set, not empty!"},
+  {q:"The set containing ALL elements relevant to a particular problem is called the...", opts:["Empty set","Singleton set","Universal set","Finite set"], answer:2,
+   explain:"The universal set (U or ξ) is the 'container' set holding every element relevant to the problem."}
+];
+let qIndex = 0, score = 0;
+const quizBody = document.getElementById('quiz-body');
+const scoreBadge = document.getElementById('score-badge');
+
+function shuffleOptions(raw){
+  const idxs = raw.opts.map((_,i)=>i);
+  for(let i=idxs.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [idxs[i],idxs[j]] = [idxs[j],idxs[i]];
+  }
+  return { ...raw, opts: idxs.map(i=>raw.opts[i]), answer: idxs.indexOf(raw.answer) };
+}
+function renderQuestion(){
+  if(qIndex >= quizData.length){ renderFinal(); return; }
+  const item = shuffleOptions(quizData[qIndex]);
+  quizBody.innerHTML = `
+    <p class="qtext">Q${qIndex+1}. ${item.q}</p>
+    <div class="options">${item.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain-box">${item.explain}</div>
+    <div class="btnrow"><button class="action" id="next-btn" style="display:none;">Next ▶</button></div>
+  `;
+  const optBtns = quizBody.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.dataset.i);
+      optBtns.forEach(b=>b.disabled=true);
+      if(i === item.answer){ btn.classList.add('correct'); score++; scoreBadge.textContent = "Score: "+score+" / "+quizData.length; }
+      else { btn.classList.add('wrong'); optBtns[item.answer].classList.add('correct'); }
+      document.getElementById('explain-box').style.display='block';
+      document.getElementById('next-btn').style.display='inline-block';
+    });
+  });
+  document.getElementById('next-btn').addEventListener('click', ()=>{ qIndex++; renderQuestion(); });
+}
+function renderFinal(){
+  const total = quizData.length;
+  let msg = score===total ? "Perfect score! You really know your set types! 🌟"
+          : score>=total*0.6 ? "Great job! You've got the main idea! 🎉"
+          : "Nice try! Scroll up, explore again, then retake the quiz! 💪";
+  quizBody.innerHTML = `
+    <div class="quiz-final">
+      <div class="confetti-row">🎉 🏅 🎉</div>
+      <p class="big-score">${score} / ${total}</p>
+      <p>${msg}</p>
+      <div class="btnrow"><button class="action secondary" id="restart-quiz">🔄 Play Again</button></div>
+    </div>`;
+  document.getElementById('restart-quiz').addEventListener('click', ()=>{
+    qIndex=0; score=0; scoreBadge.textContent="Score: 0 / "+quizData.length; renderQuestion();
+  });
+  document.getElementById('next-box').style.display = 'block';
+}
+renderQuestion();
+</script>
+</body>
+</html>
