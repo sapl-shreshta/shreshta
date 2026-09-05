@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The First People of India 🔥</title>
+<style>
+  :root{
+    --ochre:#c97b3c; --terracotta:#b5502e; --clay:#8a5a44; --stone:#6b6355;
+    --fire:#e8622c; --leaf:#5c7a3f; --night:#2b2320; --cream:#faf3e6; --ink:#2b2320;
+    --gold:#d4a441; --river:#3d7a8c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(160deg,#f7e7ce,#f0dcc3 40%,#e8d2b0);color:var(--ink);padding:20px;}
+  .container{max-width:880px;margin:0 auto;padding-bottom:60px;}
+
+  /* thread progress bar */
+  .thread-track{position:fixed;top:0;left:0;width:100%;height:10px;background:#d8c4a0;z-index:200;box-shadow:0 2px 6px rgba(0,0,0,.1);}
+  .thread-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--terracotta),var(--gold));position:relative;transition:width .15s ease-out;}
+  .thread-needle{position:absolute;right:-14px;top:-9px;font-size:22px;transform:rotate(90deg);}
+
+  .nav-top{position:fixed;top:22px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--clay);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #5c3d2e;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #5c3d2e;}
+
+  header{text-align:center;margin:70px 0 20px;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  h1{font-size:clamp(30px,5.5vw,46px);color:var(--terracotta);margin-bottom:8px;}
+  .subtitle{font-size:clamp(15px,2.2vw,20px);color:var(--clay);font-weight:bold;}
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--gold);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+  .mascot-frame{
+    flex:0 0 auto;width:70px;height:70px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#f3d9a0,var(--gold));
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #a8792a;
+  }
+  .guide p{font-size:clamp(14px,2vw,16px);line-height:1.55;}
+  .guide b{color:var(--terracotta);}
+
+  .act{
+    background:var(--cream);border-radius:22px;padding:26px 24px;margin:34px 0;
+    border:3px solid var(--stone);box-shadow:0 6px 18px rgba(0,0,0,.1);
+  }
+  .act-label{
+    display:inline-block;background:var(--terracotta);color:white;font-size:12px;font-weight:bold;
+    padding:5px 14px;border-radius:999px;margin-bottom:10px;letter-spacing:.5px;
+  }
+  .act h2{font-size:clamp(22px,3.4vw,30px);color:var(--terracotta);margin-bottom:12px;}
+  .story p{font-size:clamp(15px,2.1vw,17px);line-height:1.75;margin-bottom:14px;}
+  .story b{color:var(--clay);}
+
+  .scene{
+    background:linear-gradient(160deg,#e9d3ac,#dcc292);border-radius:18px;padding:22px;margin:18px 0;
+    text-align:center;position:relative;border:2px solid #c7a86f;
+  }
+  .scene-emoji{font-size:clamp(40px,9vw,64px);letter-spacing:14px;}
+  .hotspot{
+    display:inline-block;margin-top:14px;background:var(--fire);color:white;border:none;
+    padding:10px 18px;border-radius:14px;font-weight:bold;font-size:14px;cursor:pointer;
+    box-shadow:0 4px 0 #a63f16;transition:transform .15s;
+  }
+  .hotspot:hover{transform:translateY(-2px);}
+  .hotspot:active{transform:translateY(2px);box-shadow:0 2px 0 #a63f16;}
+  .hotspot.revealed{background:var(--leaf);box-shadow:0 4px 0 #3b5228;}
+  .reveal-box{
+    display:none;text-align:left;background:white;border-radius:14px;padding:14px 18px;margin-top:14px;
+    font-size:14px;line-height:1.6;border-left:6px solid var(--fire);
+  }
+  .reveal-box.show{display:block;animation:fadeIn .4s ease-in;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+
+  .fact-box{
+    background:#eaf3ea;border-left:6px solid var(--leaf);border-radius:10px;padding:14px 16px;
+    margin-top:16px;font-size:14px;line-height:1.6;
+  }
+  .fact-box b{color:var(--leaf);}
+
+  /* branching reflection (no scoring) */
+  .branch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px;}
+  .branch-btn{
+    background:white;border:3px solid var(--river);border-radius:14px;padding:14px;font-size:14px;
+    font-weight:bold;cursor:pointer;transition:all .15s;text-align:center;
+  }
+  .branch-btn:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.12);}
+  .branch-btn.chosen{background:var(--river);color:white;}
+  .branch-response{display:none;background:#e6f2f5;border-radius:14px;padding:16px;margin-top:14px;font-size:14px;line-height:1.6;border-left:6px solid var(--river);}
+  .branch-response.show{display:block;animation:fadeIn .4s ease-in;}
+
+  /* spin-the-thread climax interactive */
+  .spin-wrap{text-align:center;margin-top:18px;}
+  .spindle{
+    font-size:70px;display:inline-block;cursor:pointer;user-select:none;
+    transition:transform .25s ease-out;
+  }
+  .spindle.spun{transform:rotate(720deg);}
+  .spin-hint{font-size:13px;color:var(--clay);margin-top:6px;font-weight:bold;}
+  .thread-result{display:none;margin-top:16px;}
+  .thread-result.show{display:block;animation:fadeIn .6s ease-in;}
+
+  .next-box{
+    background:linear-gradient(135deg,#e9d3ac,#f0dcc3);border:3px dashed var(--terracotta);
+    border-radius:22px;padding:26px 24px;margin:34px 0;text-align:center;
+  }
+  .next-box h2{color:var(--terracotta);font-size:clamp(20px,3vw,26px);margin-bottom:10px;}
+  .next-box p{font-size:15px;margin-bottom:16px;line-height:1.5;}
+  button.action{
+    background:var(--leaf);color:white;border:none;font-weight:bold;font-size:14px;padding:12px 20px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #3b5228;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #3b5228;}
+  button.action.locked{background:#9a9184;box-shadow:0 4px 0 #6e6759;cursor:not-allowed;opacity:.85;}
+  button.action.locked:hover{transform:none;}
+  button.action.secondary{background:var(--clay);box-shadow:0 4px 0 #5c3d2e;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px;}
+</style>
+</head>
+<body>
+
+<div class="thread-track"><div class="thread-fill" id="thread-fill"><span class="thread-needle">🧵</span></div></div>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to History">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🌋 🦴 🔥</div>
+    <h1>The First People of India</h1>
+    <p class="subtitle">Chapter 1 · Prehistoric India · where our story begins</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧵</div>
+    <p>Namaste! I'm <b>Tantu</b>, the Thread-Weaver. I'm going to walk with you through the
+      <i>whole</i> story of India — every chapter, every age. I carry one long thread with me,
+      and every time something new gets woven into the fabric of this land, my thread grows a
+      little longer. Today the thread is just beginning. Let's go meet the very first people to
+      ever call this land home.</p>
+  </div>
+
+  <!-- ACT 1 -->
+  <section class="act">
+    <span class="act-label">ACT ONE · THE OLD STONE AGE</span>
+    <h2>The Hunters of the Rock Shelters</h2>
+    <div class="story">
+      <p>Close your eyes and go back — not a hundred years, not a thousand, but <b>hundreds of
+        thousands of years.</b> There are no cities. No villages. Not even a single house. But
+        there are people — small bands of them, moving together across hills and river valleys,
+        in a land that will one day be called India.</p>
+      <p>A little girl walks beside her mother along a rocky ridge above a river. She doesn't have
+        a name written down anywhere, because no one writes yet. She carries a sharp stone in her
+        hand — not shaped by magic, but <b>chipped, again and again, by another person's hands</b>,
+        until one edge became sharp enough to cut through hide and wood. Her family doesn't stay in
+        one place. They follow the animals, the fruit trees, the rivers. Wherever they stop for the
+        night, they shelter under overhanging rocks.</p>
+    </div>
+
+    <div class="scene">
+      <div class="scene-emoji">🪨🔥🦴</div>
+      <button class="hotspot" data-target="fire-reveal">🔥 Rub the stones together</button>
+      <div class="reveal-box" id="fire-reveal">
+        One evening, someone strikes two stones together, again and again — and a spark jumps
+        out and catches dry grass. <b>Fire.</b> It isn't magic, it's discovery — and it changes
+        everything. Fire means warmth on cold nights, protection from animals that hunt in the
+        dark, cooked meat that's easier to chew and digest, and light to keep going after sunset.
+        For the first time, a family can sit together after dark — and maybe that's when the
+        first stories were ever told, around a fire just like this one.
+      </div>
+    </div>
+
+    <div class="scene">
+      <div class="scene-emoji">🖐️🦌🐘</div>
+      <button class="hotspot" data-target="art-reveal">🎨 Look closer at the cave wall</button>
+      <div class="reveal-box" id="art-reveal">
+        On the rock walls of their shelter, someone has pressed crushed red and white stone mixed
+        with water — and painted. Running deer. A herd of elephants. Hunters with raised spears.
+        <b>This is art</b> — made not to be useful, but simply because someone wanted to show what
+        they'd seen, or felt, or hoped for. In real caves at a place called <b>Bhimbetka</b>, in
+        today's Madhya Pradesh, paintings just like these still survive — some of the oldest art
+        made by human hands anywhere on Earth.
+      </div>
+    </div>
+
+    <div class="fact-box">🗺️ <b>Where were they?</b> Early people lived across many parts of
+      India — from the rock shelters of <b>Bhimbetka</b> (Madhya Pradesh) to river valleys in
+      today's <b>Tamil Nadu</b> and the <b>Narmada valley</b>. They didn't know borders or states —
+      only rivers, rocks, and the animals they followed.</div>
+  </section>
+
+  <!-- ACT 2 -->
+  <section class="act">
+    <span class="act-label">ACT TWO · THE MIDDLE STONE AGE</span>
+    <h2>Smaller Tools, Bigger Questions</h2>
+    <div class="story">
+      <p>Many, many generations pass. The little girl from Act One is now only a memory carried
+        in stories — her great-great-great-grandchildren live differently than she did. Their
+        stone tools are <b>smaller and sharper</b> — tiny blades called <i>microliths</i>, no
+        bigger than your fingernail, fitted cleverly into wood or bone handles to make knives,
+        arrows, and harpoons. Hunting has become more precise. The world feels a little more
+        within their control.</p>
+      <p>And something new has started happening too. When someone in the group dies, the others
+        don't just walk away. They dig a resting place, and sometimes place a favourite tool or a
+        string of shell beads beside the body.</p>
+    </div>
+
+    <div class="scene">
+      <div class="scene-emoji">🌾💐🕊️</div>
+      <button class="hotspot" data-target="belief-reveal">🕯️ Sit with the family for a moment</button>
+      <div class="reveal-box" id="belief-reveal">
+        Nobody knows exactly what they believed. But burying someone with care, instead of leaving
+        them behind, tells us something important: <b>they were wondering.</b> Wondering what
+        happens after we die. Wondering if there's something more than the world they could see
+        and touch. That quiet wondering — the very first stirring of belief — is something every
+        single generation after them, all the way to today, has kept asking in its own way.
+      </div>
+    </div>
+
+    <div class="scene">
+      <div class="scene-emoji">💃🥁🏹</div>
+      <button class="hotspot" data-target="dance-reveal">🎶 Listen — what's that sound?</button>
+      <div class="reveal-box" id="dance-reveal">
+        On the same rock shelter walls, new paintings appear alongside the old hunting scenes:
+        rows of people <b>dancing together</b>, arms linked. Real paintings like this exist at
+        Bhimbetka too. A hunt was survival — but a dance was something else entirely: joy, and
+        the first hints of community celebration, rhythm, and music.
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 3 -->
+  <section class="act">
+    <span class="act-label">ACT THREE · THE NEW STONE AGE</span>
+    <h2>The Village by the River</h2>
+    <div class="story">
+      <p>Time keeps moving — thousands more years. And now something happens that will change
+        India, and the whole world, forever: <b>people stop wandering.</b></p>
+      <p>Near a river in the northwest of the subcontinent (a place we now call <b>Mehrgarh</b>),
+        a family plants seeds on purpose for the very first time — wheat and barley — and waits
+        for them to grow instead of simply gathering whatever grows wild. They keep goats and
+        sheep close to their homes instead of hunting them far away. For the first time in the
+        whole story so far, a family builds a home meant to <b>stay</b> — walls of mud brick, a
+        roof that won't move with the seasons.</p>
+    </div>
+
+    <div class="scene">
+      <div class="scene-emoji">🌱🐐🏺</div>
+      <button class="hotspot" data-target="farm-reveal">🌾 Plant the seed</button>
+      <div class="reveal-box" id="farm-reveal">
+        A seed goes into the ground. Months later, there's grain — enough to eat, and enough to
+        <b>store</b> for the months when nothing grows. Storing food changes how people live: you
+        no longer need to move constantly, so families start staying in one spot, and a wandering
+        band slowly turns into a <b>village.</b> To hold the stored grain, someone shapes wet clay
+        into a rounded pot and bakes it hard in a fire — the first pottery.
+      </div>
+    </div>
+
+    <div class="scene spin-wrap">
+      <p style="font-weight:bold;margin-bottom:10px;color:var(--terracotta);font-size:15px;">
+        🌸 There's a strange white puff growing on a plant nearby. Someone picks it, and starts
+        twisting it between their fingers...</p>
+      <div class="spindle" id="spindle" title="Click to spin!">🧶</div>
+      <p class="spin-hint" id="spin-hint">👆 Click the cotton to spin it into thread</p>
+      <div class="thread-result" id="thread-result">
+        <div class="fact-box">
+          🧵 <b>You just spun the very first thread.</b> At Mehrgarh, people were growing cotton
+          and twisting it into thread thousands of years ago — some of the earliest cotton thread
+          found <i>anywhere on Earth</i> comes from right here. That thread got woven into cloth.
+          People wore it, traded it, and never stopped. The very cotton clothes families across
+          India wear today can trace their story back to this exact moment.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION (no scoring, branching flavor) -->
+  <section class="act">
+    <span class="act-label">YOUR TURN</span>
+    <h2>If you lived back then...</h2>
+    <p class="story" style="margin-bottom:4px;">Which discovery do you think mattered most? Pick
+      one and see what Tantu thinks.</p>
+    <div class="branch-grid" id="branch-grid">
+      <button class="branch-btn" data-key="fire">🔥 Discovering fire</button>
+      <button class="branch-btn" data-key="farming">🌾 Learning to farm</button>
+      <button class="branch-btn" data-key="art">🎨 Painting on cave walls</button>
+    </div>
+    <div class="branch-response" id="branch-response"></div>
+  </section>
+
+  <!-- EPILOGUE -->
+  <section class="act" style="border-color:var(--gold);">
+    <span class="act-label" style="background:var(--gold);color:var(--night);">EPILOGUE</span>
+    <h2>The Thread Continues...</h2>
+    <div class="guide" style="border-color:var(--terracotta);">
+      <div class="mascot-frame">🧵</div>
+      <p>Look how much changed across this one chapter: people went from wandering to settling,
+        from chipping stone to shaping pottery, from silence to art, dance, and quiet questions
+        about life and death. But notice what <b>survived</b> too — they still told stories by
+        firelight, still made things with their hands, still lived close to rivers, still
+        wondered. <b>That's the thread I carry.</b> Every chapter from here on, watch for what
+        changes — and what quietly stays the same.</p>
+    </div>
+    <p class="story">Next, the thread leads us somewhere extraordinary: real cities, with straight
+      streets, covered drains, and public baths — built in India thousands of years before most of
+      the world had anything like them. Come meet the people of the Indus Valley.</p>
+  </section>
+
+  <div class="next-box">
+    <h2>🎉 You've finished Chapter 1!</h2>
+    <p>You've met India's very first people — hunters, artists, and the first farmers who ever
+      spun a thread on this land.</p>
+    <div class="btnrow">
+      <a href="../index.html" style="text-decoration:none;"><button class="action secondary">⬅️ Back to History</button></a>
+      <button class="action locked" title="Coming soon">🔒 Chapter 2: The Harappan Civilization</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* thread progress bar */
+function updateThread(){
+  const h = document.documentElement;
+  const scrollTop = h.scrollTop || document.body.scrollTop;
+  const scrollHeight = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+  const pct = scrollHeight > 0 ? Math.min(100, (scrollTop / scrollHeight) * 100) : 0;
+  document.getElementById('thread-fill').style.width = pct + '%';
+}
+document.addEventListener('scroll', updateThread);
+window.addEventListener('resize', updateThread);
+updateThread();
+
+/* hotspot reveals */
+document.querySelectorAll('.hotspot').forEach(btn=>{
+  const originalLabel = btn.textContent;
+  btn.addEventListener('click', ()=>{
+    const box = document.getElementById(btn.dataset.target);
+    const nowShown = box.classList.toggle('show');
+    btn.classList.toggle('revealed', nowShown);
+    btn.textContent = nowShown ? '✅ ' + originalLabel.replace(/^[^\s]+\s/, '') : originalLabel;
+  });
+});
+
+/* spin the thread */
+const spindle = document.getElementById('spindle');
+const spinHint = document.getElementById('spin-hint');
+const threadResult = document.getElementById('thread-result');
+let spun = false;
+spindle.addEventListener('click', ()=>{
+  if(spun) return;
+  spun = true;
+  spindle.classList.add('spun');
+  spindle.textContent = '🧵';
+  spinHint.style.display = 'none';
+  threadResult.classList.add('show');
+});
+
+/* branching reflection */
+const branchData = {
+  fire: "Fire is a wonderful pick! It's often called humanity's first great invention — it gave warmth, safety, cooked food, and light to gather around. Many historians agree it changed how humans lived more than almost anything else on this list.",
+  farming: "A brilliant choice! Farming didn't just feed people — it let them stop wandering and build the first villages, which eventually grew into towns, cities, and everything you see in India today. Almost nothing that came after was possible without this step.",
+  art: "A beautiful answer! Art doesn't keep you warm or fed — but it tells us these early people had imagination, memory, and feelings they wanted to share. In many ways, that spark of creativity is the same one behind every painting, story, and song made in India ever since."
+};
+document.querySelectorAll('.branch-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.branch-btn').forEach(b=>b.classList.remove('chosen'));
+    btn.classList.add('chosen');
+    const box = document.getElementById('branch-response');
+    box.textContent = '🧵 Tantu says: ' + branchData[btn.dataset.key];
+    box.classList.add('show');
+  });
+});
+</script>
+</body>
+</html>
