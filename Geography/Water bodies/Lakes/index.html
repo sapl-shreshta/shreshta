@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lakes of the World (Geography Class 6)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --fresh:#118ab2; --salt:#c0392b;
+    --bg:#f7f5f0; --panel:#ffffff; --ink:#2b2b2b; --muted:#6b6b6b; --border:#e2ddd3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);font-family:"Georgia","Times New Roman",serif;color:var(--ink);}
+  header{padding:14px 90px 14px 20px;background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  header h1{font-size:18px;margin:0;font-weight:600;}
+  header .subtitle{font-size:12px;color:var(--muted);font-family:Arial, sans-serif;margin-top:2px;}
+  #legend{display:flex;gap:14px;flex-wrap:wrap;font-family:Arial, sans-serif;font-size:12.5px;}
+  .legend-item{display:flex;align-items:center;gap:6px;cursor:pointer;padding:5px 10px;border-radius:16px;border:1px solid var(--border);background:#fbfaf7;user-select:none;transition:opacity .15s ease, transform .1s ease;}
+  .legend-item.off{opacity:.35;}
+  .legend-item:active{transform:scale(.97);}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,.25);}
+  #map{height:60vh;min-height:400px;}
+  .leaflet-popup-content{font-family:Arial, sans-serif;font-size:13px;line-height:1.4;min-width:150px;}
+  .tag{display:inline-block;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;padding:1px 7px;border-radius:10px;color:#fff;margin-top:4px;}
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:1000;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{background:#a06cd5;color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;display:flex;align-items:center;justify-content:center;font-weight:bold;}
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  main{max-width:980px;margin:0 auto;padding:26px 20px 60px;}
+  h2.section-title{font-size:22px;color:#0b6e93;border-bottom:3px solid #ffd166;display:inline-block;padding-bottom:4px;margin:34px 0 14px;}
+  h3.sub-title{font-size:16px;color:#c2185b;margin:18px 0 8px;}
+  p{line-height:1.65;margin:0 0 12px;}
+  ul{line-height:1.65;padding-left:22px;margin:0 0 14px;}
+  li{margin-bottom:6px;}
+  .imp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:14px 0;}
+  .imp-item{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Arial, sans-serif;font-size:13.5px;line-height:1.55;}
+  .imp-item b{color:#0b6e93;}
+  details{background:var(--panel);border:1px solid var(--border);border-radius:10px;margin:10px 0;padding:10px 16px;}
+  summary{cursor:pointer;font-weight:bold;font-family:Arial, sans-serif;font-size:14px;color:#0b6e93;}
+  details p{font-family:Arial, sans-serif;font-size:13.5px;margin-top:8px;}
+  footer{padding:16px 20px;font-family:Arial, sans-serif;font-size:11px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Water Bodies">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+<div id="app">
+  <header>
+    <div>
+      <h1>Lakes of the World</h1>
+      <div class="subtitle">Geography Class 6, Ch. 3 — Water Bodies</div>
+    </div>
+    <div id="legend"></div>
+  </header>
+  <div id="map"></div>
+
+  <main>
+    <h2 class="section-title">5. Lakes — Introduction &amp; Characteristics</h2>
+    <p>A lake is a <b>large body of water on land</b>. It is bigger and deeper than a pond. Lakes occupy hollows of the land surface in which water accumulates. They vary tremendously in size, shape, depth and mode of formation. A lake may exist temporarily, filling up a small depression of undulating ground after heavy rains — but those which are deep and carry more water than is evaporated remain permanent, e.g. <b>Lake Geneva</b> in Switzerland.</p>
+    <ul>
+      <li>Most of the lakes in the world are <b>freshwater lakes</b> fed by rivers and without outflowing streams, e.g. Lake Poyang and the Great Lakes of North America.</li>
+      <li>In regions of low precipitation and intense evaporation, where there are few rivers strong enough to reach the sea, streams drain into a lake forming a basin of <b>inland drainage</b>. Due to intense evaporation, these lakes are <b>saline</b> — e.g. the <b>Dead Sea</b> has a salinity of 250 parts per thousand and the <b>Great Salt Lake</b> of Utah, USA, has a salinity of 220 parts per thousand.</li>
+      <li><b>Salt lakes or playas</b> are also formed in deserts, e.g. salt lakes of Western Australia.</li>
+    </ul>
+
+    <details open>
+      <summary>Assess Yourself</summary>
+      <p>• Why do some lakes become salty while others remain freshwater?<br>• Name two of the Great Lakes of North America.</p>
+    </details>
+
+    <h2 class="section-title">Importance of Lakes</h2>
+    <p>In countries where lakes are found in abundance — Finland, Sweden, Canada, USA and East African countries — lakes together with other inland waterways play a dominant role in the human, economic, social and cultural life of the people.</p>
+    <div class="imp-grid">
+      <div class="imp-item"><b>Transport:</b> Large lakes like the Great Lakes of North America provide a cheap and convenient form of transport for bulky, heavy goods such as coal, iron, machinery and timber.</div>
+      <div class="imp-item"><b>Economic &amp; industrial development:</b> Early settlements and town sites were much influenced by the presence of lakes — the Great Lakes–St. Lawrence waterways developed the industries in the area.</div>
+      <div class="imp-item"><b>Water storage:</b> Natural or artificial lakes are vital sources of domestic water supply, e.g. the Okhla reservoir supplies water to Delhi.</div>
+      <div class="imp-item"><b>Hydroelectric power:</b> In mountainous districts, lakes or man-made reservoirs are used to generate hydroelectric power.</div>
+      <div class="imp-item"><b>Agricultural purposes:</b> Most freshwater lakes, once dried up, are covered with thick layers of fertile alluvium.</div>
+      <div class="imp-item"><b>Modern multipurpose dams:</b> Besides generating electric power, they also supply water for irrigation.</div>
+      <div class="imp-item"><b>Source of food:</b> Many large lakes, like the Caspian Sea and Great Lakes, have important supplies of food in the form of freshwater fish.</div>
+      <div class="imp-item"><b>Source of minerals:</b> Salt lakes provide valuable rock salts. In the Dead Sea, the highly saline water is evaporated and common salt is produced.</div>
+      <div class="imp-item"><b>Control the river flow:</b> Lakes help to control the flow of water in a river.</div>
+      <div class="imp-item"><b>Tourist attractions &amp; health resorts:</b> Some of the world's best holiday and health resorts are on lakesides, e.g. Lake Geneva and Lake Lucerne in Switzerland — the glacier-formed lakes of the Alps made the tourist industry a national occupation for the Swiss. Chilika Lake in Odisha, India is famous for its flamingos and other migratory birds.</div>
+    </div>
+
+    <p style="font-family:Arial, sans-serif; font-size:12.5px; color:var(--muted);">Toggle the map legend above to explore freshwater lakes (blue) and salt lakes (red) mentioned in the textbook — including Baikal, the five Great Lakes of USA, Lake Onega, Lake Titicaca, Lake Victoria and Chilika Lake.</p>
+  </main>
+
+  <footer>Source: Geography Class-6 textbook, Chapter 3 — Water Bodies. Coordinates are approximate centroids for teaching/reference purposes.</footer>
+</div>
+<script>
+const categories = {
+  fresh: { label: "Freshwater Lake", color: "#118ab2" },
+  salt:  { label: "Salt Lake", color: "#c0392b" }
+};
+const lakes = [
+  { name: "Great Bear Lake", cat: "fresh", lat: 66, lng: -120, note: "Canada — one of the largest freshwater lakes in North America." },
+  { name: "Great Slave Lake", cat: "fresh", lat: 61, lng: -114, note: "Canada" },
+  { name: "Lake Athabasca", cat: "fresh", lat: 59, lng: -110, note: "Canada" },
+  { name: "Great Salt Lake", cat: "salt", lat: 41, lng: -112.5, note: "Utah, USA — salinity of 220 parts per thousand." },
+  { name: "Lake Winnipeg", cat: "fresh", lat: 52, lng: -98, note: "Canada" },
+  { name: "Great Lakes (USA)", cat: "fresh", lat: 45, lng: -83, note: "Five Great Lakes: Superior, Michigan, Huron, Erie, Ontario." },
+  { name: "Lake Vänern", cat: "fresh", lat: 59, lng: 13.5, note: "Sweden — largest lake in Sweden." },
+  { name: "Lake Ladoga", cat: "fresh", lat: 61, lng: 31, note: "Russia — largest lake in Europe." },
+  { name: "Lake Onega", cat: "fresh", lat: 61.6, lng: 35.4, note: "Russia" },
+  { name: "Caspian Sea", cat: "salt", lat: 42, lng: 51, note: "World's largest inland (salt) water body — also treated as an inland sea." },
+  { name: "Lake Baikal", cat: "fresh", lat: 53.5, lng: 108, note: "Russia — the world's deepest freshwater lake." },
+  { name: "Lake Balkash", cat: "fresh", lat: 46, lng: 75, note: "Kazakhstan" },
+  { name: "Aral Sea", cat: "salt", lat: 45, lng: 60, note: "Once one of the world's largest lakes." },
+  { name: "Lake Chad", cat: "fresh", lat: 13, lng: 14, note: "Central Africa" },
+  { name: "Lake Tana", cat: "fresh", lat: 12, lng: 37.3, note: "Ethiopia — source of the Blue Nile." },
+  { name: "Lake Tanganyika", cat: "fresh", lat: -6, lng: 29.5, note: "East Africa — one of the world's deepest lakes." },
+  { name: "Lake Turkana", cat: "salt", lat: 3.5, lng: 36, note: "Kenya" },
+  { name: "Lake Titicaca", cat: "fresh", lat: -15.9, lng: -69.3, note: "Peru/Bolivia — highest large navigable lake in the world." },
+  { name: "Lake Nyasa (Lake Malawi)", cat: "fresh", lat: -12, lng: 34.5, note: "East Africa" },
+  { name: "Lake Victoria", cat: "fresh", lat: -1, lng: 33, note: "East Africa — largest lake in Africa." },
+  { name: "Lake Albert", cat: "fresh", lat: 1.7, lng: 31, note: "Uganda / DR Congo" },
+  { name: "Lake Geneva", cat: "fresh", lat: 46.4, lng: 6.5, note: "Switzerland — famous for the Jet d'Eau fountain; tourist resort." },
+  { name: "Chilika Lake", cat: "salt", lat: 19.7, lng: 85.3, note: "Odisha, India — Asia's largest brackish-water lagoon, famous for flamingos." }
+];
+const map = L.map('map', { worldCopyJump: false, minZoom: 2, maxBounds: [[-90,-180],[90,180]], maxBoundsViscosity: 1.0 }).setView([20, 20], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 18, noWrap: true }).addTo(map);
+const layerGroups = {};
+Object.keys(categories).forEach(key => { layerGroups[key] = L.layerGroup().addTo(map); });
+lakes.forEach(l => {
+  const c = categories[l.cat];
+  const marker = L.circleMarker([l.lat, l.lng], { radius: 7, fillColor: c.color, color: "#ffffff", weight: 1.5, fillOpacity: 0.9 });
+  marker.bindPopup(`<b>${l.name}</b><br>${l.note}<br><span class="tag" style="background:${c.color}">${c.label}</span>`, { maxWidth: 240 });
+  marker.addTo(layerGroups[l.cat]);
+});
+const legendEl = document.getElementById('legend');
+Object.entries(categories).forEach(([key, c]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="dot" style="background:${c.color}"></span><span>${c.label}</span>`;
+  item.addEventListener('click', () => {
+    if (map.hasLayer(layerGroups[key])) { map.removeLayer(layerGroups[key]); item.classList.add('off'); }
+    else { map.addLayer(layerGroups[key]); item.classList.remove('off'); }
+  });
+  legendEl.appendChild(item);
+});
+</script>
+</body>
+</html>

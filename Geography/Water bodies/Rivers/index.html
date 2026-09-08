@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rivers of the World (Geography Class 6)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --snow:#4cc9f0; --perennial:#06d6a0; --nonperennial:#e07a1f;
+    --bg:#f7f5f0; --panel:#ffffff; --ink:#2b2b2b; --muted:#6b6b6b; --border:#e2ddd3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);font-family:"Georgia","Times New Roman",serif;color:var(--ink);}
+  header{padding:14px 90px 14px 20px;background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  header h1{font-size:18px;margin:0;font-weight:600;}
+  header .subtitle{font-size:12px;color:var(--muted);font-family:Arial, sans-serif;margin-top:2px;}
+  #legend{display:flex;gap:14px;flex-wrap:wrap;font-family:Arial, sans-serif;font-size:12.5px;}
+  .legend-item{display:flex;align-items:center;gap:6px;cursor:pointer;padding:5px 10px;border-radius:16px;border:1px solid var(--border);background:#fbfaf7;user-select:none;transition:opacity .15s ease, transform .1s ease;}
+  .legend-item.off{opacity:.35;}
+  .legend-item:active{transform:scale(.97);}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,.25);}
+  #map{height:62vh;min-height:420px;}
+  .leaflet-popup-content{font-family:Arial, sans-serif;font-size:13px;line-height:1.4;min-width:150px;}
+  .tag{display:inline-block;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;padding:1px 7px;border-radius:10px;color:#fff;margin-top:4px;}
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:1000;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{background:#a06cd5;color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;display:flex;align-items:center;justify-content:center;font-weight:bold;}
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  main{max-width:980px;margin:0 auto;padding:26px 20px 60px;}
+  h2.section-title{font-size:22px;color:#0b6e93;border-bottom:3px solid #ffd166;display:inline-block;padding-bottom:4px;margin:34px 0 14px;}
+  h3.sub-title{font-size:16px;color:#c2185b;margin:18px 0 8px;}
+  p{line-height:1.65;margin:0 0 12px;}
+  ul{line-height:1.65;padding-left:22px;margin:0 0 14px;}
+  li{margin-bottom:6px;}
+  .term-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:14px 0;}
+  .term{background:var(--panel);border:1px solid var(--border);border-left:5px solid #4cc9f0;border-radius:8px;padding:10px 14px;font-family:Arial, sans-serif;font-size:13.5px;line-height:1.5;}
+  .term b{display:block;color:#0b6e93;font-family:Georgia,serif;font-size:14.5px;margin-bottom:3px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:16px 0;}
+  .river-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:6px solid var(--c,#4cc9f0);box-shadow:0 3px 10px rgba(0,0,0,.05);}
+  .river-card h3{margin:0 0 8px;font-size:17px;}
+  .river-card p, .river-card ul{font-family:Arial, sans-serif;font-size:13.5px;line-height:1.55;}
+  .imp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:14px 0;}
+  .imp-item{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Arial, sans-serif;font-size:13.5px;line-height:1.55;}
+  .imp-item b{color:#0b6e93;}
+  .uses-wheel{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0;}
+  .use{background:#eef6fb;border:2px solid #4cc9f0;border-radius:20px;padding:8px 14px;font-family:Arial, sans-serif;font-size:13px;}
+  details{background:var(--panel);border:1px solid var(--border);border-radius:10px;margin:10px 0;padding:10px 16px;}
+  summary{cursor:pointer;font-weight:bold;font-family:Arial, sans-serif;font-size:14px;color:#0b6e93;}
+  details p{font-family:Arial, sans-serif;font-size:13.5px;margin-top:8px;}
+  footer{padding:16px 20px;font-family:Arial, sans-serif;font-size:11px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Water Bodies">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+<div id="app">
+  <header>
+    <div>
+      <h1>Rivers of the World</h1>
+      <div class="subtitle">Geography Class 6, Ch. 3 — Water Bodies</div>
+    </div>
+    <div id="legend"></div>
+  </header>
+  <div id="map"></div>
+
+  <main>
+    <h2 class="section-title">6. Rivers — Introduction</h2>
+    <p>A river is a <b>body of water that flows downhill in a channel</b>, usually towards the ocean. When rain falls, part of it seeps into the ground, some is evaporated back into the atmosphere, and the rest runs off as rivulets, streams and tributaries of rivers that flow down to the sea.</p>
+
+    <h3 class="sub-title">Key Terms</h3>
+    <div class="term-grid">
+      <div class="term"><b>Source / Headwaters</b>The beginning of a river, often in the mountains. May be fed by snowmelt, glacial melt or run-off rain — a spring, a lake, or an upland region of heavy precipitation.</div>
+      <div class="term"><b>Catchment area</b>The uplands that collect water form the catchment areas of rivers.</div>
+      <div class="term"><b>Divide / Watershed</b>The crest of the mountain — from which streams flow down the slope to begin their journey to the ocean. A watershed is the total area of land that drains into a particular waterbody (stream, wetland, river, lake or ocean).</div>
+      <div class="term"><b>Mouth</b>Where the river ends its journey — in a sea, lake or large waterbody.</div>
+      <div class="term"><b>Delta</b>If sediments are deposited at the last stage of the river, a triangular raised area is formed; the river splits into distributaries, e.g. the <b>Sundarban Delta</b> and the Mississippi Delta.</div>
+      <div class="term"><b>Estuary</b>Where the rock is hard, the river flows swiftly without carrying silt and flows straight into the sea, forming good natural harbours, e.g. in India, the <b>Narmada</b> and <b>Tapi</b> flow into the Arabian Sea forming estuaries.</div>
+    </div>
+    <p>Hence, every river is part of a larger system — a <b>watershed</b> which is the land drained by a river and its tributaries. Land uses and runoff in a watershed determine what happens in the smaller streams and waterways within it.</p>
+
+    <h2 class="section-title">Characteristics of Rivers</h2>
+    <p>Every river is different. However, common characteristics of rivers are as follows: the river source (headwaters) is often located in mountains, and may be fed by snowmelt, glacial melt or run-off rain.</p>
+    <div class="cards">
+      <div class="river-card" style="--c:#4cc9f0;">
+        <h3>❄️ Snow-fed Rivers</h3>
+        <p>Rivers that start in high mountains from melting ice and snow. They are usually <b>perennial</b> in nature, e.g. rivers in Norway that flow from snow-capped mountains.</p>
+      </div>
+      <div class="river-card" style="--c:#06d6a0;">
+        <h3>💧 Perennial Rivers</h3>
+        <p>Rivers that exhibit a continuous flow of water throughout the year, except during extreme drought. Also known as <b>permanent rivers</b>. Very important — support activities dependent on the river throughout the year (human, plant and animal life); used for irrigation and generation of hydroelectricity, e.g. the Himalayan rivers <b>Ganga and Yamuna</b>.</p>
+      </div>
+      <div class="river-card" style="--c:#e07a1f;">
+        <h3>☀️ Non-perennial (Periodic) Rivers</h3>
+        <p>Rivers that do not have a constant flow throughout the year — mainly rivers which flow only during the rainy season. Found in arid climates where evaporation tends to be greater than precipitation. Stream flow declines and they may dry up, sometimes unable to reach the sea, e.g. the peninsular rivers of India — <b>Krishna and Kaveri</b>.</p>
+      </div>
+    </div>
+
+    <details open>
+      <summary>Assess Yourself</summary>
+      <p>• State any two characteristics of a river.<br>• What do you mean by the water cycle? Explain with the help of a diagram.<br>• What is the difference between a perennial and a non-perennial river?</p>
+    </details>
+
+    <h2 class="section-title">Importance of Rivers</h2>
+    <div class="imp-grid">
+      <div class="imp-item">Rivers play a very important role in the life of human beings. In the past, many rivers were <b>cradles of great civilisation</b>, e.g. the Indus Valley Civilisation.</div>
+      <div class="imp-item">Rivers serve as <b>inland waterways</b> for trade and travel.</div>
+      <div class="imp-item">River estuaries support many types of fish and birds; they are also of <b>recreational importance</b> for tourists. Ports can be built on them as they form good natural harbours.</div>
+      <div class="imp-item"><b>River deltas</b> support agriculture and wildlife of sea and land, and the growth of mangrove vegetation, e.g. the <b>Sundarban Delta</b>.</div>
+      <div class="imp-item">Rivers provide <b>fresh drinking water</b>, playing an important role in the water cycle as drainage channels for surface water.</div>
+      <div class="imp-item">Rivers are major <b>economic assets</b> of any country — they aid the production of electricity, attract tourism, act as a transport system, and help in trading purposes.</div>
+      <div class="imp-item">Various rivers are regarded as <b>deities</b> in many countries, including India — considered sacred and worshipped by devotees with utmost respect, e.g. the <b>Ganga</b> in India.</div>
+    </div>
+
+    <h3 class="sub-title">A River System — Uses of River Water</h3>
+    <div class="uses-wheel">
+      <div class="use">💧 Drinking water</div>
+      <div class="use">🌾 Agriculture &amp; industry</div>
+      <div class="use">🚢 Transportation systems</div>
+      <div class="use">🐟 Food source</div>
+      <div class="use">⛏️ Mineral extraction</div>
+      <div class="use">🏊 Recreation &amp; tourism</div>
+      <div class="use">🦫 Animal, plant &amp; aquatic habitat</div>
+    </div>
+
+    <p style="font-family:Arial, sans-serif; font-size:12.5px; color:var(--muted);">Toggle the map legend above to explore the 32 major rivers of the world (Fig. 3.22), coloured by whether the textbook describes them as perennial, snow-fed, or non-perennial/seasonal (unlabelled rivers shown as general/perennial by default).</p>
+  </main>
+
+  <footer>Source: Geography Class-6 textbook, Chapter 3 — Water Bodies. Coordinates are approximate centroids for teaching/reference purposes.</footer>
+</div>
+<script>
+const categories = {
+  snow: { label: "Snow-fed", color: "#4cc9f0" },
+  perennial: { label: "Perennial", color: "#06d6a0" },
+  nonperennial: { label: "Non-perennial / Seasonal", color: "#e07a1f" }
+};
+const rivers = [
+  { name: "Mackenzie", cat: "snow", lat: 65, lng: -124, note: "North America" },
+  { name: "Fraser", cat: "perennial", lat: 52, lng: -122, note: "North America" },
+  { name: "St. Lawrence", cat: "perennial", lat: 47, lng: -70, note: "North America — Great Lakes waterway" },
+  { name: "Mississippi", cat: "perennial", lat: 32, lng: -91, note: "North America — forms the Mississippi Delta" },
+  { name: "Missouri", cat: "perennial", lat: 41, lng: -95, note: "North America" },
+  { name: "Rio Grande", cat: "nonperennial", lat: 28, lng: -101, note: "North America" },
+  { name: "Colorado", cat: "nonperennial", lat: 36, lng: -114, note: "North America" },
+  { name: "Amazon", cat: "perennial", lat: -3, lng: -60, note: "South America — world's largest river by volume" },
+  { name: "Parana", cat: "perennial", lat: -27, lng: -58, note: "South America" },
+  { name: "Paraguay", cat: "perennial", lat: -20, lng: -57, note: "South America" },
+  { name: "Nile", cat: "perennial", lat: 20, lng: 31, note: "Africa — longest river in the world" },
+  { name: "Zaire (Congo)", cat: "perennial", lat: -2, lng: 18, note: "Africa" },
+  { name: "Zambezi", cat: "perennial", lat: -17, lng: 28, note: "Africa — drains into the Indian Ocean" },
+  { name: "Niger", cat: "perennial", lat: 12, lng: 3, note: "Africa" },
+  { name: "Orange", cat: "nonperennial", lat: -29, lng: 20, note: "Africa" },
+  { name: "Rhine", cat: "perennial", lat: 50, lng: 7.5, note: "Europe — drains into the Atlantic" },
+  { name: "Seine", cat: "perennial", lat: 49, lng: 2.5, note: "Europe" },
+  { name: "Rhone", cat: "perennial", lat: 44, lng: 4.8, note: "Europe" },
+  { name: "Volga", cat: "perennial", lat: 48, lng: 46, note: "Europe — longest river in Europe" },
+  { name: "Danube", cat: "perennial", lat: 45, lng: 20, note: "Europe" },
+  { name: "Murray", cat: "nonperennial", lat: -34, lng: 143, note: "Australia" },
+  { name: "Darling", cat: "nonperennial", lat: -30, lng: 145, note: "Australia" },
+  { name: "Chang Jiang (Yangtse)", cat: "perennial", lat: 30, lng: 112, note: "Asia — longest river in Asia" },
+  { name: "Hwang-Ho", cat: "perennial", lat: 37, lng: 110, note: "Asia" },
+  { name: "Ganga", cat: "perennial", lat: 25, lng: 84, note: "India — snow-fed, perennial, sacred river" },
+  { name: "Yamuna", cat: "perennial", lat: 27, lng: 79, note: "India — snow-fed, perennial" },
+  { name: "Godavari", cat: "perennial", lat: 18, lng: 80, note: "India" },
+  { name: "Krishna", cat: "nonperennial", lat: 16, lng: 79, note: "India — peninsular, non-perennial river" },
+  { name: "Kaveri", cat: "nonperennial", lat: 11, lng: 78, note: "India — peninsular, non-perennial river" },
+  { name: "Indus", cat: "perennial", lat: 27, lng: 68.5, note: "South Asia — cradle of the Indus Valley Civilisation" },
+  { name: "Narmada", cat: "perennial", lat: 22, lng: 74, note: "India — flows into the Arabian Sea forming an estuary" },
+  { name: "Tapi", cat: "perennial", lat: 21, lng: 74, note: "India — flows into the Arabian Sea forming an estuary" },
+  { name: "Mekong", cat: "perennial", lat: 15, lng: 105, note: "Southeast Asia" },
+  { name: "Irrawaddy", cat: "perennial", lat: 20, lng: 95.5, note: "Myanmar — drains into the Indian Ocean" },
+  { name: "Tigris", cat: "perennial", lat: 34, lng: 44, note: "Middle East" },
+  { name: "Euphrates", cat: "perennial", lat: 34, lng: 41, note: "Middle East" },
+  { name: "Ob", cat: "snow", lat: 62, lng: 67, note: "Russia" }
+];
+const map = L.map('map', { worldCopyJump: false, minZoom: 2, maxBounds: [[-90,-180],[90,180]], maxBoundsViscosity: 1.0 }).setView([20, 20], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 18, noWrap: true }).addTo(map);
+const layerGroups = {};
+Object.keys(categories).forEach(key => { layerGroups[key] = L.layerGroup().addTo(map); });
+rivers.forEach(r => {
+  const c = categories[r.cat];
+  const marker = L.circleMarker([r.lat, r.lng], { radius: 6.5, fillColor: c.color, color: "#ffffff", weight: 1.2, fillOpacity: 0.9 });
+  marker.bindPopup(`<b>${r.name}</b><br>${r.note}<br><span class="tag" style="background:${c.color}">${c.label}</span>`, { maxWidth: 240 });
+  marker.addTo(layerGroups[r.cat]);
+});
+const legendEl = document.getElementById('legend');
+Object.entries(categories).forEach(([key, c]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="dot" style="background:${c.color}"></span><span>${c.label}</span>`;
+  item.addEventListener('click', () => {
+    if (map.hasLayer(layerGroups[key])) { map.removeLayer(layerGroups[key]); item.classList.add('off'); }
+    else { map.addLayer(layerGroups[key]); item.classList.remove('off'); }
+  });
+  legendEl.appendChild(item);
+});
+</script>
+</body>
+</html>

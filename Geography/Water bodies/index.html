@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Water Bodies - Geography</title>
+<style>
+  :root{
+    --pink:#ff6ec7;
+    --purple:#a06cd5;
+    --blue:#4cc9f0;
+    --teal:#06d6a0;
+    --yellow:#ffd166;
+    --orange:#ff9e45;
+    --red:#ef476f;
+    --cream:#fff8f0;
+    --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:var(--ink);
+    padding:20px;
+  }
+  .container{max-width:1000px;margin:0 auto;}
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;}
+  .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;
+    border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+  header{text-align:center;margin:60px 0 30px 0;}
+  h1{font-size:clamp(36px,6vw,56px);background:linear-gradient(90deg,#118ab2,#06d6a0,#ffd166,#ff9e45);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:10px;}
+  .subtitle{font-size:clamp(18px,2.5vw,24px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(40px,8vw,60px);text-align:center;margin:20px 0;letter-spacing:10px;}
+
+  .intro-card{
+    background:var(--cream);border-radius:20px;padding:24px 28px;margin:30px 0;
+    border:3px solid var(--blue);box-shadow:0 4px 12px rgba(0,0,0,.08);
+    font-size:clamp(15px,1.8vw,17px);line-height:1.7;
+  }
+  .intro-card h2{color:var(--red);margin-bottom:10px;font-size:clamp(20px,2.5vw,26px);}
+  .stat-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;}
+  .stat-pill{
+    background:white;border:2px dashed var(--purple);border-radius:14px;
+    padding:10px 16px;font-size:14px;flex:1;min-width:180px;
+  }
+  .stat-pill b{color:var(--purple);display:block;font-size:15px;margin-bottom:2px;}
+
+  .cycle{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:22px 0 6px;
+  }
+  .cycle-step{
+    background:white;border-radius:14px;padding:12px 14px;text-align:center;
+    width:120px;box-shadow:0 3px 8px rgba(0,0,0,.08);border:2px solid var(--teal);
+  }
+  .cycle-step .e{font-size:28px;display:block;}
+  .cycle-step .t{font-size:12.5px;font-weight:bold;color:var(--ink);margin-top:4px;}
+  .cycle-arrow{align-self:center;font-size:22px;color:var(--purple);}
+
+  .lessons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:30px 0;}
+  .lesson-card{
+    background:var(--cream);border-radius:16px;padding:18px 14px;
+    border:3px solid #118ab2;box-shadow:0 4px 12px rgba(0,0,0,.08);
+    text-decoration:none;color:inherit;
+    transition:all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .lesson-card:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .lesson-emoji{font-size:38px;margin-bottom:6px;}
+  .lesson-card h2{font-size:clamp(15px,2.5vw,19px);color:var(--pink);margin-bottom:8px;}
+  .lesson-card p{font-size:clamp(12px,1.5vw,14px);color:var(--ink);line-height:1.5;}
+
+  .section{background:var(--cream);border-radius:20px;padding:24px 28px;margin:26px 0;border:3px solid var(--yellow);box-shadow:0 4px 12px rgba(0,0,0,.08);}
+  .section h2{color:var(--orange);font-size:clamp(20px,2.5vw,26px);margin-bottom:14px;}
+  .mindmap{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:10px;}
+  .mm-branch{background:white;border:2px solid var(--purple);border-radius:14px;padding:12px 16px;min-width:150px;box-shadow:0 3px 8px rgba(0,0,0,.06);}
+  .mm-branch h4{color:var(--red);font-size:15px;margin-bottom:6px;}
+  .mm-branch p{font-size:13px;color:#444;line-height:1.5;}
+  .glossary dl{display:grid;grid-template-columns:max-content 1fr;gap:8px 14px;font-size:15px;}
+  .glossary dt{font-weight:bold;color:var(--purple);white-space:nowrap;}
+  .glossary dd{color:#333;line-height:1.5;}
+  .synopsis ul{padding-left:20px;line-height:1.8;font-size:15px;}
+  .synopsis li b{color:var(--red);}
+  footer.note{text-align:center;font-size:13px;color:#777;margin:30px 0 10px;}
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Geography">⬅️</button>
+  </a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">🌊 🏝️ 🏞️</div>
+    <h1>Water Bodies</h1>
+    <p class="subtitle">Oceans, seas, lakes & rivers on our blue planet! ✨</p>
+  </header>
+
+  <div class="intro-card">
+    <h2>🌍 1. What is a Water Body?</h2>
+    <p>A <b>body of water</b> (or water body) is any significant accumulation of water on the Earth's surface. Earth is often called the <b>Watery Planet</b> because nearly <b>71%</b> of its surface is covered with water. The term usually refers to oceans, seas and lakes — but rivers, streams and canals, where water moves from one place to another, are also considered bodies of water. The Earth's <b>hydrosphere</b> consists of water on and below the surface of the Earth.</p>
+    <div class="stat-row">
+      <div class="stat-pill"><b>71%</b>of Earth's surface is covered by oceans &amp; seas</div>
+      <div class="stat-pill"><b>Sea level</b>the uniform level water always maintains — used to measure the height of mountains &amp; plateaus, e.g. Mt. Everest is 8849 m above sea level</div>
+      <div class="stat-pill"><b>Interconnected</b>unlike continents, all oceans and seas are joined to one another</div>
+    </div>
+  </div>
+
+  <div class="intro-card">
+    <h2>💧 The Water Cycle (Hydrological Cycle)</h2>
+    <p>There is a continuous interchange of water between the oceans, atmosphere and land — this is called the <b>hydrological cycle</b> or <b>water cycle</b>. The differential heating of the Earth by the sun causes water to evaporate; water vapour condenses in the cooler upper atmosphere to form clouds, which fall back as rain, snow or hail (<b>precipitation</b>). This water flows into rivers as <b>runoff</b>, soaks into the ground as <b>recharge</b>, or returns to the oceans as <b>discharge</b>. Because of this circulation, water exists in three states — solid, liquid and gas (snow, water and vapour). Water cycle is the single process through which the three realms of the Earth — <b>lithosphere, hydrosphere and atmosphere</b> — are connected.</p>
+    <div class="cycle">
+      <div class="cycle-step"><span class="e">☀️💧</span><span class="t">Evaporation</span></div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step"><span class="e">☁️</span><span class="t">Condensation</span></div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step"><span class="e">🌧️</span><span class="t">Precipitation</span></div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step"><span class="e">🏞️➡️</span><span class="t">Runoff</span></div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step"><span class="e">🌊</span><span class="t">Back to the ocean</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🧭 Explore the Chapter</h2>
+    <div class="lessons-grid">
+      <a href="Oceans/index.html" class="lesson-card">
+        <div class="lesson-emoji">🌊</div>
+        <h2>Oceans</h2>
+        <p>The five great oceans — Pacific, Atlantic, Indian, Arctic &amp; Southern — on an interactive map, with their characteristics and importance.</p>
+      </a>
+      <a href="Seas/index.html" class="lesson-card">
+        <div class="lesson-emoji">🏖️</div>
+        <h2>Seas</h2>
+        <p>What makes a sea, and the difference between marginal seas (Bering, Caribbean...) and inland seas (Caspian, Dead Sea...).</p>
+      </a>
+      <a href="Lakes/index.html" class="lesson-card">
+        <div class="lesson-emoji">🏞️</div>
+        <h2>Lakes</h2>
+        <p>Freshwater &amp; salt lakes, how they form, why they matter, and a world map of famous lakes.</p>
+      </a>
+      <a href="Rivers/index.html" class="lesson-card">
+        <div class="lesson-emoji">🏔️</div>
+        <h2>Rivers</h2>
+        <p>From source to mouth — snow-fed, perennial &amp; non-perennial rivers, deltas, estuaries and the major rivers of the world.</p>
+      </a>
+      <a href="Pollution/index.html" class="lesson-card">
+        <div class="lesson-emoji">🛢️</div>
+        <h2>Water Pollution</h2>
+        <p>Causes of pollution of our oceans, seas, lakes &amp; rivers — from urbanisation and farming to real oil-spill disasters.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🧠 Mind Map — Water Bodies</h2>
+    <div class="mindmap">
+      <div class="mm-branch"><h4>🌊 Oceans</h4><p>Pacific · Atlantic · Indian · Arctic · Southern</p></div>
+      <div class="mm-branch"><h4>🏖️ Seas — Marginal</h4><p>Bering · Caribbean · North Sea · Arabian Sea</p></div>
+      <div class="mm-branch"><h4>🏝️ Seas — Inland</h4><p>Black · Caspian · Aral · Red · Dead Sea</p></div>
+      <div class="mm-branch"><h4>🏞️ Lakes — Fresh water</h4><p>e.g. Great Lakes of USA, Baikal, Victoria</p></div>
+      <div class="mm-branch"><h4>🧂 Lakes — Salt water</h4><p>e.g. Chilika, Caspian</p></div>
+      <div class="mm-branch"><h4>🌧️ Rivers — Perennial</h4><p>e.g. Ganga, Amazon</p></div>
+      <div class="mm-branch"><h4>☀️ Rivers — Non-perennial / Seasonal</h4><p>e.g. Krishna, Kaveri</p></div>
+    </div>
+  </div>
+
+  <div class="section glossary">
+    <h2>📖 Glossary</h2>
+    <dl>
+      <dt>Continent</dt><dd>The large masses of land.</dd>
+      <dt>Sea</dt><dd>Expanse of saltwater surrounding the continents.</dd>
+      <dt>Lake</dt><dd>A hollow in the Earth's surface filled permanently with water. It may be fresh or brackish (salty).</dd>
+      <dt>River</dt><dd>A stream of water flowing from higher ground level to lower ground level. The origin of a river is called the 'source of the river'.</dd>
+      <dt>Isthmus</dt><dd>Narrow strip of land with water on each side connecting two masses of land.</dd>
+      <dt>Catchment area</dt><dd>An area from which surface runoff is carried away by a single drainage system.</dd>
+    </dl>
+  </div>
+
+  <div class="section synopsis">
+    <h2>📝 Synopsis</h2>
+    <ul>
+      <li>The Earth is a <b>watery planet</b> with 71% of its surface being covered with water. All oceans and seas are interconnected. There is a continuous interchange of water between the oceans, atmosphere and land known as the <b>water cycle</b>.</li>
+      <li>The different types of water bodies are <b>oceans, seas, lakes and rivers</b>. There are five important oceans like Pacific Ocean, Atlantic Ocean, Indian Ocean, Arctic Ocean and Southern Ocean.</li>
+      <li>Every ocean has its own characteristics. <b>Pacific Ocean</b> being the largest and <b>Atlantic Ocean</b> being the second largest. The <b>Arctic Ocean</b> is the smallest and the <b>Southern Ocean</b> remains frozen.</li>
+      <li>Oceans regulate climate, support marine life, provide food, it plays a role in the water cycle and is a source of mineral.</li>
+      <li><b>Seas</b> are marginal or inland.</li>
+      <li><b>Lakes</b> may be saline or freshwater and supports agriculture, helps in fishing, used for recreation, controls flood, maintains groundwater level etc.</li>
+      <li><b>Rivers</b> may either be perennial (e.g. Ganga) or non-perennial (e.g. Krishna).</li>
+    </ul>
+  </div>
+
+  <footer class="note">Source: Geography Class-6 textbook, Chapter 3 — Water Bodies.</footer>
+</div>
+</body>
+</html>

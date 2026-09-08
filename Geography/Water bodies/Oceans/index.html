@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>World Oceans — Pacific, Atlantic, Indian, Arctic &amp; Southern (Geography Class 6)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --pacific:#118ab2;
+    --atlantic:#06d6a0;
+    --indian:#ffd166;
+    --arctic:#4a5568;
+    --southern:#8338ec;
+    --bg:#f7f5f0;
+    --panel:#ffffff;
+    --ink:#2b2b2b;
+    --muted:#6b6b6b;
+    --border:#e2ddd3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);font-family:"Georgia","Times New Roman",serif;color:var(--ink);}
+  #app{display:flex;flex-direction:column;}
+  header{
+    padding:14px 90px 14px 20px;background:var(--panel);border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  header h1{font-size:18px;margin:0;font-weight:600;}
+  header .subtitle{font-size:12px;color:var(--muted);font-family:Arial, sans-serif;margin-top:2px;}
+  #legend{display:flex;gap:14px;flex-wrap:wrap;font-family:Arial, sans-serif;font-size:12.5px;}
+  .legend-item{display:flex;align-items:center;gap:6px;cursor:pointer;padding:5px 10px;border-radius:16px;border:1px solid var(--border);background:#fbfaf7;user-select:none;transition:opacity .15s ease, transform .1s ease;}
+  .legend-item.off{opacity:.35;}
+  .legend-item:active{transform:scale(.97);}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,.25);}
+  #map{height:60vh;min-height:380px;}
+  .leaflet-popup-content{font-family:Arial, sans-serif;font-size:13px;line-height:1.4;min-width:170px;}
+  .leaflet-popup-content b{font-size:14px;}
+  .tag{display:inline-block;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;padding:1px 7px;border-radius:10px;color:#fff;margin-top:4px;}
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:1000;}
+  .nav-back{left:20px;}
+  .nav-home{right:20px;}
+  .icon-btn{background:#a06cd5;color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;display:flex;align-items:center;justify-content:center;font-weight:bold;}
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  main{max-width:980px;margin:0 auto;padding:26px 20px 60px;}
+  h2.section-title{font-size:22px;color:#0b6e93;border-bottom:3px solid #ffd166;display:inline-block;padding-bottom:4px;margin:34px 0 14px;}
+  p{line-height:1.65;margin:0 0 12px;}
+  .quote{background:#fff8e6;border-left:4px solid #ffd166;padding:10px 16px;font-style:italic;margin:14px 0;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:16px 0;}
+  .ocean-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:6px solid var(--c,#118ab2);box-shadow:0 3px 10px rgba(0,0,0,.05);}
+  .ocean-card h3{margin:0 0 8px;font-size:18px;color:var(--ink);}
+  .ocean-card ul{margin:0;padding-left:20px;font-family:Arial, sans-serif;font-size:13.5px;line-height:1.6;color:#333;}
+  .ocean-card ul li{margin-bottom:5px;}
+  .fact-strip{font-family:Arial, sans-serif;font-size:12.5px;color:var(--muted);margin-top:10px;background:#f3f1ea;border-radius:8px;padding:6px 10px;}
+
+  .imp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+  .imp-item{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Arial, sans-serif;font-size:13.5px;line-height:1.55;}
+  .imp-item b{color:#0b6e93;}
+
+  .callout{border-radius:12px;padding:14px 18px;margin:16px 0;font-family:Arial, sans-serif;font-size:13.5px;line-height:1.6;}
+  .callout.fact{background:#fff0f5;border:1px dashed #ff6ec7;}
+  .callout.info{background:#eefaf6;border:1px dashed #06d6a0;}
+  .callout h4{font-family:Georgia,serif;font-size:15px;margin:0 0 6px;color:#c2185b;}
+
+  details{background:var(--panel);border:1px solid var(--border);border-radius:10px;margin:10px 0;padding:10px 16px;}
+  summary{cursor:pointer;font-weight:bold;font-family:Arial, sans-serif;font-size:14px;color:#0b6e93;}
+  details p{font-family:Arial, sans-serif;font-size:13.5px;margin-top:8px;}
+
+  footer{padding:16px 20px;font-family:Arial, sans-serif;font-size:11px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Back to Water Bodies">⬅️</button>
+  </a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;">
+    <button class="icon-btn" title="Go to Home">🏠</button>
+  </a>
+</div>
+<div id="app">
+  <header>
+    <div>
+      <h1>World Oceans — Pacific, Atlantic, Indian, Arctic &amp; Southern</h1>
+      <div class="subtitle">Geography Class 6, Ch. 3 — Water Bodies</div>
+    </div>
+    <div id="legend"></div>
+  </header>
+  <div id="map"></div>
+
+  <main>
+    <h2 class="section-title">2. Characteristics of Major Oceans</h2>
+    <p>Generally, we speak of the oceans as if they are separate bodies of water. In reality they are just sections of <b>one great sea</b> covering most of the Earth's surface. The major oceans of the world are the <b>Pacific, Atlantic, Indian, Arctic</b> and <b>Southern</b> Oceans.</p>
+
+    <div class="cards">
+      <div class="ocean-card" style="--c:#118ab2;">
+        <h3>🌊 Pacific Ocean</h3>
+        <ul>
+          <li>The <b>largest and deepest</b> ocean, covering one-third of the globe; average depth 4200 m.</li>
+          <li>Its basin has high and abrupt ridges, deep trenches (e.g. the <b>Mariana Trench</b>), and a string of <b>volcanoes</b> along its coastal margins.</li>
+          <li>The equator divides it into the North Pacific Ocean and the South Pacific Ocean.</li>
+          <li><i>Pacific</i> is a Spanish word meaning "peaceful sea" — named by the Portuguese explorer <b>Ferdinand Magellan</b>.</li>
+        </ul>
+      </div>
+      <div class="ocean-card" style="--c:#06d6a0;">
+        <h3>🌊 Atlantic Ocean</h3>
+        <ul>
+          <li>The <b>second largest</b> ocean; shallower than the Pacific, with many ridges, canyons and gorges.</li>
+          <li>Many rivers drain into it: the Rhine, Senegal, Niger, Congo, Amazon, Mississippi, Orinoco and La Plata.</li>
+          <li>It is the <b>great commercial highway</b> of the world — most of the world's great ports lie on its coasts.</li>
+          <li>Occupies an elongated <b>S-shaped basin</b>; its name comes from Greek mythology, meaning "Sea of Atlas".</li>
+          <li>It is the <b>saltiest</b> major ocean.</li>
+        </ul>
+      </div>
+      <div class="ocean-card" style="--c:#ffd166;">
+        <h3>🌊 Indian Ocean</h3>
+        <ul>
+          <li>Comparatively <b>small in size</b>, average depth 4000 m.</li>
+          <li>The two great bays on either side of the Indian peninsula — the <b>Bay of Bengal</b> and the <b>Arabian Sea</b> — belong to it.</li>
+          <li>Has thousands of small islands, like the Maldives and the Cocos Islands; the Mauritius Islands are volcanic islands.</li>
+          <li>Principal rivers draining into it: Zambezi, Indus, Ganga and Irrawaddy.</li>
+          <li>It is the <b>saltwater body covering about one-fifth</b> of the total ocean area of the world — the smallest, geologically youngest and physically most complex of the world's three major oceans. Its deepest point is the <b>Sunda Deep</b> of the Java Trench (7450 m).</li>
+        </ul>
+      </div>
+      <div class="ocean-card" style="--c:#4a5568;">
+        <h3>🌊 Arctic Ocean</h3>
+        <ul>
+          <li>The <b>smallest</b> of all oceans; situated around the North Pole and remains perpetually frozen.</li>
+          <li>Connected to the Atlantic Ocean by the eastern and western Greenland channels, and to the Pacific Ocean by the <b>Bering Strait</b>.</li>
+          <li>Salinity is very low; important for <b>polar air routes</b> between Europe and North America.</li>
+          <li>It is <b>not navigable</b>; surrounded by the important continents of Europe, North America and Asia.</li>
+          <li>Its surface temperature and salinity vary seasonally as the ice cover melts and freezes.</li>
+        </ul>
+      </div>
+      <div class="ocean-card" style="--c:#8338ec;">
+        <h3>🌊 Southern (Antarctic) Ocean</h3>
+        <ul>
+          <li>Surrounds the continent of Antarctica; an extension of the Pacific, Atlantic and Indian Oceans.</li>
+          <li>Remains <b>frozen</b> for most of the year, hence <b>not navigable</b>.</li>
+          <li>Also known as the Antarctic Ocean, it comprises the southernmost waters of the world oceans, generally taken to be south of <b>60°S latitude</b>, encircling Antarctica. It is <b>larger than the Arctic Ocean</b>.</li>
+          <li>Captain <b>James Cook</b>, through his 1770s voyages, proved that waters encompassed the southern latitudes of the globe.</li>
+          <li>Its salinity is the <b>lowest</b> on average of the five major oceans, due to low evaporation and heavy freshwater inflow from rivers and streams. Geographers still disagree on its northern boundary, or even its existence, considering it an extension of the other three oceans.</li>
+        </ul>
+      </div>
+    </div>
+
+    <details open>
+      <summary>Assess Yourself</summary>
+      <p>• Mention any two characteristics of the Pacific Ocean.<br>• State one unique feature of the Indian Ocean.<br>• Compare the Pacific Ocean and the Atlantic Ocean.</p>
+    </details>
+
+    <h2 class="section-title">3. Importance of Oceans</h2>
+    <p>The oceans of the earth serve many functions, especially affecting the weather and temperature. They moderate the Earth's temperature by absorbing incoming solar radiation (stored as heat energy). The ever-moving ocean currents distribute this heat around the globe, heating the land and air during winter and cooling it during summer.</p>
+    <div class="imp-grid">
+      <div class="imp-item"><b>(a) Source of Water:</b> An ocean is a major source of water through the water cycle — oceans contribute water vapour to the atmosphere, returned to us as precipitation.</div>
+      <div class="imp-item"><b>(b) Climate:</b> Oceans have direct control over climate. Nearness to oceans affects temperature, rain, humidity and other elements of climate.</div>
+      <div class="imp-item"><b>(c) Food Resources:</b> Oceans are the biggest storehouse of edible marine food — fish being the most important. Millions of people take fish as their food.</div>
+      <div class="imp-item"><b>(d) Mineral &amp; Chemical Resources:</b> Oceans hold enormous mineral and chemical wealth — dissolved salts like sodium chloride (common salt), magnesium chloride, potassium chloride, etc.</div>
+      <div class="imp-item"><b>(e) Oceans and Oil:</b> Oil and gas are important fuels obtained from oceans; a large part of the world's oil production comes from off-shore fields — e.g. <b>Mumbai High</b>, an important off-shore oil field of India.</div>
+      <div class="imp-item"><b>(f) Oceans and Energy:</b> Oceans are becoming a source of energy too — some developed countries like France, UK and USA generate energy from tides.</div>
+      <div class="imp-item"><b>(g) Trade and Transport:</b> Oceans provide the cheapest mode of transportation for international trade — bulky products like coal, iron, machinery and transport equipment. Ocean routes act as highways for trade; despite obstacles like fog, icebergs, coral reefs and storms, oceans remain highways of trade and travel.</div>
+    </div>
+
+    <div class="callout fact">
+      <h4>🐙 Did You Know? — Deep South Atlantic Discoveries</h4>
+      <p>A 35-day expedition near the South Sandwich Islands uncovered rare coral gardens and possibly new species — including sponges, sea stars, and snailfish eggs laid on black coral. These zones, located 700 m deep, reveal thriving ecosystems fuelled by geochemical, not sunlight-driven, processes.</p>
+    </div>
+    <div class="callout info">
+      <h4>🌟 Interesting Facts</h4>
+      <p>The Indian Ocean has some of the world's major ports belonging to different continents: Colombo in Sri Lanka, Durban and Richards Bay in South Africa, Jakarta in Indonesia and Melbourne in Australia.</p>
+    </div>
+
+    <h2 class="section-title">World Oceans, Seas &amp; Gulfs (Fig. 3.8b)</h2>
+    <p class="quote">Key — <b>Oceans:</b> Pacific, Atlantic, Indian, Arctic and Southern Ocean. &nbsp; <b>Sea:</b> Bering, Caribbean, North, Black, Caspian, Aral, Arabian, Red and Dead Sea.</p>
+    <p>Toggle the categories in the map legend above to explore each ocean's approximate location and read its key facts.</p>
+  </main>
+
+  <footer>Source: Geography Class-6 textbook, Chapter 3 — Water Bodies. Coordinates are approximate centroids for teaching/reference purposes.</footer>
+</div>
+<script>
+const categories = {
+  pacific:  { label: "Pacific Ocean",  color: "#118ab2" },
+  atlantic: { label: "Atlantic Ocean", color: "#06d6a0" },
+  indian:   { label: "Indian Ocean",   color: "#ffd166" },
+  arctic:   { label: "Arctic Ocean",   color: "#4a5568" },
+  southern: { label: "Southern Ocean", color: "#8338ec" }
+};
+const oceans = [
+  { name: "North Pacific Ocean", cat: "pacific", lat: 30, lng: -170, note: "Largest ocean basin; Mariana Trench lies here." },
+  { name: "South Pacific Ocean", cat: "pacific", lat: -20, lng: -140, note: "String of volcanoes along coastal margins." },
+  { name: "North Atlantic Ocean", cat: "atlantic", lat: 30, lng: -40, note: "S-shaped basin; great commercial highway." },
+  { name: "South Atlantic Ocean", cat: "atlantic", lat: -25, lng: -15, note: "Saltiest major ocean." },
+  { name: "Indian Ocean", cat: "indian", lat: -20, lng: 80, note: "Bay of Bengal & Arabian Sea belong here; Sunda Deep 7450 m." },
+  { name: "Arctic Ocean", cat: "arctic", lat: 85, lng: 0, note: "Smallest ocean, perpetually frozen, around the North Pole." },
+  { name: "Southern (Antarctic) Ocean", cat: "southern", lat: -65, lng: 0, note: "Surrounds Antarctica; frozen most of the year, not navigable." }
+];
+const map = L.map('map', {
+  worldCopyJump: false, minZoom: 2,
+  maxBounds: [[-90, -180], [90, 180]], maxBoundsViscosity: 1.0
+}).setView([10, 20], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors', maxZoom: 18, noWrap: true
+}).addTo(map);
+const layerGroups = {};
+Object.keys(categories).forEach(key => { layerGroups[key] = L.layerGroup().addTo(map); });
+oceans.forEach(o => {
+  const c = categories[o.cat];
+  const marker = L.circleMarker([o.lat, o.lng], { radius: 11, fillColor: c.color, color: "#ffffff", weight: 1.5, fillOpacity: 0.85 });
+  marker.bindPopup(`<b>${o.name}</b><br>${o.note}<br><span class="tag" style="background:${c.color}">${c.label}</span>`, { maxWidth: 240 });
+  marker.addTo(layerGroups[o.cat]);
+});
+const legendEl = document.getElementById('legend');
+Object.entries(categories).forEach(([key, c]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="dot" style="background:${c.color}"></span><span>${c.label}</span>`;
+  item.addEventListener('click', () => {
+    if (map.hasLayer(layerGroups[key])) { map.removeLayer(layerGroups[key]); item.classList.add('off'); }
+    else { map.addLayer(layerGroups[key]); item.classList.remove('off'); }
+  });
+  legendEl.appendChild(item);
+});
+</script>
+</body>
+</html>

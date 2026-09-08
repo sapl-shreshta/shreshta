@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Seas of the World — Marginal &amp; Inland (Geography Class 6)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --marginal:#118ab2;
+    --inland:#c0392b;
+    --bg:#f7f5f0; --panel:#ffffff; --ink:#2b2b2b; --muted:#6b6b6b; --border:#e2ddd3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);font-family:"Georgia","Times New Roman",serif;color:var(--ink);}
+  header{padding:14px 90px 14px 20px;background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  header h1{font-size:18px;margin:0;font-weight:600;}
+  header .subtitle{font-size:12px;color:var(--muted);font-family:Arial, sans-serif;margin-top:2px;}
+  #legend{display:flex;gap:14px;flex-wrap:wrap;font-family:Arial, sans-serif;font-size:12.5px;}
+  .legend-item{display:flex;align-items:center;gap:6px;cursor:pointer;padding:5px 10px;border-radius:16px;border:1px solid var(--border);background:#fbfaf7;user-select:none;transition:opacity .15s ease, transform .1s ease;}
+  .legend-item.off{opacity:.35;}
+  .legend-item:active{transform:scale(.97);}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,.25);}
+  #map{height:58vh;min-height:360px;}
+  .leaflet-popup-content{font-family:Arial, sans-serif;font-size:13px;line-height:1.4;min-width:150px;}
+  .tag{display:inline-block;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;padding:1px 7px;border-radius:10px;color:#fff;margin-top:4px;}
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:1000;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{background:#a06cd5;color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;display:flex;align-items:center;justify-content:center;font-weight:bold;}
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  main{max-width:980px;margin:0 auto;padding:26px 20px 60px;}
+  h2.section-title{font-size:22px;color:#0b6e93;border-bottom:3px solid #ffd166;display:inline-block;padding-bottom:4px;margin:34px 0 14px;}
+  p{line-height:1.65;margin:0 0 12px;}
+  .quote{background:#fff8e6;border-left:4px solid #ffd166;padding:10px 16px;font-style:italic;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-family:Arial, sans-serif;font-size:14px;}
+  th,td{border:1px solid var(--border);padding:8px 12px;text-align:left;}
+  th{background:#f3f1ea;}
+  tr:nth-child(odd) td{background:#fbfaf7;}
+  .callout{border-radius:12px;padding:14px 18px;margin:16px 0;font-family:Arial, sans-serif;font-size:13.5px;line-height:1.6;}
+  .callout.fact{background:#fff0f5;border:1px dashed #ff6ec7;}
+  .callout h4{font-family:Georgia,serif;font-size:15px;margin:0 0 6px;color:#c2185b;}
+  details{background:var(--panel);border:1px solid var(--border);border-radius:10px;margin:10px 0;padding:10px 16px;}
+  summary{cursor:pointer;font-weight:bold;font-family:Arial, sans-serif;font-size:14px;color:#0b6e93;}
+  details p{font-family:Arial, sans-serif;font-size:13.5px;margin-top:8px;}
+  footer{padding:16px 20px;font-family:Arial, sans-serif;font-size:11px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Water Bodies">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+<div id="app">
+  <header>
+    <div>
+      <h1>Seas — Marginal &amp; Inland</h1>
+      <div class="subtitle">Geography Class 6, Ch. 3 — Water Bodies</div>
+    </div>
+    <div id="legend"></div>
+  </header>
+  <div id="map"></div>
+
+  <main>
+    <h2 class="section-title">4. Sea — Definition</h2>
+    <p class="quote">"A sea is a large body of saltwater that is surrounded in whole or part by land."</p>
+    <p>Often the boundaries of a particular sea are defined by peninsular or island chains. Seas, though vast, are smaller and shallower than the ocean. Their waves are smaller, and no big currents flow through them. The sea contains a great variety of salts and minerals in solution — including <b>magnesium chloride, magnesium sulphate, potassium sulphate</b> and <b>calcium carbonate</b>.</p>
+
+    <h2 class="section-title">Distribution of Sea</h2>
+    <p>Seas may be of two types:</p>
+    <table>
+      <tr><th>Marginal Sea</th><th>Inland Sea</th></tr>
+      <tr><td>1. Bering Sea</td><td>1. Black Sea</td></tr>
+      <tr><td>2. Caribbean Sea</td><td>2. Caspian Sea</td></tr>
+      <tr><td>3. North Sea</td><td>3. Aral Sea</td></tr>
+      <tr><td>4. Arabian Sea</td><td>4. Red Sea</td></tr>
+      <tr><td></td><td>5. Dead Sea</td></tr>
+    </table>
+
+    <p><b>(i) Marginal sea:</b> A marginal sea is a partially enclosed body of water that is located between the open ocean and the coastal zone, e.g. the <b>Bering Sea</b>, bordered by Russia, Alaska (USA) and separating the North Pacific Ocean from the Arctic via the Bering Strait, with the Gulf of Alaska and Chukchi Sea nearby.</p>
+
+    <div class="callout fact">
+      <h4>🦭 Did You Know?</h4>
+      <p>In summer 2025, the <b>U.S. Fish &amp; Wildlife Service</b> and <b>USGS</b> conducted a major cruise in the North Bering and Chukchi Seas to survey walrus populations, collect genetic biopsy samples, and assess ecosystem health. This multi-year study will enhance understanding of age structure and population trends.</p>
+    </div>
+
+    <p><b>(ii) Inland sea:</b> Large lakes in continental areas are often termed "inland seas". They are large bodies of saltwater almost entirely surrounded by land, e.g. the <b>Dead Sea</b> in the Jordan Valley — one of the saltiest water bodies on Earth, famous for its salt formations along the shore (Fig. 3.11) and its high salinity of <b>250 parts per thousand</b>.</p>
+
+    <details open>
+      <summary>Assess Yourself</summary>
+      <p>• What is the main difference between a sea and a lake?<br>• Which of the following is a marginal sea: Caspian Sea, Aral Sea, Bering Sea, Red Sea?<br>• The Maldives are located in which ocean?</p>
+    </details>
+
+    <p style="font-family:Arial, sans-serif; font-size:12.5px; color:var(--muted);">Toggle the map legend above to compare where the marginal seas (blue) and inland seas (red) of this chapter lie. See the <a href="../Lakes/index.html">Lakes</a> page for more on salt lakes and playas, and the <a href="../Oceans/index.html">Oceans</a> page for the five major oceans these seas connect to.</p>
+  </main>
+
+  <footer>Source: Geography Class-6 textbook, Chapter 3 — Water Bodies. Coordinates are approximate centroids for teaching/reference purposes.</footer>
+</div>
+<script>
+const categories = {
+  marginal: { label: "Marginal Sea", color: "#118ab2" },
+  inland:   { label: "Inland Sea",   color: "#c0392b" }
+};
+const seas = [
+  { name: "Bering Sea", cat: "marginal", lat: 58, lng: -178, note: "Between Russia & Alaska; leads to the Bering Strait." },
+  { name: "Caribbean Sea", cat: "marginal", lat: 15, lng: -75, note: "Between Central & South America and the West Indies." },
+  { name: "North Sea", cat: "marginal", lat: 56, lng: 3, note: "Between Great Britain and continental Europe." },
+  { name: "Arabian Sea", cat: "marginal", lat: 15, lng: 65, note: "Part of the Indian Ocean, west of the Indian peninsula." },
+  { name: "Black Sea", cat: "inland", lat: 43, lng: 35, note: "Between Europe and Asia, connected via the Bosphorus." },
+  { name: "Caspian Sea", cat: "inland", lat: 42, lng: 51, note: "The world's largest inland body of water." },
+  { name: "Aral Sea", cat: "inland", lat: 45, lng: 60, note: "Once one of the world's largest lakes, now much shrunk." },
+  { name: "Red Sea", cat: "inland", lat: 20, lng: 38, note: "Between Africa and Arabia; very high salinity." },
+  { name: "Dead Sea", cat: "inland", lat: 31.5, lng: 35.5, note: "Salinity of 250 parts per thousand — one of the saltiest water bodies on Earth." }
+];
+const map = L.map('map', { worldCopyJump: false, minZoom: 2, maxBounds: [[-90,-180],[90,180]], maxBoundsViscosity: 1.0 }).setView([30, 30], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 18, noWrap: true }).addTo(map);
+const layerGroups = {};
+Object.keys(categories).forEach(key => { layerGroups[key] = L.layerGroup().addTo(map); });
+seas.forEach(s => {
+  const c = categories[s.cat];
+  const marker = L.circleMarker([s.lat, s.lng], { radius: 9, fillColor: c.color, color: "#ffffff", weight: 1.5, fillOpacity: 0.9 });
+  marker.bindPopup(`<b>${s.name}</b><br>${s.note}<br><span class="tag" style="background:${c.color}">${c.label}</span>`, { maxWidth: 240 });
+  marker.addTo(layerGroups[s.cat]);
+});
+const legendEl = document.getElementById('legend');
+Object.entries(categories).forEach(([key, c]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="dot" style="background:${c.color}"></span><span>${c.label}</span>`;
+  item.addEventListener('click', () => {
+    if (map.hasLayer(layerGroups[key])) { map.removeLayer(layerGroups[key]); item.classList.add('off'); }
+    else { map.addLayer(layerGroups[key]); item.classList.remove('off'); }
+  });
+  legendEl.appendChild(item);
+});
+</script>
+</body>
+</html>
