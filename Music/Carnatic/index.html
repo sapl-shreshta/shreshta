@@ -232,6 +232,81 @@
       word-wrap: break-word;
     }
 
+    .swara-block {
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .sp-section {
+      margin: 14px 0;
+      background: white;
+      border-radius: 10px;
+      padding: 10px 12px;
+      border-left: 4px solid #ff6ec7;
+    }
+
+    .sp-label {
+      font-weight: bold;
+      color: #a06cd5;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .sp-row {
+      display: flex;
+      flex-wrap: nowrap;
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+      line-height: 1.9;
+      white-space: nowrap;
+    }
+
+    .sp-row .sw {
+      display: inline-block;
+      min-width: 1.35em;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      color: #1d2b53;
+    }
+
+    .sp-row .bar {
+      display: inline-block;
+      min-width: 1.4em;
+      text-align: center;
+      color: #ff6ec7;
+      font-weight: bold;
+      font-family: 'Courier New', monospace;
+    }
+
+    .sp-row.sahitya {
+      font-size: 12px;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    .sp-row.sahitya .sw {
+      font-size: 11px;
+      font-weight: normal;
+      color: #06a07a;
+      min-width: 1.35rem;
+    }
+
+    .sp-row .sw { width: 19px; min-width: 19px; flex: 0 0 19px; }
+    .sp-row .bar { width: 19px; min-width: 19px; flex: 0 0 19px; }
+    .sp-row.sahitya .sw { overflow: visible; white-space: nowrap; }
+    .sp-row.sahitya .bar { color: transparent; }
+
+    .practice {
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 1.8;
+      word-spacing: 6px;
+    }
+
+    .accordion-content.active.tall { max-height: 6000px; }
+
     footer {
       text-align: center;
       margin-top: 50px;
@@ -427,6 +502,530 @@ Your exalted presence ("varadha") resides in the city ("pura") of Velapura. You 
 
 G   M   P    |  P   D     D    N    || D  P  -  M          |  P   G    R    S            ||
 Va  ra  dha    Ve -      la      a      pu  ra  Su            ro   -    tta  ma
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWARAPALLAVI SECTION -->
+    <h2 class="section-title" onclick="toggleSection(this)">
+      <span>🎹 Swarapallavi</span>
+      <span class="section-toggle">▼</span>
+    </h2>
+    <div class="accordion-container">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-title">
+            <span class="accordion-icon">🎵</span>
+            <span>Hindola (Adi)</span>
+          </div>
+          <span class="accordion-toggle">▼</span>
+        </div>
+        <div class="accordion-content tall">
+          <div class="song-details">
+            <div class="song-name">🎹 Hindola · Adi · Swarapallavi</div>
+            <div class="raga-info">
+              <strong>Ragam:</strong> Hindolam (20th Melajanya)<br>
+              <strong>Talam:</strong> Adi<br>
+              <strong>Arohanam:</strong> s g₂ m₁ d₁ n₂ ṡ<br>
+              <strong>Avarohanam:</strong> ṡ n₂ d₁ m₁ g₂ s<br>
+              <span style="color:#666">Dot above a note = higher octave (ṡ); dot below = lower octave (ṇ). &nbsp;, = 1 beat pause &nbsp; ; = 2 beat pause</span>
+            </div>
+            <div class="swara-block">
+<div class="sp-section"><div class="sp-label">Pallavi</div><div class="sp-row">
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="bar">|</span>
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="bar">|</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="bar">||</span>
+</div>
+<div class="sp-row">
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="bar">|</span>
+<span class="sw">,</span>
+<span class="sw">g</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="bar">|</span>
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="bar">||</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="bar">||</span>
+</div></div>
+<div class="sp-section"><div class="sp-label">Charanam 1</div><div class="sp-row">
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">ṁ</span>
+<span class="sw">ġ</span>
+<span class="sw">ġ</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">ġ</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="bar">|</span>
+<span class="sw">n</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="bar">|</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="bar">||</span>
+</div>
+<div class="sp-row">
+<span class="sw">m</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">,</span>
+<span class="sw">,</span>
+<span class="sw">g</span>
+<span class="bar">|</span>
+<span class="sw">s</span>
+<span class="sw">s</span>
+<span class="sw">ṇ</span>
+<span class="sw">ṇ</span>
+<span class="sw">s</span>
+<span class="sw">s</span>
+<span class="sw">,</span>
+<span class="sw">g</span>
+<span class="bar">|</span>
+<span class="sw">g</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="sw">m</span>
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="bar">||</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="bar">||</span>
+</div></div>
+<div class="sp-section"><div class="sp-label">Charanam 2</div><div class="sp-row">
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="sw">;</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">n</span>
+<span class="sw">s</span>
+<span class="sw">n</span>
+<span class="sw">n</span>
+<span class="bar">|</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">,</span>
+<span class="sw">;</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="bar">|</span>
+<span class="sw">n</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="bar">||</span>
+</div>
+<div class="sp-row">
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">;</span>
+<span class="sw">;</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="bar">|</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="bar">|</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="bar">||</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="bar">||</span>
+</div></div>
+<div class="sp-section"><div class="sp-label">Charanam 3</div><div class="sp-row">
+<span class="sw">m</span>
+<span class="sw">,</span>
+<span class="sw">;</span>
+<span class="sw">;</span>
+<span class="sw">g</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">ṇ</span>
+<span class="bar">|</span>
+<span class="sw">ḍ</span>
+<span class="sw">,</span>
+<span class="sw">;</span>
+<span class="sw">;</span>
+<span class="sw">ṇ</span>
+<span class="sw">s</span>
+<span class="bar">|</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">,</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="bar">||</span>
+</div>
+<div class="sp-row">
+<span class="sw">m</span>
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">,</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">n</span>
+<span class="bar">|</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="bar">|</span>
+<span class="sw">g</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="bar">||</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="bar">||</span>
+</div></div>
+<div class="sp-section"><div class="sp-label">Charanam 4</div><div class="sp-row">
+<span class="sw">d</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="sw">s</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">,</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">n</span>
+<span class="sw">,</span>
+<span class="sw">s</span>
+<span class="sw">n</span>
+<span class="bar">|</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">s</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="bar">|</span>
+<span class="sw">s</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="sw">s</span>
+<span class="sw">n</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="bar">||</span>
+</div>
+<div class="sp-row">
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="bar">|</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">s</span>
+<span class="sw">n</span>
+<span class="bar">|</span>
+<span class="sw">s</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">g</span>
+<span class="bar">||</span>
+</div></div>
+<div class="sp-section"><div class="sp-label">Charanam 5</div><div class="sp-row">
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">,</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="bar">|</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="sw">ġ</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="bar">|</span>
+<span class="sw">,</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="bar">||</span>
+</div>
+<div class="sp-row sahitya">
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw">ki</span>
+<span class="sw">na</span>
+<span class="sw">jhum</span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="bar">|</span>
+<span class="sw">ta</span>
+<span class="sw">jhum</span>
+<span class="sw"></span>
+<span class="sw">ta</span>
+<span class="sw">ri</span>
+<span class="sw">ta</span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="bar">|</span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw">ta</span>
+<span class="sw">kum</span>
+<span class="sw">da</span>
+<span class="sw">ri</span>
+<span class="bar">||</span>
+</div>
+<div class="sp-row">
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">s</span>
+<span class="sw">s</span>
+<span class="sw">ṇ</span>
+<span class="sw">s</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="bar">|</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">ġ</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">ṡ</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="bar">|</span>
+<span class="sw">n</span>
+<span class="sw">d</span>
+<span class="sw">m</span>
+<span class="sw">g</span>
+<span class="sw">m</span>
+<span class="sw">d</span>
+<span class="sw">d</span>
+<span class="sw">n</span>
+<span class="bar">||</span>
+<span class="sw">ṡ</span>
+<span class="sw">,</span>
+<span class="bar">||</span>
+</div>
+<div class="sp-row sahitya">
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw">ta</span>
+<span class="sw">ki</span>
+<span class="sw">ta</span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw">dha</span>
+<span class="sw">na</span>
+<span class="sw">ta</span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw">ta</span>
+<span class="bar">|</span>
+<span class="sw">ri</span>
+<span class="sw">ta</span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw">jha</span>
+<span class="sw">nu</span>
+<span class="sw">ta</span>
+<span class="bar">|</span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw"></span>
+<span class="sw">ta</span>
+<span class="sw">dhi</span>
+<span class="sw">gi</span>
+<span class="sw">na</span>
+<span class="sw">ta</span>
+<span class="bar">||</span>
+</div></div>
             </div>
           </div>
         </div>
