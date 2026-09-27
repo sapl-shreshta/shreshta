@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pronouns 🙋</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{min-height:100vh;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);color:#1d2b53;padding:16px 12px 60px;}
+  .top{max-width:1200px;margin:0 auto 20px;}
+  .back{display:inline-block;background:#a06cd5;color:white;text-decoration:none;padding:12px 24px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;}
+  .header{text-align:center;margin:30px auto 26px;max-width:820px;}
+  .big{font-size:clamp(70px,12vw,130px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  h1{font-size:clamp(40px,6vw,72px);margin:14px 0;
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#4cc9f0,#a06cd5);
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{font-size:clamp(18px,2.2vw,23px);color:#a06cd5;}
+
+  /* What is a pronoun box */
+  .intro{max-width:900px;margin:0 auto 26px;background:#fff;border-radius:20px;padding:22px 24px;border:3px dashed #ffd166;box-shadow:0 4px 12px rgba(0,0,0,.06);font-size:19px;line-height:1.55;}
+  .intro h2{font-size:26px;margin-bottom:8px;color:#a06cd5;}
+  .swap{margin-top:12px;display:grid;gap:8px;}
+  .swap div{background:#fff8f0;border-radius:12px;padding:10px 14px;}
+  .swap .no{color:#b23a48;}
+  .swap .yes{color:#1b7f5b;}
+
+  /* jump chips */
+  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:1100px;margin:0 auto 28px;}
+  .chips a{text-decoration:none;color:#1d2b53;background:#fff;border:2px solid var(--c);padding:6px 14px;border-radius:50px;font-size:16px;font-weight:bold;transition:transform .2s;}
+  .chips a:hover{transform:translateY(-3px);background:var(--c);color:#fff;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;max-width:1200px;margin:0 auto;}
+  @media (max-width:380px){.grid{grid-template-columns:1fr;}}
+  .tile{background:#fff8f0;border-radius:20px;border:3px solid var(--c);box-shadow:0 4px 12px rgba(0,0,0,.08);overflow:hidden;display:flex;flex-direction:column;transition:all .25s cubic-bezier(0.34,1.56,0.64,1);scroll-margin-top:16px;}
+  .tile:hover{transform:translateY(-6px);box-shadow:0 14px 26px rgba(0,0,0,.14);}
+  .tile .head{background:var(--c);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+  .tile .head .icon{font-size:40px;line-height:1;}
+  .tile .head .num{font-size:14px;opacity:.9;}
+  .tile .head h2{font-size:23px;line-height:1.15;}
+  .tile .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.5;flex:1;}
+  .what{font-size:17.5px;}
+  .words{display:flex;flex-wrap:wrap;gap:6px;}
+  .words span{background:#fff;border:2px solid var(--c);color:#1d2b53;padding:3px 11px;border-radius:50px;font-weight:bold;font-size:16px;}
+  .label{font-weight:bold;color:var(--c);font-size:15px;text-transform:uppercase;letter-spacing:.5px;}
+  ul.ex{list-style:none;display:grid;gap:6px;}
+  ul.ex li{background:#fff;border-radius:10px;padding:8px 12px;border-left:5px solid var(--c);}
+  mark{background:var(--soft);color:#1d2b53;padding:0 4px;border-radius:5px;font-weight:bold;}
+  .tip{margin-top:auto;background:#fff5d6;border-radius:12px;padding:10px 12px;font-size:16px;border:2px dashed #ffd166;}
+  .tip b{color:#c77d00;}
+  table.mini{width:100%;border-collapse:collapse;font-size:15px;background:#fff;border-radius:10px;overflow:hidden;}
+  table.mini th,table.mini td{padding:6px 8px;text-align:left;border-bottom:1px solid #f0e6da;}
+  table.mini th{background:var(--soft);}
+
+  /* recap */
+  .recap{max-width:1100px;margin:40px auto 0;background:#fff;border-radius:20px;padding:22px;box-shadow:0 4px 12px rgba(0,0,0,.06);border:3px solid #a06cd5;}
+  .recap h2{text-align:center;font-size:30px;color:#a06cd5;margin-bottom:14px;}
+  .tablewrap{overflow-x:auto;}
+  .recap table{width:100%;border-collapse:collapse;font-size:17px;min-width:560px;}
+  .recap th{background:#a06cd5;color:#fff;padding:10px;text-align:left;}
+  .recap td{padding:10px;border-bottom:1px solid #eee;vertical-align:top;}
+  .recap tr:nth-child(even) td{background:#faf5ff;}
+  .recap td:first-child{font-weight:bold;white-space:nowrap;}
+</style>
+</head>
+<body>
+  <div class="top"><a class="back" href="../index.html">⬅️ Grammar</a></div>
+
+  <div class="header">
+    <div class="big">🙋</div>
+    <h1>Pronouns</h1>
+    <p class="sub">Little words that take the place of nouns — so we don't repeat ourselves! 🔁</p>
+  </div>
+
+  <div class="intro">
+    <h2>🤔 What is a pronoun?</h2>
+    A <b>pronoun</b> is a word used <b>in place of a noun</b> (a person, place, animal or thing). The word it replaces is called its <b>antecedent</b>.
+    <div class="swap">
+      <div class="no">❌ Meera loves painting. Meera paints every Sunday. Meera's paintings are colourful.</div>
+      <div class="yes">✅ Meera loves painting. <b>She</b> paints every Sunday. <b>Her</b> paintings are colourful.</div>
+    </div>
+  </div>
+
+  <nav class="chips">
+    <a href="#personal" style="--c:#ff6ec7">Personal</a>
+    <a href="#possessive" style="--c:#f77f00">Possessive</a>
+    <a href="#reflexive" style="--c:#06a77d">Reflexive</a>
+    <a href="#emphatic" style="--c:#e63946">Emphatic</a>
+    <a href="#demonstrative" style="--c:#118ab2">Demonstrative</a>
+    <a href="#interrogative" style="--c:#7b2cbf">Interrogative</a>
+    <a href="#relative" style="--c:#2a9d8f">Relative</a>
+    <a href="#indefinite" style="--c:#6c757d">Indefinite</a>
+    <a href="#reciprocal" style="--c:#d6336c">Reciprocal</a>
+    <a href="#distributive" style="--c:#3a86ff">Distributive</a>
+    <a href="#exclamatory" style="--c:#fb8500">Exclamatory</a>
+  </nav>
+
+  <div class="grid">
+
+    <!-- 1 PERSONAL -->
+    <section class="tile" id="personal" style="--c:#ff6ec7;--soft:#ffd6ee">
+      <div class="head"><span class="icon">🧑‍🤝‍🧑</span><div><div class="num">Type 1</div><h2>Personal Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Stand in for <b>people or things</b>. They change with the <b>person</b> — 1st (the speaker), 2nd (the listener) and 3rd (someone/something else).</p>
+        <div class="words"><span>I</span><span>you</span><span>he</span><span>she</span><span>it</span><span>we</span><span>they</span><span>me</span><span>him</span><span>her</span><span>us</span><span>them</span></div>
+        <table class="mini">
+          <tr><th>Person</th><th>Subject</th><th>Object</th></tr>
+          <tr><td>1st</td><td>I, we</td><td>me, us</td></tr>
+          <tr><td>2nd</td><td>you</td><td>you</td></tr>
+          <tr><td>3rd</td><td>he, she, it, they</td><td>him, her, it, them</td></tr>
+        </table>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li><mark>She</mark> is my best friend.</li>
+          <li><mark>We</mark> went to the zoo, and the monkeys waved at <mark>us</mark>!</li>
+          <li><mark>They</mark> are playing cricket in the park.</li>
+          <li>Grandpa told <mark>me</mark> a story, and <mark>I</mark> loved <mark>it</mark>.</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> Use the <b>subject</b> form before the verb (<i>He</i> runs) and the <b>object</b> form after it (Call <i>him</i>).</div>
+      </div>
+    </section>
+
+    <!-- 2 POSSESSIVE -->
+    <section class="tile" id="possessive" style="--c:#f77f00;--soft:#ffe3c2">
+      <div class="head"><span class="icon">🎒</span><div><div class="num">Type 2</div><h2>Possessive Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Show <b>ownership</b> — who something belongs to. They stand <b>alone</b>, without a noun after them.</p>
+        <div class="words"><span>mine</span><span>yours</span><span>his</span><span>hers</span><span>ours</span><span>theirs</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li>This blue pencil is <mark>mine</mark>.</li>
+          <li>Is that lunchbox <mark>yours</mark>?</li>
+          <li>The prize was <mark>hers</mark> because she ran the fastest.</li>
+          <li>Our house is small, but <mark>theirs</mark> has a big garden.</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> <i>my, your, our</i> come <b>before</b> a noun (<i>my bag</i>) — they are possessive <b>adjectives</b>. <i>mine, yours, ours</i> stand <b>alone</b> (<i>the bag is mine</i>). Never add an apostrophe: <i>yours</i>, not <i>your's</i>.</div>
+      </div>
+    </section>
+
+    <!-- 3 REFLEXIVE -->
+    <section class="tile" id="reflexive" style="--c:#06a77d;--soft:#c8f2e3">
+      <div class="head"><span class="icon">🪞</span><div><div class="num">Type 3</div><h2>Reflexive Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Used when the action <b>turns back</b> on the doer — the subject and the object are the <b>same</b>. They end in <b>-self</b> or <b>-selves</b>.</p>
+        <div class="words"><span>myself</span><span>yourself</span><span>himself</span><span>herself</span><span>itself</span><span>ourselves</span><span>yourselves</span><span>themselves</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li>I hurt <mark>myself</mark> while climbing the tree.</li>
+          <li>The cat is cleaning <mark>itself</mark>.</li>
+          <li>We enjoyed <mark>ourselves</mark> at the birthday party.</li>
+          <li>Arjun taught <mark>himself</mark> to play the flute.</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> A reflexive pronoun is <b>needed</b> — if you remove it, the sentence doesn't make sense (<i>"I hurt ___"</i> 🤔).</div>
+      </div>
+    </section>
+
+    <!-- 4 EMPHATIC -->
+    <section class="tile" id="emphatic" style="--c:#e63946;--soft:#ffd3d6">
+      <div class="head"><span class="icon">💪</span><div><div class="num">Type 4</div><h2>Emphatic Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Look just like reflexive pronouns, but are used to <b>add emphasis</b> — to stress <i>who exactly</i> did something. Also called <b>intensive</b> pronouns.</p>
+        <div class="words"><span>I myself</span><span>you yourself</span><span>he himself</span><span>she herself</span><span>it itself</span><span>we ourselves</span><span>they themselves</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li>I <mark>myself</mark> baked this cake!</li>
+          <li>The Principal <mark>herself</mark> gave away the prizes.</li>
+          <li>They built the treehouse <mark>themselves</mark>.</li>
+          <li>The king <mark>himself</mark> came to see the play.</li>
+        </ul>
+        <div class="tip"><b>💡 Remove test:</b> Take the word out. If the sentence still makes sense (<i>"The Principal gave away the prizes"</i>), it is <b>emphatic</b>. If it breaks, it is <b>reflexive</b>.</div>
+      </div>
+    </section>
+
+    <!-- 5 DEMONSTRATIVE -->
+    <section class="tile" id="demonstrative" style="--c:#118ab2;--soft:#cdeefa">
+      <div class="head"><span class="icon">👉</span><div><div class="num">Type 5</div><h2>Demonstrative Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what"><b>Point out</b> a particular person or thing — near or far, one or many.</p>
+        <div class="words"><span>this</span><span>that</span><span>these</span><span>those</span></div>
+        <table class="mini">
+          <tr><th></th><th>Near 🤏</th><th>Far 🔭</th></tr>
+          <tr><td>One</td><td>this</td><td>that</td></tr>
+          <tr><td>Many</td><td>these</td><td>those</td></tr>
+        </table>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li><mark>This</mark> is my new bicycle.</li>
+          <li><mark>That</mark> was an exciting match!</li>
+          <li><mark>These</mark> are the mangoes from our garden.</li>
+          <li><mark>Those</mark> are birds, not kites.</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> If a noun comes right after (<i>this book</i>, <i>those shoes</i>), the word is a demonstrative <b>adjective</b>, not a pronoun.</div>
+      </div>
+    </section>
+
+    <!-- 6 INTERROGATIVE -->
+    <section class="tile" id="interrogative" style="--c:#7b2cbf;--soft:#e7d4fa">
+      <div class="head"><span class="icon">❓</span><div><div class="num">Type 6</div><h2>Interrogative Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Used to <b>ask questions</b>. The sentence ends with a question mark.</p>
+        <div class="words"><span>who</span><span>whom</span><span>whose</span><span>which</span><span>what</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li><mark>Who</mark> is knocking at the door? <i>(a person — subject)</i></li>
+          <li><mark>Whom</mark> did you invite to the party? <i>(a person — object)</i></li>
+          <li><mark>Whose</mark> is this umbrella? <i>(owner)</i></li>
+          <li><mark>Which</mark> do you like better — tea or milk? <i>(choice)</i></li>
+          <li><mark>What</mark> is your favourite colour? <i>(thing / idea)</i></li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> <i>Who</i> does the action; <i>whom</i> receives it. Trick: if you can answer with <b>him</b>, use <b>whom</b> (him ↔ whom both end in <b>m</b>).</div>
+      </div>
+    </section>
+
+    <!-- 7 RELATIVE -->
+    <section class="tile" id="relative" style="--c:#2a9d8f;--soft:#cdf0ec">
+      <div class="head"><span class="icon">🔗</span><div><div class="num">Type 7</div><h2>Relative Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what"><b>Join</b> two ideas into one sentence and <b>relate</b> back to a noun mentioned earlier. They are not asking a question!</p>
+        <div class="words"><span>who</span><span>whom</span><span>whose</span><span>which</span><span>that</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li>The girl <mark>who</mark> won the race is my sister.</li>
+          <li>The doctor <mark>whom</mark> we met was very kind.</li>
+          <li>This is the boy <mark>whose</mark> kite flew the highest.</li>
+          <li>My dog, <mark>which</mark> is brown, loves biscuits.</li>
+          <li>The book <mark>that</mark> I borrowed is really exciting.</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> <i>who / whom</i> → people · <i>which</i> → animals &amp; things · <i>that</i> → people or things · <i>whose</i> → ownership.</div>
+      </div>
+    </section>
+
+    <!-- 8 INDEFINITE -->
+    <section class="tile" id="indefinite" style="--c:#6c757d;--soft:#e2e5e8">
+      <div class="head"><span class="icon">🌫️</span><div><div class="num">Type 8</div><h2>Indefinite Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Refer to people or things in a <b>general</b> way — <b>not a specific</b> one.</p>
+        <div class="words"><span>someone</span><span>anybody</span><span>everyone</span><span>nobody</span><span>none</span><span>something</span><span>all</span><span>some</span><span>several</span><span>many</span><span>few</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li><mark>Someone</mark> left the lights on.</li>
+          <li><mark>Everyone</mark> loves the summer holidays.</li>
+          <li><mark>None</mark> of the cookies are left!</li>
+          <li><mark>Many</mark> were invited, but only a <mark>few</mark> came.</li>
+          <li>Is <mark>anybody</mark> home?</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> Words ending in <i>-one, -body, -thing</i> are <b>singular</b>: <i>"Everyone <b>is</b> here"</i>, not <i>"Everyone are here"</i>.</div>
+      </div>
+    </section>
+
+    <!-- 9 RECIPROCAL -->
+    <section class="tile" id="reciprocal" style="--c:#d6336c;--soft:#fbd5e3">
+      <div class="head"><span class="icon">🤝</span><div><div class="num">Type 9</div><h2>Reciprocal Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Show a <b>two-way</b> (mutual) action — each person does the same thing to the other.</p>
+        <div class="words"><span>each other</span><span>one another</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li>Ravi and Sita helped <mark>each other</mark> with homework.</li>
+          <li>The two friends hugged <mark>each other</mark>.</li>
+          <li>The team members cheered for <mark>one another</mark>.</li>
+          <li>All the students in class respect <mark>one another</mark>.</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> Use <b>each other</b> for <b>two</b> people and <b>one another</b> for <b>more than two</b>.</div>
+      </div>
+    </section>
+
+    <!-- 10 DISTRIBUTIVE -->
+    <section class="tile" id="distributive" style="--c:#3a86ff;--soft:#d6e6ff">
+      <div class="head"><span class="icon">🍬</span><div><div class="num">Type 10</div><h2>Distributive Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Refer to people or things <b>one at a time</b>, separately — not as a group.</p>
+        <div class="words"><span>each</span><span>either</span><span>neither</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li><mark>Each</mark> of the students has a new book.</li>
+          <li>You may take <mark>either</mark> of the two pens.</li>
+          <li><mark>Neither</mark> of the answers is correct.</li>
+          <li><mark>Each</mark> gets two sweets. 🍬🍬</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> Always use a <b>singular</b> verb: <i>"Each <b>has</b>"</i>, <i>"Neither <b>is</b>"</i>. <i>Either</i> = one of two; <i>neither</i> = not this one and not that one.</div>
+      </div>
+    </section>
+
+    <!-- 11 EXCLAMATORY -->
+    <section class="tile" id="exclamatory" style="--c:#fb8500;--soft:#ffe1bf">
+      <div class="head"><span class="icon">😲</span><div><div class="num">Type 11</div><h2>Exclamatory Pronouns</h2></div></div>
+      <div class="body">
+        <p class="what">Express strong <b>feelings</b> — surprise, joy, shock or anger. The sentence ends with an <b>exclamation mark (!)</b>.</p>
+        <div class="words"><span>what</span><span>which</span><span>who</span></div>
+        <div class="label">Examples</div>
+        <ul class="ex">
+          <li><mark>What</mark>! You finished all your homework already?</li>
+          <li><mark>What</mark> a beautiful rainbow!</li>
+          <li><mark>Who</mark> would have thought it!</li>
+          <li><mark>What</mark>! The school is closed today?</li>
+        </ul>
+        <div class="tip"><b>💡 Tip:</b> The same words are <b>interrogative</b> when they ask (<i>What is this?</i>) and <b>exclamatory</b> when they express feeling (<i>What a surprise!</i>). Look at the punctuation: <b>?</b> vs <b>!</b></div>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="recap">
+    <h2>📝 Quick Recap</h2>
+    <div class="tablewrap">
+    <table>
+      <tr><th>Type</th><th>What it does</th><th>Examples</th></tr>
+      <tr><td>🧑‍🤝‍🧑 Personal</td><td>Stands for a person or thing</td><td>I, you, he, she, it, we, they</td></tr>
+      <tr><td>🎒 Possessive</td><td>Shows ownership</td><td>mine, yours, his, hers, ours, theirs</td></tr>
+      <tr><td>🪞 Reflexive</td><td>Action goes back to the doer</td><td>myself, itself, themselves</td></tr>
+      <tr><td>💪 Emphatic</td><td>Adds emphasis (can be removed)</td><td>I myself, she herself</td></tr>
+      <tr><td>👉 Demonstrative</td><td>Points to something</td><td>this, that, these, those</td></tr>
+      <tr><td>❓ Interrogative</td><td>Asks a question</td><td>who, whom, whose, which, what</td></tr>
+      <tr><td>🔗 Relative</td><td>Joins ideas &amp; relates to a noun</td><td>who, whom, whose, which, that</td></tr>
+      <tr><td>🌫️ Indefinite</td><td>Refers to no one in particular</td><td>someone, everyone, none, few</td></tr>
+      <tr><td>🤝 Reciprocal</td><td>Shows a two-way action</td><td>each other, one another</td></tr>
+      <tr><td>🍬 Distributive</td><td>One at a time, separately</td><td>each, either, neither</td></tr>
+      <tr><td>😲 Exclamatory</td><td>Expresses strong feeling</td><td>what!, who!, which!</td></tr>
+    </table>
+    </div>
+  </section>
+</body>
+</html>
