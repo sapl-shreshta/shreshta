@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Geopolitics 🌐</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  body{
+    min-height:100vh;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+    color:#1d2b53;padding:16px 12px;
+  }
+  .top{max-width:1000px;margin:0 auto 30px;}
+  .back{display:inline-block;background:#a06cd5;color:white;text-decoration:none;padding:12px 24px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;}
+  .big{font-size:clamp(80px,15vw,160px);animation:bounce 2s ease-in-out infinite;text-align:center;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+  h1{font-size:clamp(40px,6vw,72px);text-align:center;margin:20px 0;
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{text-align:center;font-size:clamp(18px,2.2vw,24px);color:#a06cd5;margin-bottom:30px;}
+  .what{max-width:760px;margin:0 auto 34px;background:#fff8f0;border:3px dashed #e07a1f;border-radius:20px;padding:18px 22px;font-size:clamp(16px,2vw,19px);line-height:1.6;}
+  .what b{color:#e07a1f;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:1000px;margin:0 auto;}
+  .topic{background:#fff8f0;border-radius:16px;padding:24px;text-decoration:none;color:#1d2b53;border:3px solid #e07a1f;box-shadow:0 4px 12px rgba(0,0,0,.08);display:block;transition:all .25s cubic-bezier(0.34,1.56,0.64,1);}
+  .topic:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.15);}
+  .topic .icon{font-size:50px;display:block;margin-bottom:10px;}
+  .topic h3{font-size:24px;margin-bottom:6px;}
+  .topic p{font-size:18px;color:#555;}
+  .soon{border-color:#c7bba3;opacity:.7;cursor:default;}
+  .header{text-align:center;margin:60px 0 30px 0;}
+</style>
+</head>
+<body>
+  <div class="top"><a class="back" href="../index.html">⬅️ Home</a></div>
+  <div class="header">
+    <div class="big">🌐</div>
+    <h1>Geopolitics</h1>
+    <p class="sub">How countries team up, compete and shape our world 🤝</p>
+  </div>
+
+  <div class="what">
+    <b>What is geopolitics?</b> It is the study of how <b>geography</b> (where a country is, what resources it has, who its neighbours are)
+    and <b>politics</b> (power, money, friendships and rivalries) come together to decide what countries do.
+    Why does India buy oil from one country and sell medicines to another? Why do some countries form clubs? That is geopolitics!
+  </div>
+
+  <div class="grid">
+    <a class="topic" href="BRICS/index.html">
+      <span class="icon">🤝</span>
+      <h3>BRICS</h3>
+      <p>The club of emerging nations — and the 2026 New Delhi Summit hosted by India!</p>
+    </a>
+    <div class="topic soon">
+      <span class="icon">🏛️</span>
+      <h3>The United Nations</h3>
+      <p>Coming soon — the world's biggest meeting room.</p>
+    </div>
+    <div class="topic soon">
+      <span class="icon">💶</span>
+      <h3>G7 &amp; G20</h3>
+      <p>Coming soon — the clubs of the world's largest economies.</p>
+    </div>
+  </div>
+</body>
+</html>
