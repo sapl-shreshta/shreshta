@@ -210,6 +210,92 @@
       object-fit: contain;
     }
 
+    .card-front .emoji-face {
+      font-size: clamp(60px, 10vw, 90px);
+      line-height: 1;
+    }
+
+    .mode-toggle {
+      display: flex;
+      justify-content: center;
+      margin: 14px 0 4px;
+    }
+
+    .mode-switch {
+      display: inline-flex;
+      background: white;
+      border: 3px solid var(--teal);
+      border-radius: 50px;
+      padding: 4px;
+      gap: 4px;
+      box-shadow: 0 3px 0 rgba(0,0,0,.08);
+    }
+
+    .mode-btn {
+      border: none;
+      background: transparent;
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-weight: bold;
+      font-size: clamp(13px, 1.8vw, 16px);
+      color: #048a63;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .mode-btn.active {
+      background: var(--teal);
+      color: white;
+    }
+
+    .mode-hint {
+      text-align: center;
+      font-size: clamp(13px, 1.8vw, 16px);
+      color: #048a63;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+
+    .card-front .front-sanskrit {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: bold;
+      color: var(--purple);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .card-front .front-question {
+      position: absolute;
+      top: 10px;
+      font-size: 13px;
+      color: #7a6a9a;
+    }
+
+    .card-back .back-visual {
+      font-size: clamp(34px, 5vw, 46px);
+      line-height: 1;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-back .back-visual img {
+      max-height: 50px;
+      max-width: 70px;
+      object-fit: contain;
+    }
+
+    .card-back .english-word.big-answer {
+      font-size: clamp(16px, 2.6vw, 21px);
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    .card-back .sanskrit-word.small {
+      font-size: clamp(14px, 2.2vw, 18px);
+    }
+
     .card-front .tap-hint {
       position: absolute;
       bottom: 6px;
@@ -303,6 +389,14 @@
       <button class="reset-btn" onclick="resetAll()">🔄 Reset</button>
     </div>
 
+    <div class="mode-toggle">
+      <div class="mode-switch">
+        <button class="mode-btn active" id="modePicture" onclick="setMode('picture')">🖼️ Picture → Sanskrit</button>
+        <button class="mode-btn" id="modeSanskrit" onclick="setMode('sanskrit')">🔤 Sanskrit → English</button>
+      </div>
+    </div>
+    <p class="mode-hint" id="modeHint">Look at the picture and say the Sanskrit word!</p>
+
     <div class="category-tabs" id="categoryTabs"></div>
 
     <div class="deck" id="deck"></div>
@@ -383,15 +477,80 @@
           { san: 'मेषः', eng: 'Sheep', img: 'sheep.png' },
           { san: 'शशः', eng: 'Rabbit', img: 'rabbit.png' }
         ]
+      },
+      {
+        key: 'namapadani',
+        label: '📘 नामपदानि (Nouns · Pg 39)',
+        words: [
+          { san: 'करः', eng: 'Hand', emoji: '✋' },
+          { san: 'घटः', eng: 'Pot', emoji: '🏺' },
+          { san: 'तटः', eng: 'Bank / Shore', emoji: '🏖️' },
+          { san: 'कटः', eng: 'Mat', emoji: '🧺' },
+          { san: 'वृक्षः', eng: 'Tree', emoji: '🌳' },
+          { san: 'देहः', eng: 'Body', emoji: '🧍' },
+          { san: 'पटः', eng: 'Cloth', emoji: '🧣' },
+          { san: 'पादः', eng: 'Foot', emoji: '🦶' },
+          { san: 'कर्णः', eng: 'Ear', emoji: '👂' },
+          { san: 'नरः', eng: 'Man', emoji: '👨' },
+          { san: 'पिकः', eng: 'Cuckoo', emoji: '🐦' },
+          { san: 'सेवकः', eng: 'Servant', emoji: '🤵' },
+          { san: 'भ्रमरः', eng: 'Bee', emoji: '🐝' },
+          { san: 'हस्तः', eng: 'Hand', emoji: '🤚' },
+          { san: 'शिक्षकः', eng: 'Teacher', emoji: '👩‍🏫' },
+          { san: 'सैनिकः', eng: 'Soldier', emoji: '💂' }
+        ]
+      },
+      {
+        key: 'visheshanani',
+        label: '✨ विशेषणानि (Adjectives · Pg 39)',
+        words: [
+          { san: 'दीनः', eng: 'Poor / Miserable', emoji: '😢' },
+          { san: 'आढ्यः', eng: 'Rich', emoji: '💰' },
+          { san: 'तीक्ष्णः', eng: 'Sharp / Keen', emoji: '🔪' },
+          { san: 'उन्नतः', eng: 'Tall / High', emoji: '🏔️' },
+          { san: 'स्थूलः', eng: 'Thick / Stout', emoji: '🐘' },
+          { san: 'कृशः', eng: 'Thin', emoji: '🥢' },
+          { san: 'चतुरः', eng: 'Clever', emoji: '🦊' },
+          { san: 'पीवरः', eng: 'Thick / Stout', emoji: '🐼' },
+          { san: 'सूक्ष्मः', eng: 'Fine / Thin', emoji: '🐜' },
+          { san: 'मन्दः', eng: 'Slow / Dull', emoji: '🐢' },
+          { san: 'शूरः', eng: 'Brave', emoji: '🦸' },
+          { san: 'विशालः', eng: 'Large / Spacious', emoji: '🏰' }
+        ]
       }
     ];
 
     // status: 'new' | 'known' | 'learning', keyed by "categoryKey|san"
     const status = {};
     let activeCategory = categories[0].key;
+    let mode = 'picture'; // 'picture' | 'sanskrit'
 
     function cardId(catKey, san) {
-      return catKey + '|' + san;
+      return mode + '|' + catKey + '|' + san;
+    }
+
+    function setMode(m) {
+      mode = m;
+      document.getElementById('modePicture').classList.toggle('active', m === 'picture');
+      document.getElementById('modeSanskrit').classList.toggle('active', m === 'sanskrit');
+      document.getElementById('modeHint').textContent = m === 'picture'
+        ? 'Look at the picture and say the Sanskrit word!'
+        : 'Read the Sanskrit word and guess what it means in English!';
+      updateScore();
+      renderDeck();
+    }
+
+    function makeVisual(w) {
+      if (w.img) {
+        const img = document.createElement('img');
+        img.src = 'images/' + w.img;
+        img.alt = w.eng;
+        return img;
+      }
+      const em = document.createElement('div');
+      em.className = 'emoji-face';
+      em.textContent = w.emoji;
+      return em;
     }
 
     function renderTabs() {
@@ -423,10 +582,18 @@
 
         const front = document.createElement('div');
         front.className = 'card-face card-front';
-        const img = document.createElement('img');
-        img.src = 'images/' + w.img;
-        img.alt = w.eng;
-        front.appendChild(img);
+        if (mode === 'picture') {
+          front.appendChild(makeVisual(w));
+        } else {
+          const q = document.createElement('div');
+          q.className = 'front-question';
+          q.textContent = 'What does it mean? 🤔';
+          front.appendChild(q);
+          const fs = document.createElement('div');
+          fs.className = 'front-sanskrit';
+          fs.textContent = w.san;
+          front.appendChild(fs);
+        }
         const hint = document.createElement('div');
         hint.className = 'tap-hint';
         hint.textContent = '👆';
@@ -463,8 +630,21 @@
         learnBtn.onclick = (e) => { e.stopPropagation(); status[id] = 'learning'; updateScore(); renderDeck(); };
         btns.appendChild(knowBtn);
         btns.appendChild(learnBtn);
-        back.appendChild(sw);
-        back.appendChild(ew);
+        if (mode === 'sanskrit') {
+          const vis = document.createElement('div');
+          vis.className = 'back-visual';
+          const v = makeVisual(w);
+          v.className = '';
+          vis.appendChild(v);
+          ew.classList.add('big-answer');
+          sw.classList.add('small');
+          back.appendChild(vis);
+          back.appendChild(ew);
+          back.appendChild(sw);
+        } else {
+          back.appendChild(sw);
+          back.appendChild(ew);
+        }
         back.appendChild(btns);
 
         card.appendChild(front);
@@ -480,8 +660,9 @@
     }
 
     function updateScore() {
-      const known = Object.values(status).filter(s => s === 'known').length;
-      const learning = Object.values(status).filter(s => s === 'learning').length;
+      const mine = Object.keys(status).filter(k => k.startsWith(mode + '|')).map(k => status[k]);
+      const known = mine.filter(s => s === 'known').length;
+      const learning = mine.filter(s => s === 'learning').length;
       document.getElementById('knowCount').textContent = known;
       document.getElementById('learnCount').textContent = learning;
     }
