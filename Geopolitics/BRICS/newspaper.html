@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The ELC Times: India's BRICS Opportunity 📰</title>
+<link rel="stylesheet" href="brics.css">
+<style>
+  .paper{background:#f4ecd8;border:4px solid #3b2f1e;border-radius:10px;padding:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);}
+  .paper a{display:block;cursor:zoom-in;}
+  .paper img{display:block;width:100%;height:auto;border-radius:4px;}
+  .zoom-hint{text-align:center;font-size:14px;color:#666;margin-top:8px;}
+  .qbox{background:#fff;border-radius:16px;padding:14px 16px;margin:12px 0;border-left:8px solid #8b1e1e;}
+  .qbox label{display:flex;gap:10px;align-items:flex-start;font-weight:bold;font-size:clamp(16px,2vw,19px);margin-bottom:8px;}
+  .qbox .n{background:#1d2b53;color:#fff;border-radius:50%;min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .qbox textarea{width:100%;min-height:90px;border:2px solid #d8cdb5;border-radius:12px;padding:10px 12px;font-size:16px;font-family:inherit;resize:vertical;background:#fffdf7;}
+  .qbox textarea:focus{outline:none;border-color:#8b1e1e;}
+  .quote{background:#1d2b53;color:#fff;border-radius:18px;padding:18px 22px;font-size:clamp(18px,2.4vw,24px);line-height:1.5;text-align:center;margin:14px 0;}
+  .quote small{display:block;font-size:14px;opacity:.8;margin-top:8px;letter-spacing:1px;}
+  .printbtn{background:var(--purple);color:#fff;border:none;border-radius:40px;padding:10px 22px;font-size:16px;cursor:pointer;font-family:inherit;box-shadow:0 5px 0 #7a3b97;}
+</style>
+</head>
+<body>
+<div class="nav-top nav-back"><a class="icon-btn" href="index.html" title="Back to BRICS">⬅️</a></div>
+<div class="nav-top nav-home"><a class="icon-btn" href="../../index.html" title="Go to Home">🏠</a></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="big">📰</div>
+    <h1>Newspaper: India's BRICS Opportunity</h1>
+    <p class="sub">From <b>The ELC Times</b> · Vol. 1, Issue 28 · September 2026</p>
+  </div>
+
+  <div class="paper">
+    <a href="images/elc-times-brics-opportunity.jpg" target="_blank" rel="noopener" title="Open full size">
+      <img src="images/elc-times-brics-opportunity.jpg"
+           alt="The ELC Times front page, headline 'India's BRICS Opportunity: To bring different countries to the same table, even when they do not always agree.' It shows BRICS leaders at the 2026 summit table in front of member flags, a Key Facts box (11 member countries, almost half of the world's population, a growing share of the global economy, focus on development, trade, technology and the Global South), a Why It Matters box, the quote 'You don't always have to make everyone agree. Sometimes, your job is to make sure everyone keeps talking.', and a Think Like a Diplomat activity.">
+    </a>
+  </div>
+  <p class="zoom-hint">🔍 Tap the newspaper to open it full size</p>
+
+  <section class="lesson" style="--c:#8b1e1e;margin-top:26px;">
+    <h2>🗞️ Read like a journalist <span class="lvl basic">🌱 BASIC</span></h2>
+    <p>The article's big idea: BRICS members often <b>disagree</b>, so India's opportunity is to be a <b>bridge</b>. India can keep everyone talking and find practical areas where they <i>can</i> work together, such as trade, development, energy, technology and the concerns of the Global South.</p>
+    <div class="quote">"You don't always have to make everyone agree. Sometimes, your job is to make sure everyone keeps talking."<small>— A LESSON IN DIPLOMACY</small></div>
+    <details class="reveal">
+      <summary>Which chapters of these notes connect to this article?</summary>
+      <ul>
+        <li><b>Chapter 1:</b> the 11 members and why a bigger, more varied club finds it harder to agree.</li>
+        <li><b>Chapter 2:</b> why getting a Declaration signed after the May 2026 failure was a win.</li>
+        <li><b>Chapter 5:</b> India's balancing act, "not against anyone", and the Iran–UAE meeting in Delhi.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="lesson" style="--c:#1d2b53;">
+    <h2>✍️ Think like a diplomat <span class="lvl pro">🧠 PRO</span></h2>
+    <p>You are <b>India's representative</b> at the next BRICS meeting (China, 2027). Write your answers below. They are saved in this browser.</p>
+    <div class="qbox"><label for="d1"><span class="n">1</span>What one issue would you put on the table?</label><textarea id="d1" placeholder="e.g. food prices, AI safety, clean energy, payments between countries..."></textarea></div>
+    <div class="qbox"><label for="d2"><span class="n">2</span>Why should ALL the BRICS countries care about it? (Think about oil sellers AND oil buyers, big AND small economies.)</label><textarea id="d2"></textarea></div>
+    <div class="qbox"><label for="d3"><span class="n">3</span>What could India suggest? Name one practical step everyone could agree to.</label><textarea id="d3"></textarea></div>
+    <div class="box dyk"><span class="t">💡 Diplomat's tip</span><p>Choose an issue that helps <b>every</b> member, even rivals. Food security works well: grain sellers like Russia and Brazil want steady buyers, and grain buyers like Egypt and Iran want steady prices. That's the thinking behind the <b>BRICS Grain Exchange</b>!</p></div>
+    <p style="text-align:center;"><button class="printbtn" onclick="window.print()">🖨️ Print my answers</button></p>
+  </section>
+
+  <div class="pager">
+    <a href="quiz.html">⬅️ Revision &amp; Quiz</a>
+    <a class="next" href="index.html">🏠 BRICS Home</a>
+  </div>
+</div>
+
+<script>
+  ['d1','d2','d3'].forEach(id=>{
+    const el=document.getElementById(id), key='brics-diplomat-'+id;
+    try{ const v=localStorage.getItem(key); if(v) el.value=v; }catch(e){}
+    el.addEventListener('input',()=>{ try{ localStorage.setItem(key, el.value); }catch(e){} });
+  });
+</script>
+</body>
+</html>
