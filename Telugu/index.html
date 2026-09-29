@@ -1,30 +1,331 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Telugu 🔤</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ఉడుత భక్తి · The Squirrel's Devotion 🐿️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
-  body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);color:#1d2b53;padding:16px 12px;text-align:center;}
-  .back{position:absolute;top:30px;left:30px;background:#a06cd5;color:white;text-decoration:none;
-    padding:12px 24px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;}
-  .big{font-size:clamp(80px,15vw,160px);animation:bounce 2s ease-in-out infinite;}
-  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
-  h1{font-size:clamp(40px,6vw,72px);margin:20px 0;
-    background:linear-gradient(90deg,#ffd166,#ff9e45,#ef476f,#a06cd5);
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --ink:#1d2b53; --card:#ffffff;
+    --te:'Noto Sans Telugu','Nirmala UI','Gautami',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;
+    background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);background-attachment:fixed;
+    color:var(--ink);padding:16px;min-height:100vh;overflow-x:hidden;}
+  .te{font-family:var(--te);}
+  .wrap{max-width:960px;margin:0 auto;}
+  .back{display:inline-block;background:var(--purple);color:#fff;text-decoration:none;
+    padding:10px 20px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;}
+  .back:hover{transform:translateY(-2px);}
+  header{text-align:center;margin:18px 0 22px;}
+  .big{font-size:clamp(56px,10vw,96px);animation:bounce 2.4s ease-in-out infinite;display:inline-block;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+  h1{font-size:clamp(30px,5.5vw,54px);margin:8px 0 4px;line-height:1.3;
+    background:linear-gradient(90deg,var(--orange),var(--red),var(--purple));
     -webkit-background-clip:text;background-clip:text;color:transparent;}
-  p{font-size:clamp(20px,2.6vw,28px);color:#a06cd5;max-width:600px;margin-top:10px;}
-  .badge{display:inline-block;background:#ffd166;color:#1d2b53;padding:16px 12px;border-radius:50px;
-    font-weight:bold;margin-top:30px;border:3px solid #ff9e45;font-size:22px;}
+  h1 .te{font-weight:700;}
+  .sub{font-size:clamp(16px,2.2vw,20px);color:var(--purple);}
+  nav.jump{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px 0 6px;}
+  nav.jump a{background:#fff;border:3px solid var(--yellow);color:var(--ink);text-decoration:none;
+    padding:8px 16px;border-radius:50px;font-weight:bold;font-size:15px;}
+  nav.jump a:hover{background:var(--yellow);}
+  section{background:var(--card);border-radius:24px;padding:22px clamp(14px,3vw,30px);margin:22px 0;
+    box-shadow:0 8px 0 rgba(160,108,213,.18);border:3px solid #f1e4ff;}
+  h2{font-size:clamp(22px,3.4vw,30px);margin-bottom:12px;color:var(--purple);}
+  h2 .te{font-weight:700;}
+  h3{font-size:20px;color:var(--orange);margin:18px 0 8px;}
+  p{line-height:1.6;font-size:17px;}
+
+  /* Full poem */
+  .poem{background:linear-gradient(135deg,#fffaf0,#fff3e0);border-left:8px solid var(--orange);
+    border-radius:16px;padding:18px clamp(12px,3vw,26px);}
+  .poem ol{list-style:none;counter-reset:ln;}
+  .poem li{counter-increment:ln;font-family:var(--te);font-size:clamp(19px,2.8vw,24px);line-height:1.9;
+    display:flex;gap:14px;align-items:baseline;}
+  .poem li::before{content:counter(ln);font-family:'Comic Sans MS',sans-serif;font-size:13px;color:#b08a5a;
+    min-width:22px;text-align:right;}
+  .poem li.gap{color:#b08a5a;font-size:16px;font-style:italic;font-family:'Comic Sans MS',sans-serif;}
+  .poem li.gap::before{content:"…";}
+  .part{display:inline-block;background:var(--orange);color:#fff;border-radius:50px;padding:4px 14px;
+    font-weight:bold;margin:12px 0 6px;font-size:15px;}
+  .note{background:#eef9ff;border:2px dashed var(--blue);border-radius:14px;padding:10px 14px;
+    font-size:15px;margin-top:14px;line-height:1.5;}
+
+  /* Line by line */
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .btn{background:var(--teal);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-size:15px;
+    font-weight:bold;cursor:pointer;box-shadow:0 4px 0 #04a57b;font-family:inherit;}
+  .btn:active{transform:translateY(2px);box-shadow:0 2px 0 #04a57b;}
+  .btn.alt{background:var(--blue);box-shadow:0 4px 0 #2a9cc4;}
+  .line{border:3px solid #ffe6a8;border-radius:18px;padding:14px 16px;margin:14px 0;background:#fffdf6;}
+  .line-head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;}
+  .num{background:var(--yellow);border-radius:50%;min-width:34px;height:34px;display:inline-flex;
+    align-items:center;justify-content:center;font-weight:bold;font-size:15px;flex-shrink:0;}
+  .tline{font-family:var(--te);font-size:clamp(20px,3vw,26px);font-weight:600;line-height:1.6;}
+  .words{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 8px;}
+  .w{background:#fff;border:2px solid #d9c6f5;border-radius:12px;padding:6px 10px;font-size:15px;line-height:1.35;}
+  .w b{font-family:var(--te);font-size:18px;color:var(--purple);display:block;}
+  .w span{color:#3a4670;}
+  .mean{background:#e9fff7;border-left:5px solid var(--teal);border-radius:10px;padding:8px 12px;font-size:16px;line-height:1.5;}
+  .mean::before{content:"👉 ";}
+  .hide-words .words{display:none;}
+  .hide-mean .mean{display:none;}
+
+  /* Vocab + summary */
+  .vocab{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;}
+  .v{background:linear-gradient(135deg,#fff0f8,#f3eaff);border-radius:14px;padding:10px 12px;border:2px solid #f6c7e6;}
+  .v b{font-family:var(--te);font-size:20px;color:var(--red);display:block;}
+  .story{font-size:17px;line-height:1.7;}
+  .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0;font-size:16px;}
+  .flow span{background:#fff3d6;border-radius:50px;padding:6px 12px;border:2px solid var(--yellow);}
+  .flow i{font-style:normal;color:var(--orange);font-weight:bold;}
+  .lesson{text-align:center;background:linear-gradient(135deg,#fff5d6,#ffe0f0);border-radius:18px;padding:18px;
+    font-size:clamp(17px,2.4vw,21px);line-height:1.6;border:3px solid var(--yellow);}
+  .lesson .te{font-size:clamp(20px,3vw,26px);font-weight:700;color:var(--purple);display:block;margin-bottom:6px;}
+  footer{text-align:center;color:#7a6aa0;font-size:14px;margin:24px 0 10px;}
+  @media (max-width:520px){ .poem li{gap:8px;} .w{font-size:14px;} }
+  @media print{ body{background:#fff;} .back,nav.jump,.controls{display:none;} section{box-shadow:none;break-inside:avoid-page;} }
 </style>
 </head>
 <body>
+<div class="wrap">
   <a class="back" href="../index.html">⬅️ Home</a>
-  <div class="big">🔤</div>
-  <h1>తెలుగు · Telugu</h1>
-  <p>పద్యాలు, కథలు, వ్యాకరణం — మన మాతృభాష నేర్చుకుందాం! 🌼</p>
-  <div class="badge">🚧 Coming Soon 🚧</div>
+
+  <header>
+    <div class="big">🐿️</div>
+    <h1><span class="te">ఉడుత భక్తి</span> · The Squirrel's Devotion</h1>
+    <p class="sub">A <span class="te">ద్విపద</span> poem from the Ramayana — the little squirrel who helped build Rama's bridge 🌊🪨</p>
+    <nav class="jump">
+      <a href="#poem">📜 Full Poem</a>
+      <a href="#lines">🔍 Word by Word</a>
+      <a href="#story">🌸 The Story</a>
+      <a href="#vocab">📚 Key Words</a>
+    </nav>
+  </header>
+
+  <!-- ============ FULL POEM ============ -->
+  <section id="poem">
+    <h2>📜 <span class="te">పూర్తి పద్యం</span> · The Full Poem</h2>
+    <div class="poem" id="poemBox"></div>
+  </section>
+
+  <!-- ============ LINE BY LINE ============ -->
+  <section id="lines">
+    <h2>🔍 <span class="te">పదాలు – అర్థాలు</span> · Word by Word</h2>
+    <p style="margin-bottom:10px">Each line of the poem, split into words, with the meaning of every word and then the meaning of the whole line.</p>
+    <div class="controls">
+      <button class="btn" id="tWords">🙈 Hide word meanings</button>
+      <button class="btn alt" id="tMean">🙈 Hide line meanings</button>
+    </div>
+    <div id="lineBox"></div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section id="story">
+    <h2>🌸 <span class="te">తాత్పర్యం</span> · What Happens in the Poem</h2>
+    <div class="story">
+      <p>The monkeys (<span class="te">వానరులు</span>) are building a bridge (<span class="te">సేతువు</span>) across the ocean to Lanka. They carry huge rocks and trees and hand them to <b>Nala</b>, who fits them into the bridge.</p>
+      <p style="margin-top:10px">A tiny squirrel thinks, <i>"The bridge must be finished quickly — I will help these mighty ones too!"</i> Keeping Sri Rama's lotus feet in its heart, it keeps doing this again and again:</p>
+      <div class="flow">
+        <span>🌊 dips in the sea</span><i>→</i><span>🏖️ rolls in the sand</span><i>→</i><span>🏃 runs to the bridge</span><i>→</i><span>🪨 shakes the sand between the rocks</span><i>→</i><span>🔁 comes back again</span>
+      </div>
+      <p>Sri Rama sees it from far away and says, <i>"Lakshmana, look! While the monkey chiefs bring mountains with great strength, this little squirrel never thinks 'how small am I?' — it helps with love. Did you see?"</i></p>
+      <p style="margin-top:10px">Lakshmana replies, <i>"I see it, brother. For anyone who keeps your feet in their heart, even a blade of grass becomes as great as the mountain of the gods. So it is <b>devotion</b> that truly matters."</i></p>
+      <p style="margin-top:10px">Rama is delighted. He asks Sugriva to bring the squirrel, takes it in his hand, praises it in many ways, and gently strokes its back with the fingers of his right hand. That is how the squirrel got the <b>three beautiful lines on its back</b> 🐿️✨ — and we still see them today!</p>
+    </div>
+    <h3>🗣️ In very simple Telugu</h3>
+    <p class="te" style="font-size:19px;line-height:1.9">వానరులు సముద్రంపై వారధి కడుతున్నారు. ఒక చిన్న ఉడుత కూడా సాయం చేయాలనుకుంది. నీటిలో మునిగి, ఇసుకలో పొర్లి, ఆ ఇసుకను వారధి రాళ్ల మధ్య రాల్చింది. శ్రీరాముడు అది చూసి సంతోషించాడు. ఉడుతను చేతిలోకి తీసుకుని ప్రేమగా వీపు నిమిరాడు. అప్పటి నుండి ఉడుత వీపుపై మూడు గీతలు ఉన్నాయి.</p>
+  </section>
+
+  <!-- ============ VOCAB ============ -->
+  <section id="vocab">
+    <h2>📚 <span class="te">ముఖ్యమైన పదాలు</span> · Key Words to Learn</h2>
+    <div class="vocab" id="vocabBox"></div>
+  </section>
+
+  <section>
+    <div class="lesson">
+      <span class="te">శక్తి కాదు, భక్తి ముఖ్యం!</span>
+      It's not how <b>big</b> your help is — it's how <b>sincerely</b> you give it. 💛<br>
+      That's why we still say <span class="te"><b>"ఉడుత సాయం"</b></span> for a small help given with a big heart.
+    </div>
+  </section>
+
+  <footer>Made for Shreshta 🌼 · <span class="te">తెలుగు నేర్చుకుందాం!</span></footer>
+</div>
+
+<script>
+/* ---------- The poem ----------
+   Each line: t = Telugu line, w = [word, meaning] pairs, m = meaning of the line.
+   Parts I and II follow the textbook's section markers. */
+const PART1 = [
+  {t:"నలు చేతిఁ కొసగఁ నా నలుఁ డవి పుచ్చి",
+   w:[["నలు చేతికి","into Nala's hand"],["ఒసఁగ","when (the monkeys) gave"],["ఆ నలుఁడు","that Nala"],["అవి","those (rocks)"],["పుచ్చి","taking them"]],
+   m:"The monkeys handed the rocks to Nala, and Nala took them…"},
+  {t:"తలకొని కట్ట నా తరి యొక్క యుడుత",
+   w:[["తలకొని","setting to work"],["కట్టన్","to build (the bridge)"],["ఆ తరి","at that time"],["ఒక్క","one"],["ఉడుత","squirrel"]],
+   m:"…and set about building the bridge. At that time, one little squirrel (thought):"},
+  {t:"గొబ్బున సేతువు గొనసాగవలయు",
+   w:[["గొబ్బున","quickly"],["సేతువు","the bridge"],["కొనసాగవలయు","must be completed"]],
+   m:"\"The bridge must be finished quickly!\""},
+  {t:"నిబ్బలియులకుఁ దోడేసి గావింతు",
+   w:[["ఈ బలియులకు","to these mighty ones"],["తోడు","help"],["ఏ","I (too)"],["కావింతు","will do / will give"]],
+   m:"\"I too will help these strong monkeys.\""},
+  {t:"ననుచు శ్రీరాముని యడుగుఁ దామరలు",
+   w:[["అనుచు","saying so"],["శ్రీరాముని","Sri Rama's"],["అడుగుఁ దామరలు","lotus feet"]],
+   m:"Saying this, (keeping) Sri Rama's lotus feet…"},
+  {t:"మనమునఁ జేర్చి యమ్మనుజేశు నెదుర",
+   w:[["మనమునన్","in its mind / heart"],["చేర్చి","placing"],["ఆ మనుజేశు","that king of men (Rama)"],["ఎదుర","in front of"]],
+   m:"…in its heart, right in front of that king of men, Rama,"},
+  {t:"నచ్చపు భక్తితో నట వార్ధి మునిఁగి",
+   w:[["అచ్చపు","pure"],["భక్తితో","with devotion"],["అట","there"],["వార్ధి","the ocean"],["మునిఁగి","dipping / diving in"]],
+   m:"with pure devotion, it dipped into the ocean there,"},
+  {t:"వచ్చి తా నిసుకలో వడిఁ బొరలాడి",
+   w:[["వచ్చి","coming (out)"],["తాను","itself"],["ఇసుకలో","in the sand"],["వడిన్","quickly"],["పొరలాడి","rolling about"]],
+   m:"came out and quickly rolled about in the sand (so the sand stuck to its wet body),"},
+  {t:"తడయక చనుదెంచి తన మేని యిసుక",
+   w:[["తడయక","without delay"],["చనుదెంచి","coming (to the bridge)"],["తన","its (own)"],["మేని","body's"],["ఇసుక","sand"]],
+   m:"Without any delay it came to the bridge, and the sand on its body…"},
+  {t:"వడిగట్టుపై రాల్చి వనధిలో మునిఁగి",
+   w:[["వడిన్","quickly"],["గట్టుపై","on the bridge / embankment"],["రాల్చి","dropping (the sand)"],["వనధిలో","in the ocean"],["మునిఁగి","dipping in"]],
+   m:"…it quickly dropped onto the bridge. Then it dipped into the ocean again,"},
+  {t:"తేలి గట్టున కేగి తిరుగంగఁ బొరలి",
+   w:[["తేలి","coming up (out of the water)"],["గట్టునకు","to the shore"],["ఏగి","going"],["తిరుగంగన్","again"],["పొరలి","rolling (in the sand)"]],
+   m:"came up out of the water, went to the shore, rolled in the sand again,"},
+  {t:"వాలిన భక్తితో వచ్చి విదుల్చె",
+   w:[["వాలిన","great / abundant"],["భక్తితో","with devotion"],["వచ్చి","coming"],["విదుల్చె","shook (the sand) off"]],
+   m:"and with great devotion came back and shook the sand off onto the bridge."},
+  {t:"నివ్విధంబున నుండ నినకులాధిపుఁడు",
+   w:[["ఇవ్విధంబున","in this way"],["ఉండన్","while (it) was (doing so)"],["ఇనకుల","of the Sun dynasty"],["అధిపుఁడు","the lord — Sri Rama"]],
+   m:"While the squirrel kept doing this, Sri Rama, lord of the Sun dynasty,"},
+  {t:"దవ్వులఁ బొడగాంచి తమ్మునిఁ జూచి",
+   w:[["దవ్వులన్","from far away"],["పొడగాంచి","noticing"],["తమ్మునిన్","(his) younger brother"],["చూచి","looking at"]],
+   m:"noticed it from far away, looked at his younger brother (and said):"},
+  {t:"పొందుగా లక్ష్మణ పొర్లదే చూడు",
+   w:[["పొందుగా","nicely / lovingly"],["లక్ష్మణ","O Lakshmana!"],["పొర్లు","rolling"],["అదే","there it is"],["చూడు","look!"]],
+   m:"\"O Lakshmana! Look — there it is, rolling so nicely!"},
+  {t:"ముందఱ నొక తరుమూషకం బెలమి",
+   w:[["ముందఱ","in front (of us)"],["ఒక","a"],["తరుమూషకంబు","squirrel (lit. 'tree-mouse')"],["ఎలమి","happily / eagerly"]],
+   m:"In front of us, a little squirrel, happily…"},
+];
+
+const PART2 = [
+  {t:"నామీఁద భక్తి యున్నతగతి బూనిఁ",
+   w:[["నామీఁద","on me / towards me"],["భక్తి","devotion"],["ఉన్నతగతి","in a lofty way / greatly"],["పూని","taking up / holding"]],
+   m:"…holding great devotion towards me,"},
+  {t:"తా మేను జలముల దడపి గట్టునకు",
+   w:[["తా","it"],["మేను","body"],["జలముల","in the waters"],["తడపి","wetting"],["గట్టునకు","to the shore"]],
+   m:"wets its body in the water, (goes) to the shore,"},
+  {t:"జని వేగ నిసుకపైఁ జల్లాడి తిరుగఁ",
+   w:[["చని","going"],["వేగ","quickly"],["ఇసుకపైన్","on the sand"],["జల్లాడి","rolling / tossing about"],["తిరుగన్","again / returning"]],
+   m:"quickly rolls about on the sand, and then again…"},
+  {t:"జనుదెంచి కొండల సందున రాల్చి",
+   w:[["చనుదెంచి","coming (to the bridge)"],["కొండల","of the rocks"],["సందున","in the gaps between"],["రాల్చి","dropping (the sand)"]],
+   m:"comes to the bridge and drops the sand into the gaps between the rocks."},
+  {t:"కరమొప్పుచున్నది కపికులాధీశు",
+   w:[["కరము","very much"],["ఒప్పుచున్నది","it looks splendid"],["కపికుల","of the monkey race"],["అధీశులు","the chiefs / lords"]],
+   m:"How splendid it looks! Where the chiefs of the monkeys…"},
+  {t:"లురుశక్తి దరు గిరు లొగి దెచ్చుచోట",
+   w:[["ఉరుశక్తి","with great strength"],["తరు","trees"],["గిరులు","hills / big rocks"],["ఒగి","one after another"],["తెచ్చుచోట","where (they) are bringing"]],
+   m:"…are bringing trees and hills one after another with great strength,"},
+  {t:"దా నెంత యని మదిదలపక ప్రేమ",
+   w:[["తాను","itself"],["ఎంత","how much / how small"],["అని","thinking"],["మది","in its mind"],["తలపక","without worrying"],["ప్రేమ","love"]],
+   m:"it never thinks \"how small am I?\" — with love…"},
+  {t:"బూని సహాయమై పొదలుచున్నదియు",
+   w:[["పూని","taking up"],["సహాయమై","as a helper"],["పొదలుచున్నది","it is busily working / thriving"],["ఉ","and"]],
+   m:"…it has taken up the job of helping and is working busily."},
+  {t:"కనుగొంటివే యన గమలాప్త వంశ!",
+   w:[["కనుగొంటివే","did you see (it)?"],["అన","when (Rama) said"],["కమలాప్త","the Sun (friend of the lotus)"],["వంశ","O (jewel) of the dynasty!"]],
+   m:"Did you see it?\" — when Rama said this, (Lakshmana replied:) \"O jewel of the Sun dynasty!"},
+  {t:"కనుగొంటి భవ దంఘ్రికమల యుగ్మమును",
+   w:[["కనుగొంటి","I saw"],["భవత్","your"],["అంఘ్రి","feet"],["కమల","lotus"],["యుగ్మమును","the pair (of)"]],
+   m:"I saw it! (For one who keeps) the pair of your lotus feet…"},
+  {t:"నెవ్వడు మదినిల్పి యెసఁగుఁ దృణంబు",
+   w:[["ఎవ్వఁడు","whoever"],["మదిన్","in the mind"],["నిల్పి","keeps / holds"],["ఎసఁగు","shines / grows great"],["తృణంబు","a blade of grass"]],
+   m:"…in their mind — whoever does that, even a blade of grass (in their hands) grows great…"},
+  {t:"నవ్వేల్పు గిరిబోలు ననిన గాకున్నె",
+   w:[["ఆ వేల్పుగిరి","that mountain of the gods (Meru)"],["పోలు","becomes equal to"],["అనినన్","if one says so"],["కాకున్నె","would it not be true?"]],
+   m:"…and becomes equal to Meru, the mountain of the gods. Is that not true?"},
+  {t:"కావున భక్తియ కారణం బనఘ",
+   w:[["కావున","therefore"],["భక్తియ","devotion alone"],["కారణంబు","is the reason"],["అనఘ","O sinless one!"]],
+   m:"So, O sinless one, it is devotion alone that matters.\""},
+  {t:"ననవుడు ముదమంది నలినాప్తసుతుని",
+   w:[["అనవుడు","when he said so"],["ముదము","joy"],["అంది","feeling"],["నలినాప్త","the Sun (friend of the lotus)"],["సుతుని","son — Sugriva"]],
+   m:"When Lakshmana said this, Rama was filled with joy, and looking at Sugriva, son of the Sun,"},
+  {t:"గనుగొని మతి దాని గనుగొను వేడ్క",
+   w:[["కనుగొని","looking at"],["మతి","in (my) mind"],["దాని","it (the squirrel)"],["కనుగొను","to see"],["వేడ్క","the wish / desire"]],
+   m:"(he said,) \"In my mind the wish to see it (up close)…"},
+  {t:"బెనఁగొనుచున్నది ప్రేమ నిచ్చుటికి",
+   w:[["పెనఁగొనుచున్నది","is growing strong"],["ప్రేమన్","lovingly"],["ఇచ్చటికి","to here"]],
+   m:"…is growing strong.\" Lovingly (he said), \"(Bring it) here!\""},
+  {t:"దెమ్మన్న వేగంబె దెచ్చి సుగ్రీవు",
+   w:[["తెమ్ము","bring (it)"],["అన్నన్","when he said"],["వేగంబె","at once"],["తెచ్చి","bringing"],["సుగ్రీవుఁడు","Sugriva"]],
+   m:"When Rama said \"Bring it,\" Sugriva brought it at once"},
+  {t:"డమ్మహాత్ముని చేతి కందియిచ్చుటయు",
+   w:[["ఆ మహాత్ముని","of that great soul (Rama)"],["చేతికి","into the hand"],["అందియిచ్చుటయు","handed over"]],
+   m:"and placed it in the great Rama's hand."},
+  {t:"బలుదెఱంగుల జాల బ్రస్తుతిజేసి",
+   w:[["పలు","many"],["తెఱంగుల","ways"],["చాల","a lot"],["ప్రస్తుతి","praise"],["చేసి","doing"]],
+   m:"Rama praised the squirrel a lot, in many ways,"},
+  {t:"కలిత దక్షిణకరాగ్రమున దువ్వుటయు",
+   w:[["కలిత","graceful"],["దక్షిణ","right"],["కర","hand"],["అగ్రమున","with the fingertips"],["దువ్వుటయు","stroking"]],
+   m:"and stroked it with the fingertips of his graceful right hand."},
+  {t:"నల యుడుతకు వెన్క నమరెఁ ద్రిరేఖ",
+   w:[["ఆ ఉడుతకు","for that squirrel"],["వెన్క","on the back"],["అమరెన్","appeared / was formed"],["త్రిరేఖ","three lines"]],
+   m:"On that squirrel's back, three lines appeared,"},
+  {t:"చులుకనై చూడ్కుల సుఖకరంబుగను",
+   w:[["చులుకనై","lightly / delicately"],["చూడ్కుల","to the eyes"],["సుఖకరంబుగను","pleasing / lovely to see"]],
+   m:"delicate and lovely to look at — and squirrels have had those stripes ever since! 🐿️"}
+];
+
+const VOCAB = [
+  ["ఉడుత / తరుమూషకం","squirrel"],["సేతువు / వారధి","bridge (across the sea)"],["వార్ధి / వనధి","ocean"],
+  ["ఇనకులాధిపుఁడు","lord of the Sun dynasty — Rama"],["కపికులాధీశులు","chiefs of the monkeys"],
+  ["భక్తి","devotion"],["అంఘ్రికమలము / అడుగుఁదామర","lotus feet"],["మేను","body"],["ఇసుక","sand"],["విదుల్చు","to shake off"],
+  ["దవ్వులన్","from far away"],["తమ్ముఁడు","younger brother"],["గిరి","mountain / hill"],["తరువు","tree"],
+  ["తృణము","blade of grass"],["ముదము","joy"],["ప్రస్తుతి","praise"],["దక్షిణకరము","right hand"],["త్రిరేఖ","three lines"]
+];
+
+/* ---------- Render ---------- */
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function poemList(lines, gapAfter){
+  let h = '<ol>';
+  lines.forEach(l => { h += `<li>${esc(l.t)}</li>`; });
+  if (gapAfter) h += `<li class="gap">(a few lines here are not visible in the photo)</li>`;
+  return h + '</ol>';
+}
+document.getElementById('poemBox').innerHTML =
+  `<span class="part">Part 1 · <span class="te">భాగం 1</span></span>` + poemList(PART1, false) +
+  `<span class="part">Part 2 · <span class="te">భాగం 2</span></span>` + poemList(PART2, false);
+
+function lineCards(lines, start, label){
+  let h = `<h3>${label}</h3>`;
+  lines.forEach((l, i) => {
+    h += `<div class="line"><div class="line-head"><span class="num">${start + i}</span><span class="tline">${esc(l.t)}</span></div>
+      <div class="words">${l.w.map(([a,b]) => `<div class="w"><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join('')}</div>
+      <div class="mean">${esc(l.m)}</div></div>`;
+  });
+  return h;
+}
+document.getElementById('lineBox').innerHTML =
+  lineCards(PART1, 1, 'Part 1 · <span class="te">భాగం 1</span> — the squirrel helps, and Rama notices') +
+  lineCards(PART2, 1, 'Part 2 · <span class="te">భాగం 2</span> — Rama praises the squirrel');
+
+document.getElementById('vocabBox').innerHTML =
+  VOCAB.map(([a,b]) => `<div class="v"><b>${esc(a)}</b>${esc(b)}</div>`).join('');
+
+/* ---------- Toggles (for self-testing) ---------- */
+const box = document.getElementById('lineBox');
+const tw = document.getElementById('tWords'), tm = document.getElementById('tMean');
+tw.onclick = () => { const h = box.classList.toggle('hide-words'); tw.textContent = h ? '👀 Show word meanings' : '🙈 Hide word meanings'; };
+tm.onclick = () => { const h = box.classList.toggle('hide-mean');  tm.textContent = h ? '👀 Show line meanings' : '🙈 Hide line meanings'; };
+</script>
 </body>
 </html>
