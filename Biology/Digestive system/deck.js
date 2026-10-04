@@ -97,7 +97,69 @@ function initToothLabels(){
   });
 }
 
+/* ---------- One-slide food journey ---------- */
+const JR_STAGES = [
+  { token:'🍛', s:1,    cap:'👄 <b>Mouth:</b> teeth chew the food and saliva turns it into a soft <b>bolus</b>. Salivary amylase starts turning starch into maltose.' },
+  { token:'🥣', s:.95,  cap:'🎒 <b>Stomach:</b> churned with acidic gastric juice into a soupy <b>chyme</b>. HCl kills germs; pepsin starts breaking proteins into peptones.' },
+  { token:'🥣', s:.85,  cap:'🧪 <b>Duodenum:</b> bile emulsifies the fats; pancreatic juice brings amylase, trypsin and lipase, and its alkali neutralises the stomach acid.' },
+  { token:'🥣', s:.55,  cap:'🌀 <b>Small intestine:</b> intestinal juice finishes digestion. The <b>villi</b> absorb glucose, amino acids, fatty acids, glycerol, vitamins, minerals and most of the water.' },
+  { token:'🟤', s:.5,   cap:'🧺 <b>Large intestine:</b> only fibre, water and salts are left. Water and salts are absorbed; friendly bacteria make vitamin K.' },
+  { token:'💩', s:.55,  cap:'🚪 <b>Rectum &amp; anus:</b> what\'s left (mostly fibre, bacteria and dead cells) is stored as <b>faeces</b> and egested.' }
+];
+function initJourney(){
+  const grid = document.querySelector('.journey');
+  if(!grid) return;
+  const slide = grid.closest('.slide');
+  const cap = slide.querySelector('.jr-caption');
+  const capDefault = cap.innerHTML;
+  const tube = grid.querySelector('.jr-tube'), token = grid.querySelector('.jr-token');
+  const heads = [...grid.querySelectorAll('.jh')];
+  const cells = [...grid.querySelectorAll('.jc')];
+  const playBtn = slide.querySelector('[data-jr="play"]');
+  let i = -1, timer = null;
+
+  function show(n){
+    i = n;
+    if(i < 0){
+      grid.classList.remove('stepping');
+      cells.forEach(c=>c.classList.remove('on','done','todo'));
+      token.textContent = '🍛'; token.style.left = '34px'; token.style.setProperty('--s', 1);
+      cap.innerHTML = capDefault;
+      return;
+    }
+    grid.classList.add('stepping');
+    cells.forEach(c=>{
+      const col = +c.dataset.col;
+      c.classList.remove('on','done','todo');
+      void c.offsetWidth;                       // restart the pop animation
+      c.classList.add(col === i ? 'on' : col < i ? 'done' : 'todo');
+    });
+    const h = heads[i], st = JR_STAGES[i];
+    token.style.left = (h.offsetLeft + h.offsetWidth/2 - tube.offsetLeft) + 'px';
+    token.style.setProperty('--s', st.s);
+    token.textContent = st.token;
+    token.classList.remove('wiggle'); void token.offsetWidth; token.classList.add('wiggle');
+    cap.innerHTML = st.cap;
+  }
+  function stop(){ clearTimeout(timer); timer = null; playBtn.textContent = '▶ Play'; }
+  function tick(){
+    if(i >= JR_STAGES.length - 1){ stop(); return; }
+    show(i + 1);
+    timer = setTimeout(tick, 3800);
+  }
+  playBtn.addEventListener('click', ()=>{
+    if(timer){ stop(); return; }
+    if(i >= JR_STAGES.length - 1) show(-1);
+    playBtn.textContent = '⏸ Pause';
+    tick();
+  });
+  slide.querySelector('[data-jr="next"]').addEventListener('click', ()=>{ stop(); show(Math.min(i + 1, JR_STAGES.length - 1)); });
+  slide.querySelector('[data-jr="prev"]').addEventListener('click', ()=>{ stop(); show(Math.max(i - 1, -1)); });
+  slide.querySelector('[data-jr="all"]').addEventListener('click', ()=>{ stop(); show(-1); });
+  heads.forEach((h,k)=>h.addEventListener('click', ()=>{ stop(); show(k); }));
+}
+
 /* ---------- boot ---------- */
-function boot(){ stampMascots(); initFlips(); initQuiz(); initToothLabels(); }
+function boot(){ stampMascots(); initFlips(); initQuiz(); initToothLabels(); initJourney(); }
 if(document.readyState !== 'loading') boot();
 else document.addEventListener('DOMContentLoaded', boot);

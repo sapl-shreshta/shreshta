@@ -586,7 +586,117 @@
     </div>
   </section>
 
-  <!-- ============ 21. THANK YOU / RECAP ============ -->
+  <!-- ============ 21. FOOD JOURNEY (ONE-SLIDE SUMMARY) ============ -->
+  <section data-label="Food Journey Summary">
+    <div class="slide bg-cream" style="padding:34px 70px 30px;">
+      <div class="layer">
+        <div class="row center-x between anim d1" style="gap:20px;">
+          <div class="col" style="gap:4px;">
+            <h2 class="head" style="font-size:56px; margin:0;">🗺️ The Whole Journey of a <span class="accent-mint">Meal</span></h2>
+          </div>
+          <div class="row jr-controls" style="gap:12px; align-items:center;">
+            <button class="jr-btn" data-jr="prev">◀</button>
+            <button class="jr-btn play" data-jr="play">▶ Play</button>
+            <button class="jr-btn" data-jr="next">▶</button>
+            <button class="jr-btn" data-jr="all">Show all</button>
+          </div>
+        </div>
+        <div class="row center-x anim d2" style="gap:10px; margin:8px 0 8px; flex-wrap:wrap;">
+          <span class="jr-meal">Our meal: 🍚 rice <i>(carbohydrate)</i></span><span class="jr-meal">🫘 dal &amp; paneer <i>(protein)</i></span><span class="jr-meal">🧈 ghee <i>(fat)</i></span><span class="jr-meal">🥕 vegetables <i>(fibre, vitamins, minerals)</i></span><span class="jr-meal">💧 water</span>
+        </div>
+        <div class="jr-caption anim d2">Press <b>▶ Play</b> to follow the meal stop by stop, or tap any stop's name.</div>
+
+        <div class="journey anim d3">
+          <!-- gut tube with travelling food -->
+          <div class="jr-label jr-tube-label">🍛 Food</div>
+          <div class="jr-tube"><div class="jr-token">🍛</div></div>
+
+          <!-- station headers -->
+          <div class="jr-label">📍 Stop</div>
+          <button class="jc jh" data-col="0" style="background:#fff1cf;"><span class="je">👄</span><b>Mouth</b><small>a few seconds to 1 min</small></button>
+          <button class="jc jh" data-col="1" style="background:#ffe5e0;"><span class="je">🎒</span><b>Stomach</b><small>2–4 hours</small></button>
+          <button class="jc jh" data-col="2" style="background:#ece1ff;"><span class="je">🧪</span><b>Duodenum</b><small>start of small intestine</small></button>
+          <button class="jc jh" data-col="3" style="background:#dff3ff;"><span class="je">🌀</span><b>Rest of small intestine</b><small>3–6 hours in all</small></button>
+          <button class="jc jh" data-col="4" style="background:#dcf7e7;"><span class="je">🧺</span><b>Large intestine</b><small>about a day</small></button>
+          <button class="jc jh" data-col="5" style="background:#ffe6f0;"><span class="je">🚪</span><b>Rectum &amp; anus</b><small>stored, then egested</small></button>
+
+          <!-- chemicals -->
+          <div class="jr-label" style="background:#2b2d4a;color:#fff;">🧪 Chemicals<br/>acting</div>
+          <div class="jc jchem" data-col="0"><b>Saliva</b><span class="ch">salivary amylase (ptyalin)</span><span class="ch">mucus</span><em>neutral, pH ~7</em></div>
+          <div class="jc jchem" data-col="1"><b>Gastric juice</b><span class="ch">HCl</span><span class="ch">pepsin</span><span class="ch">rennin</span><span class="ch">mucus</span><em>very acidic, pH ~2; HCl kills germs</em></div>
+          <div class="jc jchem" data-col="2"><b>Bile</b> <span class="nc">(no enzyme)</span> + <b>pancreatic juice</b><span class="ch">amylase</span><span class="ch">trypsin</span><span class="ch">lipase</span><em>alkaline: neutralises the acid</em></div>
+          <div class="jc jchem" data-col="3"><b>Intestinal juice</b><span class="ch">maltase</span><span class="ch">sucrase</span><span class="ch">lactase</span><span class="ch">peptidase</span><span class="ch">lipase</span></div>
+          <div class="jc jchem" data-col="4"><b>No enzymes</b><br/><span class="ch">friendly bacteria</span><em>ferment leftovers</em></div>
+          <div class="jc jchem" data-col="5"><b>None</b><em>storage only</em></div>
+
+          <!-- carbohydrates -->
+          <div class="jr-label">🍚 Carbs</div>
+          <div class="jc" data-col="0">Starch → some <b class="pd">maltose</b></div>
+          <div class="jc" data-col="1"><span class="nc">Acid stops amylase: no change</span></div>
+          <div class="jc" data-col="2">Starch → <b class="pd">maltose</b></div>
+          <div class="jc" data-col="3">Maltose → <b class="pd">glucose</b><br/>Sucrose → <b class="pd">glucose + fructose</b><br/>Lactose → <b class="pd">glucose + galactose</b></div>
+          <div class="jc" data-col="4"><span class="nc">none left</span></div>
+          <div class="jc" data-col="5"><span class="nc">none left</span></div>
+
+          <!-- proteins -->
+          <div class="jr-label">🫘 Proteins</div>
+          <div class="jc" data-col="0"><span class="nc">no change</span></div>
+          <div class="jc" data-col="1">Proteins → <b class="pd">peptones</b> (pepsin)<br/>Milk protein curdled (rennin)</div>
+          <div class="jc" data-col="2">→ smaller <b class="pd">peptides</b> (trypsin)</div>
+          <div class="jc" data-col="3">Peptides → <b class="pd">amino acids</b></div>
+          <div class="jc" data-col="4"><span class="nc">none left</span></div>
+          <div class="jc" data-col="5"><span class="nc">none left</span></div>
+
+          <!-- fats -->
+          <div class="jr-label">🧈 Fats</div>
+          <div class="jc" data-col="0"><span class="nc">no change</span></div>
+          <div class="jc" data-col="1"><span class="nc">no change</span></div>
+          <div class="jc" data-col="2">Bile <b>emulsifies</b> big drops into tiny droplets → lipase makes <b class="pd">fatty acids + glycerol</b></div>
+          <div class="jc" data-col="3">Lipase finishes: <b class="pd">fatty acids + glycerol</b></div>
+          <div class="jc" data-col="4"><span class="nc">none left</span></div>
+          <div class="jc" data-col="5"><span class="nc">none left</span></div>
+
+          <!-- fibre -->
+          <div class="jr-label">🥕 Fibre</div>
+          <div class="jc" data-col="0">Chewed and softened</div>
+          <div class="jc" data-col="1"><span class="nc">no change</span></div>
+          <div class="jc" data-col="2"><span class="nc">no change</span></div>
+          <div class="jc" data-col="3"><span class="nc">no change: we have no enzyme for cellulose</span></div>
+          <div class="jc" data-col="4">Bacteria ferment a little; adds <b>bulk</b></div>
+          <div class="jc" data-col="5"><b class="lf">Leaves the body</b></div>
+
+          <!-- water -->
+          <div class="jr-label">💧 Water</div>
+          <div class="jc" data-col="0">Saliva adds water</div>
+          <div class="jc" data-col="1">Juices add more</div>
+          <div class="jc" data-col="2">Bile &amp; pancreatic juice add more</div>
+          <div class="jc" data-col="3"><b class="ab">Most absorbed</b> (about 80%)</div>
+          <div class="jc" data-col="4"><b class="ab">Most of the rest absorbed</b></div>
+          <div class="jc" data-col="5">A little leaves in faeces</div>
+
+          <!-- vitamins & minerals -->
+          <div class="jr-label">🧂 Vitamins &amp; minerals</div>
+          <div class="jc" data-col="0"><span class="nc">no change</span></div>
+          <div class="jc" data-col="1"><span class="nc">no change</span></div>
+          <div class="jc" data-col="2">Iron and some minerals absorbed</div>
+          <div class="jc" data-col="3"><b class="ab">Most absorbed</b></div>
+          <div class="jc" data-col="4">Salts absorbed; bacteria make <b class="pd">vitamin K</b></div>
+          <div class="jc" data-col="5"><span class="nc">—</span></div>
+
+          <!-- absorbed -->
+          <div class="jr-label" style="background:#4ec98a;">⬇️ Absorbed<br/>here</div>
+          <div class="jc jabs" data-col="0">Almost nothing</div>
+          <div class="jc jabs" data-col="1">A little water, alcohol &amp; some medicines</div>
+          <div class="jc jabs" data-col="2">Some iron &amp; minerals</div>
+          <div class="jc jabs" data-col="3"><b>Villi:</b> glucose, amino acids → <b>blood</b>; fatty acids + glycerol → <b>lymph</b>; + vitamins, minerals, water</div>
+          <div class="jc jabs" data-col="4">Water, salts &amp; bacterial vitamins → <b>blood</b></div>
+          <div class="jc jabs jleft" data-col="5">Nothing. 💩 <b>Faeces</b> are egested: fibre, bacteria, dead cells &amp; a little water</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 22. THANK YOU / RECAP ============ -->
   <section data-label="Thank You">
     <div class="slide center bg-mint">
       <svg class="deco float" style="top:12%;left:10%;width:110px;--rot:-10deg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#ffc83d" stroke="#2b2d4a" stroke-width="6"/></svg>
