@@ -25,6 +25,67 @@
   .topic h3{font-size:24px;margin-bottom:6px;}
   .topic p{font-size:18px;color:#555;}
   .header{text-align:center;margin:60px 0 40px 0;}
+  /* ===== Story of India timeline ===== */
+  .tl-wrap{max-width:1000px;margin:50px auto 40px;}
+  .tl-title{text-align:center;font-size:clamp(26px,4vw,40px);color:#b5502e;margin-bottom:8px;}
+  .tl-lead{text-align:center;font-size:clamp(16px,2vw,19px);color:#a06cd5;margin-bottom:22px;}
+  .tl-guide{display:flex;align-items:center;gap:16px;background:#faf3e6;border:3px dashed #d4a441;border-radius:20px;padding:16px 20px;margin:0 0 22px;box-shadow:0 4px 12px rgba(0,0,0,.08);}
+  .tl-mascot{flex:0 0 auto;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3d9a0,#d4a441);display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 4px 0 #a8792a;}
+  .tl-guide p{font-size:clamp(14px,2vw,17px);line-height:1.6;}
+  .tl-guide b{color:#b5502e;}
+
+  /* the "one day" clock */
+  .tl-day{background:#fff8f0;border:3px solid #a06cd5;border-radius:20px;padding:20px;margin-bottom:26px;box-shadow:0 4px 12px rgba(0,0,0,.08);}
+  .tl-day h3{font-size:clamp(19px,2.6vw,24px);color:#7b4aaf;margin-bottom:6px;}
+  .tl-day > p{font-size:15px;line-height:1.6;margin-bottom:12px;}
+  .tl-bar{display:flex;height:34px;border-radius:12px;overflow:hidden;border:2px solid #1d2b53;}
+  .tl-bar span{display:block;height:100%;}
+  .tl-bar-labels{display:flex;justify-content:space-between;font-size:12px;color:#555;margin-top:4px;}
+  .tl-zoom{margin-top:14px;font-size:14px;line-height:1.5;}
+  .tl-clock{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:12px;}
+  .tl-clock div{background:white;border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.4;border-left:6px solid var(--c,#a06cd5);}
+  .tl-clock b{display:block;font-size:17px;color:#1d2b53;}
+
+  /* era jump chips + controls */
+  .tl-controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 10px;}
+  .tl-chip{text-decoration:none;color:white;font-weight:bold;padding:10px 18px;border-radius:999px;font-size:15px;box-shadow:0 4px 0 rgba(0,0,0,.25);border:none;cursor:pointer;}
+  .tl-chip:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.25);}
+  .tl-note{font-size:14px;line-height:1.55;background:#eef6ff;border-left:6px solid #4cc9f0;border-radius:10px;padding:12px 14px;margin:14px 0 24px;}
+
+  /* vertical timeline */
+  .tl-era{margin:34px 0 10px;padding:10px 18px;border-radius:14px;color:white;font-size:clamp(18px,2.6vw,24px);font-weight:bold;scroll-margin-top:16px;}
+  .tl-era small{display:block;font-size:14px;font-weight:normal;opacity:.95;}
+  .tl-line{position:relative;padding-left:44px;}
+  .tl-line::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:6px;border-radius:3px;background:repeating-linear-gradient(180deg,var(--c) 0 14px,transparent 14px 20px);}
+  .tl-item{position:relative;margin:16px 0;}
+  .tl-dot{position:absolute;left:-44px;top:14px;width:42px;height:42px;border-radius:50%;background:white;border:4px solid var(--c);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:1;}
+  .tl-item details{background:#fff8f0;border:3px solid var(--c);border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.08);overflow:hidden;}
+  .tl-item summary{list-style:none;cursor:pointer;padding:14px 18px;display:block;}
+  .tl-item summary::-webkit-details-marker{display:none;}
+  .tl-item summary:hover{background:rgba(0,0,0,.03);}
+  .tl-date{display:inline-block;background:var(--c);color:white;font-size:13px;font-weight:bold;padding:4px 12px;border-radius:999px;margin-bottom:6px;}
+  .tl-item h3{font-size:clamp(19px,2.6vw,23px);margin-bottom:4px;}
+  .tl-item h3 i{font-style:normal;color:#777;font-size:.75em;}
+  .tl-sum{font-size:16px;color:#444;line-height:1.5;}
+  .tl-more{display:inline-block;margin-top:8px;font-size:14px;font-weight:bold;color:var(--c);}
+  .tl-item details[open] .tl-more::after{content:" ▲";}
+  .tl-item details:not([open]) .tl-more::after{content:" ▼";}
+  .tl-body{padding:4px 18px 18px;border-top:2px dashed var(--c);}
+  .tl-lens{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:12px;}
+  .tl-lens div{background:white;border-radius:12px;padding:12px 14px;font-size:15px;line-height:1.55;}
+  .tl-lens h4{font-size:15px;margin-bottom:4px;color:var(--c);}
+  .tl-thread{margin-top:12px;background:#fff3d6;border-left:6px solid #d4a441;border-radius:10px;padding:12px 14px;font-size:15px;line-height:1.55;}
+  .tl-wow{margin-top:12px;background:#eaf3ea;border-left:6px solid #5c7a3f;border-radius:10px;padding:12px 14px;font-size:15px;line-height:1.55;}
+  .tl-link{display:inline-block;margin-top:12px;background:var(--c);color:white;text-decoration:none;font-weight:bold;padding:9px 16px;border-radius:999px;font-size:14px;}
+  .tl-page{display:block;text-decoration:none;color:#1d2b53;background:#fff8f0;border:3px solid var(--c);border-radius:16px;padding:14px 18px;box-shadow:0 4px 12px rgba(0,0,0,.08);transition:transform .2s;}
+  .tl-page:hover{transform:translateY(-4px);box-shadow:0 10px 20px rgba(0,0,0,.14);}
+  .tl-badge{display:inline-block;background:#ffd166;color:#5c3d00;font-size:12px;font-weight:bold;padding:4px 10px;border-radius:999px;margin-left:6px;}
+  .tl-tunnel{display:flex;align-items:center;gap:10px;margin:6px 0 6px -2px;text-decoration:none;color:#5a2f8a;font-weight:bold;font-size:14px;background:linear-gradient(90deg,#f3e8ff,#fff8f0);border:2px dashed #a06cd5;border-radius:999px;padding:8px 14px;width:fit-content;max-width:100%;}
+  .tl-tunnel:hover{background:#ecdcff;}
+  .tl-tunnel .sw{display:inline-block;animation:tlspin 4s linear infinite;font-size:18px;}
+  @keyframes tlspin{to{transform:rotate(360deg);}}
+  .tl-end{text-align:center;background:linear-gradient(135deg,#ffe0f0,#fff5d6);border:3px dashed #b5502e;border-radius:20px;padding:20px;margin-top:30px;font-size:16px;line-height:1.6;}
+  @media (max-width:520px){.tl-guide{flex-direction:column;text-align:center;}.tl-line{padding-left:36px;}.tl-line::before{left:14px;}.tl-dot{left:-36px;width:34px;height:34px;font-size:16px;}}
 </style>
 </head>
 <body>
@@ -39,6 +100,16 @@
       <span class="icon">🗺️</span>
       <h3>Introduction to History</h3>
       <p>An interactive mind map of how historians study the past!</p>
+    </a>
+    <a class="topic" href="River_Valley_Civilisations/index.html">
+      <span class="icon">🏺</span>
+      <h3>River Valley Civilisations</h3>
+      <p>Explore the mighty Indus Valley Civilisation!</p>
+    </a>
+    <a class="topic" href="Jainism_and_Mahavira/index.html">
+      <span class="icon">🪷</span>
+      <h3>Jainism &amp; Mahavira</h3>
+      <p>A quest through riddles, stories and word puzzles — plus a printable worksheet!</p>
     </a>
   </div>
 
@@ -58,5 +129,417 @@
       <p>Coming soon — the world's first planned cities.</p>
     </div>
   </div>
+
+  <!-- ===== TIMELINE: First tools to the Later Vedic Age ===== -->
+  <section class="tl-wrap" id="timeline">
+    <h2 class="tl-title">🕰️ Timeline: From the First Stone Tool to the Later Vedic Age</h2>
+    <p class="tl-lead">Every phase of India's story, in order — tap any card to open it!</p>
+
+    <div class="tl-guide">
+      <div class="tl-mascot">🧵</div>
+      <p>Namaste again! It's <b>Tantu</b>. Before we walk through the chapters one by one, let's
+        unroll my <b>whole thread</b> and see where we're going. There are <b>11 stops</b> between
+        the very first stone tool and the end of the Vedic age. Each stop gives my thread something
+        new — fire, farming, copper, cities, hymns, iron. Tap a card to hear its story, and look
+        for the <b>🧵 thread</b> box to see what is <i>still with us today</i>.</p>
+    </div>
+
+    <!-- one-day clock -->
+    <div class="tl-day">
+      <h3>⏰ How long is "long ago"? Squeeze it into one day!</h3>
+      <p>Imagine the whole human story of India — from the first stone tools about
+        <b>15 lakh (1.5 million) years ago</b> until today — squeezed into a single day of 24 hours.</p>
+      <div class="tl-bar" role="img" aria-label="Bar showing that the Old Stone Age fills almost the whole day">
+        <span style="width:80%;background:#c79a74;" title="Lower Palaeolithic"></span>
+        <span style="width:17.3%;background:#8a5a44;" title="Middle Palaeolithic"></span>
+        <span style="width:1.9%;background:#5c3d2e;" title="Upper Palaeolithic"></span>
+        <span style="width:0.8%;background:#b45309;" title="Everything else"></span>
+      </div>
+      <div class="tl-bar-labels"><span>12:00 midnight</span><span>12 noon</span><span>midnight again = today</span></div>
+      <p class="tl-zoom">See that tiny sliver at the very end? <b>Farming, cities, the Vedas, kings,
+        emperors — and you</b> — all fit into it! Here's the clock:</p>
+      <div class="tl-clock">
+        <div style="--c:#c79a74"><b>12:00 AM → 7:12 PM</b>Lower Old Stone Age — big hand-axes</div>
+        <div style="--c:#8a5a44"><b>7:12 PM → 11:21 PM</b>Middle Old Stone Age — flake tools</div>
+        <div style="--c:#5c3d2e"><b>11:21 PM → 11:48 PM</b>Upper Old Stone Age — blades, beads, first art</div>
+        <div style="--c:#5c7a3f"><b>11:51 PM</b>First farmers at Mehrgarh 🌾</div>
+        <div style="--c:#0f7c8c"><b>11:55 PM</b>Harappan cities rise 🏙️</div>
+        <div style="--c:#b45309"><b>11:56 PM</b>Rigveda hymns are being composed 📜</div>
+        <div style="--c:#b45309"><b>11:57:30 PM</b>Later Vedic age ends ⚔️</div>
+        <div style="--c:#a06cd5"><b>Last 2½ minutes</b>Buddha, Mauryas, Mughals, freedom… and YOU! 🙋</div>
+      </div>
+    </div>
+
+    <div class="tl-controls">
+      <a class="tl-chip" href="#era-stone" style="background:#8a5a44;">🪨 Stone Age</a>
+      <a class="tl-chip" href="#era-copper" style="background:#0f7c8c;">⚒️ Copper &amp; Cities</a>
+      <a class="tl-chip" href="#era-vedic" style="background:#b45309;">📜 Vedic Age</a>
+      <button class="tl-chip" id="tl-toggle" style="background:#a06cd5;" type="button">📖 Open all cards</button>
+    </div>
+
+    <div class="tl-note">
+      🔎 <b>Reading the dates:</b> <b>c.</b> means <i>circa</i> = "about" — nobody wrote down dates
+      back then, so historians work them out from clues like soil layers and carbon dating, and they
+      still argue about many of them! <b>BCE</b> years count <i>backwards</i>: 3000 BCE is
+      <i>older</i> than 1500 BCE. And remember — phases <b>overlap</b>. When Harappan cities were
+      busy in the northwest, people in the south and east were still living in Stone Age villages.
+    </div>
+
+    <!-- ================= ERA 1: STONE AGE ================= -->
+    <div class="tl-era" id="era-stone" style="background:#8a5a44;">🪨 Part 1 · The Stone Age
+      <small>About 15 lakh years ago → about 7000 BCE (later in many regions)</small></div>
+    <div class="tl-line" style="--c:#8a5a44;">
+
+      <div class="tl-item">
+        <div class="tl-dot">🪨</div>
+        <a class="tl-page" href="Timeline/01_Lower_Palaeolithic/index.html">
+          <span class="tl-date">c. 15 lakh – 3 lakh years ago</span>
+          <span class="tl-badge">✨ Story + map</span>
+          <h3>1. Lower Palaeolithic <i>(early Old Stone Age)</i></h3>
+          <p class="tl-sum">The very first toolmakers — big tear-drop hand-axes chipped from river pebbles.</p>
+          <span class="tl-more">Open the story, the map &amp; make a hand-axe →</span>
+        </a>
+      </div>
+
+      <a class="tl-tunnel" href="Timeline/Tunnel_1_to_2/index.html"><span class="sw">🌀</span>Time Tunnel: how did hand-axes become flakes? Drag through 5 lakh years →</a>
+      <div class="tl-item">
+        <div class="tl-dot">🔪</div>
+        <a class="tl-page" href="Timeline/02_Middle_Palaeolithic/index.html">
+          <span class="tl-date">c. 3 lakh – 40,000 years ago</span>
+          <span class="tl-badge">✨ Story + map</span>
+          <h3>2. Middle Palaeolithic <i>(middle Old Stone Age)</i></h3>
+          <p class="tl-sum">Smarter, lighter tools — sharp flakes struck off a prepared stone.</p>
+          <span class="tl-more">Open the story, the map, the tortoise-core trick &amp; the Toba dig →</span>
+        </a>
+      </div>
+
+      <a class="tl-tunnel" href="Timeline/Tunnel_2_to_3/index.html"><span class="sw">🌀</span>Time Tunnel: Toba, a great journey &amp; the first art — while India changed, so did the world →</a>
+      <div class="tl-item">
+        <div class="tl-dot">🎨</div>
+        <a class="tl-page" href="Timeline/03_Upper_Palaeolithic/index.html">
+          <span class="tl-date">c. 40,000 – 12,000 years ago</span>
+          <span class="tl-badge">✨ Story + map</span>
+          <h3>3. Upper Palaeolithic <i>(late Old Stone Age)</i></h3>
+          <p class="tl-sum">Modern humans like us — long blades, bone tools, beads and the first paintings.</p>
+          <span class="tl-more">Open the story, the map, make a necklace &amp; paint a rock wall →</span>
+        </a>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">🏹</div>
+        <details>
+          <summary>
+            <span class="tl-date">c. 10,000 – 6000 BCE (later in places)</span>
+            <h3>4. Mesolithic <i>(Middle Stone Age)</i></h3>
+            <p class="tl-sum">The Ice Age ends — tiny "microlith" tools, bows and arrows, the first tamed animals.</p>
+            <span class="tl-more">Tell me more</span>
+          </summary>
+          <div class="tl-body">
+            <div class="tl-lens">
+              <div><h4>🌦️ What changed?</h4>The world warmed up. More grass and forests grew,
+                with smaller, faster animals like deer. So people made <b>microliths</b> — stone
+                blades smaller than your fingernail — and fixed them into wood or bone to make
+                <b>arrows, sickles and harpoons</b>.</div>
+              <div><h4>🐐 First tamed animals</h4>At <b>Bagor</b> (Rajasthan) and
+                <b>Adamgarh</b> (MP), we find some of India's earliest signs of people
+                <b>keeping sheep and goats</b> instead of only hunting them.</div>
+              <div><h4>🛕 What did they believe?</h4>People were <b>buried with care</b>, with
+                ornaments and tools — at <b>Sarai Nahar Rai, Mahadaha and Damdama</b>
+                (Pratapgarh, UP). Bhimbetka paintings now show <b>dancing</b>, honey-collecting
+                and family scenes.</div>
+            </div>
+            <div class="tl-thread">🧵 <b>Thread to today:</b> Bows and arrows and wild-honey
+              gathering are still part of life for some forest communities in India.</div>
+            <a class="tl-link" href="Chapter_01_Prehistoric_India/index.html">🔥 Go to Chapter 1 →</a>
+          </div>
+        </details>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">🌾</div>
+        <details>
+          <summary>
+            <span class="tl-date">c. 7000 BCE (Mehrgarh) – c. 1000 BCE elsewhere</span>
+            <h3>5. Neolithic <i>(New Stone Age)</i></h3>
+            <p class="tl-sum">Farming! People settle down in villages, make pottery and polished stone axes.</p>
+            <span class="tl-more">Tell me more</span>
+          </summary>
+          <div class="tl-body">
+            <div class="tl-lens">
+              <div><h4>🌱 The big change</h4>At <b>Mehrgarh</b> (Balochistan, now Pakistan)
+                people grew <b>wheat and barley</b>, kept <b>goats, sheep and cattle</b>, built
+                <b>mud-brick houses</b>, and later grew <b>cotton</b>. They also made
+                <b>polished stone axes</b>, grinding stones and pottery.</div>
+              <div><h4>🗺️ Farming spreads — at different times</h4>
+                <b>Burzahom</b> (Kashmir): pit-houses dug into the ground for winter, and dogs
+                buried with their owners! <b>Chirand</b> (Bihar): bone tools.
+                <b>Lahuradewa &amp; Koldihwa</b> (UP): early rice. <b>Utnur, Sanganakallu,
+                Budihal</b> (Karnataka/AP): cattle-herders whose dung heaps became "ash mounds".
+                <b>Daojali Hading</b> (Assam): axes linked to Southeast Asia.</div>
+              <div><h4>🦷 Wow — ancient dentists!</h4>At Mehrgarh, archaeologists found teeth with
+                tiny <b>holes drilled into them</b> about 9,000 years ago — some of the earliest
+                dentistry known anywhere in the world.</div>
+            </div>
+            <div class="tl-thread">🧵 <b>Thread to today:</b> Wheat, barley, rice, cattle,
+              clay pots, mud houses and <b>cotton thread</b> — all born or grown here, all still
+              part of daily Indian life.</div>
+            <a class="tl-link" href="Chapter_01_Prehistoric_India/index.html">🧶 Spin the first thread in Chapter 1 →</a>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ================= ERA 2: COPPER & CITIES ================= -->
+    <div class="tl-era" id="era-copper" style="background:#0f7c8c;">⚒️ Part 2 · Copper, Bronze &amp; the First Cities
+      <small>About 4500 BCE → 1300 BCE</small></div>
+    <div class="tl-line" style="--c:#0f7c8c;">
+
+      <div class="tl-item">
+        <div class="tl-dot">⚒️</div>
+        <details>
+          <summary>
+            <span class="tl-date">from c. 4500 BCE (northwest) · c. 3000–700 BCE (central India &amp; Deccan)</span>
+            <h3>6. Chalcolithic <i>(Copper–Stone Age)</i></h3>
+            <p class="tl-sum">The first metal! Copper tools join stone ones in painted-pottery villages.</p>
+            <span class="tl-more">Tell me more</span>
+          </summary>
+          <div class="tl-body">
+            <div class="tl-lens">
+              <div><h4>🔬 What's new?</h4>"Chalco" = copper, "lithic" = stone. People learned
+                to <b>melt copper from rocks</b> and beat it into axes, bangles and fish-hooks —
+                but still used plenty of stone tools. Their pots were often painted
+                <b>black-on-red</b>.</div>
+              <div><h4>🗺️ Which cultures?</h4><b>Ahar–Banas</b> (Rajasthan — copper from the
+                Aravalli hills), <b>Kayatha</b> and <b>Malwa</b> (MP, e.g. Navdatoli on the
+                Narmada), <b>Jorwe</b> (Maharashtra — Inamgaon, Daimabad). In the Ganga–Yamuna
+                region: the <b>Copper Hoard</b> people, with copper harpoons and strange
+                human-shaped copper pieces.</div>
+              <div><h4>👨‍👩‍👧 How did they live?</h4>Big farming villages. <b>Inamgaon</b> had a
+                chief's house, grain stores and a water channel for irrigation. At
+                <b>Daimabad</b>, a hoard of bronze figures was found — a chariot with a rider,
+                an elephant, a rhino and a buffalo!</div>
+            </div>
+            <div class="tl-wow">⏳ <b>Overlap alert:</b> Many of these village cultures lived
+              <i>at the same time as</i> — and even after — the Harappan cities. India never
+              moved in one single step!</div>
+          </div>
+        </details>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">🏘️</div>
+        <details>
+          <summary>
+            <span class="tl-date">c. 3300 – 2600 BCE</span>
+            <h3>7. Early Harappan <i>(villages become towns)</i></h3>
+            <p class="tl-sum">Along the Indus and Ghaggar-Hakra rivers, villages grow into walled towns.</p>
+            <span class="tl-more">Tell me more</span>
+          </summary>
+          <div class="tl-body">
+            <div class="tl-lens">
+              <div><h4>👨‍👩‍👧 How did they live?</h4>Bigger settlements with <b>town walls</b>,
+                mud-brick houses and pottery made on a <b>potter's wheel</b>. Marks scratched on
+                pots may be the first steps towards a script.</div>
+              <div><h4>🗺️ Where?</h4><b>Kot Diji, Amri, Rehman Dheri</b> (Pakistan),
+                the early "Ravi phase" at <b>Harappa</b>, and early layers at
+                <b>Kalibangan</b> (Rajasthan), <b>Bhirrana</b> and <b>Rakhigarhi</b> (Haryana).</div>
+              <div><h4>🌾 Wow — the oldest ploughed field!</h4>At <b>Kalibangan</b>, archaeologists
+                found a field with <b>criss-cross plough furrows</b> — one of the oldest ploughed
+                fields in the world. Two crops were probably grown in the same field.</div>
+            </div>
+            <div class="tl-thread">🧵 <b>Thread to today:</b> Farmers in Rajasthan still plough
+              criss-cross to sow mustard and gram together in one field.</div>
+          </div>
+        </details>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">🏙️</div>
+        <details>
+          <summary>
+            <span class="tl-date">c. 2600 – 1900 BCE</span>
+            <h3>8. Mature Harappan <i>(the great cities)</i></h3>
+            <p class="tl-sum">Planned cities with drains, a Great Bath, seals, standard weights and trade across the sea.</p>
+            <span class="tl-more">Tell me more</span>
+          </summary>
+          <div class="tl-body">
+            <div class="tl-lens">
+              <div><h4>🏙️ The cities</h4><b>Mohenjo-daro, Harappa</b> (Pakistan),
+                <b>Dholavira</b> (Gujarat — clever water reservoirs and a giant signboard),
+                <b>Lothal</b> (a dockyard for boats), <b>Kalibangan, Rakhigarhi, Banawali</b>,
+                and <b>Chanhudaro</b> (a bead factory). It covered a bigger area than ancient
+                Egypt and Mesopotamia put together!</div>
+              <div><h4>🔬 What did they invent?</h4>Streets in a <b>grid</b>, covered
+                <b>drains</b>, baked bricks all in the same 1:2:4 shape, the <b>Great Bath</b>,
+                and stone <b>weights</b> that doubled — 1, 2, 4, 8, 16, 32… Their cotton cloth is
+                among the oldest in the world.</div>
+              <div><h4>📚 What did they write?</h4>Small square <b>seals</b> carved with animals
+                (like the "unicorn") and about 400 signs. Nobody has been able to
+                <b>read the Harappan script</b> yet — maybe you will!</div>
+              <div><h4>🌏 Who did they meet?</h4>Traders sailed to <b>Mesopotamia</b> (Iraq),
+                whose clay tablets mention a land called <b>"Meluhha"</b> — very likely the
+                Harappans. They sold carnelian beads, cotton and timber.</div>
+              <div><h4>🎨 What did they create?</h4>The bronze <b>"Dancing Girl"</b> (made by
+                the lost-wax method), the stone "Priest-King", toy carts and whistles of
+                baked clay.</div>
+            </div>
+            <a class="tl-link" href="River_Valley_Civilisations/index.html">🏺 Explore the Indus Valley page →</a>
+          </div>
+        </details>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">🍂</div>
+        <details>
+          <summary>
+            <span class="tl-date">c. 1900 – 1300 BCE</span>
+            <h3>9. Late Harappan <i>(the cities fade)</i></h3>
+            <p class="tl-sum">Big cities slowly empty out, and people spread east and south into smaller villages.</p>
+            <span class="tl-more">Tell me more</span>
+          </summary>
+          <div class="tl-body">
+            <div class="tl-lens">
+              <div><h4>❓ Why did the cities fade?</h4>Probably <b>many reasons together</b>:
+                weaker monsoons, rivers changing course, the <b>Ghaggar-Hakra</b> river (often
+                linked with the Sarasvati) drying up, floods, and trade with Mesopotamia falling
+                off. It was <b>not</b> one sudden invasion — historians have dropped that old idea.</div>
+              <div><h4>👨‍👩‍👧 How did life change?</h4>Writing, seals and standard weights
+                slowly disappear. But <b>farming village life carries on</b> — in cultures like
+                <b>Cemetery H</b> (Punjab), <b>Jhukar</b> (Sindh) and <b>Rangpur &amp; Rojdi</b>
+                (Gujarat), with more sites now in Haryana and western UP.</div>
+              <div><h4>🛞 Wow — Sinauli!</h4>At <b>Sinauli</b> (UP), around 2000–1800 BCE,
+                people were buried with <b>wooden carts covered in copper sheets</b>, along with
+                swords and shields.</div>
+            </div>
+            <div class="tl-thread">🧵 <b>Thread to today:</b> Bangles, bullock carts, ploughs,
+              cotton cloth, clay toys and the swastika symbol all carried on long after the
+              cities were gone.</div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ================= ERA 3: VEDIC AGE ================= -->
+    <div class="tl-era" id="era-vedic" style="background:#b45309;">📜 Part 3 · The Vedic Age
+      <small>About 1500 BCE → 600 BCE</small></div>
+    <div class="tl-line" style="--c:#b45309;">
+
+      <div class="tl-item">
+        <div class="tl-dot">🔥</div>
+        <details>
+          <summary>
+            <span class="tl-date">c. 1500 – 1000 BCE</span>
+            <h3>10. Early Vedic <i>(the Rigvedic age)</i></h3>
+            <p class="tl-sum">Cattle-herding tribes in the "land of seven rivers" compose the hymns of the Rigveda.</p>
+            <span class="tl-more">Tell me more</span>
+          </summary>
+          <div class="tl-body">
+            <div class="tl-lens">
+              <div><h4>🗺️ Where?</h4><b>Sapta Sindhu</b> — "the seven rivers": the Indus and its
+                Punjab rivers (Vitasta/Jhelum, Asikni/Chenab, Parushni/Ravi, Vipas/Beas,
+                Shutudri/Sutlej) and the Sarasvati. The Ganga is mentioned only once!</div>
+              <div><h4>👨‍👩‍👧 Who were they?</h4>They spoke an early form of <b>Sanskrit</b>,
+                a cousin of Persian, Greek and Latin (<i>pitar</i> → <i>pater</i> → father!).
+                How this language reached India is still <b>debated</b>: many scholars think
+                speakers came in slowly from Central Asia over centuries and mixed with people
+                already here; others argue it grew within India. New DNA studies (like one from
+                Rakhigarhi) are adding fresh clues.</div>
+              <div><h4>🐄 How did they live?</h4>Mostly <b>herders</b> — cattle were wealth, and
+                the word for battle, <i>gavishti</i>, means "searching for cows"! They grew
+                <b>barley</b>, used <b>horses and chariots</b>, and lived in houses of wood
+                and reed.</div>
+              <div><h4>👑 Who ruled?</h4>Each tribe (<i>jana</i>) had a chief called the
+                <b>rajan</b>, guided by assemblies — the <b>sabha</b>, <b>samiti</b> and
+                <b>vidatha</b> — where women could also take part. People gave the chief
+                gifts called <i>bali</i>.</div>
+              <div><h4>🛕 What did they believe?</h4>Gods of nature: <b>Indra</b> (rain and
+                war), <b>Agni</b> (fire, the messenger to the gods), <b>Varuna</b> (guardian of
+                <i>rita</i>, the order of the universe), <b>Ushas</b> (dawn), <b>Surya</b>,
+                <b>Soma</b>. Worship was the fire ritual — <b>yajna</b>. No temples, no idols.</div>
+              <div><h4>📚 What did they compose?</h4>The <b>Rigveda</b> — 1,028 hymns in 10
+                books — passed on <b>by memory, not writing</b>, for about 3,000 years, word for
+                word. Women such as <b>Lopamudra, Ghosha and Apala</b> composed hymns too.</div>
+            </div>
+            <div class="tl-wow">⚔️ <b>The Battle of Ten Kings:</b> On the banks of the Parushni
+              (Ravi), King <b>Sudas</b> of the <b>Bharata</b> tribe defeated ten tribes. The name
+              <b>"Bharat"</b> for our country traces back partly to this tribe!</div>
+            <div class="tl-thread">🧵 <b>Thread to today:</b> The <b>Gayatri mantra</b> comes
+              from the Rigveda. Walking around Agni at weddings, havans, and Vedic chanting
+              (honoured by UNESCO) are all still alive.</div>
+          </div>
+        </details>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">⚔️</div>
+        <details>
+          <summary>
+            <span class="tl-date">c. 1000 – 600 BCE</span>
+            <h3>11. Later Vedic <i>(iron, kingdoms &amp; big questions)</i></h3>
+            <p class="tl-sum">People move into the Ganga plains with iron tools; tribes become kingdoms; the Upanishads ask "Who am I?"</p>
+            <span class="tl-more">Tell me more</span>
+          </summary>
+          <div class="tl-body">
+            <div class="tl-lens">
+              <div><h4>🗺️ Where?</h4>Eastwards into the <b>Ganga–Yamuna plains</b>. The
+                <b>Kuru</b> and <b>Panchala</b> kingdoms (around Delhi and western UP) were the
+                most important; later <b>Kosala, Kashi</b> and <b>Videha</b> rose further east.
+                Towns like <b>Hastinapura</b> appear.</div>
+              <div><h4>🔬 What did they invent?</h4><b>Iron</b> — called <i>shyama ayas</i>,
+                "the dark metal". Iron axes cleared thick forests and iron ploughs broke harder
+                soil. Their special pottery: <b>Painted Grey Ware</b> (grey with black designs).
+                The <b>Shulba Sutras</b> used clever geometry to build fire altars — including the
+                rule we now call Pythagoras' theorem!</div>
+              <div><h4>👨‍👩‍👧 How did they live?</h4>Now settled <b>farmers</b> — rice, wheat,
+                barley, lentils. Society became stricter: <b>varna</b> (four groups) started to
+                depend on birth, <b>gotras</b> appeared, and the idea of life-stages
+                (<i>ashramas</i>) began. Women lost their place in assemblies, though thinkers
+                like <b>Gargi</b> and <b>Maitreyi</b> still debated with sages.</div>
+              <div><h4>👑 Who ruled?</h4>Tribes became territories — <i>jana</i> became
+                <b>janapada</b> ("where the tribe puts its foot"). Kings grew powerful, collected
+                regular taxes, and held grand rituals: <b>Rajasuya</b> (crowning),
+                <b>Ashvamedha</b> (the horse sacrifice) and <b>Vajapeya</b> (a chariot race).</div>
+              <div><h4>📚 What did they write?</h4>The other three Vedas — <b>Samaveda</b>
+                (melodies — roots of Indian music), <b>Yajurveda</b> (ritual verses),
+                <b>Atharvaveda</b> (charms, healing, everyday life) — then the <b>Brahmanas</b>,
+                <b>Aranyakas</b> ("forest books") and the <b>Upanishads</b>.</div>
+              <div><h4>🛕 What did they believe?</h4>Rituals became huge and costly — but the
+                <b>Upanishads</b> asked deeper questions: What is the self (<i>atman</i>)? What
+                is the universe (<i>brahman</i>)? What happens after death? Ideas of
+                <b>karma</b> and rebirth take shape.</div>
+            </div>
+            <div class="tl-wow">🌏 <b>Meanwhile in the South:</b> From about 1200 BCE, people in
+              South India began using iron too, and buried their dead under great stone circles
+              called <b>megaliths</b> — at <b>Brahmagiri</b> (Karnataka) and
+              <b>Adichanallur</b> (Tamil Nadu).</div>
+            <div class="tl-thread">🧵 <b>Thread to today:</b> India's national motto
+              <b>"Satyameva Jayate"</b> (Truth alone triumphs) comes from the Mundaka Upanishad.
+              The stories of the <b>Mahabharata</b> (Kuru kingdom) and <b>Ramayana</b> (Kosala,
+              Videha) are set in this world, though they were written down much later.</div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="tl-end">
+      🧵 <b>Tantu says:</b> By about <b>600 BCE</b>, the janapadas have grown into
+      <b>16 great kingdoms — the Mahajanapadas</b> — and two young princes named
+      <b>Siddhartha</b> and <b>Vardhamana</b> are about to ask questions that will change the
+      world. That's where my thread goes next!<br><a class="tl-link" style="background:#2F4AA8;" href="Jainism_and_Mahavira/index.html">🪷 Walk Mahavira's Path (Vardhamana's story) →</a>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      var btn = document.getElementById('tl-toggle');
+      var all = document.querySelectorAll('#timeline details');
+      btn.addEventListener('click', function(){
+        var anyClosed = Array.prototype.some.call(all, function(d){ return !d.open; });
+        all.forEach(function(d){ d.open = anyClosed; });
+        btn.textContent = anyClosed ? '📕 Close all cards' : '📖 Open all cards';
+      });
+    })();
+  </script>
+
 </body>
 </html>

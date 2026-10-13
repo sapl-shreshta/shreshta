@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The First Artists 🎨</title>
+<style>
+
+  :root{
+    --ochre:#c97b3c; --terracotta:#b5502e; --clay:#8a5a44; --stone:#6b6355;
+    --leaf:#5c7a3f; --night:#2b2320; --cream:#faf3e6; --ink:#2b2320;
+    --gold:#d4a441; --river:#3d7a8c; --sea:#bfe0ea; --land:#ecd9b4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  html{scroll-behavior:smooth;}
+  body{background:linear-gradient(160deg,#f7e7ce,#f0dcc3 40%,#e8d2b0);color:var(--ink);padding:20px;}
+  .container{max-width:900px;margin:0 auto;padding-bottom:60px;}
+
+  .thread-track{position:fixed;top:0;left:0;width:100%;height:10px;background:#d8c4a0;z-index:200;box-shadow:0 2px 6px rgba(0,0,0,.1);}
+  .thread-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--terracotta),var(--gold));position:relative;transition:width .15s ease-out;}
+  .thread-needle{position:absolute;right:-14px;top:-9px;font-size:22px;transform:rotate(90deg);}
+
+  .nav-top{position:fixed;top:22px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{background:var(--clay);color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #5c3d2e;transition:transform .15s;display:flex;align-items:center;justify-content:center;}
+  .icon-btn:hover{transform:translateY(-2px);}
+
+  header{text-align:center;margin:70px 0 20px;}
+  .crumb{display:inline-block;background:var(--clay);color:white;font-size:13px;font-weight:bold;padding:5px 14px;border-radius:999px;margin-bottom:10px;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:10px 0;letter-spacing:8px;}
+  h1{font-size:clamp(30px,5.5vw,46px);color:var(--terracotta);margin-bottom:8px;}
+  .subtitle{font-size:clamp(15px,2.2vw,20px);color:var(--clay);font-weight:bold;}
+
+  .guide{display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--gold);border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.08);}
+  .mascot-frame{flex:0 0 auto;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3d9a0,var(--gold));display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 0 #a8792a;}
+  .guide p{font-size:clamp(14px,2vw,16px);line-height:1.6;}
+  .guide b{color:var(--terracotta);}
+
+  .act{background:var(--cream);border-radius:22px;padding:26px 24px;margin:34px 0;border:3px solid var(--stone);box-shadow:0 6px 18px rgba(0,0,0,.1);}
+  .act-label{display:inline-block;background:var(--terracotta);color:white;font-size:12px;font-weight:bold;padding:5px 14px;border-radius:999px;margin-bottom:10px;letter-spacing:.5px;}
+  .act h2{font-size:clamp(22px,3.4vw,30px);color:var(--terracotta);margin-bottom:12px;}
+  .story p{font-size:clamp(15px,2.1vw,17px);line-height:1.75;margin-bottom:14px;}
+  .story b{color:var(--clay);}
+
+  .scene{background:linear-gradient(160deg,#e9d3ac,#dcc292);border-radius:18px;padding:22px;margin:18px 0;text-align:center;border:2px solid #c7a86f;}
+  .scene-emoji{font-size:clamp(40px,9vw,64px);letter-spacing:14px;}
+  .hotspot-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px;}
+  .hotspot{background:#e8622c;color:white;border:none;padding:10px 18px;border-radius:14px;font-weight:bold;font-size:14px;cursor:pointer;box-shadow:0 4px 0 #a63f16;transition:transform .15s;}
+  .hotspot:hover{transform:translateY(-2px);}
+  .hotspot.revealed{background:var(--leaf);box-shadow:0 4px 0 #3b5228;}
+  .reveal-box{display:none;text-align:left;background:white;border-radius:14px;padding:14px 18px;margin-top:14px;font-size:15px;line-height:1.6;border-left:6px solid #e8622c;}
+  .reveal-box.show{display:block;animation:fadeIn .4s ease-in;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+
+  .fact-box{background:#eaf3ea;border-left:6px solid var(--leaf);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:15px;line-height:1.6;}
+  .fact-box b{color:var(--leaf);}
+  .thread-box{background:#fff3d6;border-left:6px solid var(--gold);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:15px;line-height:1.6;}
+
+  /* ---------- MAP ---------- */
+  .map-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px;align-items:start;margin-top:14px;}
+  .map-box{background:var(--sea);border:3px solid var(--river);border-radius:18px;overflow:hidden;position:relative;}
+  .map-box svg{display:block;width:100%;height:auto;}
+  .land{fill:var(--land);stroke:#b89a66;stroke-width:1;}
+  .riv-major{fill:none;stroke:#4a90a8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .riv-minor{fill:none;stroke:#6aa7ba;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;opacity:.85;}
+  .geo-label{font-size:11px;fill:#8a6d3b;font-weight:bold;letter-spacing:2px;}
+  .sea-label{font-size:12px;fill:#3d7a8c;font-style:italic;letter-spacing:2px;}
+  .riv-label{font-size:10px;fill:#2f6f84;font-style:italic;}
+  .city circle{fill:#8c8c8c;}
+  .city text{font-size:10px;fill:#6b6b6b;}
+  .site{cursor:pointer;outline:none;}
+  .site .pulse{fill:var(--terracotta);opacity:.35;transform-box:fill-box;transform-origin:center;animation:pulse 2s ease-out infinite;}
+  .site .dot{fill:var(--terracotta);stroke:white;stroke-width:2.5;transition:r .15s;}
+  .site text{font-size:11.5px;font-weight:bold;fill:#5c2a17;paint-order:stroke;stroke:#fff8ea;stroke-width:3.5px;stroke-linejoin:round;}
+  .site:hover .dot,.site:focus .dot{r:10;}
+  .site.visited .dot{fill:var(--leaf);}
+  .site.visited .pulse{fill:var(--leaf);animation:none;opacity:0;}
+  .site.active .dot{fill:var(--gold);r:11;}
+  @keyframes pulse{0%{transform:scale(.6);opacity:.55;}100%{transform:scale(2.2);opacity:0;}}
+  .map-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;padding:8px 12px;background:rgba(255,255,255,.75);}
+  .map-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .lg{display:inline-block;width:12px;height:12px;border-radius:50%;}
+
+  .site-card{background:white;border:3px solid var(--terracotta);border-radius:18px;padding:18px;min-height:200px;}
+  .site-card .placeholder{color:var(--stone);font-size:15px;line-height:1.6;text-align:center;padding-top:20px;}
+  .site-card h3{color:var(--terracotta);font-size:21px;margin-bottom:4px;}
+  .site-card .where{display:inline-block;background:#f3e3c8;border-radius:999px;font-size:12px;font-weight:bold;padding:4px 10px;margin:2px 4px 8px 0;}
+  .site-card p{font-size:15px;line-height:1.65;margin-bottom:10px;}
+  .site-card .found{background:#eaf3ea;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.55;}
+  .visit-count{text-align:center;font-weight:bold;color:var(--leaf);margin-top:10px;font-size:15px;}
+  .site-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .site-list button{background:white;border:2px solid var(--terracotta);color:var(--terracotta);border-radius:999px;padding:6px 12px;font-weight:bold;font-size:13px;cursor:pointer;}
+  .site-list button.visited{border-color:var(--leaf);color:var(--leaf);}
+  .site-list button.visited::before{content:"✓ ";}
+
+  /* ---------- HAND-AXE ---------- */
+  .knap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center;margin-top:10px;}
+  .knap-stage{background:linear-gradient(160deg,#e9d3ac,#dcc292);border-radius:18px;border:2px solid #c7a86f;position:relative;text-align:center;padding:10px;user-select:none;}
+  .knap-stage svg{width:100%;max-width:280px;height:auto;cursor:pointer;}
+  #rock{fill:#a89a86;stroke:#5d5346;stroke-width:3;transition:all .35s ease;}
+  .scar{fill:#c3b6a2;stroke:#7a6e5e;stroke-width:1.5;opacity:0;animation:scarIn .4s forwards;}
+  @keyframes scarIn{to{opacity:.9;}}
+  .flake{fill:#b9ab95;stroke:#5d5346;stroke-width:1.5;animation:fly .7s ease-out forwards;}
+  @keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(220deg);opacity:0;}}
+  .hammer{position:absolute;font-size:44px;right:10px;top:10px;transition:transform .12s;}
+  .hammer.hit{transform:translate(-30px,20px) rotate(-35deg);}
+  .strike-btn{background:var(--terracotta);color:white;border:none;border-radius:14px;padding:12px 20px;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 4px 0 #7a3520;margin:8px 4px 0;}
+  .strike-btn:disabled{opacity:.5;cursor:default;}
+  .ghost-btn{background:white;color:var(--terracotta);border:2px solid var(--terracotta);border-radius:14px;padding:10px 16px;font-size:14px;font-weight:bold;cursor:pointer;margin:8px 4px 0;}
+  .knap-msg{font-size:15px;line-height:1.6;background:white;border-radius:14px;padding:14px 16px;border-left:6px solid var(--terracotta);min-height:120px;}
+  .strikes{font-size:22px;letter-spacing:4px;margin-top:6px;}
+
+  .toolkit{display:grid;align-items:start;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:16px;}
+  .tool{background:white;border:3px solid var(--stone);border-radius:16px;padding:14px;text-align:center;cursor:pointer;transition:transform .15s;}
+  .tool:hover{transform:translateY(-3px);}
+  .tool .t-ico{font-size:40px;}
+  .tool h4{color:var(--terracotta);font-size:17px;margin:6px 0 4px;}
+  .tool p{font-size:13.5px;line-height:1.5;display:none;text-align:left;}
+  .tool.open p{display:block;animation:fadeIn .3s;}
+  .tool .tap{font-size:12px;color:var(--stone);}
+  .tool.open .tap{display:none;}
+
+  .detective{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px;}
+  .clue{background:white;border-radius:16px;padding:16px;border-top:6px solid var(--river);font-size:15px;line-height:1.6;}
+  .clue h4{color:var(--river);font-size:17px;margin-bottom:6px;}
+
+  .branch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:16px;}
+  .branch-btn{background:white;border:3px solid var(--river);border-radius:14px;padding:14px;font-size:14px;font-weight:bold;cursor:pointer;transition:all .15s;}
+  .branch-btn:hover{transform:translateY(-3px);}
+  .branch-btn.chosen{background:var(--river);color:white;}
+  .branch-response{display:none;background:#e6f2f5;border-radius:14px;padding:16px;margin-top:14px;font-size:15px;line-height:1.6;border-left:6px solid var(--river);}
+  .branch-response.show{display:block;animation:fadeIn .4s ease-in;}
+
+  .next-box{background:linear-gradient(135deg,#e9d3ac,#f0dcc3);border:3px dashed var(--terracotta);border-radius:22px;padding:26px 24px;margin:34px 0;text-align:center;}
+  .next-box h2{color:var(--terracotta);font-size:clamp(20px,3vw,26px);margin-bottom:10px;}
+  .next-box p{font-size:15px;margin-bottom:16px;line-height:1.6;}
+  .nav-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+  .pill{display:inline-block;text-decoration:none;background:var(--terracotta);color:white;font-weight:bold;padding:12px 20px;border-radius:999px;box-shadow:0 4px 0 #7a3520;font-size:15px;}
+  .pill.locked{background:#c7bba3;box-shadow:0 4px 0 #9d927d;cursor:default;}
+
+  @media (max-width:720px){
+    .map-layout,.knap{grid-template-columns:1fr;}
+    .guide{flex-direction:column;text-align:center;}
+    body{padding:14px;}
+    .act{padding:20px 16px;}
+    .site text{font-size:18px;stroke-width:4px;}
+    .site .dot{r:11;}
+    .geo-label,.sea-label{font-size:13px;}
+    .city text{font-size:13px;}
+  }
+
+  #neck-svg{width:100%;max-width:320px;height:auto;}
+  .bead{animation:pop .35s cubic-bezier(.34,1.56,.64,1);transform-box:fill-box;transform-origin:center;}
+  @keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
+  .paint-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;margin:10px 0;}
+  .swatches{display:flex;gap:8px;}
+  .swatch{width:38px;height:38px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px #6b6355;cursor:pointer;}
+  .swatch.on{box-shadow:0 0 0 4px var(--terracotta);}
+  .shapes{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+  .shape-btn{background:white;border:2px solid var(--clay);border-radius:999px;padding:8px 12px;font-weight:bold;font-size:14px;cursor:pointer;}
+  .shape-btn.on{background:var(--clay);color:white;}
+  .wall-wrap{border:4px solid #7a5a3a;border-radius:18px;overflow:hidden;box-shadow:inset 0 0 30px rgba(0,0,0,.3);}
+  #wall{display:block;width:100%;height:auto;cursor:crosshair;touch-action:manipulation;}
+  .paint-tip{text-align:center;font-weight:bold;color:var(--clay);margin-top:10px;font-size:15px;line-height:1.5;}
+
+</style>
+</head>
+<body>
+
+<div class="thread-track"><div class="thread-fill" id="thread-fill"><span class="thread-needle">🧵</span></div></div>
+<div class="nav-top nav-back"><a href="../../index.html#timeline" style="text-decoration:none;"><button class="icon-btn" title="Back to the Timeline">⬅️</button></a></div>
+<div class="nav-top nav-home"><a href="../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a></div>
+
+<div class="container">
+  <header>
+    <span class="crumb">🕰️ Timeline · Stop 3 of 11</span>
+    <div class="emoji-row">🎨 📿 🦴</div>
+    <h1>The First Artists</h1>
+    <p class="subtitle">Upper Palaeolithic · the late Old Stone Age · c. 40,000 – 12,000 years ago</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🧵</div>
+    <p>Namaste! <b>Tantu</b> here, and this stop is special. The people we meet now are
+      <b>exactly like you</b> — same brains, same bodies, same ability to talk, laugh, sing and
+      imagine. If one of them were born today, they could go to your school! And they start doing
+      something no one before them did: making things <b>just because they're beautiful</b>.</p>
+  </div>
+
+  <!-- ACT 1 -->
+  <section class="act">
+    <span class="act-label">ACT ONE · BEADS BY THE FIRE</span>
+    <h2>About 25,000 Years Ago, at Patne in Today's Maharashtra</h2>
+    <div class="story">
+      <p>It's the <b>Ice Age</b>. The air is cooler and drier than India today, and wide
+        grasslands stretch across the Deccan. Out on the grass, a flock of <b>ostriches</b>
+        — yes, ostriches, in India! — stalks along, keeping a wary eye on the hunters.</p>
+      <p>Evening falls. A family sits around a fire beside a river. A girl holds a piece of
+        <b>ostrich eggshell</b> — thick, creamy-white and strong. With a tiny stone drill, she twists
+        and twists until a neat hole goes through. Then she rubs the piece on a flat stone until
+        it's round and smooth. <b>A bead.</b> It's her ninth today.</p>
+      <p>Her grandmother is scratching a pattern onto a bigger piece of shell — a neat
+        <b>criss-cross</b> of lines. Nobody needs that pattern to hunt or to eat. She makes it
+        because she <b>wants to</b>. Because it means something to her. That's something new in
+        our story.</p>
+    </div>
+    <div class="scene">
+      <div class="scene-emoji">🔥📿🥚</div>
+      <div class="hotspot-row">
+        <button class="hotspot" data-target="r-who">👀 Who were they?</button>
+        <button class="hotspot" data-target="r-ice">🧊 What was the Ice Age world like?</button>
+        <button class="hotspot" data-target="r-eat">🍖 What did they eat?</button>
+        <button class="hotspot" data-target="r-art">🎨 Why make beautiful things?</button>
+      </div>
+      <div class="reveal-box" id="r-who">
+        They were <b>modern humans — <i>Homo sapiens</i></b>, our own species. Their ancestors had
+        walked out of Africa and spread along the coasts and river valleys of Asia. Exactly
+        <b>when</b> they first reached India is still debated — somewhere between about
+        <b>50,000 and 80,000 years ago</b> — but by this time they were living all over the
+        subcontinent. Most people in India today have these first settlers among their ancestors.
+      </div>
+      <div class="reveal-box" id="r-ice">
+        So much of the world's water was frozen into giant ice sheets that the <b>sea was much
+        lower</b> — around 100 metres lower at the coldest time! Sri Lanka was joined to India by
+        <b>dry land</b>, and you could have walked there. India was cooler and drier, with more
+        grassland, and animals like <b>ostriches</b> lived here — we know because their eggshells
+        turn up at many sites.
+      </div>
+      <div class="reveal-box" id="r-eat">
+        They were expert <b>hunter-gatherers</b>: deer, antelope, wild cattle, wild pigs, birds,
+        fish and shellfish — plus fruit, nuts, roots and honey. Ostrich eggs made a <b>giant
+        meal</b> (one egg equals about two dozen hen's eggs!), and the empty shells could carry
+        water.
+      </div>
+      <div class="reveal-box" id="r-art">
+        Beads and patterns probably <b>said something</b>: "I belong to this group," "I am
+        grown-up now," or "this was a gift from my friend." Beads could be traded between bands
+        that lived far apart. Making art and jewellery is a sign of minds that think in
+        <b>symbols</b> — the same kind of thinking that makes language, stories and writing possible.
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 2 MAP -->
+  <section class="act" id="map-act">
+    <span class="act-label">ACT TWO · WHERE WERE THEY?</span>
+    <h2>Artists, Bead-Makers and Cave-Dwellers</h2>
+    <div class="story">
+      <p>Upper Palaeolithic people lived in caves, rock shelters and open camps from the
+        mountains of the north-west all the way to <b>Sri Lanka</b>. Tap each
+        <b style="color:var(--terracotta)">● red dot</b> to visit. Can you visit all 7?</p>
+    </div>
+    <div class="map-layout">
+      <div class="map-box">
+        <svg viewBox="0 0 586.2 620" role="img" aria-label="Map of the Indian subcontinent showing Upper Palaeolithic sites" id="map">
+          <path class="land" d="M273.7,552.7 L277.9,560.6 L279.4,561.3 L282.8,566.8 L283.3,569.9 L286.1,571.4 L287.0,577.0 L291.5,584.4 L294.6,591.4 L295.4,599.6 L293.4,607.7 L291.0,611.5 L284.8,615.9 L274.0,620.4 L269.7,621.0 L265.5,619.8 L262.3,616.9 L257.9,603.4 L255.2,576.4 L255.9,574.1 L256.5,579.6 L259.4,566.2 L259.2,562.0 L262.4,555.8 L262.1,548.4 L266.4,550.7 L268.5,550.4 L265.3,547.8 L261.4,547.0 L259.7,545.2 L260.2,543.7 L265.2,544.1 L273.7,552.7ZM490.4,525.0 L493.3,522.1 L494.5,525.9 L492.6,529.6 L490.7,529.1 L490.4,525.0ZM493.8,502.5 L495.1,501.0 L496.4,496.2 L498.5,495.5 L497.2,492.9 L497.2,489.2 L497.6,484.4 L499.3,479.9 L499.8,472.8 L501.0,470.3 L503.6,469.1 L503.9,472.0 L502.7,473.3 L503.7,475.6 L500.3,481.2 L501.8,483.0 L502.2,489.2 L501.2,490.9 L499.9,491.3 L500.2,495.4 L497.7,500.1 L498.7,502.5 L496.9,509.7 L494.5,505.6 L493.8,502.5ZM466.0,297.9 L466.7,289.6 L468.5,294.3 L468.0,296.5 L466.0,297.9ZM457.1,287.6 L456.0,283.3 L457.7,282.7 L459.1,283.7 L460.3,287.2 L462.8,290.3 L462.0,296.8 L461.1,298.2 L456.2,298.7 L459.3,293.5 L458.7,289.2 L457.1,287.6ZM590.1,422.5 L587.7,419.6 L588.7,410.8 L590.4,408.6 L583.9,409.5 L580.8,402.1 L580.6,398.1 L574.1,392.0 L575.2,393.9 L574.1,395.9 L575.2,399.4 L572.5,405.8 L569.8,408.7 L566.3,409.9 L563.5,408.1 L562.9,404.7 L561.8,404.6 L562.7,408.7 L564.3,411.1 L559.0,413.2 L558.5,414.9 L553.8,416.6 L552.3,420.5 L546.9,425.5 L545.3,424.9 L546.4,420.3 L546.1,418.0 L542.9,423.5 L538.6,423.6 L537.7,416.3 L535.9,420.6 L533.3,421.9 L534.1,409.8 L533.4,413.3 L529.3,418.1 L526.6,419.8 L525.2,419.7 L526.1,409.7 L527.6,407.2 L529.8,397.3 L531.5,393.8 L532.0,388.6 L529.0,376.0 L524.2,365.4 L525.6,365.2 L522.3,362.1 L521.9,354.3 L519.9,357.1 L520.4,360.1 L519.7,362.0 L515.6,359.5 L511.6,352.6 L513.2,352.0 L516.0,354.7 L517.8,355.2 L520.3,353.4 L521.0,351.2 L518.0,349.3 L516.2,346.1 L513.8,344.5 L515.6,341.8 L513.3,341.8 L510.0,339.2 L507.1,338.6 L505.3,339.2 L506.1,342.0 L506.0,343.0 L504.8,342.8 L502.5,338.5 L504.2,336.4 L502.7,336.3 L503.7,332.4 L503.1,331.9 L500.2,337.0 L499.2,336.4 L498.5,335.8 L500.4,333.2 L497.5,328.7 L497.3,334.1 L489.5,324.2 L484.9,316.5 L484.0,306.3 L480.6,295.4 L481.3,293.0 L480.0,294.1 L475.1,285.8 L474.1,282.3 L469.2,287.2 L464.2,288.1 L458.8,279.5 L457.8,268.2 L456.9,271.6 L451.6,270.9 L453.9,272.7 L456.3,273.1 L457.6,274.7 L457.7,277.3 L455.3,278.9 L456.9,281.9 L455.2,282.4 L454.7,285.0 L458.1,292.8 L457.6,294.8 L453.2,299.0 L450.9,303.4 L449.6,303.7 L447.9,302.3 L448.2,299.7 L450.5,296.9 L445.7,299.5 L445.1,297.7 L444.6,293.8 L446.3,290.7 L444.4,292.2 L443.1,300.3 L438.6,304.7 L437.0,294.5 L437.3,301.7 L434.6,305.6 L432.4,305.6 L429.7,302.5 L428.9,298.1 L428.5,301.3 L427.0,301.2 L428.4,303.3 L429.0,306.9 L426.3,306.9 L425.3,305.1 L423.2,308.3 L422.2,305.3 L423.2,299.9 L421.3,297.6 L419.9,303.4 L420.3,306.8 L417.7,307.7 L414.7,304.8 L414.1,307.6 L411.7,307.3 L410.4,306.1 L413.0,297.2 L409.3,294.7 L408.3,292.5 L408.7,294.9 L412.3,297.6 L408.4,303.5 L403.4,306.9 L392.6,310.0 L388.2,315.3 L387.8,317.9 L390.3,326.0 L386.4,331.6 L386.1,333.7 L381.4,336.6 L379.2,339.9 L376.7,338.9 L378.0,340.2 L376.2,342.1 L364.3,346.1 L362.8,346.1 L364.0,344.9 L363.9,342.7 L362.9,342.2 L358.2,344.8 L356.9,348.1 L360.5,346.4 L361.8,347.5 L357.8,349.8 L349.3,357.5 L347.8,360.7 L336.9,374.1 L328.5,378.6 L320.0,387.8 L304.4,398.1 L303.0,401.3 L304.4,404.3 L302.5,408.8 L293.3,413.4 L286.6,412.7 L284.4,413.3 L281.6,420.8 L279.7,422.4 L278.7,424.8 L275.9,424.7 L275.1,422.7 L272.5,422.1 L267.7,424.1 L266.0,425.8 L262.4,433.5 L261.5,438.5 L263.8,450.4 L262.6,455.8 L266.2,470.3 L263.4,465.7 L261.7,467.9 L266.9,472.8 L264.8,486.2 L263.2,491.0 L257.9,500.2 L255.9,508.5 L256.7,511.1 L254.8,513.7 L256.8,513.2 L257.7,516.1 L257.5,533.5 L251.8,533.4 L247.8,534.9 L246.6,536.5 L246.7,539.3 L241.8,546.3 L240.4,550.9 L242.3,553.3 L247.0,554.3 L249.6,556.2 L241.5,554.6 L231.1,557.9 L226.9,562.2 L225.7,569.8 L224.4,572.3 L214.3,578.4 L210.3,577.1 L204.1,571.9 L196.4,561.9 L192.1,551.0 L190.6,541.5 L192.5,543.5 L193.1,549.2 L194.6,549.3 L192.5,541.6 L189.7,538.3 L189.8,536.0 L184.6,524.3 L180.9,512.8 L177.2,505.9 L171.1,498.8 L166.5,488.7 L163.2,478.5 L161.4,466.6 L158.1,459.1 L156.0,450.1 L147.9,438.5 L146.7,433.9 L145.2,432.1 L147.6,432.1 L144.6,428.5 L145.8,426.8 L143.9,426.9 L142.9,425.8 L139.1,418.9 L136.5,410.8 L133.2,387.6 L130.1,378.0 L127.9,367.1 L130.4,359.6 L129.7,356.9 L127.2,360.5 L126.6,358.4 L126.8,354.0 L130.0,354.5 L126.3,352.7 L125.7,351.0 L126.5,349.6 L125.2,348.4 L124.1,343.4 L128.3,326.5 L126.8,317.7 L124.5,316.4 L123.3,312.6 L125.3,310.6 L123.1,310.8 L126.7,307.6 L132.4,305.0 L127.3,306.3 L121.8,306.1 L122.7,302.4 L124.7,300.6 L121.4,300.5 L121.9,296.8 L126.7,295.3 L122.6,294.4 L115.1,294.6 L117.4,296.2 L116.8,298.2 L112.3,303.5 L115.6,305.4 L116.4,306.8 L116.4,309.4 L111.9,316.9 L93.5,325.2 L87.8,325.2 L83.5,323.2 L75.1,316.4 L69.8,309.9 L59.4,300.2 L55.3,294.2 L55.5,292.3 L56.8,291.3 L61.0,294.3 L66.0,291.8 L68.0,291.9 L69.4,290.7 L71.1,291.0 L74.5,289.0 L77.7,288.5 L82.6,280.6 L84.0,280.0 L83.5,278.2 L80.8,281.2 L76.6,281.1 L68.2,284.8 L60.2,283.0 L52.4,278.9 L49.1,276.2 L45.0,268.6 L51.7,263.0 L41.6,268.1 L40.3,262.9 L39.4,264.9 L37.9,263.0 L36.3,263.4 L34.6,261.9 L33.8,263.4 L31.0,263.8 L30.6,261.6 L29.1,262.4 L24.4,256.5 L21.8,244.9 L13.1,242.8 L13.0,235.5 L8.0,228.5 L4.1,228.2 L2.4,230.1 L6.6,229.9 L8.7,231.1 L4.4,230.7 L-6.0,232.9 L-9.3,232.6 L-9.3,-10.0 L595.5,-10.0 L595.5,446.4 L594.3,444.7 L593.0,445.2 L592.0,442.8 L590.1,422.5ZM551.3,627.8 L555.6,630.0 L543.8,629.7 L543.9,628.7 L547.0,627.4 L551.3,627.8ZM517.7,595.3 L519.7,600.5 L517.8,605.0 L515.6,600.0 L514.7,599.7 L514.6,597.3 L517.7,595.3ZM532.2,415.9 L531.6,419.6 L528.7,423.0 L528.3,420.1 L532.2,415.9ZM587.6,410.3 L587.6,414.9 L586.9,415.2 L585.8,413.9 L585.6,410.8 L587.6,410.3ZM516.3,362.7 L515.0,366.5 L511.5,362.6 L516.3,362.7ZM519.2,353.4 L516.5,353.5 L516.1,351.7 L514.4,350.1 L515.7,348.8 L518.7,350.4 L520.0,351.4 L519.2,353.4Z"/>
+          <path class="riv-minor" d="M298.6,285.9 L298.6,283.4 L299.5,281.3 L296.9,278.6 L291.9,277.2 L290.5,275.5 L288.0,274.1 L287.7,272.1 L284.7,270.9 L284.4,268.7 L283.6,268.2 L283.4,265.6 L282.4,263.9 L283.8,263.1 L282.2,262.2 L281.0,260.5 L280.3,260.6 L279.1,258.2 L281.5,257.3 L283.0,257.6 L283.7,256.6 L285.5,256.0 L291.0,251.9 L301.2,249.5 L301.9,248.8 L303.5,249.4 L304.3,248.8 L308.0,249.4 L311.5,247.9 L314.3,247.7 L317.5,250.4 L321.0,250.7 L324.5,249.6 L330.3,249.8 L331.4,249.1 L333.8,249.0 L335.0,246.4 L336.7,244.0 L338.4,243.3 L340.6,239.4 L342.9,238.4 L344.3,236.1 L347.1,235.1 L348.5,233.4 L349.4,231.3 L349.9,227.2 L351.3,225.8M211.1,275.2 L213.6,277.6 L216.2,277.2 L218.4,271.2 L220.7,267.2 L220.5,263.8 L223.7,259.2 L224.0,256.1 L225.0,253.5 L228.4,250.7 L227.5,249.6 L228.3,247.9 L228.2,246.1 L226.4,242.4 L229.3,240.0 L229.8,238.0 L233.3,236.2 L237.0,230.0 L240.2,228.7 L240.1,228.0 L242.7,225.5 L243.8,223.5 L246.0,224.1 L247.2,223.7 L247.2,224.2 L248.0,224.5 L249.5,223.8 L250.1,224.1 L251.0,222.8 L251.9,223.5 L252.4,222.7 L251.4,222.4 L253.0,222.0 L253.3,221.3 L255.6,221.7 L256.6,222.6 L256.9,221.7 L258.8,222.4 L259.7,221.8 L260.4,222.3 L261.4,222.0 L262.4,221.1 L264.4,221.6M201.4,93.5 L197.3,94.0 L195.0,92.3 L194.6,91.1 L189.7,90.6 L187.3,87.6 L184.5,87.8 L182.9,90.0 L181.3,90.7 L180.5,91.9 L178.1,92.5 L176.0,95.1 L173.2,96.9 L171.1,97.4 L170.7,98.3 L167.9,98.1 L168.0,98.7 L166.6,99.4 L164.3,99.5 L163.4,101.1 L161.9,101.0 L159.1,103.5 L157.8,106.0 L155.3,106.8 L152.6,110.0M152.7,110.0 L150.6,112.2 L149.7,111.7 L148.6,113.9 L147.7,113.6 L146.5,115.4 L145.0,114.8 L140.8,117.6 L140.4,116.8 L139.2,117.7 L137.8,117.6 L138.1,118.0 L136.8,118.9 L136.7,119.8 L135.1,120.2 L134.6,121.2 L132.8,121.9 L133.0,122.9 L132.2,122.7 L129.8,124.7 L128.1,124.7 L127.2,126.0 L125.9,125.7 L124.5,128.1 L120.9,127.4 L120.2,128.1 L114.9,128.4 L110.1,126.9 L108.3,128.0 L107.5,127.7M334.3,156.0 L333.3,159.7 L331.7,160.9 L330.6,163.8 L327.3,166.9 L328.2,168.0 L328.4,169.9 L326.9,173.0 L328.8,175.7 L326.5,178.9 L327.3,179.9 L327.0,180.4 L324.5,181.0 L325.3,181.6 L330.6,181.6 L331.7,182.5 L335.3,181.8 L336.7,182.7 L339.9,183.1 L340.9,184.8 L342.4,184.5 L342.6,185.9 L339.2,186.8 L336.9,189.3 L333.8,189.0 L333.6,189.5 L334.2,189.6 L333.8,190.8 L331.9,191.3 L332.7,192.6 L332.0,193.9 L335.3,196.5 L336.2,198.3 L337.6,198.7 L338.8,201.6 L340.2,202.4 L341.5,204.4 L342.9,207.9 L344.6,208.0 L345.2,209.9 L347.7,210.8 L350.0,214.2 L351.2,215.1 L352.0,217.3 L353.1,218.3 L352.6,219.2 L354.4,220.4 L356.8,223.4 L357.0,227.2M200.3,111.8 L199.8,112.2 L199.8,113.8 L199.0,113.8 L198.2,114.6 L195.2,111.8 L194.2,111.6M284.6,124.2 L282.8,123.0M194.2,111.6 L192.9,112.0 L193.1,113.2 L194.2,115.1 L196.4,116.6 L197.0,118.4 L196.1,118.8 L196.1,119.9 L195.5,120.4 L193.4,119.8 L187.6,120.2 L184.6,119.5 L177.5,120.5 L174.8,120.3 L171.2,119.0 L168.1,116.3 L164.4,116.8 L160.0,118.9 L158.5,120.7 L157.1,121.1 L156.3,122.1 L154.8,122.1 L151.9,126.7 L150.1,127.8 L149.9,129.4 L146.0,132.9 L144.6,132.6 L142.6,133.7 L141.2,133.5 L138.0,135.5 L136.6,135.7 L136.7,136.4 L135.5,137.4 L134.6,136.6 L134.5,137.5 L132.8,138.3 L131.2,138.1 L129.0,140.3 L128.2,139.9 L125.2,141.9 L123.5,142.1 L123.2,143.5 L120.5,142.9 L118.4,143.2 L116.3,145.8 L115.3,145.7 L114.4,146.8 L114.7,148.4 L111.4,150.2 L106.4,151.1 L105.5,150.5 L104.2,152.2 L102.2,151.8 L101.7,152.7 L101.2,151.8 L100.3,152.7 L98.1,151.4 L97.1,152.3 L96.5,151.6 L95.7,152.3 L93.5,152.7M282.8,123.0 L281.9,121.6 L278.2,120.4 L274.6,117.5 L272.2,117.6 L269.9,119.0 L267.8,118.6 L260.7,114.2 L260.5,113.1 L258.4,110.6 L251.7,109.8 L248.5,107.3 L246.5,106.5 L244.2,106.1 L242.5,106.3 L241.7,107.0 L241.0,106.8 L239.0,103.9 L237.6,103.8 L236.6,103.1 L231.8,106.5 L231.5,108.0 L228.7,108.0 L228.2,109.6 L226.8,109.8 L222.7,108.6 L220.1,108.7 L217.8,109.9 L216.4,111.1 L216.4,112.0 L215.0,112.2 L214.7,112.9 L211.5,112.8 L210.4,114.5 L207.7,115.2 L202.5,112.6 L202.5,111.7 L200.3,111.8M286.1,124.8 L284.6,124.2M332.3,309.6 L328.7,305.5 L326.6,305.2 L325.0,307.1 L323.6,306.2 L321.9,306.1M332.3,309.6 L333.7,310.2 L334.6,311.4 L333.0,313.8 L333.3,315.9 L331.8,318.9 L331.8,321.4 L334.3,323.3 L335.9,323.7 L338.8,322.2 L340.4,322.5 L341.7,324.9 L345.1,325.5 L348.1,327.4 L349.5,329.6 L351.6,329.6 L356.7,332.4 L357.9,332.1 L360.0,332.9 L362.9,332.4 L365.6,330.8 L367.0,331.3 L367.9,330.6 L369.7,331.1 L371.4,332.7 L372.4,332.7 L373.3,334.8 L374.9,335.8 L375.1,337.1M272.2,328.0 L272.3,324.9 L274.6,324.3 L277.2,319.9 L279.7,318.7 L280.8,318.9 L281.6,318.1 L283.4,318.0 L283.5,315.4 L285.9,311.6 L285.8,310.3 L287.1,307.7 L290.2,307.2 L290.5,308.1 L292.0,308.3 L291.6,306.8 L292.5,306.0 L292.2,304.8 L295.5,304.4 L298.6,302.2 L299.8,303.0 L300.9,303.0 L301.4,304.5 L303.8,305.6 L307.6,304.9 L310.3,305.6 L312.7,305.3 L313.6,305.9 L316.7,305.3 L321.9,306.1M229.6,121.7 L227.3,123.6 L225.1,124.5 L222.5,129.8 L221.3,129.2 L215.4,131.4 L215.6,133.5 L214.7,135.8 L210.0,139.2 L208.8,140.8 L208.0,143.9 L206.3,146.8 L206.6,148.2 L205.8,148.9 L205.9,149.9 L206.9,150.3 L205.9,151.5 L207.4,151.7 L207.2,157.7 L208.3,160.0 L208.0,160.7 L208.8,161.7 L208.3,163.9 L208.8,166.1M208.8,166.1 L208.8,166.2 L208.8,166.1 L208.8,166.1M208.8,166.1 L209.5,168.1 L211.7,170.9 L212.3,170.6 L213.9,172.1 L213.4,173.7 L214.7,175.1 L213.9,175.8 L214.7,176.4 L213.9,177.0 L214.1,178.1 L213.4,177.7 L213.4,179.1 L214.5,180.5 L214.4,182.0 L215.7,183.1 L215.5,184.1 L217.5,184.1 L217.1,184.8 L217.6,187.4 L216.9,187.9 L217.8,188.2 L217.4,189.7 L218.6,192.3 L219.4,192.2 L219.3,193.3 L220.7,194.7 L221.1,193.9 L222.0,194.9 L222.4,194.0 L222.9,195.0 L223.2,194.5 L223.6,194.9 L223.8,196.4 L227.0,196.2 L227.3,198.3 L229.8,197.5 L228.9,198.7 L231.0,198.9 L232.9,201.4 L232.8,200.4 L233.6,200.5 L234.3,201.5 L234.6,200.9 L235.2,202.3 L236.9,201.6 L239.3,203.9 L240.9,204.3 L240.6,204.8 L242.0,204.8 L241.6,205.3 L243.5,208.0 L245.1,208.2 L245.7,209.1 L247.4,209.5 L246.5,210.0 L246.8,210.4 L246.0,211.4 L247.2,211.2 L248.0,211.9 L250.5,211.2 L251.3,213.0 L252.2,212.8 L251.8,214.2 L255.4,216.3 L256.3,217.8 L258.7,218.1 L259.6,216.7 L259.7,218.6 L262.0,218.6 L262.0,220.0 L264.1,221.4 L265.7,221.5 L266.0,222.2 L268.1,221.7 L270.5,222.6 L270.6,223.1 L269.1,223.3 L269.7,224.2 L271.1,224.3 L271.1,225.3 L274.1,226.3 L275.7,225.4 L276.4,226.3 L277.7,226.3 L278.2,227.7 L279.6,227.5 L279.1,228.6 L279.4,229.1 L282.5,230.1 L281.9,231.8 L284.0,233.4 L285.5,233.2 L286.4,234.4 L287.9,234.7 L291.4,232.8 L293.9,233.4 L294.5,231.7 L295.9,231.7M212.8,94.1 L206.2,90.0 L204.5,89.7 L203.9,88.1 L202.4,87.2 L199.7,86.5 L197.4,85.0 L194.4,84.6 L194.1,83.5 L194.7,81.8 L194.0,79.0 L187.9,73.9 L181.5,72.4 L181.0,73.3 L182.5,75.7 L182.4,76.8 L178.6,77.2 L174.2,77.2 L172.9,75.8 L170.1,74.5 L168.6,76.7 L163.8,76.4 L163.9,80.0 L163.4,81.8 L159.0,84.2 L155.2,87.8 L148.7,91.6 L145.0,92.3 L144.3,93.2 L142.9,93.1 L140.0,95.2 L137.7,95.5 L135.4,98.5 L134.2,99.3 L132.3,103.4 L130.1,104.3 L128.8,105.8 L123.9,106.7 L118.4,110.2 L116.3,112.7 L116.0,115.6 L114.2,116.3M114.2,116.3 L114.2,118.1 L111.4,122.3 L109.0,124.5 L108.6,126.8 L106.3,128.5 L105.1,128.6 L102.2,130.9 L100.6,132.8 L100.7,133.3 L99.8,133.7 L97.2,141.5 L96.3,142.5 L96.9,144.1 L96.2,146.2 L93.2,149.4 L93.9,151.5 L93.1,154.1 L92.1,154.7 L91.9,155.6 L89.9,155.5 L89.5,156.8 L88.5,157.0 L87.4,159.2 L86.3,159.3M159.9,52.4 L159.1,52.2 L158.8,54.0M141.4,73.6 L141.7,75.0 L142.7,76.2 L142.2,77.2M158.8,54.0 L156.5,54.6 L153.9,56.4 L149.2,58.0 L147.2,58.0 L141.9,55.9 L139.8,53.5 L138.7,53.3 L139.9,59.9 L141.0,61.8 L140.8,63.9 L141.4,65.8 L140.9,67.3 L142.0,68.9 L141.9,71.0 L140.9,72.3 L141.4,73.6M174.3,71.1 L174.0,70.3 L171.0,68.3 L169.4,65.9 L169.4,64.0 L167.2,61.0 L165.9,60.7 L165.4,59.5 L162.2,57.2 L160.5,55.0 L160.6,53.3 L159.9,52.4M142.2,77.2 L141.8,77.5 L142.1,78.0 L144.4,79.1 L144.6,80.4 L141.7,83.2 L140.2,85.9 L138.0,87.0 L129.0,89.1 L125.3,91.2 L123.0,91.3 L118.6,94.2 L116.1,99.9 L116.6,102.3 L116.3,103.7 L114.8,106.1 L114.2,111.8 L113.7,112.4 L114.6,115.4 L114.2,116.3M194.1,489.7 L194.9,490.8 L196.7,491.5M217.3,500.6 L220.1,501.8 L219.9,503.7M196.7,491.5 L198.3,491.2 L200.6,492.0 L203.1,495.5 L205.0,495.2 L204.9,496.3 L205.7,496.6 L206.9,496.0 L208.3,493.7 L212.6,494.1 L213.9,495.9 L217.7,496.0 L218.3,496.5 L218.3,498.4 L217.3,500.6M179.8,493.2 L181.3,494.3 L183.7,493.6 L184.6,491.3 L185.2,491.1 L185.7,489.3 L187.1,487.6 L189.2,488.4 L190.4,489.7 L193.3,490.3 L193.7,489.5 L194.1,489.7M219.9,503.7 L217.5,511.6 L220.5,515.1 L221.2,518.0 L221.8,518.6 L223.9,518.2 L225.6,518.8 L227.1,521.0 L230.1,520.8 L235.9,522.6M234.5,522.4 L236.9,523.5 L239.8,523.6M239.8,523.6 L246.8,521.3 L257.6,521.9M239.8,523.6 L241.1,524.1 L243.0,523.7 L248.8,524.2 L249.9,525.5 L251.1,528.8 L250.6,531.7 L251.7,533.2M239.7,523.7 L239.8,523.6M176.9,245.1 L178.5,243.8 L178.1,241.6M174.6,255.5 L174.0,253.9 L175.8,252.7 L178.6,249.2 L178.3,247.0M178.1,241.6 L178.2,240.6 L180.9,238.3 L181.3,237.2 L182.5,236.9 L184.3,234.5 L184.8,234.3 L185.8,235.3 L186.7,233.3 L188.7,232.9 L188.5,232.2 L189.4,230.0 L191.1,229.4 L191.9,226.8 L191.4,225.8 L194.4,224.1 L194.8,223.1 L196.4,223.0 L198.0,221.6 L199.9,221.5 L203.0,218.0 L206.2,216.3 L207.0,215.2 L208.6,215.2 L210.9,212.8 L212.4,212.7 L212.9,211.7 L214.3,211.7 L218.0,209.9 L220.2,208.5 L219.9,207.9 L221.5,206.7 L224.8,206.3 L225.2,204.1 L226.1,204.3 L226.4,203.6 L228.0,203.7 L229.4,202.8 L233.8,204.8 L236.5,204.0 L239.3,206.0 L241.9,206.5 L242.4,208.2 L245.4,209.5 L245.3,210.4 L246.5,210.0M178.3,247.0 L176.9,245.1M179.9,290.5 L176.9,287.8 L176.2,283.8 L177.2,278.1 L176.9,275.8 L174.8,272.2 L174.1,266.1 L172.5,264.9 L172.7,264.1 L174.0,264.0 L175.9,261.8 L177.0,259.3 L176.5,257.7 L174.6,255.5M277.7,129.0 L279.6,129.2 L280.8,130.5 L282.8,135.5 L285.2,136.9 L287.7,136.6 L289.2,138.6 L293.0,139.3 L293.6,140.5 L295.1,141.5 L295.2,143.9 L298.0,145.1 L295.1,147.5 L293.6,147.7 L293.7,149.3 L292.3,150.6 L293.0,153.8 L292.6,154.4 L290.6,155.5 L290.4,156.4 L286.8,159.5 L289.8,164.6 L288.7,165.0 L288.7,163.8 L287.0,161.9 L283.0,161.8 L280.1,160.5 L279.0,161.3 L280.6,162.7 L281.6,162.7 L283.0,163.8 L282.9,163.0 L284.3,166.1 L282.8,173.2 L282.2,173.8 L281.0,173.2 L280.3,174.9 L281.5,176.6 L281.6,177.8 L282.5,178.6 L282.0,179.5 L284.7,181.6 L283.8,185.7 L284.9,186.7 L284.8,189.2 L286.5,191.7 L286.8,193.8 L287.6,194.3 L287.1,195.6 L288.0,198.5 L290.4,199.1 L292.9,201.8 L293.8,202.1 L294.8,203.8 L297.2,204.2 L299.5,202.9 L302.0,203.7 L301.9,204.6 L304.3,206.5 L309.8,207.7 L310.8,208.8 L312.9,208.4 L316.4,210.5 L317.8,212.0 L322.3,213.0 L325.0,214.7 L330.8,215.0 L333.0,217.5 L337.0,218.3 L339.8,221.4 L341.9,221.2 L343.4,222.6 L344.8,222.8 L346.9,225.3 L348.2,225.2M143.2,359.9 L144.8,361.0 L147.9,365.4 L148.8,365.9 L148.6,366.3 L150.1,367.2 L151.4,367.9 L153.8,366.6 L154.9,368.4 L156.4,368.5 L157.6,369.5 L157.6,369.1 L158.3,370.0 L160.9,370.8 L162.1,369.9 L162.2,371.9 L163.6,372.1 L164.5,373.2 L163.7,374.3 L164.8,374.9 L167.9,375.0 L167.6,376.0 L169.1,375.7 L169.0,377.4 L170.3,378.1 L167.8,380.4 L170.0,380.1 L171.0,381.1 L169.8,382.2 L171.1,382.4 L170.5,384.3 L172.5,384.8 L174.2,386.4 L175.8,385.8 L176.0,386.9 L177.1,387.1 L176.9,387.8 L178.2,388.9 L179.6,389.2 L179.1,390.3 L180.1,391.5 L182.1,392.5 L183.7,391.7 L184.9,393.5 L186.9,393.1 L187.4,394.7 L189.3,396.1 L190.8,396.8 L192.5,396.4 L193.3,397.0 L192.8,397.6 L193.2,398.7 L194.4,397.2 L196.5,396.4 L195.6,398.3 L198.8,398.7 L199.8,397.0 L201.1,399.1 L202.9,399.1 L203.6,402.1 L202.7,403.2 L207.2,405.5 L207.1,407.0 L207.7,407.2 L208.4,409.6 L210.0,411.7M128.5,294.4 L130.1,294.8 L131.0,293.9 L131.9,290.2 L134.8,286.7 L134.9,284.4 L137.2,283.4 L138.2,279.5 L140.2,278.0 L141.0,276.4 L143.0,274.9 L145.0,274.6 L146.1,273.4 L147.6,273.0 L150.8,267.6 L151.4,264.5 L157.3,261.7 L158.5,262.5 L159.1,264.0 L158.7,269.2 L160.1,271.8 L162.9,274.2 L162.6,274.5 L163.7,277.1 L166.2,277.0 L167.6,278.0 L167.6,281.5 L166.7,283.7 L167.0,285.4M225.7,306.0 L223.2,306.3 L221.9,305.5 L219.8,305.4 L219.2,303.8 L218.3,303.6 L210.2,303.9 L208.4,305.3 L206.0,305.8 L203.2,307.6 L201.2,308.0 L200.4,309.7 L198.6,310.9 L195.3,311.0 L192.5,312.0 L187.2,317.2 L183.6,318.8 L181.8,318.7 L175.7,316.6 L173.1,317.0 L168.7,316.6 L164.3,314.4 L163.1,312.8 L161.5,312.0 L156.4,311.1 L154.7,309.7 L151.4,309.7 L147.1,310.8 L143.5,313.8 L143.1,315.1 L137.5,314.4 L133.7,315.5 L130.2,313.8 L128.0,315.4 L126.6,315.1 L126.6,316.2 L125.2,317.0M215.4,471.9 L216.1,470.6 L214.4,468.6 L213.8,466.7 L213.3,463.5 L213.9,462.3 L212.5,459.9 L212.8,458.3 L210.0,451.2 L210.5,450.1 L209.6,446.6 L210.8,442.7 L216.2,441.0 L219.2,442.0 L222.0,440.7 L227.8,443.9 L229.9,442.7 L230.3,443.5 L236.1,447.7 L239.1,448.9 L240.6,450.6 L242.7,451.0 L243.9,450.5 L244.7,451.5 L245.7,450.5 L246.8,450.7 L250.3,448.6 L251.9,448.4 L252.7,449.0 L255.2,448.1 L257.7,450.1 L260.0,450.6 L263.3,448.7M189.8,102.3 L187.7,100.9 L184.9,100.7M208.3,94.8 L208.4,96.3 L207.6,97.7 L206.9,101.2 L208.2,103.5 L208.4,105.6 L203.6,105.8 L203.4,104.5 L198.8,102.0 L197.1,101.9 L194.4,103.8 L192.1,104.4 L189.8,102.3M184.9,100.7 L180.6,99.0 L180.3,97.8 L178.4,98.4 L177.6,99.8 L177.9,104.3 L177.3,105.8 L171.7,110.9 L170.5,113.2 L167.5,116.5M184.1,438.1 L184.3,437.4 L187.3,436.8 L189.0,435.4 L190.3,435.5 L192.0,434.5M179.2,465.8 L177.8,466.5 L178.2,468.6 L177.4,470.1M192.0,434.6 L192.7,433.3 L195.5,432.8 L199.0,430.2 L200.6,430.1 L201.8,427.0 L206.1,421.6 L207.4,420.8 L212.7,420.9 L217.5,422.1 L220.5,422.1 L221.2,421.6 L225.2,423.4 L227.7,420.6M179.2,465.8 L180.5,464.2 L180.5,461.2 L179.8,459.8 L180.9,458.5 L180.2,457.6 L180.6,457.1 L179.9,456.6 L180.3,455.3 L179.5,454.9 L179.0,452.7 L180.2,449.9 L180.7,450.3 L182.5,448.5 L182.3,446.5 L181.2,446.1 L181.4,445.3 L180.6,445.6 L180.7,444.5 L180.0,443.8 L180.4,442.4 L180.1,441.3 L183.9,438.9 L184.1,438.1M173.4,475.4 L176.4,474.2 L176.2,472.7 L176.9,472.3 L176.7,471.2 L177.4,470.1M221.5,475.1 L226.2,475.7 L227.8,476.8 L229.3,479.6 L231.2,480.6 L230.7,483.9 L231.3,485.5 L232.5,486.5 L233.7,486.3 L236.6,483.5 L239.7,481.7 L246.1,480.6 L249.4,482.5 L258.9,485.0 L259.8,486.2 L260.5,489.3 L263.3,490.8"/>
+          <path class="riv-major" d="M142.4,339.7 L143.0,339.1 L148.3,340.3 L149.9,339.0 L156.1,341.4 L157.1,342.4 L158.3,342.2 L159.5,343.9 L163.0,344.8 L164.7,346.7 L170.8,348.1 L171.5,349.0 L175.2,350.8 L175.6,351.6 L176.4,351.3 L177.7,352.2 L180.9,353.0 L182.1,352.1 L184.5,352.2 L184.5,353.9 L186.3,353.2 L186.5,354.0 L188.1,353.8 L190.3,354.8 L191.8,354.7 L192.8,355.3 L192.2,357.8 L193.2,357.4 L194.3,358.8 L196.6,357.8 L197.8,358.6 L197.8,359.8 L199.4,359.6 L199.8,360.5 L200.6,358.9 L203.2,358.9 L204.3,358.0 L205.8,358.3 L206.2,357.6 L206.2,358.6 L207.2,358.7 L207.8,357.7 L211.8,356.9 L211.8,358.2 L213.6,359.8 L215.3,360.3 L217.9,362.5 L221.2,363.5 L223.8,362.5 L224.2,361.7 L227.3,360.0 L228.5,360.4 L228.8,361.4 L230.6,360.2 L233.4,361.1 L233.9,360.3 L235.3,360.2 L235.9,359.3 L237.7,359.8 L238.9,358.8 L240.4,359.3 L240.7,358.7 L242.1,358.4 L243.2,359.1 L245.2,362.4 L247.4,363.7 L249.9,363.0 L254.7,366.4 L257.1,365.6 L257.7,364.1 L257.6,362.4 L262.2,366.0 L266.0,365.7 L267.1,368.2 L267.8,367.9 L267.8,370.4 L269.2,371.6 L269.7,374.2 L273.5,376.8 L275.0,379.5 L277.1,381.2 L276.7,384.5 L277.2,387.2 L279.0,387.2 L279.5,388.3 L281.3,387.8 L281.9,388.5 L283.9,388.8 L284.8,390.2 L288.5,390.7 L290.6,392.2 L290.6,393.3 L291.6,393.9 L291.2,396.1 L293.1,399.4 L292.8,402.3 L295.2,408.4 L294.6,410.5 L293.1,411.7 L292.2,411.4 L292.4,413.8M293.2,400.9 L294.7,404.3 L296.5,405.7 L299.1,406.4 L304.1,406.0M241.9,415.4 L245.8,415.3 L246.3,413.4 L245.9,410.1 L246.9,408.6 L247.7,408.4M145.1,380.2 L147.6,381.8 L149.5,384.7 L149.9,386.3 L151.5,387.7 L151.5,389.2 L150.6,390.6 L150.9,392.2 L152.8,394.4 L152.6,396.9 L155.7,398.0 L155.9,399.4 L157.1,399.2 L157.2,400.1 L159.1,402.4 L159.1,403.4 L161.8,405.1 L160.1,406.0 L161.5,407.3 L160.6,407.7 L161.5,408.6 L163.6,408.0 L163.9,407.0 L165.4,406.6 L166.3,407.3 L167.2,406.5 L169.4,409.8 L170.5,409.0 L171.0,407.4 L172.4,408.1 L174.2,408.0 L175.9,409.7 L175.7,411.5 L177.1,410.6 L178.0,411.4 L179.4,411.1 L182.1,413.0 L183.3,412.8 L186.0,413.9 L187.1,414.6 L187.6,416.0 L191.3,416.9 L193.2,414.9 L195.0,415.0 L196.4,413.3 L200.3,411.3 L201.8,411.2 L202.4,410.3 L204.1,409.8 L204.5,408.7 L205.0,409.8 L207.2,410.4 L207.8,411.2 L218.4,413.5 L221.4,415.6 L222.4,417.5 L226.6,421.0 L227.8,420.5 L227.8,419.2 L228.9,419.5 L230.7,418.3 L232.6,418.1 L233.7,418.9 L235.3,418.6 L238.0,419.3 L238.9,418.7 L239.1,417.0 L240.0,417.1 L241.9,415.4M247.7,408.4 L249.7,408.2 L251.3,407.2 L252.2,407.4 L256.3,405.5 L257.3,406.2 L258.3,405.9 L258.8,407.4 L259.7,407.4 L261.9,403.5 L262.3,403.6 L263.1,406.8 L264.1,407.8 L267.8,408.7 L269.3,408.2 L273.2,411.3 L273.9,412.9 L275.7,414.7 L276.9,419.7M289.8,284.9 L287.7,284.7 L286.7,283.1 L282.1,281.0 L279.8,280.4 L279.1,281.4 L277.1,280.9 L277.3,279.9 L276.2,278.9 L275.4,280.1 L274.8,279.6 L270.2,280.9 L270.4,281.9 L269.4,283.2 L270.0,285.5 L269.4,286.5 L269.9,287.5 L268.1,288.5 L266.8,287.3 L266.6,285.5 L265.8,285.3 L265.5,284.1 L261.6,284.5 L259.2,282.5 L259.5,281.2 L258.8,280.1 L259.4,277.9 L256.6,277.4 L254.7,278.1 L251.5,277.3 L249.9,278.0 L244.3,278.5 L243.5,279.7 L241.2,279.0 L236.9,279.0 L232.1,280.0 L228.6,282.7 L226.5,282.3 L225.5,284.2 L223.2,283.5 L222.2,283.8 L221.8,282.8 L221.0,283.3 L220.7,282.5 L218.9,284.5 L210.5,288.8 L209.6,288.1 L205.6,290.0 L203.2,290.1 L201.0,291.5 L200.3,293.8 L196.6,295.5 L195.0,294.4 L195.0,293.6 L193.9,293.3 L185.2,296.2 L173.8,297.2 L167.2,298.5 L163.2,298.5 L159.4,299.6 L158.7,299.0 L156.9,299.2 L153.5,301.4 L150.0,301.2 L145.0,303.3 L143.3,303.0 L140.4,300.4 L138.5,300.3 L137.9,301.6 L137.2,301.4 L136.5,302.3 L135.2,301.3 L134.6,301.4 L134.8,303.1 L132.8,303.1 L133.2,304.5 L132.7,304.9M547.0,179.9 L548.4,182.6 L548.2,183.1 L545.1,185.1 L541.5,186.2 L541.2,187.2 L542.2,186.2 L542.2,187.4 L538.1,188.6 L537.2,189.9 L535.2,190.8 L535.1,191.6 L533.1,193.0 L533.5,193.2 L532.8,193.7 L532.5,194.5 L533.4,193.8 L533.6,194.4 L532.5,195.0 L532.2,196.1 L531.7,195.6 L531.4,198.0 L530.4,198.1 L529.1,199.8 L526.8,201.4 L524.7,201.5 L523.3,203.0 L523.5,201.9 L523.1,201.8 L516.4,205.4 L514.6,205.7 L510.6,204.6 L509.3,205.6 L507.5,205.3 L504.6,207.1 L500.5,206.9 L499.7,207.8 L497.0,207.8 L494.9,209.6 L491.3,209.3 L485.2,212.4 L484.9,213.9 L477.6,216.7 L474.5,217.2 L467.7,215.7 L462.4,217.4 L455.7,215.4 L454.4,216.6 L445.7,219.8 L443.7,222.2 L441.7,226.2 L440.5,233.5 L441.1,235.2 L439.6,238.5 L439.4,241.3 L442.3,249.0 L441.8,257.5 L441.0,260.8 L442.6,264.1 L444.9,266.5 L451.3,270.8M442.1,254.5 L443.4,256.1 L443.4,257.2 L444.4,257.4 L446.0,259.3 L447.5,259.3 L448.7,260.9 L450.5,261.7 L451.3,263.3 L450.7,265.4 L452.5,265.0 L455.3,267.1 L455.5,268.3M257.6,122.2 L257.0,123.6 L258.2,126.2 L255.2,129.8 L254.1,130.0 L252.1,128.5 L249.1,131.6 L247.9,132.0 L246.9,133.9 L245.7,134.5 L241.9,133.9 L238.2,135.3 L236.3,135.1 L234.4,137.1 L234.2,138.5 L231.9,138.5 L230.8,137.4 L229.3,137.2 L226.2,141.5 L226.8,145.9 L223.7,147.6 L223.1,148.6 L225.5,155.0 L225.6,156.2 L224.8,157.2 L225.0,163.3 L226.7,166.1 L226.9,168.6 L228.2,170.2 L228.7,173.9 L231.9,177.9 L234.9,180.2 L240.0,181.7 L241.6,183.5 L244.8,183.6 L245.7,186.2 L248.1,187.3 L249.5,187.1 L252.2,189.2 L254.9,195.2 L257.5,197.1 L259.2,197.1 L260.7,199.5 L260.7,200.6 L262.5,202.5 L263.2,205.2 L265.1,206.4 L267.0,210.2 L270.3,212.7 L270.9,215.2 L273.0,217.7 L274.5,217.9 L275.7,219.4 L278.4,218.5 L279.7,218.8 L280.3,220.0 L282.9,221.2 L283.3,222.6 L286.4,224.6 L286.1,225.9 L286.6,226.7 L288.7,227.4 L289.4,228.3 L290.8,228.3 L292.2,230.1 L293.6,230.4 L296.0,229.8 L295.9,231.7 L297.2,233.5 L298.5,233.3 L299.8,234.5 L301.1,233.7 L301.7,234.0 L301.5,236.2 L302.8,236.1 L301.9,235.6 L303.1,234.5 L303.8,235.7 L305.1,234.8 L307.0,236.6 L308.0,236.8 L308.8,236.5 L308.3,235.6 L309.6,235.6 L312.2,237.5 L313.3,237.6 L314.9,236.1 L316.5,235.8 L316.5,234.2 L317.1,233.5 L319.5,233.0 L319.7,231.8 L318.6,231.0 L319.8,229.4 L322.4,230.5 L324.0,230.3 L326.2,232.0 L326.4,231.2 L325.5,229.7 L327.8,228.0 L329.5,227.8 L330.7,229.7 L333.0,229.5 L337.6,225.3 L338.3,225.1 L339.7,226.4 L341.9,224.7 L344.0,226.0 L346.0,226.1 L348.9,224.9 L351.4,225.8 L354.7,225.4 L356.2,227.2 L358.0,227.6 L358.9,228.9 L360.4,229.7 L363.1,228.3 L365.7,230.7 L367.3,229.8 L369.0,229.9 L372.7,233.3 L376.7,233.4 L377.9,234.1 L379.9,233.4 L382.1,230.3 L383.2,230.8 L383.0,232.5 L383.5,233.9 L385.1,234.9 L386.7,234.5 L388.7,233.0 L390.7,234.4 L394.3,235.4 L396.4,232.5 L399.7,231.9 L401.9,234.7 L405.1,235.3 L405.3,238.2 L408.5,240.2 L407.7,243.1 L408.4,244.1 L408.6,245.7 L410.9,248.0 L411.6,250.1 L412.9,250.8 L415.1,250.3 L417.7,253.0 L419.0,252.7 L422.1,253.3 L423.1,254.3 L423.4,256.9 L424.7,257.6 L427.2,256.7 L428.7,258.1 L429.6,260.5M408.2,243.9 L408.3,247.6 L410.5,249.7 L410.8,250.9 L411.6,251.1 L411.5,251.8 L414.1,253.8 L413.6,254.2 L414.1,254.6 L414.2,257.2 L413.0,260.0 L413.6,260.2 L413.1,260.5 L413.8,264.5 L412.4,266.0 L412.1,267.3 L413.5,267.9 L413.8,267.2 L414.3,268.5 L415.4,267.8 L414.7,269.0 L416.2,269.5 L415.7,271.2 L416.4,272.2 L415.7,273.3 L415.9,274.6 L416.7,275.7 L417.9,275.8 L417.7,277.2 L418.6,277.9 L418.1,278.7 L418.6,279.0 L417.6,279.4 L417.0,281.1M417.4,252.9 L417.8,254.3 L419.4,255.4 L419.4,256.0 L418.9,256.0 L419.1,257.1 L421.4,258.3 L421.2,260.2 L424.0,260.8 L425.4,261.8 L425.6,266.0 L424.8,266.4 L424.8,267.3 L423.6,267.5 L423.2,268.7 L424.2,270.3 L424.8,270.3 L424.9,271.4 L426.3,270.5 L425.9,271.7 L426.9,272.1 L426.2,272.8 L427.8,272.7 L427.5,271.7 L428.3,272.3 L427.9,275.5 L428.7,275.8 L430.2,278.5 L429.4,280.0 L430.2,280.7 L429.7,281.3 L430.4,281.4 L430.5,282.1 L430.1,282.2 L430.8,284.1 L431.6,283.8 L431.2,284.7 L433.8,286.1 L432.9,285.9 L433.7,287.2 L433.4,288.0M429.6,260.4 L429.6,260.5M429.6,260.5 L431.0,261.3 L434.0,261.4 L437.9,263.6 L441.9,263.0M429.6,260.5 L432.6,263.7 L432.9,265.0 L434.6,266.6 L435.8,266.5 L437.8,269.3 L437.4,270.3 L438.2,269.9 L439.1,270.5 L439.6,272.6 L439.1,272.3 L439.1,272.9 L439.9,274.2 L440.4,274.2 L439.7,275.2 L440.7,275.5 L440.9,276.6 L442.1,276.6 L441.2,277.6 L440.7,277.2 L440.7,277.8 L443.5,281.4 L445.5,282.9 L446.7,285.0 L446.8,290.2M448.2,268.4 L447.9,269.8 L448.7,271.2 L447.8,272.2 L448.8,272.6 L449.1,274.0 L448.4,274.0 L448.4,274.8 L449.0,274.4 L449.3,275.3 L450.6,275.5 L450.6,276.2M450.6,276.2 L450.2,276.6 L449.8,276.4 L449.9,276.0 L450.6,276.2M450.6,276.2 L451.3,276.5 L451.1,277.5 L452.8,278.2 L452.0,279.1 L452.7,279.2 L452.5,279.9 L453.8,281.3 L453.4,283.1 L453.9,284.5M417.0,281.1 L418.6,281.3 L419.7,280.3 L421.2,281.2 L422.9,281.1 L423.8,282.9 L425.2,283.4 L424.5,285.6 L426.9,287.2 L427.2,288.3 L426.6,289.0 L427.4,289.4 L428.0,291.0 L428.2,294.3 L429.4,296.5 L429.1,297.4M417.0,281.1 L415.8,284.4 L416.2,286.0 L415.8,288.5 L414.1,288.9 L411.9,290.6 L412.0,292.0 L411.4,292.3 L410.7,295.3M416.9,281.1 L417.0,281.1M433.4,288.0 L432.8,287.3 L432.7,289.8 L433.4,290.7 L432.8,291.1 L432.7,292.4 L433.9,294.4 L434.4,297.4 L435.2,298.3 L434.4,299.6 L434.5,300.6M433.4,288.0 L433.4,288.0M436.8,294.1 L436.3,293.3 L435.9,289.3 L434.4,287.9 L433.8,288.3 L433.4,288.0M126.2,47.5 L126.3,49.7 L127.2,50.4 L127.5,54.2 L127.2,56.6 L124.8,58.3M124.8,58.3 L123.4,59.7 L120.3,59.6 L116.1,61.2 L116.0,64.7 L113.3,64.2 L112.1,65.1 L110.8,69.5 L109.4,71.5 L106.5,72.9 L106.0,74.5 L107.1,76.3 L106.3,77.8 L106.4,79.4 L101.4,82.3 L100.6,83.8 L100.7,85.5 L99.1,87.3 L99.4,91.7 L97.3,96.4 L95.3,98.1 L91.2,105.8 L91.2,106.7 L89.2,111.5 L88.7,115.0 L90.0,121.0 L88.4,124.5 L90.2,129.2 L89.6,132.7 L88.8,133.7 L89.6,135.6 L89.4,137.8 L90.0,138.9 L90.1,142.0 L86.3,148.0 L86.4,149.1 L87.5,149.9 L87.8,152.0 L86.5,155.7 L86.7,158.8 L84.9,159.5 L83.1,161.7 L81.4,161.7 L79.6,164.1 L75.2,166.8 L75.0,168.0 L70.0,169.8 L69.2,172.0 L66.5,175.0 L64.9,175.7 L63.6,175.4 L62.9,177.0 L61.2,176.6 L60.5,177.4 L59.2,177.6 L58.3,178.9 L56.5,178.7 L55.8,180.6 L54.4,180.3 L54.9,182.6 L53.6,183.0 L53.2,183.8 L55.0,185.1 L54.6,185.8 L51.9,186.7 L49.8,184.2 L49.2,185.8 L47.7,185.8 L46.7,186.7 L45.6,186.5 L45.0,187.5 L43.8,187.6 L42.6,188.9 L43.4,190.4 L42.7,191.6 L43.3,192.5 L41.1,192.7 L39.9,194.4 L41.0,195.7 L39.0,196.3 L39.3,198.1 L36.8,200.6 L35.6,200.7 L35.0,207.1 L35.8,208.5 L35.9,210.0 L35.2,212.3 L36.1,214.6 L39.3,216.7 L39.8,218.8 L41.3,220.0 L42.3,221.9 L44.5,223.5 L43.2,225.3 L45.2,226.8 L44.3,227.6 L44.5,229.0 L43.1,230.0 L43.0,232.1 L43.7,234.4 L42.8,235.8 L44.1,237.2 L42.7,237.4 L42.1,240.6 L40.9,239.9 L39.7,241.2 L39.8,242.5 L38.0,242.6 L38.1,244.2 L36.7,246.9 L37.4,248.3 L36.4,249.5 L36.7,251.1 L34.3,251.8 L34.8,253.1 L33.2,253.3 L34.0,254.9 L32.9,254.6 L32.3,256.5 L30.8,256.8 L31.0,257.9M250.0,85.2 L247.7,81.4 L245.3,80.2 L241.1,76.0 L240.3,75.8 L237.9,77.0 L236.5,76.7 L231.4,74.4 L226.9,71.3 L226.1,70.6 L226.1,68.7 L220.7,64.4 L217.0,59.4 L215.0,57.7 L212.5,57.4 L210.6,56.1 L209.5,56.2 L205.5,54.8 L204.5,53.8 L201.8,53.4 L198.8,51.0 L197.3,48.9 L192.0,46.6 L189.6,43.4 L190.1,40.9 L184.6,36.7 L183.2,33.2 L181.4,33.8 L179.3,33.7 L175.9,30.8 L174.2,30.3 L173.5,28.3 L169.1,28.0 L165.1,25.8 L162.7,25.5 L162.4,23.2 L160.6,23.6 L160.9,24.8 L160.4,25.2 L161.0,26.0 L160.2,26.8 L160.6,29.5 L156.4,31.6 L151.8,31.9 L144.3,29.5 L139.6,29.3 L138.4,28.8 L136.1,29.2 L134.9,33.6 L135.6,34.3 L135.3,34.8 L132.5,36.3 L128.9,39.3 L128.2,39.3 L127.7,41.9 L130.0,43.5 L127.0,44.8 L126.2,47.5M255.6,91.1 L249.9,85.1M31.0,257.9 L30.9,257.8M31.0,257.9 L30.5,258.6 L28.5,258.8M31.9,258.7 L31.0,257.9M31.9,258.7 L32.8,258.9M35.8,260.4 L36.4,260.1 L35.8,258.9 L32.8,258.6 L33.2,259.9 L35.8,260.4M35.8,260.4 L35.9,260.3M37.7,261.3 L37.5,259.8 L36.4,260.0M30.7,261.4 L32.2,260.7 L31.9,258.7M34.6,261.8 L35.8,260.4"/>
+          <g id="labels"></g>
+          <g id="cities"></g>
+          <g id="sites"></g>
+        </svg>
+        <div class="map-legend">
+          <span><i class="lg" style="background:var(--terracotta)"></i>Site</span>
+          <span><i class="lg" style="background:var(--leaf)"></i>Visited</span>
+          <span><i class="lg" style="background:#8c8c8c"></i>Today's city (to help you find your way)</span>
+          <span>〰️ Rivers</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-card" id="site-card" aria-live="polite">
+          <p class="placeholder">👈 Tap a red dot on the map<br>(or a name below)<br>to visit a site!</p>
+        </div>
+        <div class="visit-count" id="visit-count">Sites visited: 0 / 7</div>
+        <div class="site-list" id="site-list"></div>
+      </div>
+    </div>
+
+    <div class="fact-box">🌊 <b>Look at Sri Lanka on the map.</b> Today the sea separates it from
+      India. But in the Ice Age, the sea was so much lower that the two were joined by land — so
+      the people of Fa-Hien Lena could have <b>walked</b> to Tamil Nadu!</div>
+  </section>
+
+  <!-- ACT 3 BEADS -->
+  <section class="act" id="bead-act">
+    <span class="act-label">ACT THREE · YOUR TURN</span>
+    <h2>Make an Eggshell Necklace</h2>
+    <div class="story">
+      <p>Join the girl by the fire. Every bead takes <b>three steps</b>: break off a piece of
+        shell, drill a hole, then grind it round. Make <b>8 beads</b> to finish the necklace!</p>
+    </div>
+    <div class="knap">
+      <div class="knap-stage">
+        <svg viewBox="0 0 300 230" id="neck-svg" aria-label="A necklace of eggshell beads">
+          <path d="M40,40 Q150,250 260,40" fill="none" stroke="#7a5a3a" stroke-width="3"/>
+          <g id="beads"></g>
+          <g id="work" transform="translate(150,60)"></g>
+        </svg>
+        <div>
+          <button class="strike-btn" id="bead-step">🥚 Break off a piece</button>
+          <button class="ghost-btn" id="bead-reset">↺ Start again</button>
+        </div>
+        <div class="strikes" id="bead-count">Beads: 0 / 8</div>
+      </div>
+      <div class="knap-msg" id="bead-msg">Press the button to break a small piece off an ostrich eggshell.</div>
+    </div>
+
+    <div class="story" style="margin-top:20px;"><p>The new Upper Palaeolithic toolkit. Tap a tool to open it:</p></div>
+    <div class="toolkit">
+      <div class="tool" tabindex="0"><div class="t-ico">🗡️</div><h4>Blade</h4><span class="tap">tap to open</span>
+        <p>A flake that is <b>at least twice as long as it is wide</b>, with long, straight, razor-sharp
+          edges. From one core you could strike many blades — much more cutting edge from the same stone.</p></div>
+      <div class="tool" tabindex="0"><div class="t-ico">✏️</div><h4>Burin</h4><span class="tap">tap to open</span>
+        <p>A stone "chisel" with a tiny, strong tip for <b>engraving and carving</b> bone, antler, wood
+          and shell — the tool that made patterns like the criss-cross at Patne possible.</p></div>
+      <div class="tool" tabindex="0"><div class="t-ico">🦴</div><h4>Bone tools</h4><span class="tap">tap to open</span>
+        <p>People now shaped <b>bone</b> into points, awls (for piercing skins) and scrapers. Bone
+          tools found in the <b>Kurnool caves</b> are among the oldest in India.</p></div>
+      <div class="tool" tabindex="0"><div class="t-ico">📿</div><h4>Beads</h4><span class="tap">tap to open</span>
+        <p>Not a tool for work, but a tool for <b>meaning</b>! Beads of ostrich eggshell and stone
+          were worn, gifted and traded — some of the earliest jewellery in South Asia.</p></div>
+    </div>
+  </section>
+
+  <!-- ACT 4 PAINT -->
+  <section class="act" id="paint-act">
+    <span class="act-label">ACT FOUR · THE ROCK WALL</span>
+    <h2>Paint Like the First Artists</h2>
+    <div class="story">
+      <p>At <b>Bhimbetka</b>, the earliest paintings were made with colours from the earth —
+        <b>red and yellow ochre</b> (crushed coloured rock) and <b>white</b> from soft white
+        stone, mixed with water. Brushes may have been chewed twigs, or just fingers! Many of
+        the oldest pictures show big animals, and some are huge.</p>
+      <p>Pick a colour and a picture, then <b>tap the rock wall</b> to paint.</p>
+    </div>
+    <div class="paint-tools">
+      <div class="swatches">
+        <button class="swatch on" data-c="#a3361c" style="background:#a3361c" aria-label="Red ochre"></button>
+        <button class="swatch" data-c="#c98b1d" style="background:#c98b1d" aria-label="Yellow ochre"></button>
+        <button class="swatch" data-c="#f4efe4" style="background:#f4efe4" aria-label="White"></button>
+      </div>
+      <div class="shapes">
+        <button class="shape-btn on" data-s="hand">🖐️ Handprint</button>
+        <button class="shape-btn" data-s="deer">🦌 Deer</button>
+        <button class="shape-btn" data-s="bison">🐃 Wild cattle</button>
+        <button class="shape-btn" data-s="hunter">🏹 Hunter</button>
+      </div>
+      <button class="ghost-btn" id="paint-clear">🧽 Wash the wall</button>
+    </div>
+    <div class="wall-wrap">
+      <svg viewBox="0 0 600 300" id="wall" aria-label="Rock wall to paint on">
+        <defs>
+          <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
+          <radialGradient id="rockg" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#d9b38c"/><stop offset=".6" stop-color="#c49a72"/><stop offset="1" stop-color="#a77e59"/></radialGradient>
+        </defs>
+        <rect width="600" height="300" fill="url(#rockg)"/>
+        <path d="M0,70 Q150,40 300,80 T600,60 M0,190 Q200,170 380,210 T600,200 M120,0 Q140,150 90,300 M460,0 Q430,140 480,300" stroke="#9c7552" stroke-width="2" fill="none" opacity=".45"/>
+        <g id="paintings" filter="url(#rough)"></g>
+      </svg>
+    </div>
+    <p class="paint-tip" id="paint-tip">Paintings so far: 0</p>
+  </section>
+
+  <!-- ACT 5 DETECTIVES -->
+  <section class="act">
+    <span class="act-label">ACT FIVE · HISTORY DETECTIVES</span>
+    <h2>How Do We Know?</h2>
+    <div class="detective">
+      <div class="clue"><h4>🚂 Clue 1: Seen from a train (1957)</h4>
+        Archaeologist <b>V. S. Wakankar</b> was travelling by train through Madhya Pradesh when he
+        noticed unusual rock formations near the tracks. He went back to explore — and found the
+        painted shelters of <b>Bhimbetka</b>. Today it's a UNESCO World Heritage Site. Always look
+        out of the window!</div>
+      <div class="clue"><h4>💀 Clue 2: Bones in Sri Lankan caves</h4>
+        India's warm, wet soil usually destroys bones. But in Sri Lanka's caves, like
+        <b>Fa-Hien Lena</b> and <b>Batadomba-lena</b>, bones and skeletons of <b>modern humans</b>
+        survived from tens of thousands of years ago — among the oldest in South Asia. They prove
+        people like us were here.</div>
+      <div class="clue"><h4>🧬 Clue 3: The library inside you</h4>
+        Every cell in your body carries <b>DNA</b> — a kind of instruction book passed from parents
+        to children. By comparing the DNA of people living today, scientists can trace family
+        lines back tens of thousands of years — to the first modern humans who reached India.
+        In a way, you carry this history inside you!</div>
+    </div>
+  </section>
+
+  <!-- ACT 6 REFLECT -->
+  <section class="act">
+    <span class="act-label">ACT SIX · THINK ABOUT IT</span>
+    <h2>Leave Your Mark</h2>
+    <div class="story">
+      <p>The bead-makers and painters left behind things that told the world <b>"we were here, and
+        this is who we are."</b> If you could leave <b>one thing</b> for people 25,000 years from now,
+        what would you choose?</p>
+    </div>
+    <div class="branch-grid">
+      <button class="branch-btn" data-key="paint">🎨 A painting on a wall</button>
+      <button class="branch-btn" data-key="beads">📿 My favourite necklace</button>
+      <button class="branch-btn" data-key="tool">🔧 A tool I made myself</button>
+      <button class="branch-btn" data-key="story">🗣️ A story or a song</button>
+    </div>
+    <div class="branch-response" id="branch-response"></div>
+
+    <div class="thread-box">🧵 <b>What these people gave my thread:</b> <b>art, jewellery and
+      symbols</b> — the idea that a mark or an object can <i>mean</i> something. The red-ochre
+      paintings of Bhimbetka are the great-great-grandparents of every <b>rangoli, kolam, temple
+      mural and Warli painting</b> in India. And the beads? Indians have been making and wearing
+      beads ever since — from Harappan carnelian to the necklace someone in your family is wearing today.</div>
+  </section>
+
+  <div class="next-box">
+    <h2>🧵 Where does my thread go next?</h2>
+    <p>The Ice Age is ending! The world warms up, forests grow, and people start making
+      <b>tiny stone tools</b> for bows and arrows — and tame their first animals. That's the
+      <b>Mesolithic</b>.</p>
+    <div class="nav-row">
+      <a class="pill" href="../Tunnel_2_to_3/index.html">⬅️ Back through the Tunnel</a>
+      <a class="pill" href="../../index.html#timeline">🕰️ Timeline</a>
+      <span class="pill locked">🔒 Stop 4: Mesolithic (coming soon)</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+/* ---------- projection (must match the map data) ---------- */
+const L0=66, B1=37, S=20, C=Math.cos(21.5*Math.PI/180);
+const proj=(lat,lon)=>[(lon-L0)*C*S,(B1-lat)*S];
+const NS='http://www.w3.org/2000/svg';
+const el=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;};
+
+/* geography labels */
+const labels=[
+  ['HIMALAYA',31.0,79.6,'geo-label',-22],['THAR DESERT',26.6,70.0,'geo-label',0],
+  ['VINDHYA HILLS',24.1,77.6,'geo-label',-8],['WESTERN GHATS',13.6,75.0,'geo-label',75],
+  ['EASTERN GHATS',16.4,80.6,'geo-label',-52],['DECCAN',18.2,77.4,'geo-label',0],
+  ['ARABIAN SEA',15.0,69.3,'sea-label',0],['BAY OF BENGAL',15.0,85.5,'sea-label',0],
+  ['INDIAN OCEAN',7.0,73.5,'sea-label',0],
+  ['Indus',27.3,68.9,'riv-label',-60],['Ganga',25.0,84.6,'riv-label',-8],['Narmada',22.25,74.6,'riv-label',-4],
+  ['Godavari',18.2,79.9,'riv-label',-35],['Krishna',16.2,79.0,'riv-label',-10],['Brahmaputra',26.6,92.0,'riv-label',0]
+];
+const gl=document.getElementById('labels');
+labels.forEach(([t,la,lo,c,r])=>{const [x,y]=proj(la,lo);const tx=el('text',{x,y,class:c,'text-anchor':'middle',transform:`rotate(${r} ${x} ${y})`},gl);tx.textContent=t;});
+
+const cities=[['Delhi',28.61,77.21],['Mumbai',19.08,72.88],['Kolkata',22.57,88.36,1],['Hyderabad',17.39,78.49],['Bengaluru',12.97,77.59]];
+const gc=document.getElementById('cities');
+cities.forEach(([n,la,lo])=>{const [x,y]=proj(la,lo);const g=el('g',{class:'city'},gc);el('circle',{cx:x,cy:y,r:3},g);const t=el('text',{x:x+5,y:y+13},g);t.textContent=n;});
+
+/* ---------- sites ---------- */
+
+const sites=[
+ {id:'bhim',name:'Bhimbetka',lat:22.94,lon:77.61,lab:[-12,-10],state:'near Bhopal, Madhya Pradesh',age:'earliest paintings in the late Old Stone Age',
+  story:'Over <b>700 rock shelters</b> spread across forested hills. Some of the <b>oldest paintings</b> here — large animals drawn in green and dark red lines — are thought to belong to the Upper Palaeolithic. People went on painting at Bhimbetka for thousands of years afterwards, so the walls are like a giant <b>picture book</b> with pages from many ages.',
+  found:'🎨 Rock paintings, blades and scrapers in the shelter floors.'},
+ {id:'patne',name:'Patne',lat:20.45,lon:74.95,lab:[-10,-10],state:'Jalgaon district, Maharashtra',age:'about 25,000 years ago',
+  story:'The bead-makers from our story! At Patne, archaeologists found <b>ostrich eggshell beads</b> and a piece of eggshell <b>engraved with a criss-cross pattern</b> — some of the earliest decorated objects in India. Someone sat here and made patterns just because they meant something.',
+  found:'📿 Eggshell beads, an engraved eggshell, blades and burins.'},
+ {id:'belan',name:'Belan & Son Valleys',lat:24.7,lon:82.2,lab:[10,4],state:'near Prayagraj (UP) & Sidhi (MP)',age:'Upper Palaeolithic, to about 11,000 years ago',
+  story:'In the Belan valley, blades and burins lie in river gravels with bones of <b>wild cattle</b>. Nearby in the Son valley, at <b>Baghor</b>, people built a small round platform of stones and placed on it a <b>triangular stone with natural coloured rings</b>. Similar stones are still worshipped as the Mother Goddess in this region today — it may be one of the <b>oldest shrines</b> found anywhere!',
+  found:'🛕 Blades, burins, animal bones — and a possible ancient shrine at Baghor.'},
+ {id:'kurnool',name:'Kurnool Caves & Jwalapuram',lat:15.36,lon:78.17,lab:[-12,4],state:'Kurnool district, Andhra Pradesh',age:'about 35,000 – 12,000 years ago',
+  story:'Deep limestone caves like <b>Billa Surgam</b> held thousands of animal bones and some of India\'s oldest <b>bone tools</b>. Nearby at <b>Jwalapuram</b> (remember the Toba ash from Stop 2?), a rock shelter held tiny blades and <b>ostrich-eggshell beads</b> about 35,000 years old.',
+  found:'🦴 Bone points and awls, tiny blades, eggshell beads.'},
+ {id:'reni',name:'Renigunta',lat:13.65,lon:79.5,lab:[10,4],state:'near Tirupati, Andhra Pradesh',age:'Upper Palaeolithic',
+  story:'Renigunta was one of the first places in India where archaeologists found a whole set of <b>long, thin blades and burins</b> — the signature tools of this age. It showed that the "blade revolution" happened in India too, not just in Europe or Africa.',
+  found:'🗡️ Blades, burins, scrapers and points.'},
+ {id:'fahien',name:'Fa-Hien Lena',lat:6.65,lon:80.2,lab:[12,4],state:'Sri Lanka (joined to India by land in the Ice Age)',age:'from about 48,000 years ago',
+  story:'A big cave in the rainforest of Sri Lanka. People lived here from about <b>48,000 years ago</b>, hunting <b>monkeys and squirrels</b> in the trees with tiny stone points and bone tools. Human bones found here, and in nearby <b>Batadomba-lena</b>, are among the oldest remains of modern humans in all of South Asia.',
+  found:'💀 Human bones, tiny stone tools, bone tools and animal remains.'},
+ {id:'sanghao',name:'Sanghao Cave',lat:34.36,lon:72.05,lab:[10,4],state:'near Mardan (Pakistan today)',age:'Upper Palaeolithic',
+  story:'High in the north-west hills, people lived in Sanghao cave and left behind <b>thousands of stone tools</b> and hearths where they made fires. It shows modern humans were living across the whole subcontinent — from the mountains to the far south.',
+  found:'🔥 Hearths, blades and scrapers made of quartz.'}
+];
+
+const gs=document.getElementById('sites'), card=document.getElementById('site-card'), list=document.getElementById('site-list');
+const visited=new Set();
+function updateThread(){
+  const pct=Math.min(100,(window.scrollY/(document.body.scrollHeight-innerHeight))*100);
+  document.getElementById('thread-fill').style.width=pct+'%';
+}
+function visit(s){
+  visited.add(s.id);
+  document.querySelectorAll('.site').forEach(n=>n.classList.toggle('active',n.dataset.id===s.id));
+  document.querySelector(`.site[data-id="${s.id}"]`).classList.add('visited');
+  document.querySelector(`#site-list button[data-id="${s.id}"]`).classList.add('visited');
+  card.innerHTML=`<h3>📍 ${s.name}</h3><span class="where">🗺️ ${s.state}</span><span class="where">⏳ ${s.age}</span><p>${s.story}</p><div class="found"><b>What was found:</b><br>${s.found}</div>`;
+  const vc=document.getElementById('visit-count');
+  vc.textContent=visited.size===sites.length?`🎉 You visited all ${sites.length} sites! You\'re a real Stone Age explorer!`:`Sites visited: ${visited.size} / ${sites.length}`;
+}
+sites.forEach(s=>{
+  const [x,y]=proj(s.lat,s.lon);
+  const g=el('g',{class:'site',tabindex:0,role:'button','aria-label':s.name,'data-id':s.id},gs);
+  el('circle',{cx:x,cy:y,r:20,fill:'transparent'},g);
+  el('circle',{class:'pulse',cx:x,cy:y,r:9},g);
+  el('circle',{class:'dot',cx:x,cy:y,r:7.5},g);
+  const anchor=s.lab[0]<0?'end':'start';
+  const t=el('text',{x:x+s.lab[0],y:y+s.lab[1],'text-anchor':anchor},g);t.textContent=s.name.split(' & ')[0].replace('Chirki–','');
+  g.addEventListener('click',()=>visit(s));
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();visit(s);}});
+  const b=document.createElement('button');b.textContent=s.name;b.dataset.id=s.id;b.onclick=()=>{visit(s);if(innerWidth<720)card.scrollIntoView({block:'nearest'});};list.appendChild(b);
+});
+
+/* ---------- hotspots ---------- */
+document.querySelectorAll('.hotspot').forEach(btn=>btn.addEventListener('click',()=>{
+  const box=document.getElementById(btn.dataset.target);
+  const show=!box.classList.contains('show');
+  box.classList.toggle('show',show); btn.classList.toggle('revealed',show);
+}));
+
+
+/* ---------- bead necklace ---------- */
+(function(){
+  const btn=document.getElementById('bead-step'), msg=document.getElementById('bead-msg'), work=document.getElementById('work'), beads=document.getElementById('beads'), cnt=document.getElementById('bead-count');
+  const TOTAL=8; let n=0, step=0;
+  const labels=['🥚 Break off a piece','🪡 Drill a hole','🪨 Grind it round'];
+  const tips=[
+    ['🥚 <b>Crack!</b> A small, jagged piece of eggshell. Ostrich shell is about 2 mm thick — much stronger than a hen\'s egg.','🥚 Another piece of shell. Try not to break it while drilling!'],
+    ['🪡 Twist, twist, twist… using a tiny pointed stone drill, you bore a hole <b>from both sides</b> so they meet in the middle. Patience!','🪡 Drilling… careful… done!'],
+    ['🪨 Rub the edges on a rough flat stone until the piece is <b>round and smooth</b>.','🪨 Grind, grind — smooth and round.']
+  ];
+  function curve(t){const x=(1-t)*(1-t)*40+2*(1-t)*t*150+t*t*260, y=(1-t)*(1-t)*40+2*(1-t)*t*250+t*t*40;return [x,y];}
+  function drawWork(){work.innerHTML='';
+    if(step===1) el('polygon',{points:'-16,-10 12,-14 18,6 -4,16 -18,4',fill:'#f4ecd8',stroke:'#8a7a60','stroke-width':2},work);
+    if(step===2){el('polygon',{points:'-16,-10 12,-14 18,6 -4,16 -18,4',fill:'#f4ecd8',stroke:'#8a7a60','stroke-width':2},work);el('circle',{r:3.5,fill:'#5a4a3a'},work);}
+  }
+  function reset(){n=0;step=0;beads.innerHTML='';work.innerHTML='';btn.disabled=false;btn.textContent=labels[0];cnt.textContent='Beads: 0 / '+TOTAL;
+    msg.innerHTML='Press the button to break a small piece off an ostrich eggshell.';}
+  btn.onclick=()=>{
+    msg.innerHTML=tips[step][n===0?0:1]; step++;
+    if(step===3){ step=0; n++; work.innerHTML='';
+      const [x,y]=curve(0.12+0.76*(n-1)/(TOTAL-1));
+      const g=el('g',{class:'bead'},beads);
+      el('circle',{cx:x,cy:y,r:11,fill:'#f4ecd8',stroke:'#8a7a60','stroke-width':2},g);
+      el('circle',{cx:x,cy:y,r:3,fill:'#7a5a3a'},g);
+      cnt.textContent='Beads: '+n+' / '+TOTAL;
+      if(n===TOTAL){btn.disabled=true;btn.textContent='✅ Necklace finished';
+        msg.innerHTML='🎉 <b>Your necklace is finished!</b> 8 beads, each made in 3 careful steps — that\'s 24 steps of work. Archaeologists find beads like these at <b>Patne</b> and <b>Jwalapuram</b>. A necklace like this might have been worn for years, given as a gift, or traded with another group far away.';
+        return;}
+      msg.innerHTML+='<br><br>✨ <b>Bead '+n+' done!</b> Slide it onto the string. Now start the next one.';
+    } else drawWork();
+    btn.textContent=labels[step];
+  };
+  document.getElementById('bead-reset').onclick=reset; reset();
+})();
+
+/* ---------- rock painting ---------- */
+(function(){
+  const wall=document.getElementById('wall'), g=document.getElementById('paintings'), tip=document.getElementById('paint-tip');
+  let colour='#a3361c', shapeName='hand', count=0;
+  const shapes={
+    hand:(c)=>`<path d="M-14,30 Q-20,0 -16,-6 L-22,-34 Q-19,-40 -14,-34 L-8,-10 L-8,-44 Q-4,-50 0,-44 L1,-12 L5,-46 Q9,-52 13,-46 L10,-10 L17,-38 Q22,-42 24,-36 L16,0 L28,-10 Q34,-8 30,-2 L14,24 Q6,36 -14,30Z" fill="${c}" opacity=".9"/>`,
+    deer:(c)=>`<path d="M-40,0 Q-30,-14 0,-12 Q22,-12 34,-18 L40,-36 M34,-18 L46,-22 L40,-12 Q34,-6 30,0 Q20,12 -30,10 Q-44,8 -40,0Z M-30,8 L-34,34 M-18,10 L-16,34 M14,8 L12,34 M26,4 L30,34 M40,-36 L34,-48 M40,-36 L48,-46" fill="${c}" stroke="${c}" stroke-width="4" stroke-linecap="round" opacity=".9"/>`,
+    bison:(c)=>`<path d="M-50,-4 Q-48,-30 -10,-30 Q20,-36 36,-20 Q50,-14 52,0 Q50,12 36,10 Q10,18 -40,12 Q-52,8 -50,-4Z M44,-18 Q54,-30 48,-36 M-42,10 L-44,36 M-26,14 L-24,36 M18,14 L16,36 M34,10 L36,36 M-50,-4 L-60,6" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" opacity=".9"/><path d="M-44,-4 L40,-4 M-40,4 L36,4" stroke="${c}" stroke-width="2" opacity=".6"/>`,
+    hunter:(c)=>`<g stroke="${c}" stroke-width="5" stroke-linecap="round" fill="none" opacity=".9"><circle cx="0" cy="-38" r="7" fill="${c}"/><path d="M0,-30 L0,4 M0,4 L-12,34 M0,4 L14,32 M0,-20 L-18,-6 M0,-20 L20,-26 M-20,-50 Q30,-30 24,10"/><path d="M-20,-50 L24,10" stroke-width="2"/></g>`
+  };
+  document.querySelectorAll('.swatch').forEach(b=>b.onclick=()=>{document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('on'));b.classList.add('on');colour=b.dataset.c;});
+  document.querySelectorAll('.shape-btn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.shape-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');shapeName=b.dataset.s;});
+  const notes=['','🎨 Your first painting! At Bhimbetka, some pictures are high up on the walls — painters may have climbed on ledges or used ladders.',
+    '','🖐️ Handprints and animals are some of the most common early pictures all around the world — people everywhere had the same idea!',
+    '','','🦌 Great wall! Over thousands of years, new painters added pictures on top of old ones at Bhimbetka — sometimes 20 layers deep.'];
+  wall.addEventListener('click',e=>{
+    const pt=wall.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const p=pt.matrixTransform(wall.getScreenCTM().inverse());
+    const s=0.85+Math.random()*0.35, r=(Math.random()*16-8).toFixed(0);
+    const grp=el('g',{transform:`translate(${p.x.toFixed(0)},${p.y.toFixed(0)}) rotate(${r}) scale(${s.toFixed(2)})`},g);
+    grp.innerHTML=shapes[shapeName](colour); count++;
+    tip.innerHTML='Paintings so far: '+count+(notes[count]?'<br>'+notes[count]:'');
+  });
+  document.getElementById('paint-clear').onclick=()=>{g.innerHTML='';count=0;tip.textContent='Paintings so far: 0';};
+})();
+
+/* ---------- toolkit ---------- */
+document.querySelectorAll('.tool').forEach(t=>{const f=()=>t.classList.toggle('open');t.onclick=f;t.onkeydown=e=>{if(e.key==='Enter'){f();}};});
+
+document.querySelectorAll('.branch-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.branch-btn').forEach(b=>b.classList.remove('chosen'));btn.classList.add('chosen');
+  const box=document.getElementById('branch-response');box.innerHTML='🧵 <b>Tantu says:</b> '+branchData[btn.dataset.key];box.classList.add('show');
+}));
+
+addEventListener('scroll',updateThread);updateThread();
+
+const branchData={
+ paint:'Paintings can last an amazingly long time when they\'re protected under rock — Bhimbetka proves it! Painters there were telling future people what mattered to them: animals, hunts, dances. What would yours show?',
+ beads:'Beads last almost forever — that\'s why archaeologists find so many! A necklace says who you are and who you love. Thousands of years from now, someone might wonder who wore yours.',
+ tool:'A great choice — tools tell us how people solved problems. But notice: the Upper Palaeolithic people didn\'t only leave tools. They left <i>art</i> too. Maybe your tool could have a pattern carved on it?',
+ story:'Stories and songs are wonderful — but they\'re invisible to archaeologists! The people of this age surely told stories and sang, but unless someone remembers and passes them on, they vanish. That\'s why passing on stories (like the Vedas, much later!) is so precious.'
+}
+;
+addEventListener('scroll',updateThread);updateThread();
+</script>
+</body>
+</html>

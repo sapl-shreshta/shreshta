@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ఇత్వ సంధి · Ithva Sandhi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff6ec7;--purple:#a06cd5;--blue:#4cc9f0;--teal:#06d6a0;--yellow:#ffd166;--orange:#ff9e45;--red:#ef476f;--ink:#1d2b53;
+ --te:'Noto Sans Telugu','Nirmala UI','Gautami',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS','Noto Sans Telugu','Nirmala UI','Gautami',sans-serif;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+ background-attachment:fixed;color:var(--ink);padding:16px;min-height:100vh;overflow-x:hidden;}
+.te,b.te{font-family:var(--te);}
+.wrap{max-width:900px;margin:0 auto;}
+.back{display:inline-block;background:var(--purple);color:#fff;text-decoration:none;padding:10px 20px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;margin:0 6px 6px 0;}
+.back:hover{transform:translateY(-2px);}
+header{text-align:center;margin:18px 0 22px;}
+.big{font-size:clamp(56px,10vw,90px);animation:bounce 2.4s ease-in-out infinite;display:inline-block;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+h1{font-size:clamp(30px,5.5vw,52px);margin:8px 0 4px;line-height:1.4;background:linear-gradient(90deg,var(--orange),var(--red),var(--purple));
+ -webkit-background-clip:text;background-clip:text;color:transparent;}
+h1 .te{font-weight:700;}
+.sub{font-size:clamp(16px,2.2vw,20px);color:var(--purple);}
+section{background:#fff;border-radius:24px;padding:22px clamp(14px,3vw,30px);margin:22px 0;box-shadow:0 8px 0 rgba(160,108,213,.18);border:3px solid #f1e4ff;}
+h2{font-size:clamp(21px,3.2vw,28px);margin-bottom:12px;color:var(--purple);}
+h3{font-size:19px;color:var(--orange);margin:16px 0 8px;}
+p,li{line-height:1.7;font-size:17px;}
+.tl{font-family:var(--te);font-weight:700;color:var(--purple);font-size:1.12em;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:680px;margin:10px auto 0;}
+.tile{background:#fff8f0;border-radius:18px;padding:18px 12px;text-align:center;text-decoration:none;color:var(--ink);border:3px solid #c77dff;
+ box-shadow:0 4px 12px rgba(0,0,0,.08);transition:all .25s cubic-bezier(.34,1.56,.64,1);display:block;}
+.tile:hover{transform:translateY(-6px) scale(1.03);}
+.tile .icon{font-size:44px;display:block;margin-bottom:4px;}
+.tile .name{font-family:var(--te);font-size:21px;font-weight:700;display:block;}
+.tile .en{font-size:14px;color:#6a5a90;}
+.flow{display:flex;flex-direction:column;align-items:center;gap:6px;background:#fffdf3;border:3px dashed var(--yellow);border-radius:18px;padding:14px 10px;margin:12px 0;}
+.st{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;}
+.lbl{font-size:13px;font-weight:bold;color:#9a7a20;background:#fff3c4;border-radius:50px;padding:2px 10px;}
+.chip{font-family:var(--te);font-weight:700;font-size:clamp(20px,3.4vw,26px);border-radius:12px;padding:2px 12px;border:3px solid;line-height:1.5;}
+.chip.a{border-color:#3a86ff;color:#1f4fa8;background:#e3eeff;}
+.chip.b{border-color:#ff5fa2;color:#b3226a;background:#ffe6f1;}
+.chip.v{border-color:#ff9e45;color:#c25e00;background:#fff0e0;}
+.chip.x{border-color:#ef476f;border-style:dashed;color:#bbb;background:#fff;text-decoration:line-through;text-decoration-color:#ef476f;}
+.chip.r{border-color:#06a77d;color:#04694f;background:#e0f8ef;font-size:clamp(24px,4vw,32px);}
+.op{font-size:24px;font-weight:bold;color:#888;}
+.arrow{font-size:20px;color:#c99a1a;}
+.say{font-size:15px;color:#555;text-align:center;}
+.rule{background:linear-gradient(135deg,#e6f8f5,#eef9ff);border:3px solid var(--teal);border-radius:18px;padding:14px 18px;font-size:17px;line-height:1.6;}
+.rule .te{font-size:clamp(19px,3vw,23px);font-weight:700;display:block;line-height:1.7;margin-bottom:4px;}
+.sutra{background:#fff6e8;border-left:8px solid var(--orange);border-radius:14px;padding:12px 16px;margin:10px 0;font-size:16px;}
+.sutra .te{font-size:clamp(19px,3vw,23px);font-weight:700;color:#b34d00;display:block;}
+.tip{background:#eef9ff;border:2px dashed var(--blue);border-radius:14px;padding:10px 14px;font-size:16px;margin-top:12px;line-height:1.6;}
+.remember{text-align:center;background:linear-gradient(135deg,#fff5d6,#ffe0f0);border-radius:18px;padding:18px;font-size:clamp(17px,2.4vw,20px);line-height:1.7;border:3px solid var(--yellow);}
+.remember .te{font-size:clamp(20px,3vw,25px);font-weight:700;color:var(--purple);display:block;margin-bottom:4px;}
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:16px;}
+th{background:#f3e6ff;color:var(--purple);padding:8px;text-align:left;}
+td{padding:8px;border-top:2px dashed #eadcf8;vertical-align:top;}
+td .te,td.te{font-family:var(--te);font-size:19px;}
+td.res{font-family:var(--te);font-size:20px;font-weight:700;color:#04694f;}
+.tag{display:inline-block;border-radius:50px;padding:2px 12px;font-size:14px;font-weight:bold;color:#fff;white-space:nowrap;}
+.t-n{background:#06a77d;} .t-v{background:#ff9e45;} .t-b{background:#a06cd5;} .t-x{background:#ef476f;}
+.gun{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;}
+.gun div{background:#fff8f0;border:2px solid #f6d3b8;border-radius:12px;padding:8px;text-align:center;font-family:var(--te);font-size:20px;}
+.gun div b{color:var(--red);}
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0;}
+.pager a{background:#fff;border:3px solid var(--yellow);color:var(--ink);text-decoration:none;padding:8px 16px;border-radius:50px;font-weight:bold;font-family:var(--te);}
+.pager a:hover{background:var(--yellow);}
+.adv{border-color:#e6d6f5;background:#fcf9ff;}
+.adv h2 small{font-size:14px;color:#8a7aa8;font-weight:normal;}
+footer{text-align:center;color:#7a6aa0;font-size:14px;margin:24px 0 10px;}
+@media print{body{background:#fff;}.back,.pager{display:none;}section{box-shadow:none;break-inside:avoid-page;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">⬅️ సంధులు</a><a class="back" href="../../index.html">🏠 Home</a>
+<header><div class="big">✨</div><h1><span class="te">ఇత్వ సంధి</span> · Ithva Sandhi</h1>
+<p class="sub">The sandhi of the hidden <span class="te">“ఇ”</span></p></header>
+
+<section><h2>💡 What happens?</h2>
+<div class="rule"><span class="te">మొదటి పదం చివర “ఇ” ఉండి, రెండవ పదం అచ్చుతో మొదలైతే — ఆ “ఇ” పోవచ్చు.</span>
+If the first word ends in <b>ఇ</b> and the second word starts with a vowel, the <b>ఇ</b> can drop out and the two words join.</div>
+<p style="margin-top:10px">It works just like <a href="athva.html" class="te">అత్వ సంధి</a> — only the hidden vowel is <b>ఇ</b> instead of అ. Letters like <span class="tl">మి, ది, రి, కి</span> hide an ఇ.</p></section>
+
+<section><h2>🪜 Step by step</h2>
+<h3>Example 1: <span class="te">ఏమి + అంటివి</span></h3>
+<div class="flow"><div class="lbl">1 · Write the two words</div><div class="st"><span class="chip a">ఏమి</span><span class="op">+</span><span class="chip b">అంటివి</span></div><div class="arrow">⬇</div><div class="lbl">2 · Find the hidden vowel</div><div class="st"><span class="chip a">ఏమ్</span><span class="chip v">ఇ</span><span class="op">+</span><span class="chip b">అంటివి</span></div><div class="say"><span class="te">మి = మ్ + ఇ</span> — the first word ends in <b>ఇ</b></div><div class="arrow">⬇</div><div class="lbl">3 · Drop the ఇ</div><div class="st"><span class="chip a">ఏమ్</span><span class="chip x">ఇ</span><span class="op">+</span><span class="chip b">అంటివి</span></div><div class="say">the ఇ goes away ✂️</div><div class="arrow">⬇</div><div class="lbl">4 · Join</div><div class="st"><span class="chip r">ఏమంటివి</span></div><div class="say"><span class="te">మ్ + అం = మం</span> → <b class="te">ఏమంటివి</b></div></div>
+<h3>Example 2: <span class="te">మఱి + ఏమి</span></h3>
+<div class="flow"><div class="lbl">1 · Write the two words</div><div class="st"><span class="chip a">మఱి</span><span class="op">+</span><span class="chip b">ఏమి</span></div><div class="arrow">⬇</div><div class="lbl">2 · Find the hidden vowel</div><div class="st"><span class="chip a">మఱ్</span><span class="chip v">ఇ</span><span class="op">+</span><span class="chip b">ఏమి</span></div><div class="say"><span class="te">ఱి = ఱ్ + ఇ</span></div><div class="arrow">⬇</div><div class="lbl">3 · Drop the ఇ</div><div class="st"><span class="chip a">మఱ్</span><span class="chip x">ఇ</span><span class="op">+</span><span class="chip b">ఏమి</span></div><div class="arrow">⬇</div><div class="lbl">4 · Join</div><div class="st"><span class="chip r">మఱేమి</span></div><div class="say"><span class="te">ఱ్ + ఏ = ఱే</span> → <b class="te">మఱేమి</b></div></div></section>
+
+<section><h2>🤝 Two right answers!</h2>
+<p>ఇత్వ సంధి is <span class="tag t-v">వైకల్పికం</span> — <b>optional</b>. The ఇ may drop, or it may stay. If it stays, a <b class="te">య</b> comes in between the words (that is <span class="te">యడాగమ సంధి</span>).</p>
+<div class="flow"><div class="lbl">Two words</div><div class="st"><span class="chip a">ఏమి</span><span class="op">+</span><span class="chip b">అంటివి</span></div><div class="arrow">⬇</div><div class="lbl">Both are correct ✔️</div><div class="st"><span class="chip r">ఏమంటివి</span><span class="op">/</span><span class="chip r">ఏమియంటివి</span></div><div class="say">ఇ drops → <span class="te">ఏమంటివి</span> &nbsp;·&nbsp; ఇ stays + య → <span class="te">ఏమియంటివి</span></div></div>
+</section>
+
+<section><h2>🎯 Which words does it work with?</h2>
+<p>ఇత్వ సంధి works mainly with a small group of special words, called <b class="te">ఏమ్యాదులు</b> (“ఏమి and friends”):</p>
+<div class="gun"><div>ఏమి</div><div>మఱి</div><div>అది</div><div>ఇది</div><div>ఏది</div><div>-కి <small style="font-size:13px">(హరికి…)</small></div></div>
+<p style="margin-top:10px">It also works with <b>action words</b> (<span class="te">క్రియాపదాలు</span>) that end in ఇ, like <span class="tl">వచ్చిరి</span>.</p>
+<div class="tw"><table><tr><th>పూర్వపదం + పరపదం</th><th>సంధి పదం</th><th>How it joins</th></tr><tr><td class="te">అది + ఏమి</td><td class="res">అదేమి</td><td class="te">ద్ + ఏమి</td></tr><tr><td class="te">ఇది + ఎవరు</td><td class="res">ఇదెవరు</td><td class="te">ద్ + ఎవరు</td></tr><tr><td class="te">ఏమి + ఐనది</td><td class="res">ఏమైనది</td><td class="te">మ్ + ఐనది</td></tr><tr><td class="te">మఱి + ఎక్కడ</td><td class="res">మఱెక్కడ</td><td class="te">ఱ్ + ఎక్కడ</td></tr><tr><td class="te">హరికి + ఇచ్చెను</td><td class="res">హరికిచ్చెను</td><td class="te">క్ + ఇచ్చెను</td></tr><tr><td class="te">వచ్చిరి + ఇప్పుడు</td><td class="res">వచ్చిరిప్పుడు</td><td class="te">ర్ + ఇప్పుడు</td></tr></table></div>
+</section>
+
+<section><h2>✂️ Breaking a sandhi word</h2>
+<p>Find where the second word starts, and <b>give the ఇ back</b> to the first word.</p>
+<div class="flow"><div class="lbl">Sandhi word</div><div class="st"><span class="chip r">అదేమి</span></div><div class="say">The second word is <span class="te">ఏమి</span></div><div class="arrow">⬇</div><div class="lbl">Split</div><div class="st"><span class="chip a">అద్</span><span class="op">+</span><span class="chip b">ఏమి</span></div><div class="arrow">⬇</div><div class="lbl">Give the ఇ back</div><div class="st"><span class="chip a">అది</span><span class="op">+</span><span class="chip b">ఏమి</span></div><div class="say"><span class="te">ద్ + ఇ = ది</span> ✔️</div></div>
+<div class="tip">🔍 After breaking, if the first word ends in <b>ఇ</b> → it is <b>ఇత్వ సంధి</b>.</div></section>
+
+<section class="adv"><h2>📜 <span class="te">సూత్రం</span> · The grammar rule <small>· for older kids &amp; parents</small></h2>
+<div class="sutra"><span class="te">ఏమ్యాదులందలి ఇత్తునకు సంధి వైకల్పికము.</span>In ఏమి and similar words, the short ఇ joins <b>optionally</b>.</div>
+<div class="sutra"><span class="te">క్రియాపదములందలి ఇత్తునకు సంధి వైకల్పికము.</span>In action words (verbs), the short ఇ also joins <b>optionally</b>.</div></section>
+
+<section><div class="remember"><span class="te">ఇ + అచ్చు → ఇ పోవచ్చు!</span>
+The ఇ may drop (ఏమంటివి) or stay with a య (ఏమియంటివి) — both are right. ✨</div></section>
+<div class="pager"><a href="athva.html">⬅️ అత్వ సంధి</a><a href="uthva.html">ఉత్వ సంధి ➡️</a></div>
+<footer>Made for Shreshta 🌼 · <span class="te">తెలుగు నేర్చుకుందాం!</span></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>సంధులు · Sandhulu 🔗</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff6ec7;--purple:#a06cd5;--blue:#4cc9f0;--teal:#06d6a0;--yellow:#ffd166;--orange:#ff9e45;--red:#ef476f;--ink:#1d2b53;
+ --te:'Noto Sans Telugu','Nirmala UI','Gautami',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS','Noto Sans Telugu','Nirmala UI','Gautami',sans-serif;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+ background-attachment:fixed;color:var(--ink);padding:16px;min-height:100vh;overflow-x:hidden;}
+.te,b.te{font-family:var(--te);}
+.wrap{max-width:900px;margin:0 auto;} html{scroll-behavior:smooth;}
+.back{display:inline-block;background:var(--purple);color:#fff;text-decoration:none;padding:10px 20px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;margin:0 6px 6px 0;}
+.back:hover{transform:translateY(-2px);}
+header{text-align:center;margin:18px 0 22px;}
+.big{font-size:clamp(56px,10vw,90px);animation:bounce 2.4s ease-in-out infinite;display:inline-block;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+h1{font-size:clamp(30px,5.5vw,52px);margin:8px 0 4px;line-height:1.4;background:linear-gradient(90deg,var(--orange),var(--red),var(--purple));
+ -webkit-background-clip:text;background-clip:text;color:transparent;}
+h1 .te{font-weight:700;}
+.sub{font-size:clamp(16px,2.2vw,20px);color:var(--purple);}
+section{background:#fff;border-radius:24px;padding:22px clamp(14px,3vw,30px);margin:22px 0;box-shadow:0 8px 0 rgba(160,108,213,.18);border:3px solid #f1e4ff;}
+h2{font-size:clamp(21px,3.2vw,28px);margin-bottom:12px;color:var(--purple);}
+h3{font-size:19px;color:var(--orange);margin:16px 0 8px;}
+p,li{line-height:1.7;font-size:17px;}
+.tl{font-family:var(--te);font-weight:700;color:var(--purple);font-size:1.12em;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:680px;margin:10px auto 0;}
+.tile{background:#fff8f0;border-radius:18px;padding:18px 12px;text-align:center;text-decoration:none;color:var(--ink);border:3px solid #c77dff;
+ box-shadow:0 4px 12px rgba(0,0,0,.08);transition:all .25s cubic-bezier(.34,1.56,.64,1);display:block;}
+.tile:hover{transform:translateY(-6px) scale(1.03);}
+.tile .icon{font-size:44px;display:block;margin-bottom:4px;}
+.tile .name{font-family:var(--te);font-size:21px;font-weight:700;display:block;}
+.tile .en{font-size:14px;color:#6a5a90;}
+.flow{display:flex;flex-direction:column;align-items:center;gap:6px;background:#fffdf3;border:3px dashed var(--yellow);border-radius:18px;padding:14px 10px;margin:12px 0;}
+.st{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;}
+.lbl{font-size:13px;font-weight:bold;color:#9a7a20;background:#fff3c4;border-radius:50px;padding:2px 10px;}
+.chip{font-family:var(--te);font-weight:700;font-size:clamp(20px,3.4vw,26px);border-radius:12px;padding:2px 12px;border:3px solid;line-height:1.5;}
+.chip.a{border-color:#3a86ff;color:#1f4fa8;background:#e3eeff;}
+.chip.b{border-color:#ff5fa2;color:#b3226a;background:#ffe6f1;}
+.chip.v{border-color:#ff9e45;color:#c25e00;background:#fff0e0;}
+.chip.x{border-color:#ef476f;border-style:dashed;color:#bbb;background:#fff;text-decoration:line-through;text-decoration-color:#ef476f;}
+.chip.r{border-color:#06a77d;color:#04694f;background:#e0f8ef;font-size:clamp(24px,4vw,32px);}
+.op{font-size:24px;font-weight:bold;color:#888;}
+.arrow{font-size:20px;color:#c99a1a;}
+.say{font-size:15px;color:#555;text-align:center;}
+.rule{background:linear-gradient(135deg,#e6f8f5,#eef9ff);border:3px solid var(--teal);border-radius:18px;padding:14px 18px;font-size:17px;line-height:1.6;}
+.rule .te{font-size:clamp(19px,3vw,23px);font-weight:700;display:block;line-height:1.7;margin-bottom:4px;}
+.sutra{background:#fff6e8;border-left:8px solid var(--orange);border-radius:14px;padding:12px 16px;margin:10px 0;font-size:16px;}
+.sutra .te{font-size:clamp(19px,3vw,23px);font-weight:700;color:#b34d00;display:block;}
+.tip{background:#eef9ff;border:2px dashed var(--blue);border-radius:14px;padding:10px 14px;font-size:16px;margin-top:12px;line-height:1.6;}
+.remember{text-align:center;background:linear-gradient(135deg,#fff5d6,#ffe0f0);border-radius:18px;padding:18px;font-size:clamp(17px,2.4vw,20px);line-height:1.7;border:3px solid var(--yellow);}
+.remember .te{font-size:clamp(20px,3vw,25px);font-weight:700;color:var(--purple);display:block;margin-bottom:4px;}
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:16px;}
+th{background:#f3e6ff;color:var(--purple);padding:8px;text-align:left;}
+td{padding:8px;border-top:2px dashed #eadcf8;vertical-align:top;}
+td .te,td.te{font-family:var(--te);font-size:19px;}
+td.res{font-family:var(--te);font-size:20px;font-weight:700;color:#04694f;}
+.tag{display:inline-block;border-radius:50px;padding:2px 12px;font-size:14px;font-weight:bold;color:#fff;white-space:nowrap;}
+.t-n{background:#06a77d;} .t-v{background:#ff9e45;} .t-b{background:#a06cd5;} .t-x{background:#ef476f;}
+.gun{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;}
+.gun div{background:#fff8f0;border:2px solid #f6d3b8;border-radius:12px;padding:8px;text-align:center;font-family:var(--te);font-size:20px;}
+.gun div b{color:var(--red);}
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0;}
+.pager a{background:#fff;border:3px solid var(--yellow);color:var(--ink);text-decoration:none;padding:8px 16px;border-radius:50px;font-weight:bold;font-family:var(--te);}
+.pager a:hover{background:var(--yellow);}
+.adv{border-color:#e6d6f5;background:#fcf9ff;}
+.adv h2 small{font-size:14px;color:#8a7aa8;font-weight:normal;}
+footer{text-align:center;color:#7a6aa0;font-size:14px;margin:24px 0 10px;}
+@media print{body{background:#fff;}.back,.pager{display:none;}section{box-shadow:none;break-inside:avoid-page;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../index.html">⬅️ Telugu</a><a class="back" href="../../index.html">🏠 Home</a>
+<header><div class="big">🔗</div><h1><span class="te">సంధులు</span> · Sandhulu</h1>
+<p class="sub">When two words hold hands and become one 🤝</p></header>
+
+<section id="top"><h2 style="text-align:center">👉 Which sandhi do you want to learn?</h2>
+<div class="grid">
+ <a class="tile" href="#what"><span class="icon">🤔</span><span class="name">సంధి అంటే?</span><span class="en">What is a sandhi? Start here</span></a>
+ <a class="tile" href="athva.html"><span class="icon">🅰️</span><span class="name">అత్వ సంధి</span><span class="en">the hidden అ drops</span></a>
+ <a class="tile" href="ithva.html"><span class="icon">✨</span><span class="name">ఇత్వ సంధి</span><span class="en">the hidden ఇ drops</span></a>
+ <a class="tile" href="uthva.html"><span class="icon">🌀</span><span class="name">ఉత్వ సంధి</span><span class="en">the hidden ఉ drops</span></a>
+</div></section>
+
+<section id="what"><h2>🤔 <span class="te">సంధి అంటే ఏమిటి?</span> · What is a Sandhi?</h2>
+<p><b class="te">సంధి</b> means <b>“joining”</b>. When we say two words quickly, one after the other, they stick together and a sound in the middle changes or disappears.</p>
+<div class="flow"><div class="lbl">Two words</div><div class="st"><span class="chip a">రామ</span><span class="op">+</span><span class="chip b">అయ్య</span></div><div class="say">Say them slowly… then say them fast!</div><div class="arrow">⬇</div><div class="lbl">One word</div><div class="st"><span class="chip r">రామయ్య</span></div><div class="say">The two words joined into one — that is a <b class="te">సంధి</b>.</div></div>
+<p>You already do this every day without noticing — <span class="tl">అన్నయ్య, తాతయ్య, సీతమ్మ</span> are all sandhi words!</p>
+</section>
+
+<section><h2>📖 Words we will use</h2>
+<div class="tw"><table>
+<tr><td class="te"><b>పూర్వపదం</b></td><td>the <b>first</b> word (<span class="te">రామ</span>)</td></tr>
+<tr><td class="te"><b>పరపదం</b></td><td>the <b>second</b> word (<span class="te">అయ్య</span>)</td></tr>
+<tr><td class="te"><b>సంధి పదం</b></td><td>the new joined word (<span class="te">రామయ్య</span>)</td></tr>
+<tr><td class="te"><b>అచ్చులు</b></td><td>vowels — <span class="te">అ ఆ ఇ ఈ ఉ ఊ ఋ ఎ ఏ ఐ ఒ ఓ ఔ</span></td></tr>
+<tr><td class="te"><b>హల్లులు</b></td><td>consonants — <span class="te">క ఖ గ ఘ … మ య ర ల వ …</span></td></tr>
+<tr><td class="te"><b>సంధి చేయడం</b></td><td>joining two words into one</td></tr>
+<tr><td class="te"><b>సంధి విడదీయడం</b></td><td>breaking a sandhi word back into two words</td></tr>
+</table></div></section>
+
+<section><h2>🔍 The secret: the hidden vowel</h2>
+<p>Every <span class="te">గుణింతం</span> letter is really a <b>హల్లు + an అచ్చు</b> stuck together. The vowel is hiding inside!</p>
+<div class="gun"><div>క = క్ + <b>అ</b></div><div>కి = క్ + <b>ఇ</b></div><div>కు = క్ + <b>ఉ</b></div>
+<div>మ = మ్ + <b>అ</b></div><div>మి = మ్ + <b>ఇ</b></div><div>ము = మ్ + <b>ఉ</b></div>
+<div>డ = డ్ + <b>అ</b></div><div>డి = డ్ + <b>ఇ</b></div><div>డు = డ్ + <b>ఉ</b></div></div>
+<div class="tip">💡 In these sandhis, the <b>hidden vowel at the end of the first word</b> drops away, and the consonant joins the vowel at the start of the second word.</div>
+</section>
+
+<section><h2>🏷️ How does a sandhi get its name?</h2>
+<p>Look at the <b>hidden vowel at the end of the first word</b>. That vowel gives the sandhi its name:</p>
+<div class="tw"><table><tr><th>Last vowel of 1st word</th><th>Sandhi</th><th>Example</th><th>Does it always happen?</th></tr>
+<tr><td class="te"><b>అ</b></td><td class="te"><b>అత్వ సంధి</b></td><td class="te">రామ + అయ్య = రామయ్య</td><td><span class="tag t-b">బహుళం</span> in many ways</td></tr>
+<tr><td class="te"><b>ఇ</b></td><td class="te"><b>ఇత్వ సంధి</b></td><td class="te">ఏమి + అంటివి = ఏమంటివి</td><td><span class="tag t-v">వైకల్పికం</span> optional</td></tr>
+<tr><td class="te"><b>ఉ</b></td><td class="te"><b>ఉత్వ సంధి</b></td><td class="te">రాముడు + అతడు = రాముడతడు</td><td><span class="tag t-n">నిత్యం</span> always</td></tr>
+</table></div></section>
+
+<p style="text-align:center;margin-top:10px"><a class="back" href="#top">⬆️ Back to the sandhi list</a></p>
+<footer>Made for Shreshta 🌼 · <span class="te">తెలుగు నేర్చుకుందాం!</span></footer>
+</div>
+</body>
+</html>

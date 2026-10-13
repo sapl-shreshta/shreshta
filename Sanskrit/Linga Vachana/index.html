@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>लिङ्गानि वचनानि च 👦👧🍎</title>
+<style>
+  :root{--pink:#ff6ec7;--purple:#a06cd5;--blue:#4cc9f0;--teal:#06d6a0;--yellow:#ffd166;--cream:#fff8f0;--ink:#1d2b53;
+    --m:#3a86ff;--m-bg:#e3eeff;--f:#ff5fa2;--f-bg:#ffe6f1;--n:#06a77d;--n-bg:#e0f8ef;}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);color:var(--ink);padding:20px 12px;min-height:100vh;}
+  .container{max-width:900px;margin:0 auto;}
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{background:var(--purple);color:#fff;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;
+    box-shadow:0 4px 0 #7a3b97;transition:transform .15s;display:flex;align-items:center;justify-content:center;text-decoration:none;}
+  .icon-btn:hover{transform:translateY(-2px);}
+  .header{text-align:center;margin:60px 0 16px;}
+  .big{font-size:clamp(50px,10vw,90px);animation:bounce 2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  h1{font-size:clamp(30px,5vw,52px);background:linear-gradient(90deg,#c77dff,#a06cd5,#ff6ec7,#ffd166);
+    -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px;}
+  .subtitle{font-size:clamp(15px,2.2vw,20px);color:var(--blue);font-weight:bold;}
+
+  .tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0 6px;}
+  .tab-btn{background:var(--cream);border:3px solid var(--purple);border-radius:50px;padding:10px 18px;font-weight:bold;
+    font-size:clamp(13px,1.8vw,16px);color:var(--purple);cursor:pointer;transition:all .2s;}
+  .tab-btn.active{background:var(--purple);color:#fff;}
+  .tab-btn:hover{transform:translateY(-2px);}
+  .panel{display:none;} .panel.active{display:block;}
+
+  /* learn: 3x3 grid */
+  .grid9{background:#fff;border-radius:18px;border:3px solid var(--purple);overflow:hidden;box-shadow:0 6px 0 rgba(0,0,0,.08);margin-top:14px;}
+  .g-row{display:grid;grid-template-columns:110px repeat(3,1fr);border-top:2px dashed #e6d6f5;}
+  .g-row:first-child{border-top:none;}
+  .g-row.head{background:#f3e6ff;font-weight:bold;}
+  .g-c{padding:10px 6px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+  .g-c .vt{font-size:clamp(14px,2.2vw,18px);color:var(--purple);}
+  .g-c .ve{font-size:12px;color:#7a6a9a;font-weight:normal;}
+  .g-row .lgc{font-weight:bold;font-size:clamp(13px,2vw,16px);}
+  .g-row.m .lgc{background:var(--m-bg);color:#1f4fa8;} .g-row.f .lgc{background:var(--f-bg);color:#b3226a;} .g-row.n .lgc{background:var(--n-bg);color:#04694f;}
+  .pic{font-size:clamp(18px,3.4vw,28px);line-height:1.2;min-height:1.2em;}
+  .w{font-size:clamp(20px,3.6vw,30px);font-weight:bold;margin-top:2px;}
+  .w .end{padding:0 2px;border-radius:6px;}
+  .m .w .end{color:var(--m);background:var(--m-bg);} .f .w .end{color:var(--f);background:var(--f-bg);} .n .w .end{color:var(--n);background:var(--n-bg);}
+  .pr{font-size:clamp(12px,1.9vw,15px);color:#666;margin-top:2px;}
+  .chooser{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:16px 0 4px;}
+  .chip{border:3px solid var(--purple);background:var(--cream);border-radius:50px;padding:6px 14px;font-weight:bold;cursor:pointer;font-size:clamp(14px,2vw,17px);}
+  .chip.on{background:var(--purple);color:#fff;}
+  .hint{text-align:center;color:#048a63;font-weight:bold;margin:8px 0 0;font-size:clamp(13px,1.8vw,16px);}
+  .tip{background:#fff;border:3px solid var(--yellow);border-radius:16px;padding:14px 16px;margin:18px 0;font-size:clamp(14px,2vw,17px);line-height:1.7;}
+  .tip b{color:var(--purple);}
+  .fam-h{text-align:center;color:var(--purple);font-size:clamp(22px,3.4vw,30px);margin:34px 0 4px;}
+  .pm{font-size:12px;color:#7a6a9a;margin-top:2px;}
+  .star{font-size:11px;background:var(--yellow);border-radius:50px;padding:1px 8px;color:#7a5a00;margin-top:3px;}
+  .em-m{color:var(--m);font-weight:bold;} .em-f{color:var(--f);font-weight:bold;} .em-n{color:var(--n);font-weight:bold;}
+
+  /* worksheet */
+  .score-bar{position:sticky;top:8px;z-index:50;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:10px 0;}
+  .pill{background:#fff;border:3px solid var(--purple);border-radius:50px;padding:8px 18px;font-weight:bold;font-size:clamp(13px,1.8vw,16px);}
+  .reset-btn{background:var(--yellow);border:3px solid #e0a800;border-radius:50px;padding:8px 18px;font-weight:bold;
+    font-size:clamp(13px,1.8vw,16px);color:var(--ink);cursor:pointer;box-shadow:0 4px 0 #c78e00;}
+  .sec{background:#fff;border:3px solid var(--purple);border-radius:20px;padding:16px 14px;margin:18px 0;box-shadow:0 6px 0 rgba(0,0,0,.08);}
+  .sec h3{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:clamp(16px,2.4vw,20px);flex-wrap:wrap;}
+  .sec h3 .bdg{background:var(--purple);color:#fff;border-radius:50%;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;flex:none;}
+  .sec h3 .sa{color:var(--purple);font-size:clamp(13px,1.9vw,16px);font-weight:normal;}
+  .sec .note{color:#666;font-size:clamp(12px,1.8vw,15px);margin:6px 0 10px;}
+  .items{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;}
+  .item{border:2px solid #e2d5f3;border-radius:14px;padding:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;transition:background .2s;}
+  .item .no{font-weight:bold;color:var(--purple);min-width:22px;}
+  .item .emo{font-size:clamp(20px,3.6vw,28px);}
+  .item .stem{color:#7a6a9a;font-size:14px;}
+  .item.ok{background:#e0f8ef;border-color:var(--teal);} .item.bad{background:#ffe8ec;border-color:#ff8fa3;}
+  .ob{border:2px solid var(--purple);background:var(--cream);border-radius:50px;padding:5px 12px;font-size:clamp(16px,2.6vw,20px);font-weight:bold;cursor:pointer;color:var(--ink);}
+  .ob.sel{background:var(--purple);color:#fff;}
+  .ob.right{background:var(--teal);border-color:#048a63;color:#fff;}
+  .ob.wrong{background:#ff8fa3;border-color:#d9536b;color:#fff;}
+  .ob:disabled{cursor:default;}
+  .verb{margin-left:auto;font-weight:bold;font-size:clamp(17px,2.8vw,21px);color:#444;}
+  .big-w{font-size:clamp(18px,3vw,22px);font-weight:bold;}
+  .slot{display:inline-block;min-width:70px;border-bottom:3px dashed var(--purple);text-align:center;font-size:clamp(17px,2.8vw,21px);font-weight:bold;color:var(--purple);padding:0 4px;}
+
+  /* table fill */
+  .ftbl{width:100%;border-collapse:collapse;text-align:center;}
+  .ftbl th,.ftbl td{border:2px solid #d9c4f0;padding:6px 4px;font-size:clamp(15px,2.6vw,20px);}
+  .ftbl th{background:#f3e6ff;font-size:clamp(12px,1.9vw,15px);}
+  .ftbl td.given{font-weight:bold;}
+  select{font-size:clamp(14px,2.4vw,18px);font-family:inherit;padding:4px 6px;border:2px solid var(--purple);border-radius:10px;background:var(--cream);max-width:100%;}
+  td.ok select{background:#e0f8ef;border-color:var(--teal);} td.bad select{background:#ffe8ec;border-color:#ff5f7e;}
+
+  /* sort */
+  .bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;border:3px dashed var(--purple);border-radius:14px;padding:10px;min-height:56px;margin-bottom:10px;}
+  .bank .tk{border:2px solid #bbb;background:#fafafa;border-radius:10px;padding:5px 14px;font-size:clamp(17px,2.8vw,21px);font-weight:bold;cursor:pointer;}
+  .bank .tk.pick{border-color:var(--purple);background:var(--purple);color:#fff;transform:scale(1.08);}
+  .sgrid{display:grid;grid-template-columns:90px repeat(3,1fr);gap:6px;}
+  .sgrid .h{font-weight:bold;text-align:center;padding:6px 2px;border-radius:10px;font-size:clamp(12px,1.9vw,15px);display:flex;align-items:center;justify-content:center;}
+  .sgrid .h.m{background:var(--m-bg);color:#1f4fa8;} .sgrid .h.f{background:var(--f-bg);color:#b3226a;} .sgrid .h.n{background:var(--n-bg);color:#04694f;} .sgrid .h.v{background:#f3e6ff;color:var(--purple);}
+  .cellbox{border:2px dashed #cbb5e8;border-radius:10px;min-height:50px;display:flex;align-items:center;justify-content:center;font-size:clamp(16px,2.8vw,21px);font-weight:bold;cursor:pointer;background:#fffdf7;}
+  .cellbox.ok{background:#e0f8ef;border:2px solid var(--teal);} .cellbox.bad{background:#ffe8ec;border:2px solid #ff8fa3;}
+
+  .actions{display:flex;justify-content:center;gap:10px;margin-top:12px;flex-wrap:wrap;}
+  .check{background:var(--purple);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-weight:bold;font-size:16px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;}
+  .fb{text-align:center;font-weight:bold;min-height:24px;margin-top:8px;font-size:clamp(14px,2.2vw,17px);}
+  .done{display:none;text-align:center;background:#fff;border:3px solid var(--yellow);border-radius:20px;padding:18px;margin:18px 0;font-size:clamp(18px,3vw,24px);font-weight:bold;}
+  footer{text-align:center;margin-top:50px;font-size:18px;color:#a06cd5;}
+  @media (max-width:560px){ .g-row{grid-template-columns:70px repeat(3,1fr);} .sgrid{grid-template-columns:62px repeat(3,1fr);} .verb{margin-left:0;} }
+</style>
+</head>
+<body>
+  <div class="nav-top nav-back"><a class="icon-btn" href="../index.html" title="Back to Sanskrit">⬅️</a></div>
+  <div class="nav-top nav-home"><a class="icon-btn" href="../../index.html" title="Go to Home">🏠</a></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="big">👦👧🍎</div>
+      <h1>लिङ्गानि वचनानि च</h1>
+      <p class="subtitle">Gender &amp; Number — one word, nine costumes! 🎭</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-p="learn">📖 Learn</button>
+      <button class="tab-btn" data-p="ws">✏️ Worksheet</button>
+    </div>
+
+    <!-- LEARN -->
+    <section class="panel active" id="learn">
+      <div class="chooser" id="chooser"></div>
+      <div class="grid9" id="grid9"></div>
+      <p class="hint">👆 Pick a different set of words above — watch the coloured endings stay the same!</p>
+
+      <div class="tip">
+        🔍 <b>Spot the pattern</b> — only the ending changes:<br>
+        <span class="em-m">👦 पुंलिङ्गम्:</span> अः · औ · आः &nbsp; (बालः · बालौ · बालाः)<br>
+        <span class="em-f">👧 स्त्रीलिङ्गम्:</span> आ · ए · आः &nbsp; (बालिका · बालिके · बालिकाः)<br>
+        <span class="em-n">🍎 नपुंसकलिङ्गम्:</span> अम् · ए · आनि &nbsp; (फलम् · फले · फलानि)
+      </div>
+      <h2 class="fam-h">👨‍👩‍👧 The Pronoun Family · सर्वनामानि</h2>
+      <p class="hint" style="color:#7a6a9a">सः (he) → एषः (this) → कः (who?) → कीदृशः (what kind?) — they all change together!</p>
+      <div class="chooser" id="pchooser"></div>
+      <div class="grid9" id="pgrid"></div>
+      <div class="tip" id="ptip"></div>
+      <div class="tip">
+        🏃 The <b>verb</b> tells you how many: <b>…ति</b> = one (पठति), <b>…तः</b> = two (पठतः), <b>…न्ति</b> = many (पठन्ति).<br>
+        ⭐ <b>Tricky twins:</b> द्विवचनम् of स्त्री and नपुं both end in <b>ए</b> — बालिके, फले — and both use <b>ते</b>.
+      </div>
+    </section>
+
+    <!-- WORKSHEET -->
+    <section class="panel" id="ws">
+      <div class="score-bar">
+        <div class="pill">⭐ Score: <span id="score">0</span> / <span id="total">0</span></div>
+        <button class="reset-btn" id="resetAll">🔄 Start again</button>
+      </div>
+
+      <div class="sec" id="secA">
+        <h3><span class="bdg">A</span>Look at the picture — pick the right form <span class="sa">(चित्रं दृष्ट्वा उचितं रूपं चिनुत)</span></h3>
+        <div class="items" id="A"></div>
+        <div class="actions"><button class="check" data-check="A">✅ Check</button></div><div class="fb" id="fbA"></div>
+      </div>
+
+      <div class="sec" id="secB">
+        <h3><span class="bdg">B</span>Complete the table <span class="sa">(कोष्ठकं पूरयत)</span></h3>
+        <p class="note">Fill the empty boxes, and choose the लिङ्गम् for each row.</p>
+        <div style="overflow-x:auto"><table class="ftbl" id="B"></table></div>
+        <div class="actions"><button class="check" data-check="B">✅ Check</button></div><div class="fb" id="fbB"></div>
+      </div>
+
+      <div class="sec" id="secC">
+        <h3><span class="bdg">C</span>Put each word in its home <span class="sa">(पदानि उचितकोष्ठे स्थापयत)</span></h3>
+        <p class="note">Tap a word, then tap its box. Tap a filled box to send the word back. 🧩</p>
+        <div class="bank" id="bank"></div>
+        <div class="sgrid" id="sgrid"></div>
+        <div class="actions"><button class="check" data-check="C">✅ Check</button></div><div class="fb" id="fbC"></div>
+      </div>
+
+      <div class="sec" id="secD">
+        <h3><span class="bdg">D</span>Let the verb help you <span class="sa">(उचितं पदं चिनुत)</span></h3>
+        <p class="note">Clue: …ति = one, …तः = two, …न्ति = many.</p>
+        <div class="items" id="D"></div>
+        <div class="actions"><button class="check" data-check="D">✅ Check</button></div><div class="fb" id="fbD"></div>
+      </div>
+
+      <div class="sec" id="secE">
+        <h3><span class="bdg">E</span>सः, सा or तत्? <span class="sa">(सर्वनाम चिनुत)</span></h3>
+        <p class="note">Choose the right pronoun for each word.</p>
+        <div class="items" id="E"></div>
+        <div class="actions"><button class="check" data-check="E">✅ Check</button></div><div class="fb" id="fbE"></div>
+      </div>
+
+      <div class="sec" id="secF">
+        <h3><span class="bdg">F</span>Complete the family <span class="sa">(सर्वनामरूपाणि पूरयत)</span></h3>
+        <p class="note">Each line is one word in एक → द्वि → बहु. Pick the missing one.</p>
+        <div class="items" id="F"></div>
+        <div class="actions"><button class="check" data-check="F">✅ Check</button></div><div class="fb" id="fbF"></div>
+      </div>
+
+      <div class="sec" id="secG">
+        <h3><span class="bdg">G</span>Point and say "This is…" <span class="sa">(एषः / एषा / एतत् …)</span> 👉</h3>
+        <p class="note">Look at the word after the blank — its gender and number tell you which "this" to use.</p>
+        <div class="items" id="G"></div>
+        <div class="actions"><button class="check" data-check="G">✅ Check</button></div><div class="fb" id="fbG"></div>
+      </div>
+
+      <div class="sec" id="secH">
+        <h3><span class="bdg">H</span>Riddles <span class="sa">(प्रहेलिकाः)</span> 🤔</h3>
+        <div class="items" id="H" style="grid-template-columns:1fr"></div>
+        <div class="actions"><button class="check" data-check="H">✅ Check</button></div><div class="fb" id="fbH"></div>
+      </div>
+
+      <div class="done" id="done">🎉 शोभनम्, Shreshta! You finished the whole worksheet! 🌟</div>
+    </section>
+  </div>
+
+  <footer>Made with 💖 for Shreshta's learning adventure</footer>
+
+<script>
+// ---------- tabs ----------
+document.querySelectorAll('.tab-btn').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tab-btn').forEach(x=>x.classList.toggle('active',x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.p));
+});
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+// ---------- LEARN ----------
+// stem + endings; each set = one word per gender
+const SETS=[
+  {label:'👦 बाल · 👧 बालिका · 🍎 फल', m:['बा','ल','👦','boy'], f:['बालि','क','👧','girl'], n:['फ','ल','🍎','fruit']},
+  {label:'🐘 गज · 🌿 लता · 🌸 पुष्प',   m:['ग','ज','🐘','elephant'], f:['ल','त','🌿','creeper'], n:['पुष्','प','🌸','flower']},
+  {label:'🐎 अश्व · 📿 माला · 📕 पुस्तक', m:['अश्','व','🐎','horse'], f:['मा','ल','📿','garland'], n:['पुस्त','क','📕','book']},
+  {label:'🦜 शुक · 🏫 शाला · 🏠 गृह',   m:['शु','क','🦜','parrot'], f:['शा','ल','🏫','school'], n:['गृ','ह','🏠','house']},
+];
+// endings written as matra on the last consonant
+const END={m:['ः','ौ','ाः'], f:['ा','े','ाः'], n:['म्','े','ानि']};
+const PRON={m:['सः','तौ','ते'], f:['सा','ते','ताः'], n:['तत्','ते','तानि']};
+const GN={m:['पुंलिङ्गम्','Masculine'], f:['स्त्रीलिङ्गम्','Feminine'], n:['नपुंसकलिङ्गम्','Neuter']};
+// fix: गृह bahuvachana is गृहाणि (ण after ऋ)
+function form(g,parts,i){
+  let [stem,last]=parts; let e=END[g][i];
+  if(g==='n'&&i===2&&/[ऋृषर]/.test(stem)) e='ाणि';
+  return {pre:stem,end:last+e};
+}
+let cur=0;
+function drawLearn(){
+  $('chooser').innerHTML=SETS.map((s,i)=>`<button class="chip ${i===cur?'on':''}" data-i="${i}">${s.label}</button>`).join('');
+  $('chooser').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{cur=+c.dataset.i;drawLearn();});
+  const s=SETS[cur];
+  let h=`<div class="g-row head"><div class="g-c"></div>
+    <div class="g-c"><span class="vt">एकवचनम्</span><span class="ve">one ☝️</span></div>
+    <div class="g-c"><span class="vt">द्विवचनम्</span><span class="ve">two ✌️</span></div>
+    <div class="g-c"><span class="vt">बहुवचनम्</span><span class="ve">many 🖐️</span></div></div>`;
+  ['m','f','n'].forEach(g=>{
+    h+=`<div class="g-row ${g}"><div class="g-c lgc">${GN[g][0]}<span class="ve">${GN[g][1]}</span></div>`;
+    [1,2,3].forEach((k,i)=>{const fm=form(g,s[g],i);
+      h+=`<div class="g-c"><div class="pic">${s[g][2].repeat(k)}</div><div class="w">${fm.pre}<span class="end">${fm.end}</span></div><div class="pr">${PRON[g][i]}</div></div>`;});
+    h+='</div>';
+  });
+  $('grid9').innerHTML=h;
+}
+drawLearn();
+
+// ---------- pronoun family ----------
+const PF={
+  m:{name:'👦 पुंलिङ्गम्',rows:[
+    ['he',[['','सः'],['','तौ'],['','ते']],['he','they two','they']],
+    ['this',[['ए','षः'],['ए','तौ'],['ए','ते']],['this one','these two','these']],
+    ['who?',[['','कः'],['','कौ'],['','के']],['who?','who two?','who all?']],
+    ['what kind?',[['कीदृ','शः'],['कीदृ','शौ'],['कीदृ','शाः']],['what kind?','what kind (2)?','what kind (all)?']]],
+    tip:'💡 <b>Look closely:</b> बालाः ends in <b>आः</b> but ते, एते, के end in <b>ए</b>. That is the <b>only</b> difference between nouns and pronouns! कीदृशः behaves like बालः (कीदृशाः).'},
+  f:{name:'👧 स्त्रीलिङ्गम्',rows:[
+    ['she',[['','सा'],['','ते'],['','ताः']],['she','they two','they']],
+    ['this',[['ए','षा'],['ए','ते'],['ए','ताः']],['this one','these two','these']],
+    ['who?',[['','का'],['','के'],['','काः']],['who?','who two?','who all?']],
+    ['what kind?',[['कीदृ','शी'],['कीदृ','श्यौ'],['कीदृ','श्यः']],['what kind?','what kind (2)?','what kind (all)?']]],
+    tip:'💡 These follow बालिका exactly: <b>आ · ए · आः</b> (सा ते ताः, एषा एते एताः, का के काः). ⭐ कीदृशी is special — it ends in <b>ई</b>, so it goes कीदृशी · कीदृश्यौ · कीदृश्यः. Just remember it!'},
+  n:{name:'🍎 नपुंसकलिङ्गम्',rows:[
+    ['it / that',[['त','त्'],['','ते'],['ता','नि']],['it','they two','they']],
+    ['this',[['एत','त्'],['ए','ते'],['एता','नि']],['this one','these two','these']],
+    ['what?',[['कि','म्'],['','के'],['का','नि']],['what?','what two?','what all?']],
+    ['what kind?',[['कीदृ','शम्'],['कीदृ','शे'],['कीदृ','शानि']],['what kind?','what kind (2)?','what kind (all)?']]],
+    tip:'💡 Like फलम् · फले · फलानि, but the first one ends in <b>त्</b> or <b>म्</b>: तत्, एतत्, किम्. The middle is always <b>ए</b>, the last is always <b>आनि</b>.'},
+};
+let pcur='m';
+function drawPF(){
+  $('pchooser').innerHTML=['m','f','n'].map(g=>`<button class="chip ${g===pcur?'on':''}" data-g="${g}">${PF[g].name}</button>`).join('');
+  $('pchooser').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{pcur=c.dataset.g;drawPF();});
+  const d=PF[pcur];
+  let h=`<div class="g-row head"><div class="g-c"></div>
+    <div class="g-c"><span class="vt">एकवचनम्</span><span class="ve">one ☝️</span></div>
+    <div class="g-c"><span class="vt">द्विवचनम्</span><span class="ve">two ✌️</span></div>
+    <div class="g-c"><span class="vt">बहुवचनम्</span><span class="ve">many 🖐️</span></div></div>`;
+  d.rows.forEach(r=>{
+    h+=`<div class="g-row ${pcur}"><div class="g-c lgc">${r[0]}</div>`;
+    r[1].forEach((w,i)=>{h+=`<div class="g-c"><div class="w">${w[0]}<span class="end">${w[1]}</span></div><div class="pm">${r[2][i]}</div>${(pcur==='f'&&r[0]==='what kind?')?'<div class="star">⭐ special</div>':''}</div>`;});
+    h+='</div>';
+  });
+  $('pgrid').innerHTML=h; $('ptip').innerHTML=d.tip;
+}
+drawPF();
+
+// ---------- WORKSHEET DATA ----------
+// Sections A–E: nouns · F–G: pronoun family · H: riddles
+const A_ITEMS=[
+  ['🐘','गज',['गजः','गजौ','गजाः'],0],
+  ['🍎🍎🍎','फल',['फलम्','फले','फलानि'],2],
+  ['👧👧','बालिका',['बालिका','बालिके','बालिकाः'],1],
+  ['🌸','पुष्प',['पुष्पम्','पुष्पे','पुष्पाणि'],0],
+  ['🐎🐎🐎','अश्व',['अश्वः','अश्वौ','अश्वाः'],2],
+  ['📕📕','पुस्तक',['पुस्तकम्','पुस्तके','पुस्तकानि'],1],
+  ['🦜🦜','शुक',['शुकः','शुकौ','शुकाः'],1],
+  ['🌿🌿🌿','लता',['लता','लते','लताः'],2],
+];
+const B_ROWS=[ // [eka,dvi,bahu], given index, gender
+  [['गजः','गजौ','गजाः'],0,'m'],
+  [['छात्रः','छात्रौ','छात्राः'],1,'m'],
+  [['माला','माले','मालाः'],0,'f'],
+  [['शाला','शाले','शालाः'],2,'f'],
+  [['पुस्तकम्','पुस्तके','पुस्तकानि'],0,'n'],
+  [['गृहम्','गृहे','गृहाणि'],1,'n'],
+];
+const C_WORDS=[['वृक्षः','m',0],['शुकौ','m',1],['अश्वाः','m',2],['लता','f',0],['बालिके','f',1],['मालाः','f',2],['फलम्','n',0],['पत्रे','n',1],['पुष्पाणि','n',2]];
+const D_ITEMS=[['बालः','बालाः','पठन्ति',1],['फलम्','फले','पतति',0],['अश्वौ','अश्वाः','धावतः',0],['बालिके','बालिकाः','गायन्ति',1],
+  ['पुष्पम्','पुष्पाणि','विकसन्ति',1],['छात्रा','छात्रे','लिखति',0],['गजः','गजौ','चलति',0],['पत्रे','पत्राणि','पततः',0]];
+const E_ITEMS=[['बालः',['सः','सा','तत्'],0],['लताः',['ताः','ते','तानि'],0],['फलानि',['ते','ताः','तानि'],2],['अश्वौ',['तौ','ते','ताः'],0],
+  ['बालिका',['सः','सा','तत्'],1],['पुस्तकम्',['सः','सा','तत्'],2],['गजाः',['ते','ताः','तानि'],0],['माले',['तौ','ते','तानि'],1]];
+const F_ITEMS=[ // pronoun family: [slots (null = missing), options, answer]
+  [['एषः','एतौ',null],['एते','एताः','एतानि'],0],
+  [['कः','कौ',null],['काः','के','कानि'],1],
+  [['सा','ते',null],['ताः','ते','तानि'],0],
+  [['किम्','के',null],['काः','के','कानि'],2],
+  [['एषा',null,'एताः'],['एतौ','एते','एतानि'],1],
+  [['सः',null,'ते'],['तौ','ते','सौ'],0],
+  [['कीदृशः',null,'कीदृशाः'],['कीदृशौ','कीदृशे','कीदृश्यौ'],0],
+  [[null,'के','काः'],['कः','का','किम्'],1],
+];
+const G_ITEMS=[ // [emoji, noun, options, ans]
+  ['👦','बालः',['एषः','एषा','एतत्'],0],
+  ['👧','बालिका',['एषः','एषा','एतत्'],1],
+  ['🍎','फलम्',['एषः','एषा','एतत्'],2],
+  ['🐘🐘','गजौ',['एतौ','एते','एताः'],0],
+  ['📕📕','पुस्तके',['एतौ','एते','एतानि'],1],
+  ['🌿🌿🌿','लताः',['एते','एताः','एतानि'],1],
+  ['🌸🌸🌸','पुष्पाणि',['एते','एताः','एतानि'],2],
+  ['🐎🐎🐎','अश्वाः',['एते','एताः','एतानि'],0],
+];
+const H_ITEMS=[
+  ['I end in <b>आनि</b>. There are many of me. Which लिङ्गम् am I?',['पुंलिङ्गम्','स्त्रीलिङ्गम्','नपुंसकलिङ्गम्'],2],
+  ['I end in <b>औ</b> (like शुकौ). How many of me are there?',['1 — एकवचनम्','2 — द्विवचनम्','many — बहुवचनम्'],1],
+  ['I am <b>लते</b>. Make me just one!',['लता','लताः','लतम्'],0],
+  ['I am <b>गजः</b>. Make me many!',['गजौ','गजाः','गजानि'],1],
+  ['<b>फले</b> and <b>बालिके</b> look alike. How many fruits and how many girls?',['1 and 1','2 and 2','many and many'],1],
+  ['Which word is the odd one out? 🧐',['बालाः','अश्वाः','फलानि'],2],
+  ['<b>बालाः</b> means many boys. How do you say <b>they</b> (many boys)?',['ताः','ते','तानि'],1],
+  ['Someone points and asks <b>कः एषः?</b> Which answer fits?',['एषः बालः।','एषा बालिका।','एतत् फलम्।'],0],
+];
+
+// ---------- scoring ----------
+const sectionScore={A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0};
+const sectionTotal={A:A_ITEMS.length,B:B_ROWS.length*3,C:C_WORDS.length,D:D_ITEMS.length,E:E_ITEMS.length,F:F_ITEMS.length,G:G_ITEMS.length,H:H_ITEMS.length};
+const checked={};
+$('total').textContent=Object.values(sectionTotal).reduce((a,b)=>a+b,0);
+function updateScore(){
+  $('score').textContent=Object.values(sectionScore).reduce((a,b)=>a+b,0);
+  $('done').style.display=Object.keys(sectionTotal).every(k=>checked[k])?'block':'none';
+}
+function feedback(k,got){
+  const t=sectionTotal[k];sectionScore[k]=got;checked[k]=true;updateScore();
+  $('fb'+k).textContent= got===t?'🌟 सर्वं सम्यक्! All correct!':`✨ ${got} / ${t} correct — fix the red ones and check again!`;
+  $('fb'+k).style.color= got===t?'#048a63':'#d9536b';
+}
+
+// generic "pick one" items (A, D, E, F)
+const picks={};
+function buildPick(k,items,render){
+  picks[k]=items.map(()=>null);
+  $(k).innerHTML=items.map((it,i)=>`<div class="item" id="${k}${i}"><span class="no">${i+1}.</span>${render(it,i)}</div>`).join('');
+  $(k).querySelectorAll('.ob').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;picks[k][i]=+b.dataset.o;
+    const row=$(k+i);row.classList.remove('ok','bad');
+    row.querySelectorAll('.ob').forEach(x=>{x.classList.remove('sel','right','wrong');x.classList.toggle('sel',x===b);});
+  });
+}
+const opts=(k,i,arr)=>arr.map((o,j)=>`<button class="ob" data-i="${i}" data-o="${j}">${o}</button>`).join('');
+function checkPick(k,items,ansIdx){
+  let got=0;
+  items.forEach((it,i)=>{const row=$(k+i),p=picks[k][i],a=it[ansIdx];
+    row.classList.remove('ok','bad');
+    row.querySelectorAll('.ob').forEach(x=>x.classList.remove('right','wrong'));
+    if(p===null){row.classList.add('bad');return;}
+    const btn=row.querySelector(`.ob[data-o="${p}"]`);
+    if(p===a){got++;row.classList.add('ok');btn.classList.add('right');}else{row.classList.add('bad');btn.classList.add('wrong');}
+  });
+  feedback(k,got);
+}
+
+function buildAll(){
+  buildPick('A',A_ITEMS,(it,i)=>`<span class="emo">${it[0]}</span><span class="stem">(${it[1]})</span>${opts('A',i,it[2])}`);
+  buildPick('D',D_ITEMS,(it,i)=>opts('D',i,[it[0],it[1]])+`<span class="verb">${it[2]}</span>`);
+  buildPick('E',E_ITEMS,(it,i)=>`<span class="slot">?</span><span class="big-w">${it[0]}</span> &nbsp;${opts('E',i,it[1])}`);
+  buildPick('F',F_ITEMS,(it,i)=>it[0].map(w=>w?`<span class="big-w">${w}</span>`:'<span class="slot">?</span>').join(' → ')+`<span style="flex-basis:100%"></span>`+opts('F',i,it[1]));
+  buildPick('G',G_ITEMS,(it,i)=>`<span class="emo">${it[0]}</span><span class="slot">?</span><span class="big-w">${it[1]}</span><span style="flex-basis:100%"></span>`+opts('G',i,it[2]));
+  buildPick('H',H_ITEMS,(it,i)=>`<span style="flex:1 1 100%;font-size:clamp(14px,2.2vw,17px)">${it[0]}</span>${opts('H',i,it[1])}`);
+  buildB(); buildC();
+  Object.keys(sectionTotal).forEach(k=>{sectionScore[k]=0;checked[k]=false;$('fb'+k).textContent='';});
+  updateScore();
+}
+// E: fill slot with chosen pronoun
+['E','F','G'].forEach(k=>$(k).addEventListener('click',e=>{const b=e.target.closest('.ob');if(!b)return;b.closest('.item').querySelector('.slot').textContent=b.textContent;}));
+
+// B: table with selects
+function buildB(){
+  let h='<tr><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th><th>लिङ्गम्</th></tr>';
+  B_ROWS.forEach((r,ri)=>{
+    h+='<tr>';
+    r[0].forEach((w,ci)=>{
+      if(ci===r[1]){h+=`<td class="given">${w}</td>`;return;}
+      // options: the right form + same-stem wrong endings from other genders
+      const stem=r[0][0].replace(/(ः|ा|म्)$/,'');
+      const pool=new Set([w]);
+      const cands=[stem+'ौ',stem+'े',stem+'ाः',stem+'ानि',stem+'ाणि',stem+'ः',stem+'ा',stem+'म्'].filter(x=>!r[0].includes(x)||x===w);
+      shuffle(cands).forEach(c=>{if(pool.size<3)pool.add(c);});
+      h+=`<td data-a="${w}"><select><option value="">— ? —</option>${shuffle([...pool]).map(o=>`<option>${o}</option>`).join('')}</select></td>`;
+    });
+    h+=`<td data-a="${r[2]}"><select><option value="">— ? —</option><option value="m">पुं</option><option value="f">स्त्री</option><option value="n">नपुं</option></select></td></tr>`;
+  });
+  $('B').innerHTML=h;
+  $('B').querySelectorAll('select').forEach(s=>s.onchange=()=>s.parentElement.classList.remove('ok','bad'));
+}
+function checkB(){
+  let got=0;
+  $('B').querySelectorAll('td[data-a]').forEach(td=>{const v=td.querySelector('select').value;
+    td.classList.remove('ok','bad');
+    if(v===td.dataset.a){got++;td.classList.add('ok');}else td.classList.add('bad');});
+  feedback('B',got);
+}
+
+// C: tap-to-place sort
+let picked=null; const placed={};
+function buildC(){
+  picked=null; for(const k in placed) delete placed[k];
+  $('bank').innerHTML=shuffle(C_WORDS).map(w=>`<span class="tk" data-w="${w[0]}">${w[0]}</span>`).join('');
+  const V=['एकवचनम्','द्विवचनम्','बहुवचनम्'];
+  let h='<div></div><div class="h m">पुंलिङ्गम्</div><div class="h f">स्त्रीलिङ्गम्</div><div class="h n">नपुंसकलिङ्गम्</div>';
+  V.forEach((v,vi)=>{h+=`<div class="h v">${v}</div>`;['m','f','n'].forEach(g=>h+=`<div class="cellbox" data-k="${g}${vi}"></div>`);});
+  $('sgrid').innerHTML=h;
+  bindC();
+}
+function bindC(){
+  $('bank').querySelectorAll('.tk').forEach(t=>t.onclick=()=>{
+    picked = picked===t.dataset.w?null:t.dataset.w;
+    $('bank').querySelectorAll('.tk').forEach(x=>x.classList.toggle('pick',x.dataset.w===picked));
+  });
+  $('sgrid').querySelectorAll('.cellbox').forEach(c=>c.onclick=()=>{
+    const k=c.dataset.k;
+    if(placed[k]){ // send back
+      $('bank').insertAdjacentHTML('beforeend',`<span class="tk" data-w="${placed[k]}">${placed[k]}</span>`);
+      delete placed[k]; c.textContent=''; c.classList.remove('ok','bad'); bindC(); if(!picked) return;
+    }
+    if(!picked) return;
+    placed[k]=picked; c.textContent=picked; c.classList.remove('ok','bad');
+    $('bank').querySelector(`.tk[data-w="${picked}"]`).remove(); picked=null; bindC();
+  });
+}
+function checkC(){
+  let got=0;
+  $('sgrid').querySelectorAll('.cellbox').forEach(c=>{const w=placed[c.dataset.k];c.classList.remove('ok','bad');
+    const ans=C_WORDS.find(x=>x[1]+x[2]===c.dataset.k)[0];
+    if(w===ans){got++;c.classList.add('ok');}else c.classList.add('bad');});
+  feedback('C',got);
+}
+
+document.querySelectorAll('.check').forEach(b=>b.onclick=()=>{
+  const k=b.dataset.check;
+  if(k==='A')checkPick('A',A_ITEMS,3);
+  if(k==='B')checkB();
+  if(k==='C')checkC();
+  if(k==='D')checkPick('D',D_ITEMS,3);
+  if(k==='E')checkPick('E',E_ITEMS,2);
+  if(k==='F')checkPick('F',F_ITEMS,2);
+  if(k==='G')checkPick('G',G_ITEMS,3);
+  if(k==='H')checkPick('H',H_ITEMS,2);
+});
+$('resetAll').onclick=()=>{buildAll();window.scrollTo({top:0,behavior:'smooth'});};
+buildAll();
+</script>
+</body>
+</html>

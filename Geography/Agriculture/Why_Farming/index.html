@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shreshta's Farm Files</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap">
+<style>
+/* Layout: one lesson column — hook, a "world without farms" toy, jobs-of-farming cards, numbers you can see, the -culture family, a tiny check. Earthy field palette. */
+:root{
+  --bg:#F3F6EC; --card:#FFFFFF; --ink:#24301F; --muted:#5E6B55;
+  --leaf:#3F7D3A; --leaf-soft:#DDEBD5; --soil:#8A5A36; --soil-soft:#F1E3D3;
+  --mustard:#D99A1E; --mustard-soft:#FBEFC9; --sky:#3C7FA6; --sky-soft:#DCEBF3;
+  --good:#2E8B4A; --bad:#C2453A; --line:#D6DECB; --dim:#C9D1BF;
+  --display:"Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --body:"Nunito", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151B13; --card:#1F271C; --ink:#E8EEDF; --muted:#A3B096;
+  --leaf:#7BC06F; --leaf-soft:#2A3A26; --soil:#D9A274; --soil-soft:#3A2B1F;
+  --mustard:#F0C25A; --mustard-soft:#3D3318; --sky:#7FB8DA; --sky-soft:#1E3240;
+  --good:#5CC27A; --bad:#EE7B6F; --line:#33402D; --dim:#3A4535; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#151B13; --card:#1F271C; --ink:#E8EEDF; --muted:#A3B096;
+  --leaf:#7BC06F; --leaf-soft:#2A3A26; --soil:#D9A274; --soil-soft:#3A2B1F;
+  --mustard:#F0C25A; --mustard-soft:#3D3318; --sky:#7FB8DA; --sky-soft:#1E3240;
+  --good:#5CC27A; --bad:#EE7B6F; --line:#33402D; --dim:#3A4535; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:780px;margin:0 auto;padding-inline:16px;padding-block:20px 60px;display:flex;flex-direction:column;gap:30px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,28px);font-weight:700}
+h3{font-size:19px;font-weight:700}
+p{margin:0;max-width:65ch}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--soil)}
+.hero{display:flex;flex-direction:column;gap:12px}
+.lead{font-size:19px}
+.nani{display:flex;gap:12px;align-items:flex-start;background:var(--mustard-soft);border-radius:16px;padding:14px 16px}
+.nani .face{font-size:34px;line-height:1;flex:none}
+.nani p{font-size:16px}
+.nani b{font-family:var(--display)}
+.trail{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.stop{flex:0 0 auto;font-size:13px;font-weight:700;padding:6px 10px;border-radius:10px;background:var(--card);border:1.5px dashed var(--line);color:var(--muted);white-space:nowrap}
+.stop.on{border-style:solid;border-color:var(--leaf);background:var(--leaf-soft);color:var(--ink)}
+section.act{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.act > header{display:flex;flex-direction:column;gap:6px}
+.how{color:var(--muted);font-size:15px}
+.btn{font-family:var(--display);font-weight:700;font-size:16px;background:var(--leaf);color:var(--card);border:none;border-radius:12px;padding:8px 18px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--leaf);border:2px solid var(--leaf)}
+button:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.big-word{font-family:var(--display);font-weight:800;color:var(--leaf);background:var(--leaf-soft);border-radius:6px;padding:0 5px}
+
+/* 1. world without farms */
+.room{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.thing{font:inherit;background:var(--sky-soft);color:var(--ink);border:2px solid transparent;border-radius:14px;padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:opacity .4s, transform .4s, background .3s}
+.thing .em{font-size:34px;line-height:1.2}
+.thing .nm{font-weight:700;font-size:15px}
+.thing .src{font-size:13px;color:var(--leaf);font-weight:700;min-height:1.3em}
+.thing.gone{opacity:.25;transform:scale(.92);background:var(--card);border:2px dashed var(--dim)}
+.thing.open{border-color:var(--leaf);background:var(--leaf-soft)}
+.verdict{background:var(--soil-soft);border-radius:14px;padding:12px 16px;font-weight:600}
+
+/* 2. jobs cards */
+.jobs{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.job{font:inherit;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.job .ic{font-size:30px;line-height:1}
+.job .hint{font-size:13px;color:var(--muted);font-weight:700}
+.job .more{display:none;font-size:15px;line-height:1.5}
+.job .more .ex{display:block;margin-top:6px;color:var(--soil);font-style:italic}
+.job.open{border-color:var(--leaf);background:var(--leaf-soft)}
+.job.open .more{display:block}
+.job.open .hint{display:none}
+.counter{font-family:var(--display);font-weight:700;color:var(--muted);font-size:15px}
+
+/* 3. numbers */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.num{background:var(--bg);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.num .fig{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;color:var(--leaf)}
+.num p{font-size:15px}
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;max-width:220px}
+.dots i{aspect-ratio:1;border-radius:50%;background:var(--dim);display:block;transition:background .25s}
+.dots i.on{background:var(--leaf)}
+.dots.coins i.on{background:var(--mustard)}
+.pie{width:120px;height:120px;max-width:100%;border-radius:50%;background:conic-gradient(var(--soil) 0 25%, var(--sky-soft) 25% 100%);border:3px solid var(--sky);position:relative}
+.workers{display:flex;gap:6px;font-size:30px;line-height:1}
+.workers span.dim{opacity:.3}
+.small{font-size:13px;color:var(--muted)}
+
+/* 4. culture family */
+.decode{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.root{font:inherit;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:12px;cursor:pointer;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.root .em{font-size:32px;line-height:1.2}
+.root .w{font-family:var(--display);font-weight:800;font-size:20px}
+.root .w span{color:var(--leaf)}
+.root .m{font-size:13px;color:var(--muted);font-weight:700}
+.root.sel{border-color:var(--leaf);background:var(--leaf-soft)}
+.panel{background:var(--leaf-soft);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-height:96px}
+.panel .eq{font-family:var(--display);font-weight:800;font-size:22px}
+.umbrella{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:var(--mustard-soft);border-radius:999px;padding:3px 12px;font-weight:700;font-size:14px}
+
+/* 5. check */
+.qs{display:flex;flex-direction:column;gap:12px}
+.q{border:2px dashed var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font:inherit;font-weight:700;font-size:15px;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:5px 12px;cursor:pointer}
+.opt.right{border-color:var(--good);background:var(--leaf-soft);color:var(--good)}
+.opt.wrong{border-color:var(--bad);color:var(--bad)}
+.why{font-size:15px;color:var(--muted)}
+.wrap-up{border:3px solid var(--mustard);background:var(--mustard-soft);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.wrap-up ul{margin:0;padding-left:20px}
+.wrap-up li{margin-bottom:2px}
+.next{color:var(--muted);font-size:15px}
+@media (prefers-reduced-motion:reduce){.thing,.dots i{transition:none}}
+</style>
+<style>.sitenav{max-width:780px;margin:0 auto;padding:16px 16px 0;display:flex;flex-wrap:wrap;gap:8px}.sitenav a{font-family:var(--display);font-weight:700;font-size:15px;text-decoration:none;color:var(--leaf);border:2px solid var(--leaf);border-radius:999px;padding:4px 14px;background:var(--card)}</style>
+</head>
+<body>
+<nav class="sitenav"><a href="../index.html">⬅️ Agriculture</a><a href="../../index.html">🌍 Geography</a><a href="../../../index.html">🏠 Home</a><a href="Farm_Files_Case1_Worksheet.pdf">📝 Printable worksheet</a></nav>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="eyebrow">Farm Files · Case 1 of 8 · Geography</span>
+    <h1>Why does the world need farmers?</h1>
+    <p class="lead">Shreshta is off to Nani's village for the holidays. Before she leaves, Nani sends a voice note.</p>
+    <div class="nani"><span class="face">👵🏽</span><p><b>Nani:</b> "Shreshta, when you come, I'll show you that a farm doesn't just grow rice. It runs half the country! Look around your house today and guess how many things came from a farm."</p></div>
+  </div>
+
+  <nav class="trail" aria-label="All sessions">
+    <span class="stop on">1 · Why farming?</span>
+    <span class="stop">2 · What crops need</span>
+    <span class="stop">3 · Farming for family</span>
+    <span class="stop">4 · Farming for money</span>
+    <span class="stop">5 · How seeds are sown</span>
+    <span class="stop">6 · Food &amp; cash crops</span>
+    <span class="stop">7 · Tea, coffee, rubber</span>
+    <span class="stop">8 · Green Revolution</span>
+  </nav>
+
+  <!-- 1. A world without farms -->
+  <section class="act">
+    <header>
+      <span class="eyebrow">Step 1 · Try it</span>
+      <h2>What if farms disappeared?</h2>
+      <p class="how">Here's Shreshta's room. Tap any thing to see where it really came from. Then press the big button and watch what happens.</p>
+    </header>
+    <div class="room" id="room"></div>
+    <div class="row" style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="vanish" type="button">🌾 Make all farms disappear</button>
+      <button class="btn ghost" id="restore" type="button" hidden>Bring the farms back</button>
+    </div>
+    <p class="verdict" id="verdict">Tap the things first. Can you guess which ones are safe?</p>
+  </section>
+
+  <!-- 2. Jobs farming does -->
+  <section class="act">
+    <header>
+      <span class="eyebrow">Step 2 · Explore</span>
+      <h2>The many jobs of one little farm</h2>
+      <p class="how">Your book lists why agriculture is important. Each card is one reason. Tap a card to open it. Look for the <span class="big-word">big word</span>: that's the one your teacher will use.</p>
+      <span class="counter" id="jobCount">Opened 0 of 10</span>
+    </header>
+    <div class="jobs" id="jobs"></div>
+  </section>
+
+  <!-- 3. Numbers -->
+  <section class="act">
+    <header>
+      <span class="eyebrow">Step 3 · See the numbers</span>
+      <h2>Farming in four pictures</h2>
+      <p class="how">Big numbers are easier to remember when you can see them. Press each button to fill the picture.</p>
+    </header>
+    <div class="nums">
+      <div class="num">
+        <span class="fig">70 in 100</span>
+        <div class="dots" id="d70"></div>
+        <p>In developing countries, about <b>70 out of every 100 people</b> depend on farming for their living.</p>
+        <button class="btn ghost" type="button" data-fill="d70" data-n="70">Fill it</button>
+      </div>
+      <div class="num">
+        <span class="fig">2 out of 3</span>
+        <div class="workers" aria-label="Two of three workers are farmers"><span>🧑‍🌾</span><span>🧑‍🌾</span><span class="dim">👩‍💼</span></div>
+        <p>In the whole world, nearly <b>two-thirds</b> of all workers are in farming. That's why it's called the most important occupation of man.</p>
+      </div>
+      <div class="num">
+        <span class="fig">1 quarter</span>
+        <div class="pie" role="img" aria-label="A circle with one quarter shaded"></div>
+        <p>About <b>one quarter</b> (1 out of 4 parts) of all the land on Earth is farmed.</p>
+      </div>
+      <div class="num">
+        <span class="fig">₹18 in ₹100</span>
+        <div class="dots coins" id="d18"></div>
+        <p>For every ₹100 India earns by selling things to other countries, about <b>₹18</b> comes from farm goods like jute, spices, cotton, tea and coffee.</p>
+        <button class="btn ghost" type="button" data-fill="d18" data-n="18">Fill it</button>
+      </div>
+    </div>
+    <p class="small">One more thing from the book: places like India, China, Brazil, Europe and North America now grow much more on the same land, thanks to better seeds, fertilisers, pesticides and organic manure. You'll meet this again in Case 8.</p>
+  </section>
+
+  <!-- 4. -culture family -->
+  <section class="act">
+    <header>
+      <span class="eyebrow">Step 4 · Word magic</span>
+      <h2>The "-culture" family</h2>
+      <p class="how">Agriculture is a big family with many members. Each name is a Latin code word + <b>culture</b> (which here means "growing or raising"). Tap a code word to decode it.</p>
+    </header>
+    <div class="decode" id="decode"></div>
+    <div class="panel" id="panel"><p class="how">Tap a code word above.</p></div>
+    <div>
+      <h3 style="margin-bottom:8px">Agriculture is the big umbrella. Under it you'll also find:</h3>
+      <div class="umbrella"><span class="tag">🌲 Forestry</span><span class="tag">🐔 Poultry</span><span class="tag">🍄 Mushroom growing</span><span class="tag">🧵 Industrial crops: cotton, flax, rubber</span><span class="tag">🌾 Food crops</span></div>
+    </div>
+  </section>
+
+  <!-- 5. Quick check -->
+  <section class="act">
+    <header>
+      <span class="eyebrow">Step 5 · Quick check</span>
+      <h2>Nani's three questions</h2>
+      <p class="how">Everything here was on this page. Pick an answer; you'll see why it's right.</p>
+    </header>
+    <div class="qs" id="qs"></div>
+  </section>
+
+  <div class="wrap-up">
+    <h2>What Shreshta learned today</h2>
+    <ul>
+      <li>Farming gives people their <b>livelihood</b>, gives us food, and gives animals <b>fodder</b>.</li>
+      <li>Factories need farms for <b>raw material</b>: cotton, jute, sugarcane, oilseeds.</li>
+      <li>Farm goods are sold abroad as <b>exports</b> and earn <b>foreign exchange</b>.</li>
+      <li>Farming creates <b>employment</b>, keeps trains and trucks busy, adds to <b>national income</b> and gives <b>food security</b>.</li>
+      <li>Agri, horti, seri, viti, pisci: fields, gardens, silk, grapes and fish.</li>
+    </ul>
+    <p class="next">📝 Now try the printed worksheet. Next time: why rice loves rain but wheat likes it cool, and what Kharif and Rabi mean.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ---------- 1. room ---------- */
+  const things=[
+    ['👕','T-shirt','Cotton field',true],['🫓','Chapati','Wheat field',true],['🍵','Morning chai','Tea garden',true],
+    ['✏️','Eraser','Rubber tree',true],['🛍️','Gunny bag','Jute field',true],['🍬','Sugar','Sugarcane field',true],
+    ['🥛','Glass of milk','Cow eating fodder',true],['🧴','Cooking oil','Groundnut field',true],['🪑','Wooden chair','Forest trees',true],
+    ['📱','Phone','Factory and mines',false],['🪟','Glass window','Sand, in a factory',false],['🔋','Battery','Metals from mines',false]
+  ];
+  const room=document.getElementById('room');
+  const btns=things.map((t,i)=>{const b=document.createElement('button');b.type='button';b.className='thing';b.id='thing'+i;
+    b.innerHTML='<span class="em">'+t[0]+'</span><span class="nm">'+t[1]+'</span><span class="src"></span>';
+    b.onclick=()=>{b.classList.add('open');b.querySelector('.src').textContent=(t[3]?'🌱 ':'🏭 ')+t[2];};room.appendChild(b);return b;});
+  const verdict=document.getElementById('verdict'),vanish=document.getElementById('vanish'),restore=document.getElementById('restore');
+  vanish.onclick=()=>{btns.forEach((b,i)=>{b.querySelector('.src').textContent=(things[i][3]?'🌱 ':'🏭 ')+things[i][2];if(things[i][3])b.classList.add('gone');else b.classList.add('open');});
+    const n=things.filter(t=>t[3]).length;
+    verdict.innerHTML='Oh no! '+n+' of the '+things.length+' things vanished. No clothes, no chapati, no chai. Even the cow had nothing to eat, so the milk went too. Only things made in factories from mines survived, and the factory workers would still be hungry! That\'s why farming is called the <b>backbone</b> of a country like India.';
+    vanish.hidden=true;restore.hidden=false;};
+  restore.onclick=()=>{btns.forEach(b=>b.classList.remove('gone'));vanish.hidden=false;restore.hidden=true;verdict.textContent='Phew! The farms are back.';};
+
+  /* ---------- 2. jobs ---------- */
+  const jobs=[
+    ['🏡','Earning a living','livelihood','Farming is how most village families earn the money they live on. Your job is your livelihood.','Nani\'s whole village works in the fields.'],
+    ['🍚','Feeding people and animals','fodder','Farms grow our food. Leftover stalks, grass and husks become food for animals, called fodder.','Gauri the cow munches dry rice stalks.'],
+    ['🏭','Feeding factories','raw material','Factories turn farm crops into new things. The crop they start with is the raw material.','Cotton → cloth mill. Sugarcane → sugar mill. Jute → sack factory.'],
+    ['🚚','Keeping trucks and trains busy','transport','Huge loads of crops travel from farms to factories by roads and railways.','A goods train full of wheat sacks.'],
+    ['🚢','Selling to other countries','export','Things a country sells abroad are its exports. India exports tea, spices, cotton, jute, sugar, coffee and tobacco.','Assam tea in a cup in London!'],
+    ['💵','Earning foreign money','foreign exchange','When India sells abroad, it gets paid in other countries\' money, like dollars. That money is foreign exchange.','About ₹18 of every ₹100 India earns abroad comes from farm goods.'],
+    ['👷','Making jobs for many','employment','Even people without fields get work: digging canals, building drains, sowing, harvesting, picking tea.','Women picking tea leaves on a hill.'],
+    ['🛡️','No one goes hungry','food security','When a country grows enough food for everyone, it feels safe. That safety is food security.','A full granary means no worry about next year\'s meals.'],
+    ['🇮🇳','Making the country richer','national income','All the money a country earns in a year is its national income. In developing countries, farming adds the biggest share.','Every sack sold adds a little to India\'s total.'],
+    ['📈','Helping the country grow','economic development','When farming grows, the whole country grows with it: more money, more factories, more jobs.','Better harvests → more schools and roads.']
+  ];
+  const jobsEl=document.getElementById('jobs'),jc=document.getElementById('jobCount');const opened=new Set();
+  jobs.forEach((j,i)=>{const b=document.createElement('button');b.type='button';b.className='job';b.id='job'+i;b.setAttribute('aria-expanded','false');
+    b.innerHTML='<span class="ic">'+j[0]+'</span><h3>'+j[1]+'</h3><span class="hint">Tap to open</span><span class="more">'+j[3].replace(j[2],'<span class="big-word">'+j[2]+'</span>')+'<span class="ex">'+j[4]+'</span></span>';
+    if(!j[3].includes(j[2]))b.querySelector('.more').insertAdjacentHTML('afterbegin','Big word: <span class="big-word">'+j[2]+'</span>. ');
+    b.onclick=()=>{const o=b.classList.toggle('open');b.setAttribute('aria-expanded',o);opened.add(i);jc.textContent=opened.size===jobs.length?'All 10 opened! 🎉':'Opened '+opened.size+' of 10';};
+    jobsEl.appendChild(b);});
+
+  /* ---------- 3. dots ---------- */
+  ['d70','d18'].forEach(id=>{const el=document.getElementById(id);for(let k=0;k<100;k++)el.appendChild(document.createElement('i'));});
+  document.querySelectorAll('[data-fill]').forEach(b=>b.onclick=()=>{const dots=[...document.getElementById(b.dataset.fill).children];const n=+b.dataset.n;
+    dots.forEach(d=>d.classList.remove('on'));let k=0;const t=setInterval(()=>{if(k>=n){clearInterval(t);return;}dots[k++].classList.add('on');},18);});
+
+  /* ---------- 4. decoder ---------- */
+  const roots=[
+    ['🌾','Agri','field','Agri + culture','Growing crops on the soil and rearing animals.','Nani\'s rice fields and Gauri the cow.'],
+    ['🌷','Horti','garden','Horti + culture','Growing vegetables, flowers and fruits to sell.','A greenhouse full of roses and tomatoes.'],
+    ['🐛','Seri','silk','Seri + culture','Rearing silkworms to get silk thread.','The silk in a Kanchipuram saree started as a silkworm cocoon.'],
+    ['🍇','Viti','vine','Viti + culture','Growing grapes on climbing vines.','Rows of grape vines on wires, like in Nashik.'],
+    ['🐟','Pisci','fish','Pisci + culture','Breeding and rearing fish in ponds and tanks.','Fish farms in Andhra Pradesh ponds.']
+  ];
+  const dec=document.getElementById('decode'),panel=document.getElementById('panel');
+  const rb=roots.map((r,i)=>{const b=document.createElement('button');b.type='button';b.className='root';b.id='root'+i;
+    b.innerHTML='<span class="em">'+r[0]+'</span><span class="w"><span>'+r[1]+'</span>culture</span><span class="m">'+r[1]+' = '+r[2]+'</span>';
+    b.onclick=()=>{rb.forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+      panel.innerHTML='<span class="eq">'+r[1]+' ('+r[2]+') + culture = '+r[1]+'culture</span><p>'+r[4]+'</p><p class="how">'+r[0]+' '+r[5]+'</p>';};
+    dec.appendChild(b);return b;});
+
+  /* ---------- 5. check ---------- */
+  const qs=[
+    {q:'Gauri the cow eats leftover rice stalks. What is food for animals called?',o:['Fodder','Raw material','Export'],a:0,w:'Fodder is food for domestic animals. Farms give it along with our food.'},
+    {q:'The cloth mill buys cotton from Raju Mama. For the mill, cotton is…',o:['Foreign exchange','Raw material','Livelihood'],a:1,w:'Cotton is the raw material: what a factory starts with to make cloth.'},
+    {q:'A farmer who raises silkworms is doing…',o:['Pisciculture','Viticulture','Sericulture'],a:2,w:'Seri means silk, so raising silkworms is sericulture.'}
+  ];
+  const qsEl=document.getElementById('qs');
+  qs.forEach((q,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML='<p><b>'+(i+1)+'.</b> '+q.q+'</p><div class="opts"></div><p class="why" hidden></p>';
+    const o=d.querySelector('.opts'),w=d.querySelector('.why');
+    q.o.forEach((t,j)=>{const b=document.createElement('button');b.type='button';b.className='opt';b.id='q'+i+'o'+j;b.textContent=t;
+      b.onclick=()=>{if(d.dataset.done)return;if(j===q.a){b.classList.add('right');d.dataset.done=1;w.hidden=false;w.textContent='✅ '+q.w;}else{b.classList.add('wrong');w.hidden=false;w.textContent='Not quite. Try another one!';}};o.appendChild(b);});
+    qsEl.appendChild(d);});
+})();
+</script>
+
+</body>
+</html>
