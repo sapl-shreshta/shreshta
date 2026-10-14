@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>यह क्या है? · Hindi Worksheet 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff6ec7;--purple:#a06cd5;--blue:#4cc9f0;--teal:#06d6a0;--yellow:#ffd166;--orange:#ff9e45;--red:#ef476f;--ink:#1d2b53;
+ --hi:'Noto Sans Devanagari','Nirmala UI','Mangal',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS','Noto Sans Devanagari','Nirmala UI',sans-serif;background:linear-gradient(135deg,#ffe0f0,#e0f7ff,#fff5d6);
+ background-attachment:fixed;color:var(--ink);padding:16px;min-height:100vh;overflow-x:hidden;}
+.hi{font-family:var(--hi);}
+.wrap{max-width:900px;margin:0 auto;}
+.back{display:inline-block;background:var(--purple);color:#fff;text-decoration:none;padding:10px 20px;border-radius:50px;font-weight:bold;box-shadow:0 5px 0 #7b4aaf;margin:0 6px 6px 0;}
+header{text-align:center;margin:18px 0 22px;}
+.big{font-size:clamp(56px,10vw,90px);animation:bounce 2.4s ease-in-out infinite;display:inline-block;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+h1{font-size:clamp(32px,6vw,56px);margin:8px 0 4px;line-height:1.5;background:linear-gradient(90deg,var(--orange),var(--red),var(--purple));
+ -webkit-background-clip:text;background-clip:text;color:transparent;font-family:var(--hi);}
+.sub{font-size:clamp(16px,2.2vw,20px);color:var(--purple);}
+section{background:#fff;border-radius:24px;padding:22px clamp(14px,3vw,30px);margin:22px 0;box-shadow:0 8px 0 rgba(160,108,213,.18);border:3px solid #f1e4ff;}
+h2{font-size:clamp(21px,3.2vw,28px);margin-bottom:6px;color:var(--purple);}
+h2 .hi{font-weight:700;}
+.how{font-size:16px;color:#5a4a80;margin-bottom:14px;line-height:1.6;}
+p,li{line-height:1.7;font-size:17px;}
+
+/* Today's sentence */
+.magic{text-align:center;background:linear-gradient(135deg,#fff5d6,#ffe0f0);border:3px solid var(--yellow);border-radius:20px;padding:18px;}
+.magic .frame{font-family:var(--hi);font-size:clamp(34px,7vw,56px);font-weight:700;line-height:1.5;}
+.magic .frame .gap{display:inline-block;min-width:2.6em;border-bottom:5px dashed var(--red);color:var(--red);}
+.magic .en{font-size:18px;color:#6a5a90;}
+.examples{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
+
+.spk{border:none;background:var(--teal);color:#fff;border-radius:50px;padding:6px 14px;font-size:16px;cursor:pointer;font-family:inherit;box-shadow:0 3px 0 #04a47b;white-space:nowrap;}
+.spk:active{transform:translateY(2px);box-shadow:none;}
+.ex{font-family:var(--hi);font-size:22px;background:#fff;border:2px solid #f6d3b8;border-radius:14px;padding:6px 12px;display:flex;align-items:center;gap:8px;}
+
+/* Part 1 matching */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.col{display:flex;flex-direction:column;gap:10px;}
+.card{border:3px solid #e6d6f5;background:#fcf9ff;border-radius:16px;padding:8px;text-align:center;cursor:pointer;user-select:none;transition:transform .15s;min-height:62px;display:flex;align-items:center;justify-content:center;}
+.card:hover{transform:scale(1.03);}
+.card.pic{font-size:40px;}
+.card.word{font-family:var(--hi);font-size:26px;font-weight:700;}
+.card.sel{border-color:var(--blue);background:#e3f6ff;box-shadow:0 0 0 4px #bfeaff;}
+.card.done{border-color:var(--teal);background:#e0f8ef;cursor:default;opacity:.85;}
+.card.wrong{animation:shake .4s;border-color:var(--red);}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+/* Part 2 fill */
+.bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:#fffdf3;border:3px dashed var(--yellow);border-radius:18px;padding:12px;margin-bottom:14px;}
+.chip{font-family:var(--hi);font-weight:700;font-size:24px;border-radius:12px;padding:4px 14px;border:3px solid var(--orange);color:#c25e00;background:#fff0e0;cursor:pointer;user-select:none;}
+.chip.sel{background:var(--orange);color:#fff;}
+.chip.used{opacity:.3;cursor:default;}
+.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;}
+.row{display:flex;align-items:center;gap:10px;background:#fcf9ff;border:2px solid #eadcf8;border-radius:16px;padding:10px 12px;}
+.row .e{font-size:40px;}
+.row .s{font-family:var(--hi);font-size:26px;font-weight:600;flex:1;}
+.blank{display:inline-block;min-width:3.4em;text-align:center;border-bottom:4px dashed var(--purple);color:var(--purple);cursor:pointer;padding:0 4px;}
+.blank.ok{border-color:var(--teal);color:#04694f;border-bottom-style:solid;}
+.blank.no{border-color:var(--red);color:var(--red);}
+
+/* Part 3 riddles */
+.riddle{background:#fff8f0;border:3px solid #f6d3b8;border-radius:18px;padding:14px 16px;margin-bottom:14px;}
+.riddle .q{font-family:var(--hi);font-size:clamp(21px,3.4vw,26px);line-height:1.7;}
+.riddle .q b{color:var(--red);}
+.riddle .tools{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+.help{border:none;background:#fff;border:2px dashed var(--blue);color:#1f6f99;border-radius:50px;padding:5px 12px;font-size:15px;cursor:pointer;font-family:inherit;}
+.meaning{display:none;background:#eef9ff;border-radius:12px;padding:8px 12px;font-size:16px;color:#245;margin-bottom:8px;}
+.meaning.show{display:block;}
+.opts{display:flex;flex-wrap:wrap;gap:10px;}
+.opt{font-family:var(--hi);font-size:22px;border:3px solid #c77dff;background:#fff;border-radius:14px;padding:6px 14px;cursor:pointer;}
+.opt.ok{background:#e0f8ef;border-color:var(--teal);}
+.opt.no{background:#ffe6ea;border-color:var(--red);text-decoration:line-through;}
+.fb{font-size:17px;margin-top:8px;min-height:1.4em;}
+
+/* Part 4 speaking */
+.speak{text-align:center;}
+.flash{font-size:110px;line-height:1.2;margin:6px 0;}
+.fw{font-size:40px;font-weight:700;color:#c25e00;min-height:1.5em;}
+.ask{font-family:var(--hi);font-size:30px;font-weight:700;color:var(--purple);}
+.ans{font-family:var(--hi);font-size:26px;color:#04694f;min-height:1.6em;visibility:hidden;}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+.btn{border:none;border-radius:50px;padding:10px 20px;font-size:18px;font-weight:bold;cursor:pointer;font-family:inherit;color:#fff;}
+.b-ok{background:var(--teal);box-shadow:0 4px 0 #04a47b;}
+.b-again{background:var(--orange);box-shadow:0 4px 0 #c97520;}
+.b-peek{background:var(--blue);box-shadow:0 4px 0 #2a9cc2;}
+.stars{font-size:30px;min-height:40px;margin-top:10px;letter-spacing:4px;}
+.rule{background:linear-gradient(135deg,#e6f8f5,#eef9ff);border:3px solid var(--teal);border-radius:18px;padding:12px 16px;font-size:16px;line-height:1.6;text-align:left;margin-top:14px;}
+
+/* Part 5 writing */
+.write{display:flex;flex-direction:column;gap:14px;}
+.wl{display:flex;align-items:center;gap:8px;font-family:var(--hi);font-size:26px;}
+.wl input{flex:1;font-family:var(--hi);font-size:24px;border:none;border-bottom:3px solid var(--purple);background:transparent;padding:4px;min-width:0;}
+.wl input:focus{outline:none;background:#fcf9ff;}
+
+.check{display:block;margin:14px auto 0;}
+.score{text-align:center;font-size:20px;font-weight:bold;margin-top:10px;min-height:1.4em;}
+
+table{width:100%;border-collapse:collapse;font-size:17px;}
+th{background:#f3e6ff;color:var(--purple);padding:8px;text-align:left;}
+td{padding:6px 8px;border-top:2px dashed #eadcf8;}
+td.hi{font-size:22px;font-weight:700;}
+.parent{background:#fffdf3;border:3px dashed var(--yellow);}
+footer{text-align:center;color:#7a6aa0;font-size:14px;margin:24px 0 10px;}
+
+@media (max-width:520px){.match{gap:8px;}.card.word{font-size:21px;}.row .s{font-size:22px;}}
+@media print{
+ body{background:#fff;padding:0;}
+ .back,.spk,.help,.btns,.check,.score,.speak .flash,.speak .ask,.speak .ans,.stars,.noprint{display:none!important;}
+ section{box-shadow:none;break-inside:avoid-page;border:2px solid #ccc;}
+ .big{animation:none;}
+ h1{color:#000;-webkit-text-fill-color:#000;background:none;}
+ .meaning{display:none!important;}
+ .card.done,.opt.ok,.opt.no{background:#fff;border-color:#e6d6f5;text-decoration:none;}
+ .wl input{border-bottom:2px solid #000;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../index.html">⬅️ Hindi</a>
+<a class="back" href="../../index.html">🏠 Home</a>
+
+<header>
+ <div class="big">🍎</div>
+ <h1>यह क्या है?</h1>
+ <p class="sub">Hindi · Worksheet 1 · <b>What is this?</b></p>
+</header>
+
+<!-- TODAY'S SENTENCE -->
+<section>
+ <h2>✨ आज का जादुई वाक्य · Today's magic sentence</h2>
+ <div class="magic">
+  <div class="frame">यह <span class="gap">?</span> है।</div>
+  <div class="en">“This is ___.”  &nbsp;Put <b>any</b> thing in the gap — it always works!</div>
+  <div class="examples">
+   <div class="ex">🍎 यह सेब है। <button class="spk" data-say="यह सेब है।">🔊</button></div>
+   <div class="ex">📖 यह किताब है। <button class="spk" data-say="यह किताब है।">🔊</button></div>
+   <div class="ex">🐱 यह बिल्ली है। <button class="spk" data-say="यह बिल्ली है।">🔊</button></div>
+  </div>
+ </div>
+ <p class="how" style="margin-top:12px">Someone asks: <b class="hi" style="font-size:22px">यह क्या है?</b> (What is this?) <button class="spk" data-say="यह क्या है?">🔊</button> — and you answer with the whole sentence, not just one word. 💪</p>
+</section>
+
+<!-- PART 1 -->
+<section>
+ <h2>1️⃣ <span class="hi">मिलाओ</span> · Match</h2>
+ <p class="how">Tap a picture, then tap its Hindi word. Read the word aloud when you match it!</p>
+ <div class="match">
+  <div class="col" id="pics"></div>
+  <div class="col" id="words"></div>
+ </div>
+ <div class="score" id="s1"></div>
+</section>
+
+<!-- PART 2 -->
+<section>
+ <h2>2️⃣ <span class="hi">खाली जगह भरो</span> · Fill the gap</h2>
+ <p class="how">Tap a word from the box, then tap the gap where it belongs. Then press 🔊 and say the sentence with it.</p>
+ <div class="bank" id="bank"></div>
+ <div class="rows" id="rows"></div>
+ <button class="btn b-ok check" id="check2">✅ जाँचो · Check</button>
+ <div class="score" id="s2"></div>
+</section>
+
+<!-- PART 3 -->
+<section>
+ <h2>3️⃣ <span class="hi">पहेली बूझो</span> · Riddles</h2>
+ <p class="how">Read the riddle (or press 🔊). Who am I? Choose the answer as a <b>full sentence</b>. Stuck? Tap 🔍 for the English meaning.</p>
+ <div id="riddles"></div>
+ <div class="score" id="s3"></div>
+</section>
+
+<!-- PART 4 -->
+<section class="speak">
+ <h2>4️⃣ <span class="hi">बोलो!</span> · Say it!</h2>
+ <p class="how">Look at the picture, read the word, and say the <b>whole sentence</b> out loud: <b class="hi">यह ___ है।</b> Then press 🔊 to check!</p>
+ <div class="flash" id="flash">🍎</div>
+ <div class="fw hi" id="fword">सेब</div>
+ <div class="ask">यह क्या है? <button class="spk" data-say="यह क्या है?">🔊</button></div>
+ <div class="ans" id="ans">यह सेब है।</div>
+ <div class="btns">
+  <button class="btn b-peek" id="again">🔊 सुनो · Check</button>
+  <button class="btn b-ok" id="good">⭐ मैंने बोला! I said it</button>
+  <button class="btn b-again" id="hide">🙈 Hide words</button>
+ </div>
+ <div class="stars" id="stars"></div>
+ <div class="rule"><b>Remember:</b> a ⭐ is only for the whole sentence — “यह गेंद है।”, not just “गेंद”. <b>Challenge:</b> tap 🙈 to hide the words and say them just from the pictures!</div>
+</section>
+
+<!-- PART 5 -->
+<section>
+ <h2>5️⃣ <span class="hi">लिखो</span> · Write</h2>
+ <p class="how">Look at your desk. Write 3 sentences about 3 things on it. Then read them aloud!</p>
+ <div class="write">
+  <div class="wl">1. यह <input type="text" aria-label="word 1"> है।</div>
+  <div class="wl">2. यह <input type="text" aria-label="word 2"> है।</div>
+  <div class="wl">3. यह <input type="text" aria-label="word 3"> है।</div>
+ </div>
+ <p class="how noprint" style="margin-top:10px">Need a word? <span class="hi">पेंसिल · रबड़ · कॉपी · बोतल · घड़ी · बस्ता</span> (pencil · eraser · notebook · bottle · clock · school bag)</p>
+</section>
+
+<!-- WORD BANK -->
+<section>
+ <h2>📒 <span class="hi">आज के शब्द</span> · Today's words</h2>
+ <table id="vocab"><tr><th>Picture</th><th>Hindi</th><th>English</th><th class="noprint">Listen</th></tr></table>
+</section>
+
+<section class="parent">
+ <h2>🌟 <span class="hi">शाबाश!</span></h2>
+ <p>You can now say a <b>full Hindi sentence</b> about anything around you. Try 5 sentences at dinner tonight! 🍽️</p>
+ <p class="how" style="margin-top:8px"><b>Next time:</b> <span class="hi">वह ___ है।</span> — “That is ___” for things far away.</p>
+</section>
+
+<footer>Made for Shreshta 🌼 · <span class="hi">हिंदी सीखें, मज़े से!</span></footer>
+</div>
+
+<script>
+/* ---------- speech ---------- */
+let hiVoice=null;
+function pickVoice(){const v=speechSynthesis.getVoices();hiVoice=v.find(x=>x.lang==='hi-IN')||v.find(x=>x.lang&&x.lang.startsWith('hi'))||null;}
+if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function say(t){
+ if(!('speechSynthesis' in window))return;
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(t);u.lang='hi-IN';u.rate=0.8;if(hiVoice)u.voice=hiVoice;
+ speechSynthesis.speak(u);
+}
+document.addEventListener('click',e=>{const b=e.target.closest('.spk');if(b)say(b.dataset.say);});
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* ---------- Part 1: match ---------- */
+const P1=[['🍎','सेब','apple'],['📖','किताब','book'],['🐱','बिल्ली','cat'],['💧','पानी','water'],
+          ['🏠','घर','house'],['⚽','गेंद','ball'],['🐶','कुत्ता','dog'],['🌸','फूल','flower']];
+const pics=document.getElementById('pics'),words=document.getElementById('words');
+let selPic=null,matched=0;
+shuffle(P1).forEach(([e,w])=>{const d=document.createElement('div');d.className='card pic';d.textContent=e;d.dataset.w=w;pics.appendChild(d);});
+shuffle(P1).forEach(([e,w])=>{const d=document.createElement('div');d.className='card word';d.textContent=w;d.dataset.w=w;words.appendChild(d);});
+pics.addEventListener('click',e=>{const c=e.target.closest('.card');if(!c||c.classList.contains('done'))return;
+ pics.querySelectorAll('.sel').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');selPic=c;});
+words.addEventListener('click',e=>{const c=e.target.closest('.card');if(!c||c.classList.contains('done'))return;
+ if(!selPic){say(c.dataset.w);return;}
+ if(c.dataset.w===selPic.dataset.w){
+  c.classList.add('done');selPic.classList.add('done');selPic.classList.remove('sel');selPic=null;matched++;
+  say('यह '+c.dataset.w+' है।');
+  if(matched===P1.length)document.getElementById('s1').textContent='🎉 सब सही! All matched!';
+ }else{c.classList.add('wrong');setTimeout(()=>c.classList.remove('wrong'),400);}
+});
+
+/* ---------- Part 2: fill ---------- */
+const P2=[['🥭','आम','mango'],['🪑','कुर्सी','chair'],['🌙','चाँद','moon'],['☀️','सूरज','sun'],['🚗','गाड़ी','car'],['✏️','पेंसिल','pencil']];
+const bank=document.getElementById('bank'),rows=document.getElementById('rows');
+let selChip=null;
+shuffle(P2).forEach(([e,w])=>{const c=document.createElement('span');c.className='chip';c.textContent=w;bank.appendChild(c);});
+P2.forEach(([e,w])=>{const r=document.createElement('div');r.className='row';
+ r.innerHTML=`<span class="e">${e}</span><span class="s">यह <span class="blank" data-a="${w}">&nbsp;</span> है।</span><button class="spk" data-say="यह ${w} है।">🔊</button>`;rows.appendChild(r);});
+bank.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c||c.classList.contains('used'))return;
+ bank.querySelectorAll('.sel').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');selChip=c;});
+rows.addEventListener('click',e=>{const b=e.target.closest('.blank');if(!b)return;
+ if(b.dataset.chip){const old=[...bank.children].find(x=>x.textContent===b.dataset.chip);if(old)old.classList.remove('used');}
+ if(selChip){b.textContent=selChip.textContent;b.dataset.chip=selChip.textContent;selChip.classList.add('used');selChip.classList.remove('sel');selChip=null;}
+ else{b.innerHTML='&nbsp;';delete b.dataset.chip;}
+ b.classList.remove('ok','no');});
+document.getElementById('check2').onclick=()=>{let ok=0;
+ rows.querySelectorAll('.blank').forEach(b=>{b.classList.remove('ok','no');if(!b.dataset.chip)return;
+  if(b.dataset.chip===b.dataset.a){b.classList.add('ok');ok++;}else b.classList.add('no');});
+ document.getElementById('s2').textContent=ok===P2.length?'🎉 शाबाश! 6/6 — now read all six aloud!':`${ok}/${P2.length} सही — fix the red ones and check again.`;};
+
+/* ---------- Part 3: riddles ---------- */
+const R=[
+ {q:'मैं <b>लाल</b> हूँ। मैं <b>मीठा</b> हूँ। मैं पेड़ पर लगता हूँ।',en:'I am red. I am sweet. I grow on a tree.',a:'सेब',o:['सेब','चाँद','कुत्ता']},
+ {q:'मैं <b>“म्याऊँ म्याऊँ”</b> करती हूँ। मुझे <b>दूध</b> पसंद है।',en:'I say “meow meow”. I like milk.',a:'बिल्ली',o:['गेंद','बिल्ली','घर']},
+ {q:'मैं <b>रात</b> में आता हूँ। मैं <b>आसमान</b> में चमकता हूँ।',en:'I come at night. I shine in the sky.',a:'चाँद',o:['पानी','सूरज','चाँद']},
+ {q:'मैं <b>“भौं भौं”</b> करता हूँ। मैं <b>घर</b> की रखवाली करता हूँ।',en:'I say “woof woof”. I guard the house.',a:'कुत्ता',o:['कुत्ता','बिल्ली','फूल']},
+ {q:'मुझमें <b>कहानियाँ</b> हैं। तुम मुझे <b>पढ़ती</b> हो।',en:'I have stories inside me. You read me.',a:'किताब',o:['कुर्सी','किताब','आम']},
+ {q:'मैं <b>फलों का राजा</b> हूँ। मैं <b>पीला</b> और मीठा हूँ। मैं गर्मी में आता हूँ।',en:'I am the king of fruits. I am yellow and sweet. I come in summer.',a:'आम',o:['सेब','आम','पानी']}
+];
+const rd=document.getElementById('riddles');let rScore=0,rDone=0;
+R.forEach((r,i)=>{const d=document.createElement('div');d.className='riddle';
+ const plain=r.q.replace(/<[^>]+>/g,'');
+ d.innerHTML=`<div class="q">${i+1}. ${r.q}<br><b style="color:var(--purple)">मैं कौन हूँ?</b></div>
+ <div class="tools"><button class="spk" data-say="${plain} मैं कौन हूँ?">🔊 सुनो</button><button class="help">🔍 मदद · meaning</button></div>
+ <div class="meaning">${r.en} <b>Who am I?</b></div>
+ <div class="opts">${shuffle(r.o).map(o=>`<button class="opt" data-o="${o}">यह ${o} है।</button>`).join('')}</div>
+ <div class="fb"></div>`;
+ d.querySelector('.help').onclick=()=>d.querySelector('.meaning').classList.toggle('show');
+ let first=true,solved=false;
+ d.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(solved)return;
+  if(b.dataset.o===r.a){b.classList.add('ok');solved=true;rDone++;if(first)rScore++;
+   say('यह '+r.a+' है।');d.querySelector('.fb').innerHTML='✅ <b class="hi">सही!</b> Now say it out loud: <b class="hi">यह '+r.a+' है।</b>';
+   if(rDone===R.length)document.getElementById('s3').textContent=`🧩 पहेली चैंपियन! ${rScore}/${R.length} on the first try`;}
+  else{b.classList.add('no');first=false;d.querySelector('.fb').textContent='🤔 Read the clue again!';}});
+ rd.appendChild(d);});
+
+/* ---------- Part 4: speaking ---------- */
+const P4=[...P1,...P2];
+let deck=shuffle(P4),idx=0,stars=0;
+const flash=document.getElementById('flash'),ans=document.getElementById('ans');
+let hideW=false;const fword=document.getElementById('fword');
+function show(){const [e,w]=deck[idx%deck.length];flash.textContent=e;fword.textContent=w;fword.style.visibility=hideW?'hidden':'visible';ans.textContent='यह '+w+' है।';ans.style.visibility='hidden';}
+function next(){idx++;if(idx%deck.length===0)deck=shuffle(P4);show();}
+document.getElementById('good').onclick=()=>{stars++;document.getElementById('stars').textContent='⭐'.repeat(stars%10||10)+(stars>=10?`  ×${stars}`:'');say('शाबाश!');next();};
+document.getElementById('again').onclick=()=>{ans.style.visibility='visible';say(ans.textContent);};
+document.getElementById('hide').onclick=e=>{hideW=!hideW;fword.style.visibility=hideW?'hidden':'visible';e.target.textContent=hideW?'👀 Show words':'🙈 Hide words';};
+show();
+
+/* ---------- vocab ---------- */
+const vt=document.getElementById('vocab');
+P4.forEach(([e,w,en])=>{const tr=document.createElement('tr');
+ tr.innerHTML=`<td style="font-size:28px">${e}</td><td class="hi">${w}</td><td>${en}</td><td class="noprint"><button class="spk" data-say="${w}">🔊</button></td>`;vt.appendChild(tr);});
+</script>
+</body>
+</html>

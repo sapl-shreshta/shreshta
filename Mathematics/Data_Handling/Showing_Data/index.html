@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Showing Data 📊</title>
+<style>
+  :root{
+    --pink:#ff6ec7; --purple:#a06cd5; --blue:#4cc9f0; --teal:#06d6a0;
+    --yellow:#ffd166; --orange:#ff9e45; --red:#ef476f; --cream:#fff8f0; --ink:#1d2b53;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Chalkboard SE','Trebuchet MS',sans-serif;}
+  html,body{overflow-x:hidden;}
+  body{background:linear-gradient(135deg,#fff5e6,#e6f3ff,#f0e6ff);color:var(--ink);padding:20px;}
+  .container{max-width:960px;margin:0 auto;padding-bottom:60px;}
+
+  .nav-top{position:fixed;top:20px;display:flex;gap:15px;z-index:101;}
+  .nav-back{left:20px;} .nav-home{right:20px;}
+  .icon-btn{
+    background:var(--purple);color:white;border:none;border-radius:50%;width:50px;height:50px;
+    font-size:24px;cursor:pointer;box-shadow:0 4px 0 #7a3b97;transition:transform .15s;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;
+  }
+  .icon-btn:hover{transform:translateY(-2px);}
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #7a3b97;}
+
+  header{text-align:center;margin:60px 0 20px;}
+  h1{font-size:clamp(32px,6vw,50px);color:var(--purple);margin-bottom:8px;}
+  .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--blue);font-weight:bold;}
+  .emoji-row{font-size:clamp(36px,7vw,54px);text-align:center;margin:14px 0;letter-spacing:8px;}
+  .highlight{
+    background:linear-gradient(90deg,#ff6ec7,#ffd166,#06d6a0,#4cc9f0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:bold;
+  }
+
+  .guide{
+    display:flex;align-items:center;gap:16px;background:var(--cream);border:3px dashed var(--pink);
+    border-radius:20px;padding:16px 20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  }
+  .mascot-frame{
+    position:relative;flex:0 0 auto;width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 4px 0 #d97b1f;
+  }
+  .guide p{font-size:clamp(14px,2vw,17px);line-height:1.5;font-weight:bold;}
+
+  .topbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:space-between;
+    background:white;border-radius:18px;padding:12px 16px;box-shadow:0 4px 12px rgba(0,0,0,.06);}
+  .prog-wrap{flex:1 1 260px;display:flex;flex-direction:column;gap:6px;}
+  .prog-label{font-weight:bold;font-size:15px;}
+  .progress-bar{background:#e6e9f0;border-radius:10px;height:18px;overflow:hidden;}
+  .progress-fill{background:linear-gradient(90deg,var(--teal),var(--blue));height:100%;width:0;transition:width .3s;}
+  a.pdf-btn{background:var(--orange);color:white;text-decoration:none;font-weight:bold;font-size:14px;padding:10px 16px;
+    border-radius:14px;box-shadow:0 4px 0 #cc7620;white-space:nowrap;}
+  a.pdf-btn:hover{transform:translateY(-2px);}
+
+  .section{
+    background:var(--cream);border-radius:22px;padding:24px 22px;margin:28px 0;
+    border:3px solid var(--teal);box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .section h2{font-size:clamp(20px,3vw,28px);color:var(--pink);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .section .lead{font-size:clamp(14px,2vw,16px);margin-bottom:16px;line-height:1.5;}
+  .level{display:inline-block;font-size:12px;font-weight:bold;padding:3px 10px;border-radius:999px;color:white;background:var(--blue);}
+  .level.l3{background:var(--purple);}
+
+  .stage{background:white;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  svg{max-width:100%;height:auto;}
+  svg.chart{width:100%;max-width:560px;}
+  .info-box{background:#e6fff5;border-left:6px solid var(--teal);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.5;}
+  .info-box.orange{background:#fff2e6;border-color:var(--orange);}
+
+  .msg-box{text-align:center;font-weight:bold;font-size:15px;padding:10px;border-radius:12px;background:#eee;min-height:20px;margin-top:12px;}
+  .msg-box:empty{display:none;}
+  .msg-box.good{background:#d4f7e8;color:#048848;}
+  .msg-box.bad{background:#ffe3ea;color:#c0245a;}
+
+  button.action{
+    background:var(--teal);color:white;border:none;font-weight:bold;font-size:14px;padding:10px 18px;
+    border-radius:14px;cursor:pointer;box-shadow:0 4px 0 #04946e;transition:transform .15s;
+  }
+  button.action:hover{transform:translateY(-2px);}
+  button.action:active{transform:translateY(2px);box-shadow:0 2px 0 #04946e;}
+  button.action.secondary{background:var(--orange);box-shadow:0 4px 0 #cc7620;}
+  button.mini{background:white;border:2px solid var(--purple);color:var(--purple);font-weight:bold;border-radius:10px;padding:4px 10px;cursor:pointer;font-size:14px;}
+  button.mini:hover{background:#f3ebff;}
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+
+  /* questions */
+  .qlist{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+  .q{background:white;border-radius:12px;border-left:5px solid var(--blue);padding:12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between;}
+  .q .qt{flex:1 1 300px;font-size:15px;line-height:1.45;}
+  .q .qn{font-weight:bold;color:var(--purple);margin-right:4px;}
+  input.ans,select.ans{padding:8px 10px;border:2px solid var(--blue);border-radius:10px;font-size:15px;width:120px;background:white;color:var(--ink);}
+  select.ans{width:auto;min-width:150px;}
+  input.ans:focus,select.ans:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,110,199,.25);}
+  .ans.ok{border-color:var(--teal);background:#d4f7e8;}
+  .ans.no{border-color:var(--red);background:#ffe3ea;}
+  .unit{font-weight:bold;}
+
+  .mcq{background:white;border-radius:12px;border-left:5px solid var(--purple);padding:12px 14px;}
+  .mcq .qt{font-size:15px;line-height:1.45;margin-bottom:10px;}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
+  .opt-btn{background:white;border:3px solid var(--blue);border-radius:14px;padding:10px 12px;font-size:14px;font-weight:bold;cursor:pointer;text-align:left;transition:all .15s;color:var(--ink);}
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .opt-btn.correct{background:#d4f7e8;border-color:var(--teal);color:#048848;}
+  .opt-btn.wrong{background:#ffe3ea;border-color:var(--red);color:#c0245a;}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.9;}
+  .explain{margin-top:10px;font-size:14px;background:#f0e6ff;padding:10px 14px;border-radius:12px;display:none;line-height:1.45;}
+  details.think{background:white;border-radius:12px;border-left:5px solid var(--orange);padding:12px 14px;font-size:15px;}
+  details.think summary{cursor:pointer;font-weight:bold;}
+  details.think p{margin-top:8px;line-height:1.5;}
+
+  /* task 1: survey */
+  .rawlist{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .raw{border:2px solid #cbd5e1;background:white;border-radius:999px;padding:6px 12px;font-size:14px;font-weight:bold;cursor:pointer;color:var(--ink);transition:all .15s;}
+  .raw:hover{border-color:var(--pink);}
+  .raw.counted{background:#eef1f6;color:#9aa4b5;text-decoration:line-through;border-color:#e2e6ee;}
+  table.ft{border-collapse:collapse;width:100%;max-width:560px;background:white;border-radius:12px;overflow:hidden;font-size:15px;}
+  table.ft th,table.ft td{border:2px solid #e3e8f0;padding:8px 10px;text-align:left;vertical-align:middle;}
+  table.ft thead th{background:var(--purple);color:white;}
+  table.ft td.tc{min-width:170px;height:44px;}
+  .tbl-wrap{overflow-x:auto;width:100%;display:flex;justify-content:center;}
+
+  /* pictographs */
+  table.picto{border-collapse:collapse;background:white;font-size:15px;}
+  table.picto th{text-align:left;padding:8px 12px;border:2px solid #e3e8f0;white-space:nowrap;}
+  table.picto td{padding:6px 10px;border:2px solid #e3e8f0;min-width:200px;}
+  .pi{display:inline-block;width:1.3em;font-size:26px;line-height:1.2;overflow:hidden;vertical-align:middle;white-space:nowrap;}
+  .pi.half{width:.65em;}
+  .pi.half span{display:inline-block;width:1.3em;}
+  .picto-key{font-weight:bold;background:#fff2e6;border:2px dashed var(--orange);border-radius:10px;padding:6px 12px;}
+  .picto-ctrl{display:flex;gap:6px;white-space:nowrap;}
+  .picto td.ok{background:#d4f7e8;} .picto td.no{background:#ffe3ea;}
+
+  /* bar drawer */
+  .drawer svg{touch-action:none;}
+  .drawer .colhit{cursor:ns-resize;}
+  .bar-ctrls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;width:100%;max-width:560px;padding-left:12%;}
+  .bar-ctrls div{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;font-weight:bold;}
+  .bar-ctrls .pm{display:flex;gap:4px;}
+  input.title-in{width:100%;max-width:420px;padding:8px 10px;border:2px solid var(--purple);border-radius:10px;font-size:15px;}
+
+  /* detective */
+  .checkset{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+  .checkset label{background:white;border-radius:10px;border:2px solid #e3e8f0;padding:8px 12px;display:flex;gap:10px;align-items:center;cursor:pointer;font-size:15px;}
+  .checkset input{width:18px;height:18px;accent-color:var(--purple);}
+  .checkset label.ok{border-color:var(--teal);background:#d4f7e8;}
+  .checkset label.no{border-color:var(--red);background:#ffe3ea;}
+  .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;align-items:start;}
+
+  /* word box */
+  .wordbox{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;background:white;border:3px dashed var(--purple);border-radius:14px;padding:12px;}
+  .wordbox span{background:#f3ebff;border-radius:999px;padding:4px 12px;font-weight:bold;font-size:14px;color:var(--purple);}
+
+  /* builder */
+  .builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:16px;align-items:start;}
+  .brow{display:flex;gap:8px;margin-bottom:8px;}
+  .brow input{padding:7px 9px;border:2px solid var(--blue);border-radius:10px;font-size:14px;min-width:0;}
+  .brow input.lab{flex:1;} .brow input.num{width:70px;}
+  input.btitle{width:100%;padding:7px 9px;border:2px solid var(--purple);border-radius:10px;font-size:14px;margin-bottom:10px;}
+
+  .finale{text-align:center;font-size:20px;font-weight:bold;}
+  .confetti-row{font-size:32px;letter-spacing:6px;margin:10px 0;}
+  @media (max-width:700px){ .builder{grid-template-columns:minmax(0,1fr);} .bar-ctrls{padding-left:10%;} }
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important;} }
+</style>
+</head>
+<body>
+
+<div class="nav-top nav-back">
+  <a href="../index.html" style="text-decoration:none;"><button class="icon-btn" title="Back to Data Handling">⬅️</button></a>
+</div>
+<div class="nav-top nav-home">
+  <a href="../../../index.html" style="text-decoration:none;"><button class="icon-btn" title="Go to Home">🏠</button></a>
+</div>
+
+<div class="container">
+  <header>
+    <div class="emoji-row">📋 📊 🎉</div>
+    <h1><span class="highlight">Showing Data</span></h1>
+    <p class="subtitle">Plan the Big Club Party with tallies, pictographs and bar graphs!</p>
+  </header>
+
+  <div class="guide">
+    <div class="mascot-frame">🎉</div>
+    <p>Hi Shreshta! The club is throwing a big party, and <b>you</b> are the Party Planner. A good planner doesn't
+      guess. She asks, counts, draws and then decides. Every task below is one step of your plan.</p>
+  </div>
+
+  <div class="topbar">
+    <div class="prog-wrap">
+      <span class="prog-label" id="prog-label">Correct answers: 0 / 0</span>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+    <a class="pdf-btn" href="Showing_Data_Worksheet.pdf" target="_blank" rel="noopener">🖨️ Printable worksheet (PDF)</a>
+  </div>
+
+  <!-- 1. SURVEY -->
+  <section class="section" id="s1">
+    <h2>📋 Task 1: The Snack Survey <span class="level">Level 2</span></h2>
+    <p class="lead">You asked all <b>30 club members</b>: <i>"What is your favourite party snack?"</i> Here are their answers,
+      in the order you heard them. Click each answer <b>once</b> to tick it off. A tally mark appears in the table for you.</p>
+    <div class="stage">
+      <div class="rawlist" id="rawlist"></div>
+      <div class="btnrow" style="margin-top:4px;"><button class="mini" id="reset-tally" type="button">↺ Start the tally again</button></div>
+      <div class="tbl-wrap">
+        <table class="ft">
+          <thead><tr><th>Snack</th><th>Tally</th><th>Frequency</th></tr></thead>
+          <tbody id="ft-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="info-box">✏️ <b>Why the fifth mark crosses the other four:</b> it makes a "gate" of 5. Counting in fives is much
+      faster than counting single lines, and you are less likely to lose your place.</div>
+    <div class="qlist">
+      <div class="q"><span class="qt"><span class="qn">a)</span>Add up your frequency column. What is the total?</span><input class="ans" data-item="s1-total" data-ans="30" inputmode="numeric" aria-label="Total"></div>
+      <div class="q"><span class="qt"><span class="qn">b)</span>Why is that total a useful check?</span><span class="unit" style="flex:1 1 220px;font-weight:normal;font-size:14px;">It should match the 30 members you asked. If it doesn't, an answer was missed or counted twice.</span></div>
+      <div class="q"><span class="qt"><span class="qn">c)</span>How many fewer children chose sandwich than pizza?</span><input class="ans" data-item="s1-fewer" data-ans="6" inputmode="numeric" aria-label="How many fewer"></div>
+      <div class="q"><span class="qt"><span class="qn">d)</span>What fraction of the club chose pizza? Write it in its simplest form.</span><input class="ans" data-item="s1-frac" data-ans="3/10" data-frac="1" data-simplest="1" aria-label="Fraction that chose pizza" placeholder="e.g. 1/2"></div>
+    </div>
+    <div class="btnrow"><button class="action" data-check="s1" type="button">✅ Check Task 1</button></div>
+    <div class="msg-box" id="msg-s1"></div>
+  </section>
+
+  <!-- 2. READ A PICTOGRAPH -->
+  <section class="section" id="s2">
+    <h2>🥤 Task 2: Reading a Pictograph <span class="level">Level 2</span></h2>
+    <p class="lead">Brothers and sisters are invited too, so there are <b>40 guests</b>. Your friend asked every guest which drink
+      they want and drew this pictograph. Look carefully at the <b>key</b>, and watch out for half cups.</p>
+    <div class="stage">
+      <div class="tbl-wrap"><div id="drinks-picto"></div></div>
+      <div class="picto-key">Key: 🥤 = 4 guests</div>
+    </div>
+    <div class="qlist">
+      <div class="q"><span class="qt"><span class="qn">a)</span>How many guests chose lassi?</span><input class="ans" data-item="s2-lassi" data-ans="10" inputmode="numeric" aria-label="Lassi"></div>
+      <div class="q"><span class="qt"><span class="qn">b)</span>How many more guests chose mango juice than lemonade?</span><input class="ans" data-item="s2-more" data-ans="6" inputmode="numeric" aria-label="How many more"></div>
+      <div class="q"><span class="qt"><span class="qn">c)</span>Add up all the rows. Does the pictograph account for every guest? Total =</span><input class="ans" data-item="s2-total" data-ans="40" inputmode="numeric" aria-label="Total guests"></div>
+      <div class="q"><span class="qt"><span class="qn">d)</span>If the key changed to 🥤 = 2 guests, how many cups would the lassi row need?</span><input class="ans" data-item="s2-key2" data-ans="5" inputmode="numeric" aria-label="Cups for lassi"></div>
+      <div class="mcq" data-item="s2-pair" data-correct="1">
+        <p class="qt"><span class="qn">e)</span>Which two drinks together were chosen by exactly <b>half</b> of the guests? <span class="level l3">Level 3</span></p>
+        <div class="options">
+          <button class="opt-btn" type="button">Lassi and Lemonade</button>
+          <button class="opt-btn" type="button">Mango juice and Rose milk</button>
+          <button class="opt-btn" type="button">Lassi and Rose milk</button>
+          <button class="opt-btn" type="button">Mango juice and Buttermilk</button>
+        </div>
+        <div class="explain">Half of 40 is 20. Mango juice (12) + Rose milk (8) = 20. Lassi and Lemonade make 10 + 6 = 16, and Lassi and Rose milk make 18.</div>
+      </div>
+    </div>
+    <div class="btnrow"><button class="action" data-check="s2" type="button">✅ Check Task 2</button></div>
+    <div class="msg-box" id="msg-s2"></div>
+  </section>
+
+  <!-- 3. DRAW A PICTOGRAPH -->
+  <section class="section" id="s3">
+    <h2>⭐ Task 3: Draw a Pictograph <span class="level">Level 2</span></h2>
+    <p class="lead">Next, the club voted for the party game. Draw the results as a pictograph using the key
+      <b>⭐ = 4 votes</b>. Use the buttons to add or remove half a star at a time.</p>
+    <div class="stage">
+      <div class="tbl-wrap">
+        <table class="ft" style="max-width:340px;">
+          <thead><tr><th>Game</th><th>Votes</th></tr></thead>
+          <tbody id="games-table"></tbody>
+        </table>
+      </div>
+      <div class="tbl-wrap"><table class="picto" id="games-picto"></table></div>
+      <div class="picto-key">Key: ⭐ = 4 votes</div>
+    </div>
+    <div class="btnrow"><button class="action" data-check="s3" type="button">✅ Check my pictograph</button></div>
+    <div class="msg-box" id="msg-s3"></div>
+    <div class="qlist">
+      <details class="think"><summary>🤔 Think about it: why would a key of ⭐ = 5 be awkward here? <span class="level l3">Level 3</span></summary>
+        <p>The votes are 14, 8, 6 and 2. None of them divide neatly by 5, so you would need pieces like ⅘ or ⅖ of a star, which are
+          impossible to read. With ⭐ = 4, every row is a whole or half star. A good key makes the pictures easy to draw <i>and</i> easy to read.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 4. DRAW A BAR GRAPH -->
+  <section class="section" id="s4">
+    <h2>📊 Task 4: Draw a Bar Graph <span class="level">Level 2</span></h2>
+    <p class="lead">Turn your snack frequency table from Task 1 into a bar graph. Drag each bar up or down (or use the
+      buttons). The scale goes up in <b>2s</b>, so an odd number like 9 ends halfway between two numbered lines.</p>
+    <div class="stage drawer">
+      <input class="title-in" id="bar-title" placeholder="Give your graph a title…" aria-label="Graph title">
+      <div id="drawer-svg" style="width:100%;display:flex;justify-content:center;"></div>
+      <div class="bar-ctrls" id="bar-ctrls"></div>
+    </div>
+    <div class="btnrow"><button class="action" data-check="s4" type="button">✅ Check my bar graph</button></div>
+    <div class="msg-box" id="msg-s4"></div>
+    <div class="qlist">
+      <details class="think"><summary>🤔 Think about it: why count in 2s and not in 1s or 10s? <span class="level l3">Level 3</span></summary>
+        <p>The biggest number is 9. Counting in 10s would make every bar tiny and hard to compare. Counting in 1s works, but you
+          need ten numbered lines and the graph gets crowded. Counting in 2s fits the data neatly and stays easy to read.
+          Choosing the scale means picking a step that makes your <i>biggest</i> value fit nicely.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 5. READ A BAR GRAPH -->
+  <section class="section" id="s5">
+    <h2>💰 Task 5: Reading a Bar Graph <span class="level">Level 2</span> <span class="level l3">Level 3</span></h2>
+    <p class="lead">Each team collected money for the party. The party costs <b>₹2,000</b>. Each small grid line is worth ₹50.</p>
+    <div class="stage" id="money-chart"></div>
+    <div class="qlist">
+      <div class="q"><span class="qt"><span class="qn">a)</span>How much did the Green team collect?</span><span><span class="unit">₹</span> <input class="ans" data-item="s5-green" data-ans="550" inputmode="numeric" aria-label="Green team"></span></div>
+      <div class="q"><span class="qt"><span class="qn">b)</span>How much did all four teams collect altogether?</span><span><span class="unit">₹</span> <input class="ans" data-item="s5-total" data-ans="1700" inputmode="numeric" aria-label="Total collected"></span></div>
+      <div class="q"><span class="qt"><span class="qn">c)</span>How much more money is needed to pay for the party?</span><span><span class="unit">₹</span> <input class="ans" data-item="s5-need" data-ans="300" inputmode="numeric" aria-label="Money still needed"></span></div>
+      <div class="q"><span class="qt"><span class="qn">d)</span>If the total had been shared equally, how much would each team have collected? <span class="level l3">Level 3</span></span><span><span class="unit">₹</span> <input class="ans" data-item="s5-equal" data-ans="425" inputmode="numeric" aria-label="Equal share"></span></div>
+      <div class="mcq" data-item="s5-pairs" data-correct="2">
+        <p class="qt"><span class="qn">e)</span>Two <b>different</b> pairs of teams each collected exactly ₹850 together. Which pairs? <span class="level l3">Level 3</span></p>
+        <div class="options">
+          <button class="opt-btn" type="button">Red + Blue, and Green + Yellow</button>
+          <button class="opt-btn" type="button">Red + Green, and Blue + Yellow</button>
+          <button class="opt-btn" type="button">Red + Yellow, and Blue + Green</button>
+          <button class="opt-btn" type="button">Only Green + Blue</button>
+        </div>
+        <div class="explain">Red (450) + Yellow (400) = 850, and Blue (300) + Green (550) = 850. Both pairs work!</div>
+      </div>
+      <div class="mcq" data-item="s5-cant" data-correct="1">
+        <p class="qt"><span class="qn">f)</span>Which question can <b>not</b> be answered from this graph? <span class="level l3">Level 3</span></p>
+        <div class="options">
+          <button class="opt-btn" type="button">Which team collected the least?</button>
+          <button class="opt-btn" type="button">How many children are in the Green team?</button>
+          <button class="opt-btn" type="button">Did any team collect more than ₹500?</button>
+          <button class="opt-btn" type="button">How much did Red and Blue collect together?</button>
+        </div>
+        <div class="explain">The graph shows money, not people. Green might be a big team that collected a little each, or a small team that collected a lot. A graph can only answer questions about the data it shows.</div>
+      </div>
+    </div>
+    <div class="btnrow"><button class="action" data-check="s5" type="button">✅ Check Task 5</button></div>
+    <div class="msg-box" id="msg-s5"></div>
+  </section>
+
+  <!-- 6. DOUBLE BAR GRAPH -->
+  <section class="section" id="s6">
+    <h2>🍕 Task 6: The Double Bar Graph <span class="level l3">Level 3</span></h2>
+    <p class="lead">The party is over! This <b>double bar graph</b> shows two things for each snack, side by side: how many
+      plates you <b>ordered</b> and how many plates were <b>eaten</b>. Use the colour key at the top.</p>
+    <div class="stage" id="food-chart"></div>
+    <div class="qlist">
+      <div class="mcq" data-item="s6-finished" data-correct="3">
+        <p class="qt"><span class="qn">a)</span>Which snacks were completely finished?</p>
+        <div class="options">
+          <button class="opt-btn" type="button">Pizza and Samosa</button>
+          <button class="opt-btn" type="button">Only Pizza</button>
+          <button class="opt-btn" type="button">Chips and Sandwich</button>
+          <button class="opt-btn" type="button">Pizza and Pani puri</button>
+        </div>
+        <div class="explain">For Pizza (10 and 10) and Pani puri (8 and 8), the two bars are the same height, so every plate was eaten.</div>
+      </div>
+      <div class="q"><span class="qt"><span class="qn">b)</span>How many plates of chips were left over?</span><input class="ans" data-item="s6-chips" data-ans="4" inputmode="numeric" aria-label="Chips left over"></div>
+      <div class="q"><span class="qt"><span class="qn">c)</span>How many plates were left over altogether?</span><input class="ans" data-item="s6-left" data-ans="10" inputmode="numeric" aria-label="Plates left over"></div>
+      <div class="q"><span class="qt"><span class="qn">d)</span>What fraction of the sandwiches was eaten? Write it in its simplest form.</span><input class="ans" data-item="s6-frac" data-ans="1/2" data-frac="1" data-simplest="1" aria-label="Fraction of sandwiches eaten" placeholder="e.g. 2/3"></div>
+      <details class="think"><summary>🤔 Planner's decision: how many plates of samosa should you order next time, and why?</summary>
+        <p>There is no single right answer. A good one uses the data: 7 plates were eaten, so ordering 7 or 8 plates makes sense
+          (8 leaves one spare in case more guests come). Ordering 10 again would probably waste 3 plates.</p>
+      </details>
+    </div>
+    <div class="btnrow"><button class="action" data-check="s6" type="button">✅ Check Task 6</button></div>
+    <div class="msg-box" id="msg-s6"></div>
+  </section>
+
+  <!-- 7. DETECTIVE -->
+  <section class="section" id="s7">
+    <h2>🕵️ Task 7: Data Detective <span class="level l3">Level 3</span></h2>
+    <p class="lead">Not every graph tells the truth. Some are drawn carelessly, and some are drawn to trick you.</p>
+
+    <h3 style="color:var(--purple);margin:6px 0 10px;">Case 1: The careless balloon graph</h3>
+    <div class="two-col">
+      <div class="stage" id="bad-chart"></div>
+      <div>
+        <p style="font-size:15px;">Your cousin drew this graph of the party balloons. Tick <b>every</b> real mistake.</p>
+        <div class="checkset" id="mistakes" data-item="s7-mistakes">
+          <label><input type="checkbox" data-mistake="1"> It has no title.</label>
+          <label><input type="checkbox" data-mistake="0"> The bars are different colours.</label>
+          <label><input type="checkbox" data-mistake="1"> The numbers on the side don't go up evenly.</label>
+          <label><input type="checkbox" data-mistake="1"> The bars are not all the same width.</label>
+          <label><input type="checkbox" data-mistake="0"> There are gaps between the bars.</label>
+          <label><input type="checkbox" data-mistake="1"> The side axis has no label.</label>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--purple);margin:22px 0 10px;">Case 2: The tricky raffle graph</h3>
+    <div class="two-col">
+      <div class="stage" id="tickets-chart"></div>
+      <div class="qlist" style="margin-top:0;">
+        <div class="mcq" data-item="s7-raju" data-correct="1">
+          <p class="qt">Raju looks at this graph and says, <i>"Team A sold twice as many tickets as Team B!"</i> Is he right?</p>
+          <div class="options">
+            <button class="opt-btn" type="button">Yes, the bar is twice as tall</button>
+            <button class="opt-btn" type="button">No, Team A sold only 4 more</button>
+            <button class="opt-btn" type="button">No, Team B sold more</button>
+          </div>
+          <div class="explain">Read the numbers, not the bar heights: 48 and 44. The side axis starts at 40, not 0, so the gap looks much bigger than it is.</div>
+        </div>
+        <div class="mcq" data-item="s7-fix" data-correct="0">
+          <p class="qt">What would make this graph honest?</p>
+          <div class="options">
+            <button class="opt-btn" type="button">Start the side axis at 0</button>
+            <button class="opt-btn" type="button">Make the bars thinner</button>
+            <button class="opt-btn" type="button">Use brighter colours</button>
+          </div>
+          <div class="explain">When the axis starts at 0, the bars show 48 and 44 at their true sizes and look almost the same height, which is the truth.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--purple);margin:22px 0 10px;">Case 3: The missing bar</h3>
+    <div class="two-col">
+      <div class="stage" id="books-chart"></div>
+      <div class="qlist" style="margin-top:0;">
+        <div class="q"><span class="qt">The four friends read <b>36 books</b> altogether in October. How many books did Meera read?</span><input class="ans" data-item="s7-meera" data-ans="8" inputmode="numeric" aria-label="Meera's books"></div>
+      </div>
+    </div>
+    <div class="btnrow"><button class="action" data-check="s7" type="button">✅ Check Task 7</button></div>
+    <div class="msg-box" id="msg-s7"></div>
+  </section>
+
+  <!-- 8. WORD BOX -->
+  <section class="section" id="s8">
+    <h2>🧩 Task 8: Word Box <span class="level">Level 2</span></h2>
+    <p class="lead">Pick the right word from the word box for each sentence. Each word is used once.</p>
+    <div class="wordbox" id="wordbox"></div>
+    <div class="qlist" id="word-q"></div>
+    <div class="btnrow"><button class="action" data-check="s8" type="button">✅ Check Task 8</button></div>
+    <div class="msg-box" id="msg-s8"></div>
+  </section>
+
+  <!-- 9. YOUR OWN SURVEY -->
+  <section class="section" id="s9">
+    <h2>🎨 Task 9: Your Own Survey <span class="level l3">Level 3</span></h2>
+    <p class="lead">Now you're the researcher. Think of a question, ask at least 15 people (family, friends, the building),
+      and type your results here. The example below is just to show how it works, so replace it with your own survey.</p>
+    <div class="builder">
+      <div>
+        <input class="btitle" id="b-title" value="Favourite season (example)" aria-label="Survey title">
+        <div id="b-rows"></div>
+        <div class="btnrow" style="justify-content:flex-start;"><button class="action" id="b-draw" type="button">📊 Draw my graph</button></div>
+      </div>
+      <div class="stage" id="b-chart"></div>
+    </div>
+    <div class="info-box orange">💡 <b>Planner's tip:</b> the graph chooses its own scale from your biggest number. Try typing a number
+      over 50 and watch the scale change from 2s to 10s.</div>
+  </section>
+
+  <div class="info-box">📌 <b>Recap:</b> Collect data with a <b>survey</b>, count it with <b>tally marks</b>, and write it in a
+    <b>frequency table</b>. A <b>pictograph</b> uses pictures and a <b>key</b>. A <b>bar graph</b> uses bars and a <b>scale</b>.
+    A <b>double bar graph</b> compares two sets of data side by side. Always read the title, the key and the scale before
+    believing what a graph seems to say.</div>
+
+  <section class="section" id="finale" hidden>
+    <div class="finale"><div class="confetti-row">🎉 🏅 🎉</div>Every answer is correct! The party plan is perfect, Party Planner! 🌟</div>
+  </section>
+</div>
+
+<script>
+/* ---------- shared chart builders (inlined into both the web page and the printable) ---------- */
+const COL = {pink:'#ff6ec7',purple:'#a06cd5',blue:'#4cc9f0',teal:'#06d6a0',yellow:'#ffd166',orange:'#ff9e45',red:'#ef476f',ink:'#1d2b53',grid:'#cfd6e4',minor:'#eceff5'};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+/* Vertical bar graph as an SVG string.
+   o: {title, xLabel, yLabel, cats[], series:[{name, values[], color, colors[]}], max, step, minor,
+       yStart, w, h, missing (index), showValues, noNumbers, legend} */
+function chartGeom(o){
+  const W=o.w||560, H=o.h||330, L=o.left||70, R=16;
+  const series=o.series||[], legendH=series.length>1?24:0;
+  const T=(o.title!==undefined?42:18)+legendH, B=o.xLabel?66:44;
+  const pw=W-L-R, ph=H-T-B, y0=o.yStart||0;
+  return {W,H,L,R,T,B,pw,ph,y0,legendH,series,band:pw/o.cats.length,Y:v=>T+ph-(v-y0)/(o.max-y0)*ph};
+}
+function barChart(o){
+  const {W,H,L,T,pw,ph,y0,legendH,series,Y}=chartGeom(o);
+  const max=o.max, step=o.step, minor=o.minor||0;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" class="chart" role="img" aria-label="${esc(o.title||'bar graph')}">`;
+  s+=`<rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="#ffffff"/>`;
+  if(o.title) s+=`<text x="${L+pw/2}" y="26" text-anchor="middle" font-size="17" font-weight="700" fill="${COL.ink}">${esc(o.title)}</text>`;
+  if(o.title==='') s+=`<text x="${L}" y="26" font-size="14" fill="${COL.ink}">Title: ______________________________________</text>`;
+  if(legendH){
+    let lx=L+pw/2-series.length*55;
+    series.forEach((se,i)=>{const x=lx+i*110;
+      s+=`<rect x="${x}" y="${T-legendH-2}" width="14" height="14" rx="3" fill="${se.color}"/><text x="${x+20}" y="${T-legendH+10}" font-size="13" fill="${COL.ink}">${esc(se.name)}</text>`;});
+  }
+  if(minor){for(let v=y0;v<=max+1e-9;v+=minor) s+=`<line x1="${L}" y1="${Y(v)}" x2="${L+pw}" y2="${Y(v)}" stroke="${COL.minor}" stroke-width="1"/>`;}
+  for(let v=y0;v<=max+1e-9;v+=step){
+    s+=`<line x1="${L}" y1="${Y(v)}" x2="${L+pw}" y2="${Y(v)}" stroke="${COL.grid}" stroke-width="1"/>`;
+    if(!o.noNumbers) s+=`<text x="${L-8}" y="${Y(v)+4.5}" text-anchor="end" font-size="13" fill="${COL.ink}">${v}</text>`;
+  }
+  const n=o.cats.length, band=pw/n;
+  o.cats.forEach((c,i)=>{
+    const cx=L+band*i+band/2;
+    const lines=String(c).split('\n');
+    lines.forEach((ln,j)=>{s+=`<text x="${cx}" y="${T+ph+20+j*15}" text-anchor="middle" font-size="13" fill="${COL.ink}">${esc(ln)}</text>`;});
+    if(o.missing===i){
+      const bw=band*0.55;
+      s+=`<rect x="${cx-bw/2}" y="${T+8}" width="${bw}" height="${ph-8}" fill="none" stroke="${COL.ink}" stroke-width="1.5" stroke-dasharray="6 5"/>`;
+      s+=`<text x="${cx}" y="${T+ph/2+12}" text-anchor="middle" font-size="34" font-weight="700" fill="${COL.pink}">?</text>`;
+      return;
+    }
+    const k=series.length; if(!k) return;
+    const bw=k===1?band*0.55:band*0.34;
+    series.forEach((se,j)=>{
+      const v=se.values[i]; if(v==null) return;
+      const x=k===1?cx-bw/2:cx-bw*k/2+j*bw+(j?2:-2)/2;
+      const top=Y(v), color=(se.colors&&se.colors[i])||se.color;
+      s+=`<rect x="${x}" y="${top}" width="${bw-2}" height="${T+ph-top}" fill="${color}" stroke="${COL.ink}" stroke-width="1"/>`;
+      if(o.showValues) s+=`<text x="${x+(bw-2)/2}" y="${top-5}" text-anchor="middle" font-size="12" font-weight="700" fill="${COL.ink}">${v}</text>`;
+    });
+  });
+  s+=`<line x1="${L}" y1="${T}" x2="${L}" y2="${T+ph}" stroke="${COL.ink}" stroke-width="2"/>`;
+  s+=`<line x1="${L}" y1="${T+ph}" x2="${L+pw}" y2="${T+ph}" stroke="${COL.ink}" stroke-width="2"/>`;
+  if(o.xLabel) s+=`<text x="${L+pw/2}" y="${H-10}" text-anchor="middle" font-size="14" font-weight="700" fill="${COL.ink}">${esc(o.xLabel)}</text>`;
+  if(o.yLabel) s+=`<text transform="translate(18 ${T+ph/2}) rotate(-90)" text-anchor="middle" font-size="14" font-weight="700" fill="${COL.ink}">${esc(o.yLabel)}</text>`;
+  return s+'</svg>';
+}
+
+/* Tally marks for n, as an inline SVG string (groups of five with a diagonal gate). */
+function tallySVG(n){
+  const groups=Math.floor(n/5), rest=n%5, gw=34, H=26;
+  const W=Math.max(10,groups*gw+rest*7+4);
+  let s=`<svg class="tally" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" aria-label="${n} tally marks">`;
+  for(let g=0;g<groups;g++){
+    const x0=4+g*gw;
+    for(let k=0;k<4;k++) s+=`<line x1="${x0+k*7}" y1="3" x2="${x0+k*7}" y2="${H-3}" stroke="${COL.ink}" stroke-width="2.2" stroke-linecap="round"/>`;
+    s+=`<line x1="${x0-3}" y1="${H-5}" x2="${x0+24}" y2="5" stroke="${COL.red}" stroke-width="2.2" stroke-linecap="round"/>`;
+  }
+  for(let k=0;k<rest;k++){const x=4+groups*gw+k*7; s+=`<line x1="${x}" y1="3" x2="${x}" y2="${H-3}" stroke="${COL.ink}" stroke-width="2.2" stroke-linecap="round"/>`;}
+  return s+'</svg>';
+}
+
+/* Pictograph icons: n may end in .5 (half icon). */
+function picIcons(n,icon){
+  let s='';
+  for(let i=0;i<Math.floor(n);i++) s+=`<span class="pi">${icon}</span>`;
+  if(n%1) s+=`<span class="pi half"><span>${icon}</span></span>`;
+  return s;
+}
+
+/* A deliberately badly drawn graph for the Data Detective round. */
+function badGraphSVG(){
+  const ink=COL.ink;
+  const ticks=[[0,230],[2,177.5],[4,125],[8,72.5],[10,20]];
+  const bars=[['Red',85,50,98.75,COL.red],['Blue',195,30,72.5,COL.blue],['Green',275,70,177.5,COL.teal],['Yellow',390,40,20,COL.yellow]];
+  let s=`<svg viewBox="0 0 460 280" xmlns="http://www.w3.org/2000/svg" class="chart" role="img" aria-label="A badly drawn graph of balloons by colour">`;
+  s+=`<rect x="0" y="0" width="460" height="280" rx="10" fill="#ffffff"/>`;
+  ticks.forEach(([v,y])=>{s+=`<line x1="50" y1="${y}" x2="445" y2="${y}" stroke="${COL.grid}"/><text x="42" y="${y+4.5}" text-anchor="end" font-size="13" fill="${ink}">${v}</text>`;});
+  bars.forEach(([lab,x,w,y,c])=>{s+=`<rect x="${x}" y="${y}" width="${w}" height="${230-y}" fill="${c}" stroke="${ink}"/><text x="${x+w/2}" y="250" text-anchor="middle" font-size="13" fill="${ink}">${lab}</text>`;});
+  s+=`<line x1="50" y1="20" x2="50" y2="230" stroke="${ink}" stroke-width="2"/><line x1="50" y1="230" x2="445" y2="230" stroke="${ink}" stroke-width="2"/>`;
+  s+=`<text x="248" y="272" text-anchor="middle" font-size="14" font-weight="700" fill="${ink}">Colour</text>`;
+  return s+'</svg>';
+}
+
+/* ---------- worksheet data (single source of truth) ---------- */
+const SNACKS=['Pizza','Samosa','Pani puri','Chips','Sandwich'];
+const SNACK_N=[9,7,6,5,3];
+const SNACK_EMOJI=['🍕','🥟','🫓','🍟','🥪'];
+const RAW_SNACKS=['Samosa','Pizza','Chips','Pani puri','Pizza','Sandwich','Samosa','Pizza','Pani puri','Chips',
+  'Pizza','Samosa','Pani puri','Pizza','Chips','Sandwich','Samosa','Pizza','Pani puri','Samosa',
+  'Chips','Pizza','Pani puri','Samosa','Pizza','Sandwich','Chips','Pani puri','Samosa','Pizza'];
+const DRINKS=[['Mango juice',3],['Lassi',2.5],['Rose milk',2],['Lemonade',1.5],['Buttermilk',1]];
+const GAMES=[['Treasure hunt',14],['Musical chairs',8],['Dumb charades',6],['Tug of war',2]];
+const MONEY={cats:['Red\nteam','Blue\nteam','Green\nteam','Yellow\nteam'],values:[450,300,550,400],colors:[COL.red,COL.blue,COL.teal,COL.yellow]};
+const FOOD={cats:SNACKS,ordered:[10,10,8,8,6],eaten:[10,7,8,4,3]};
+const BOOKS={cats:['Aarav','Diya','Kabir','Meera'],values:[9,12,7,null]};
+const WORDS=['survey','data','tally','frequency','key','scale','axis','title','double bar graph'];
+const WORD_SENTENCES=[
+  ['Asking people a question and recording their answers is called a','survey','.'],
+  ['The answers we collect are called','data','.'],
+  ['Marks drawn in groups of five to count quickly are called','tally','marks.'],
+  ['The number of times an answer appears is its','frequency','.'],
+  ['In a pictograph, the','key','tells you how many each picture stands for.'],
+  ['On a bar graph, the','scale','tells you what each grid line is worth.'],
+  ['The line along the bottom or the side of a graph is called an','axis','.'],
+  ['Every graph needs a','title','so readers know what it is about.'],
+  ['To compare two sets of data side by side, use a','double bar graph','.']
+];
+
+function moneyChart(){return barChart({title:'Money collected for the party',cats:MONEY.cats,series:[{name:'₹',values:MONEY.values,colors:MONEY.colors,color:COL.purple}],max:600,step:100,minor:50,yLabel:'Money collected (₹)',h:340});}
+function foodChart(){return barChart({title:'Plates ordered and plates eaten',cats:FOOD.cats,series:[{name:'Ordered',values:FOOD.ordered,color:COL.purple},{name:'Eaten',values:FOOD.eaten,color:COL.orange}],max:12,step:2,minor:1,yLabel:'Number of plates',xLabel:'Snack',h:350});}
+function ticketsChart(){return barChart({title:'Raffle tickets sold',cats:['Team A','Team B'],series:[{name:'Tickets',values:[48,44],colors:[COL.pink,COL.blue],color:COL.pink}],yStart:40,max:50,step:2,yLabel:'Tickets sold',w:380,h:300,left:62});}
+function booksChart(){return barChart({title:'Books read in October',cats:BOOKS.cats,series:[{name:'Books',values:BOOKS.values,color:COL.teal}],missing:3,max:14,step:2,minor:1,yLabel:'Number of books',w:460,h:310});}
+
+
+/* ---------- grading helpers ---------- */
+const state={};
+function allItems(){return [...document.querySelectorAll('[data-item]')].map(e=>e.dataset.item);}
+function updateProgress(){
+  const items=allItems(), ok=items.filter(i=>state[i]).length;
+  document.getElementById('prog-label').textContent=`Correct answers: ${ok} / ${items.length}`;
+  document.getElementById('prog-fill').style.width=(ok/items.length*100)+'%';
+  document.getElementById('finale').hidden=ok!==items.length;
+}
+function norm(s){return String(s).toLowerCase().replace(/[₹,\s]/g,'');}
+function gcd(a,b){return b?gcd(b,a%b):Math.abs(a);}
+function parseFrac(s){
+  s=norm(s); const m=s.match(/^(-?\d+)\/(\d+)$/);
+  if(m){const a=+m[1],b=+m[2]; return b?{v:a/b,simplest:gcd(a,b)===1}:null;}
+  if(/^-?\d*\.?\d+$/.test(s)) return {v:+s,simplest:false};
+  return null;
+}
+function matches(input){
+  const val=input.value; if(!val.trim()) return false;
+  const alts=input.dataset.ans.split('|');
+  if(input.dataset.frac){
+    const got=parseFrac(val); if(!got) return false;
+    return alts.some(a=>{const want=parseFrac(a); return Math.abs(got.v-want.v)<1e-9 && (!input.dataset.simplest||got.simplest);});
+  }
+  return alts.some(a=>norm(a)===norm(val));
+}
+function setMsg(sec,ok,total,extra){
+  const box=document.getElementById('msg-'+sec);
+  box.className='msg-box '+(ok===total?'good':'bad');
+  box.textContent=ok===total?`🎉 All ${total} correct! ${extra||''}`:`${ok} of ${total} correct. Have another look at the red ones. 💪`;
+}
+function checkInputs(sec){
+  const inputs=[...document.querySelectorAll(`#${sec} .ans[data-item]`)];
+  let ok=0;
+  inputs.forEach(inp=>{const r=matches(inp); inp.classList.toggle('ok',r); inp.classList.toggle('no',!r); state[inp.dataset.item]=r; if(r) ok++;});
+  return {ok,total:inputs.length};
+}
+function mcqStatus(sec){
+  const m=[...document.querySelectorAll(`#${sec} .mcq`)];
+  return {ok:m.filter(x=>state[x.dataset.item]).length,total:m.length,unanswered:m.filter(x=>!x.dataset.done).length};
+}
+
+/* MCQs: answer once, then see the explanation */
+document.querySelectorAll('.mcq').forEach(m=>{
+  const btns=[...m.querySelectorAll('.opt-btn')], correct=+m.dataset.correct;
+  btns.forEach((b,i)=>b.addEventListener('click',()=>{
+    btns.forEach(x=>x.disabled=true); m.dataset.done='1';
+    if(i===correct){b.classList.add('correct'); state[m.dataset.item]=true;}
+    else{b.classList.add('wrong'); btns[correct].classList.add('correct'); state[m.dataset.item]=false;}
+    m.querySelector('.explain').style.display='block'; updateProgress();
+  }));
+});
+
+/* ---------- Task 1: tally ---------- */
+const counted=new Set();
+const rawEl=document.getElementById('rawlist');
+RAW_SNACKS.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.className='raw';b.textContent=s;
+  b.addEventListener('click',()=>{counted.has(i)?counted.delete(i):counted.add(i);b.classList.toggle('counted');drawTallies();});rawEl.appendChild(b);});
+document.getElementById('ft-body').innerHTML=SNACKS.map((s,i)=>`<tr><th>${SNACK_EMOJI[i]} ${s}</th><td class="tc" id="tally-${i}"></td>
+  <td><input class="ans" data-item="s1-f${i}" data-ans="${SNACK_N[i]}" inputmode="numeric" aria-label="Frequency of ${s}" style="width:80px"></td></tr>`).join('');
+function drawTallies(){SNACKS.forEach((s,i)=>{const n=[...counted].filter(k=>RAW_SNACKS[k]===s).length;document.getElementById('tally-'+i).innerHTML=n?tallySVG(n):'';});}
+document.getElementById('reset-tally').addEventListener('click',()=>{counted.clear();rawEl.querySelectorAll('.raw').forEach(b=>b.classList.remove('counted'));drawTallies();});
+
+/* ---------- Task 2: drinks pictograph ---------- */
+document.getElementById('drinks-picto').innerHTML=`<table class="picto">${DRINKS.map(([d,n])=>`<tr><th>${d}</th><td>${picIcons(n,'🥤')}</td></tr>`).join('')}</table>`;
+
+/* ---------- Task 3: draw the games pictograph ---------- */
+const stars=GAMES.map(()=>0);
+document.getElementById('games-table').innerHTML=GAMES.map(([g,v])=>`<tr><td>${g}</td><td>${v}</td></tr>`).join('');
+document.getElementById('games-picto').innerHTML=GAMES.map(([g],i)=>`<tr><th>${g}</th><td id="gp-${i}" data-item="s3-g${i}"></td>
+  <td class="picto-ctrl" style="min-width:0"><button class="mini" type="button" data-g="${i}" data-d="-0.5" aria-label="Remove half a star for ${g}">−½</button><button class="mini" type="button" data-g="${i}" data-d="0.5" aria-label="Add half a star for ${g}">+½</button></td></tr>`).join('');
+function drawStars(){GAMES.forEach((g,i)=>{document.getElementById('gp-'+i).innerHTML=picIcons(stars[i],'⭐')||'&nbsp;';});}
+document.getElementById('games-picto').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(!b)return;const i=+b.dataset.g;
+  stars[i]=Math.max(0,Math.min(6,stars[i]+ +b.dataset.d));const td=document.getElementById('gp-'+i);td.classList.remove('ok','no');drawStars();});
+drawStars();
+
+/* ---------- Task 4: bar graph drawer ---------- */
+const DRAW_OPT={cats:SNACKS,series:[],max:10,step:2,minor:1,xLabel:'Snack',yLabel:'Number of children',h:340};
+const G=chartGeom(DRAW_OPT);
+const barVals=SNACKS.map(()=>0);
+const drawerHost=document.getElementById('drawer-svg');
+drawerHost.innerHTML=barChart(DRAW_OPT);
+const dsvg=drawerHost.querySelector('svg');
+const NSS='http://www.w3.org/2000/svg';
+const barRects=SNACKS.map((s,i)=>{
+  const r=document.createElementNS(NSS,'rect');const bw=G.band*0.55;
+  r.setAttribute('x',G.L+G.band*i+G.band/2-bw/2);r.setAttribute('width',bw-2);r.setAttribute('fill',[COL.pink,COL.orange,COL.yellow,COL.teal,COL.blue][i]);
+  r.setAttribute('stroke',COL.ink);r.setAttribute('stroke-width','1');dsvg.appendChild(r);return r;});
+const barLabels=SNACKS.map((s,i)=>{const t=document.createElementNS(NSS,'text');t.setAttribute('x',G.L+G.band*i+G.band/2);t.setAttribute('text-anchor','middle');
+  t.setAttribute('font-size','13');t.setAttribute('font-weight','700');t.setAttribute('fill',COL.ink);dsvg.appendChild(t);return t;});
+SNACKS.forEach((s,i)=>{const h=document.createElementNS(NSS,'rect');h.setAttribute('class','colhit');h.setAttribute('x',G.L+G.band*i);h.setAttribute('y',G.T);
+  h.setAttribute('width',G.band);h.setAttribute('height',G.ph);h.setAttribute('fill','transparent');h.dataset.i=i;dsvg.appendChild(h);});
+function renderBars(){barVals.forEach((v,i)=>{const top=G.Y(v);barRects[i].setAttribute('y',top);barRects[i].setAttribute('height',G.T+G.ph-top);
+  barLabels[i].setAttribute('y',top-5);barLabels[i].textContent=v||'';document.getElementById('bv-'+i).textContent=v;});}
+function svgY(evt){const pt=dsvg.createSVGPoint();pt.x=evt.clientX;pt.y=evt.clientY;return pt.matrixTransform(dsvg.getScreenCTM().inverse()).y;}
+let dragging=null;
+function setFromY(i,y){barVals[i]=Math.max(0,Math.min(10,Math.round((G.T+G.ph-y)/G.ph*10)));renderBars();}
+dsvg.addEventListener('pointerdown',e=>{const h=e.target.closest('.colhit');if(!h)return;dragging=+h.dataset.i;dsvg.setPointerCapture(e.pointerId);setFromY(dragging,svgY(e));});
+dsvg.addEventListener('pointermove',e=>{if(dragging!==null)setFromY(dragging,svgY(e));});
+['pointerup','pointercancel'].forEach(ev=>dsvg.addEventListener(ev,()=>{dragging=null;}));
+document.getElementById('bar-ctrls').innerHTML=SNACKS.map((s,i)=>`<div><span>${s}: <span id="bv-${i}" data-item="s4-b${i}">0</span></span>
+  <span class="pm"><button class="mini" type="button" data-b="${i}" data-d="-1" aria-label="Lower ${s} bar">−</button><button class="mini" type="button" data-b="${i}" data-d="1" aria-label="Raise ${s} bar">+</button></span></div>`).join('');
+document.getElementById('bar-ctrls').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;const i=+b.dataset.b;barVals[i]=Math.max(0,Math.min(10,barVals[i]+ +b.dataset.d));renderBars();});
+renderBars();
+
+/* ---------- Tasks 5–7: charts ---------- */
+document.getElementById('money-chart').innerHTML=moneyChart();
+document.getElementById('food-chart').innerHTML=foodChart();
+document.getElementById('bad-chart').innerHTML=badGraphSVG();
+document.getElementById('tickets-chart').innerHTML=ticketsChart();
+document.getElementById('books-chart').innerHTML=booksChart();
+
+/* ---------- Task 8: word box ---------- */
+const shuffledWords=['scale','survey','title','key','double bar graph','frequency','data','axis','tally'];
+document.getElementById('wordbox').innerHTML=shuffledWords.map(w=>`<span>${w}</span>`).join('');
+document.getElementById('word-q').innerHTML=WORD_SENTENCES.map(([a,w,b],i)=>`<div class="q"><span class="qt"><span class="qn">${i+1}.</span>${a}
+  <select class="ans" data-item="s8-w${i}" data-ans="${w}" aria-label="Sentence ${i+1}"><option value="">choose…</option>${shuffledWords.map(x=>`<option>${x}</option>`).join('')}</select> ${b}</span></div>`).join('');
+
+/* ---------- Task 9: builder ---------- */
+const EX=[['Summer',4],['Monsoon',9],['Winter',12],['Spring',5],['',0]];
+document.getElementById('b-rows').innerHTML=EX.map(([l,n],i)=>`<div class="brow"><input class="lab" id="bl-${i}" value="${l}" placeholder="Answer ${i+1}" aria-label="Answer ${i+1}">
+  <input class="num" id="bn-${i}" type="number" min="0" value="${l?n:''}" placeholder="0" aria-label="Count for answer ${i+1}"></div>`).join('');
+function niceStep(max){const raw=max/5;const p=Math.pow(10,Math.floor(Math.log10(raw||1)));for(const m of [1,2,5,10]){if(m*p>=raw)return Math.max(1,m*p);}return 10*p;}
+function drawBuilder(){
+  const rows=EX.map((_,i)=>[document.getElementById('bl-'+i).value.trim(),Math.max(0,Math.round(+document.getElementById('bn-'+i).value||0))]).filter(r=>r[0]);
+  const host=document.getElementById('b-chart');
+  if(!rows.length){host.innerHTML='<p>Type at least one answer and its count.</p>';return;}
+  const mx=Math.max(1,...rows.map(r=>r[1])), step=niceStep(mx), max=Math.ceil(mx/step)*step;
+  const palette=[COL.pink,COL.orange,COL.yellow,COL.teal,COL.blue];
+  host.innerHTML=barChart({title:document.getElementById('b-title').value||'My survey',cats:rows.map(r=>r[0]),series:[{name:'',values:rows.map(r=>r[1]),colors:palette,color:COL.purple}],max,step,showValues:true,yLabel:'Number of people',h:320});
+}
+document.getElementById('b-draw').addEventListener('click',drawBuilder);
+drawBuilder();
+
+/* ---------- section checks ---------- */
+const checkers={
+  s1(){const r=checkInputs('s1');setMsg('s1',r.ok,r.total,'Your frequency table adds up to 30 members.');},
+  s2(){const r=checkInputs('s2'),m=mcqStatus('s2');setMsg('s2',r.ok+m.ok,r.total+m.total,'');if(m.unanswered&&r.ok===r.total)document.getElementById('msg-s2').textContent='Typed answers all correct! Now answer question e).';},
+  s3(){let ok=0;GAMES.forEach(([g,v],i)=>{const r=stars[i]===v/4;const td=document.getElementById('gp-'+i);td.classList.toggle('ok',r);td.classList.toggle('no',!r);state['s3-g'+i]=r;if(r)ok++;});
+    setMsg('s3',ok,GAMES.length,'Half stars and all!');},
+  s4(){let ok=0;barVals.forEach((v,i)=>{const r=v===SNACK_N[i];state['s4-b'+i]=r;document.getElementById('bv-'+i).style.color=r?'#048848':'#c0245a';if(r)ok++;});
+    setMsg('s4',ok,SNACKS.length,document.getElementById('bar-title').value.trim()?'And it has a title. 👏':'Now give it a title!');},
+  s5(){const r=checkInputs('s5'),m=mcqStatus('s5');setMsg('s5',r.ok+m.ok,r.total+m.total,'Great money manager!');},
+  s6(){const r=checkInputs('s6'),m=mcqStatus('s6');setMsg('s6',r.ok+m.ok,r.total+m.total,'');},
+  s7(){const labels=[...document.querySelectorAll('#mistakes label')];let allRight=true;
+    labels.forEach(l=>{const c=l.querySelector('input');const right=c.checked===(c.dataset.mistake==='1');l.classList.toggle('ok',right&&c.checked);l.classList.toggle('no',!right);if(!right)allRight=false;});
+    state['s7-mistakes']=allRight;const r=checkInputs('s7'),m=mcqStatus('s7');setMsg('s7',r.ok+m.ok+(allRight?1:0),r.total+m.total+1,'Case closed, detective! 🔍');},
+  s8(){const r=checkInputs('s8');setMsg('s8',r.ok,r.total,'');}
+};
+document.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>{checkers[b.dataset.check]();updateProgress();}));
+updateProgress();
+</script>
+</body>
+</html>
